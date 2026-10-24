@@ -1,0 +1,30 @@
+{
+  "_comment": "The Director's watch list (Task 263; docs/director.md §3 and §7). `npm run director` rebuilds the live league to a moment and proposes for the desk. watchers: a measure per finished season (goalsPerMatch, scorcherShare as a percentage, burnsPerMatch); when `seasons` finished seasons in a row (since the lever last changed) fall outside `band` on the same side, a rule change is proposed for the next season, moving the lever (`path` in data/rules.json) by `step` at a time: enough steps to aim the measure back at `aim` (each step moves it by about `perStep`), at most `maxSteps`. Measured 2026-10-11 (240 seasons): goals drift with the league's age (90% of seasons 5.4–8.4), one proposal about every 24 seasons with 6.2–7.8; the save bias moves goals 0.46 a step and nothing else; the heat clock moves the scorcher share 1.3 points a second and burns 0.4 (two seconds faster breaks the burns target), and the share hardly drifts, so its watcher is a guard. The check (Task 268, docs/it-responds-summary.md): goals come in waves about a decade long as generations of strikers and keepers peak and age (the strikers-minus-keepers gap correlates 0.79 with goals; the draft's position mix doesn't predict them), so a correction on three seasons can chase a wave already turning: goals at most one step (maxSteps 1; two made goals out of 5-8 slightly more often than no Director, one slightly less); five seasons instead of three made the watcher nearly silent (0-1 changes in 60 seasons, results like no Director), an option if Tom wants it rarer. Tom (2026-10-11): drift is the league's own direction; the Director proposes only when a measure stays well out, and Tom can always reject. reasons: the change's reason, low or high, kept with it (never announced: Task 265, upkeep is quiet). check: the balance run each proposal is checked with (leagues × seasons; 5 × 30 as npm run balance: 3 × 20 was too short, careers and rating drift swinging on noise); it fails only if a target the unchanged league meets is broken.",
+  "watchers": [
+    {
+      "id": "goals",
+      "measure": "goalsPerMatch",
+      "band": [6.2, 7.8],
+      "seasons": 3,
+      "aim": 7.0,
+      "lever": { "path": "contests.save.bias", "step": 0.1, "perStep": -0.46, "maxSteps": 1, "digits": 2 },
+      "reasons": {
+        "low": "Goals have dried up. The League widens the goalmouth to bring them back.",
+        "high": "Goals are flying in. The League narrows the goalmouth to give the keepers a chance."
+      }
+    },
+    {
+      "id": "scorchers",
+      "measure": "scorcherShare",
+      "band": [23, 28],
+      "seasons": 3,
+      "aim": 25.5,
+      "lever": { "path": "heat.burnSeconds", "step": 1, "perStep": -1.3, "maxSteps": 1, "digits": 0 },
+      "reasons": {
+        "low": "Scorchers have grown rare. The League quickens the heat clock.",
+        "high": "Scorchers have grown common. The League slows the heat clock."
+      }
+    }
+  ],
+  "check": { "leagues": 5, "seasons": 30 }
+}

@@ -1,0 +1,113 @@
+{
+  "_comment": "The in-universe ads (docs/channel.md §16.11; Task 105, Tom's picks from ads.html, Task 94). Each gap between live matches shuffles them into its own seeded order (Task 158), its breaks taking settings.ads.perBreak at a time, each carrying on where the last stopped (1-3, 4-6, ...); the stills take a fresh shuffle each pass. The order here is only for reading. Each: id, brand and product, the region it's from, its tagline, colours (the brand name's fill and edge on its end card), scene (which drawn ad it is: the brands' in src/channel/adBrands.js, the league's own in adLeague.js) effects (Task 205: the ad's small sounds, musicRecipes.js effectLayers, each at its moment in seconds, a gain to soften one), and a jingle: a few notes (MIDI note numbers, lengths in beats) on one of the anthems' instruments (brass, organ, bells) at bpm, starting `at` seconds into the ad, as its brand comes up. Tickets and Season tickets (Task 146) are the league's own ads; their facts (the next live match; a team, seeded per break, and the season on sale) come from the league. The playoffs promo is the channel's own, not an ad: its brand is the event, its times come from the calendar.",
+  "ads": [
+    {
+      "id": "caravan_cola", "brand": "Caravan Cola", "product": "cola", "region": "Sunreach",
+      "tagline": "The taste that crossed the desert.", "colours": ["#f0d9a0", "#5a1208"], "scene": "caravan_cola",
+      "jingle": { "instrument": "bells", "bpm": 132, "at": 6.5, "notes": [{ "note": 72, "beats": 0.5 }, { "note": 76, "beats": 0.5 }, { "note": 79, "beats": 0.5 }, { "note": 81, "beats": 1 }, { "note": 79, "beats": 1.5 }] },
+      "effects": [{ "effect": "rise", "at": 2.5 }, { "effect": "pop", "at": 3.4 }, { "effect": "fizz", "at": 3.45, "gain": 0.8 }]
+    },
+    {
+      "id": "tideline_sardines", "brand": "Tideline Sardines", "product": "tinned fish", "region": "the Gullcoast",
+      "tagline": "Fresh off the Gullcoast.", "colours": ["#f4f7fb", "#104860"], "scene": "tideline",
+      "jingle": { "instrument": "organ", "bpm": 140, "at": 6.5, "notes": [{ "note": 67, "beats": 0.5 }, { "note": 72, "beats": 0.5 }, { "note": 71, "beats": 0.5 }, { "note": 74, "beats": 0.5 }, { "note": 72, "beats": 1.5 }] },
+      "effects": [{ "effect": "swoosh", "at": 0.2 }, { "effect": "gull", "at": 0.9 }, { "effect": "splash", "at": 1.95 }, { "effect": "splash", "at": 2.4, "gain": 0.5 }, { "effect": "clink", "at": 2.6, "gain": 0.6 }, { "effect": "sparkle", "at": 5.2, "gain": 0.8 }]
+    },
+    {
+      "id": "foundry_fuel", "brand": "Foundry Fuel", "product": "energy drink", "region": "the Kettle",
+      "tagline": "Fuel for the hot ball.", "colours": ["#ff8a1f", "#3a0d08"], "scene": "foundry_fuel",
+      "jingle": { "instrument": "brass", "bpm": 120, "at": 6.5, "notes": [{ "note": 60, "beats": 0.5 }, { "note": 63, "beats": 0.5 }, { "note": 67, "beats": 0.5 }, { "note": 70, "beats": 1.5 }] },
+      "effects": [{ "effect": "sizzle", "at": 0.2, "gain": 0.7 }, { "effect": "rise", "at": 0.4, "gain": 0.7 }, { "effect": "stamp", "at": 3 }, { "effect": "sizzle", "at": 3.4, "gain": 0.6 }]
+    },
+    {
+      "id": "ironvale_boots", "brand": "Ironvale Boots", "product": "football boots", "region": "the Kettle",
+      "tagline": "Forged in the Kettle. Made to last.", "colours": ["#f2efe6", "#e8641e"], "scene": "ironvale",
+      "jingle": { "instrument": "brass", "bpm": 112, "at": 3.6, "notes": [{ "note": 55, "beats": 0.75 }, { "note": 55, "beats": 0.25 }, { "note": 62, "beats": 0.5 }, { "note": 67, "beats": 1.5 }] },
+      "effects": [{ "effect": "swoosh", "at": 0.9, "gain": 0.6 }, { "effect": "boot", "at": 1.4 }, { "effect": "ignite", "at": 1.95 }, { "effect": "stamp", "at": 2.8, "gain": 0.7 }, { "effect": "sizzle", "at": 2.85, "gain": 0.8 }]
+    },
+    {
+      "id": "velours", "brand": "Velours", "product": "sparkling water", "region": "Varenne",
+      "tagline": "Terribly refined. Slightly fizzy.", "colours": ["#f4e8d0", "#6b3fa0"], "scene": "velours",
+      "jingle": { "instrument": "bells", "bpm": 120, "at": 6.5, "notes": [{ "note": 84, "beats": 0.5 }, { "note": 79, "beats": 0.5 }, { "note": 76, "beats": 0.5 }, { "note": 72, "beats": 1.5 }] },
+      "effects": [{ "effect": "pour", "at": 1.3 }, { "effect": "fizz", "at": 2.4, "gain": 0.5 }, { "effect": "clink", "at": 4.9 }, { "effect": "sparkle", "at": 5.3, "gain": 0.6 }]
+    },
+    {
+      "id": "red_dune_sun_cream", "brand": "Red Dune Sun Cream", "product": "sun cream", "region": "Sunreach",
+      "tagline": "Stay cool in the Sunreach.", "colours": ["#fff1d6", "#8a1a10"], "scene": "red_dune",
+      "jingle": { "instrument": "organ", "bpm": 120, "at": 6.5, "notes": [{ "note": 72, "beats": 0.25 }, { "note": 76, "beats": 0.25 }, { "note": 79, "beats": 0.5 }, { "rest": true, "beats": 0.25 }, { "note": 77, "beats": 0.5 }, { "note": 76, "beats": 1.5 }] },
+      "effects": [{ "effect": "hop", "at": 0.2, "gain": 0.7 }, { "effect": "hop", "at": 0.68, "gain": 0.7 }, { "effect": "hop", "at": 1.16, "gain": 0.7 }, { "effect": "hop", "at": 1.64, "gain": 0.7 }, { "effect": "swoosh", "at": 2.2 }, { "effect": "squelch", "at": 2.75 }, { "effect": "splat", "at": 3.3 }, { "effect": "sparkle", "at": 3.5 }, { "effect": "stamp", "at": 4, "gain": 0.4 }, { "effect": "pop", "at": 4.6 }]
+    },
+    {
+      "id": "gullwing_ferries", "brand": "Gullwing Ferries", "product": "ferries", "region": "the Gullcoast",
+      "tagline": "Across the bay before the tide turns.", "colours": ["#f4f7fb", "#b8322a"], "scene": "gullwing",
+      "jingle": { "instrument": "brass", "bpm": 120, "at": 6.5, "notes": [{ "note": 55, "beats": 1 }, { "rest": true, "beats": 0.25 }, { "note": 60, "beats": 0.5 }, { "note": 64, "beats": 0.5 }, { "note": 67, "beats": 1.5 }] },
+      "effects": [{ "effect": "horn", "at": 0.4 }, { "effect": "chug", "at": 0.5, "gain": 0.8 }, { "effect": "gull", "at": 2.6, "gain": 0.6 }, { "effect": "wave", "at": 4.7, "gain": 0.8 }]
+    },
+    {
+      "id": "maison_dore", "brand": "Maison Doré", "product": "pastries", "region": "Varenne",
+      "tagline": "Flaky, like your midfield.", "colours": ["#f2c86a", "#3a1a30"], "scene": "maison_dore",
+      "jingle": { "instrument": "bells", "bpm": 120, "at": 6.5, "notes": [{ "note": 79, "beats": 0.5 }, { "note": 84, "beats": 0.5 }, { "note": 83, "beats": 0.5 }, { "note": 81, "beats": 0.5 }, { "note": 79, "beats": 1.25 }] },
+      "effects": [{ "effect": "clunk", "at": 0, "gain": 0.4 }, { "effect": "swoosh", "at": 1.4, "gain": 0.5 }, { "effect": "shatter", "at": 3.9 }, { "effect": "sparkle", "at": 4, "gain": 0.8 }]
+    },
+    {
+      "id": "steamvale_crisps", "brand": "Steamvale Crisps", "product": "crisps", "region": "the Kettle",
+      "tagline": "Crunch you can hear from the stands.", "colours": ["#ffd23f", "#7a1a08"], "scene": "steamvale",
+      "jingle": { "instrument": "brass", "bpm": 132, "at": 6.5, "notes": [{ "note": 67, "beats": 0.333 }, { "note": 71, "beats": 0.333 }, { "note": 74, "beats": 0.334 }, { "note": 79, "with": [83, 86], "beats": 0.5 }, { "rest": true, "beats": 0.25 }, { "note": 79, "with": [83, 86], "beats": 1.25 }] },
+      "effects": [{ "effect": "pop", "at": 1.8 }, { "effect": "crunch", "at": 2.2 }, { "effect": "crunch", "at": 2.6, "gain": 0.55 }, { "effect": "crunch", "at": 2.95, "gain": 0.4 }, { "effect": "crunch", "at": 3.3, "gain": 0.3 }, { "effect": "crunch", "at": 3.65, "gain": 0.2 }]
+    },
+    {
+      "id": "sandglass_watches", "brand": "Sandglass Watches", "product": "watches", "region": "Sunreach",
+      "tagline": "Keeps time like a referee.", "colours": ["#fff1d6", "#6a3a1a"], "scene": "sandglass",
+      "jingle": { "instrument": "bells", "bpm": 88, "at": 6.5, "notes": [{ "note": 64, "beats": 0.25 }, { "note": 59, "beats": 0.25 }, { "note": 64, "beats": 0.25 }, { "note": 59, "beats": 0.25 }, { "note": 57, "with": [60, 64], "beats": 1 }] },
+      "effects": [{ "effect": "rain", "at": 0.3, "gain": 0.3 }, { "effect": "whirl", "at": 3.5, "gain": 0.8 }, { "effect": "sparkle", "at": 4.4 }, { "effect": "tick", "at": 5.4 }]
+    },
+    {
+      "id": "brinestone_oilskins", "brand": "Brinestone Oilskins", "product": "rain jackets", "region": "the Gullcoast",
+      "tagline": "Stubborn as the weather.", "colours": ["#f2c230", "#1d2a38"], "scene": "brinestone",
+      "jingle": { "instrument": "brass", "bpm": 84, "at": 6.5, "notes": [{ "note": 50, "beats": 0.5 }, { "note": 55, "beats": 0.5 }, { "note": 55, "beats": 0.25 }, { "note": 57, "beats": 0.5 }, { "note": 59, "beats": 1 }] },
+      "effects": [{ "effect": "rain", "at": 0 }, { "effect": "thunder", "at": 1.1 }, { "effect": "wave", "at": 2.2 }, { "effect": "wave", "at": 3.4 }, { "effect": "sparkle", "at": 4.8 }]
+    },
+    {
+      "id": "orrery_bank", "brand": "Orrery Bank", "product": "a bank", "region": "Varenne",
+      "tagline": "Old money. Older vaults.", "colours": ["#a87420", "#2a1a08"], "scene": "orrery_bank",
+      "jingle": { "instrument": "organ", "bpm": 80, "at": 6.5, "notes": [{ "note": 48, "with": [55, 60], "beats": 0.5 }, { "note": 53, "with": [57, 60], "beats": 0.5 }, { "note": 55, "with": [59, 62], "beats": 0.5 }, { "note": 48, "with": [52, 55], "beats": 1 }] },
+      "effects": [{ "effect": "roll", "at": 0.5 }, { "effect": "clink", "at": 3.3 }, { "effect": "clunk", "at": 4.4 }]
+    },
+    {
+      "id": "ember_and_co", "brand": "Ember & Co.", "product": "match balls (the league's official ball)", "region": "league-wide",
+      "tagline": "The ball that runs hot.", "colours": ["#ff8a1f", "#3a0d08"], "scene": "ember",
+      "jingle": { "instrument": "brass", "bpm": 144, "at": 6.5, "notes": [{ "note": 48, "beats": 0.25 }, { "note": 55, "beats": 0.25 }, { "note": 50, "beats": 0.25 }, { "note": 57, "beats": 0.25 }, { "note": 52, "beats": 0.25 }, { "note": 58, "beats": 0.25 }, { "note": 55, "beats": 0.25 }, { "note": 48, "with": [55, 60], "beats": 1 }] },
+      "effects": [{ "effect": "rise", "at": 0.6, "gain": 0.6 }, { "effect": "sizzle", "at": 1, "gain": 0.6 }, { "effect": "ignite", "at": 2.4 }, { "effect": "sizzle", "at": 3.3 }]
+    },
+    {
+      "id": "scorchball_almanac", "brand": "The Scorchball Almanac", "product": "the record book (the league's own)", "region": "league-wide",
+      "tagline": "Every match. Every goal. Every burn.", "colours": ["#e8c060", "#3a1a10"], "scene": "almanac",
+      "jingle": { "instrument": "organ", "bpm": 138, "at": 6.5, "notes": [{ "note": 60, "beats": 0.25 }, { "note": 53, "beats": 0.25 }, { "note": 58, "beats": 0.25 }, { "note": 51, "beats": 0.25 }, { "note": 56, "beats": 0.25 }, { "note": 50, "beats": 0.25 }, { "note": 55, "beats": 0.25 }, { "note": 48, "beats": 0.25 }, { "note": 53, "with": [57, 60], "beats": 1 }] },
+      "effects": [{ "effect": "swoosh", "at": 0.3, "gain": 0.5 }, { "effect": "thump", "at": 0.9 }, { "effect": "swoosh", "at": 1.7, "gain": 0.4 }, { "effect": "riffle", "at": 2 }, { "effect": "stamp", "at": 5.2, "gain": 0.4 }]
+    },
+    {
+      "id": "league_shop", "brand": "The League Shop", "product": "replica shirts (the league's own)", "region": "league-wide",
+      "tagline": "Wear your colours.", "colours": ["#5ac87a", "#0d2a18"], "scene": "league_shop",
+      "jingle": { "instrument": "bells", "bpm": 150, "at": 6.5, "notes": [{ "note": 52, "beats": 0.25 }, { "note": 57, "beats": 0.25 }, { "note": 52, "beats": 0.25 }, { "note": 59, "beats": 0.25 }, { "note": 52, "beats": 0.25 }, { "note": 60, "beats": 0.25 }, { "note": 55, "beats": 0.25 }, { "note": 64, "beats": 0.25 }, { "note": 55, "with": [60, 64], "beats": 1 }] },
+      "effects": [{ "effect": "whirl", "at": 0 }, { "effect": "swoosh", "at": 4, "gain": 0.5 }, { "effect": "till", "at": 4.9 }]
+    },
+    {
+      "id": "tickets", "brand": "Tickets", "product": "match tickets (the league's own)", "region": "league-wide",
+      "tagline": "Louder in person.", "colours": ["#ffb627", "#3a0d08"], "scene": "tickets",
+      "jingle": { "instrument": "brass", "bpm": 132, "at": 6.5, "notes": [{ "note": 67, "beats": 0.5 }, { "note": 67, "beats": 0.5 }, { "note": 72, "beats": 0.5 }, { "note": 76, "beats": 1.5 }] },
+      "effects": [{ "effect": "click", "at": 0.5 }, { "effect": "steps", "at": 0.9 }, { "effect": "cheer", "at": 3.8 }]
+    },
+    {
+      "id": "season_tickets", "brand": "Season tickets", "product": "season tickets (the league's own)", "region": "league-wide",
+      "tagline": "Your seat. All season.", "colours": ["#ffb627", "#3a0d08"], "scene": "season_tickets",
+      "jingle": { "instrument": "bells", "bpm": 120, "at": 6.5, "notes": [{ "note": 72, "beats": 0.5 }, { "note": 74, "beats": 0.5 }, { "note": 76, "beats": 0.5 }, { "note": 79, "beats": 0.5 }, { "note": 84, "beats": 1.5 }] },
+      "effects": [{ "effect": "tear", "at": 1.1 }, { "effect": "tear", "at": 1.8 }, { "effect": "tear", "at": 2.5 }, { "effect": "tear", "at": 3.2 }, { "effect": "tear", "at": 3.9 }, { "effect": "tear", "at": 4.6 }, { "effect": "stamp", "at": 6, "gain": 0.4 }]
+    },
+    {
+      "id": "playoffs_promo", "brand": "Playoffs", "product": "the channel's own promo", "region": "league-wide",
+      "tagline": "Only on", "colours": ["#ffb627", "#3a0d08"], "scene": "playoffs_promo",
+      "jingle": { "instrument": "brass", "bpm": 126, "at": 0.9, "notes": [{ "note": 60, "beats": 0.5 }, { "note": 64, "beats": 0.5 }, { "note": 67, "beats": 0.5 }, { "note": 72, "beats": 1.5 }] },
+      "effects": [{ "effect": "rise", "at": 0 }, { "effect": "sizzle", "at": 0.2, "gain": 0.5 }]
+    }
+  ]
+}

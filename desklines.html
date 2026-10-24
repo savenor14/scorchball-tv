@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Desk lines</title>
+  <style>
+    @font-face { font-family: "VT323"; src: url("assets/fonts/VT323.ttf") format("truetype"); }
+    body { margin: 0; padding: 16px 20px 40px; background: #0b0c10; color: #f2efe6; font: 20px/1.3 "VT323", monospace; }
+    h1 { margin: 0 0 4px; font-size: 30px; color: #ffb627; }
+    h2 { margin: 18px 0 6px; font-size: 24px; color: #8fd3ff; font-weight: 400; }
+    p { margin: 6px 0; max-width: 1100px; }
+    .muted { color: #9aa1b2; }
+    table { border-collapse: collapse; margin-top: 4px; }
+    th, td { text-align: left; padding: 2px 14px 2px 0; vertical-align: top; }
+    th { color: #8fd3ff; font-weight: 400; }
+    td.num { text-align: right; }
+    tr.muted td { color: #6b7180; }
+    .named { color: #ffd98a; }
+    .tag { margin-left: 10px; color: #7ee081; }
+    .line { margin: 6px 0; max-width: 1100px; }
+    .line .head { color: #9aa1b2; }
+    .line .said { padding-left: 16px; }
+    .line .shown { padding-left: 16px; color: #ffb627; }
+  </style>
+</head>
+<body>
+  <h1>Desk lines (Task 246a)</h1>
+  <p class="muted">The desk remembers: after a match, the heaviest fact the desk can say (data/chronicle.json facts.deskFrom and up), after the result, story, reaction and table; before one, in the tee-up, last season's final, a run between the two, or a player facing an old club. The said line is generic or names a team; the graphic shows the specifics. Ways naming a surname (gold) are off until their clips are made. Nothing here is voiced yet. ?seasons=N, ?seed=S.</p>
+  <div id="sheet"><p class="muted">Fast-forwarding a league…</p></div>
+  <script type="module" src="src/channel/deskLinesSheet.js"></script>
+</body>
+</html>

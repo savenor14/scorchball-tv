@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kit review</title>
+  <style>
+    @font-face { font-family: "VT323"; src: url("assets/fonts/VT323.ttf") format("truetype"); }
+    body { margin: 0; padding: 16px 20px 40px; background: #0b0c10; color: #f2efe6; font: 18px/1.3 "VT323", monospace; }
+    h1 { margin: 0 0 4px; font-size: 30px; color: #ffb627; }
+    h2 { margin: 28px 0 8px; font-size: 24px; color: #8fd3ff; }
+    p { margin: 4px 0; max-width: 1100px; }
+    .muted { color: #9aa1b2; }
+    .bad { color: #ff6b5e; }
+    canvas { image-rendering: pixelated; display: block; }
+    .team { display: grid; grid-template-columns: 220px auto auto 90px 1fr; align-items: center; gap: 16px; padding: 6px 0; border-bottom: 1px solid #2c3345; }
+    .panel { background: #151924; border: 1px solid #2c3345; padding: 6px 8px; font-size: 20px; }
+    .kit { display: inline-block; width: 8px; height: 16px; vertical-align: middle; box-shadow: inset -2px 0 0 var(--kit2, transparent); outline: 1px solid rgb(255 255 255 / 0.3); }
+    #matchups { display: grid; gap: 4px; align-items: center; }
+    #matchups .head, #matchups .corner { padding: 2px 4px; white-space: nowrap; }
+    #matchups .corner { color: #9aa1b2; }
+    .cell { padding: 3px; border: 1px solid transparent; }
+    .cell.same { background: repeating-linear-gradient(45deg, #151924 0 6px, #0b0c10 6px 12px); align-self: stretch; }
+    .cell.changed { border-color: #ffb627; }
+    .cell .tag { font-size: 15px; color: #9aa1b2; }
+    .cell.changed .tag { color: #ffb627; }
+  </style>
+</head>
+<body>
+  <h1>Kit review</h1>
+  <p class="muted">A dev page for Task 18. The same sprites as the channel. Keepers wear lime (home) and pink (away) whatever the team, with sleeves and shorts in the team's shirt colour.</p>
+  <p id="threshold"></p>
+
+  <h2>Teams</h2>
+  <p class="muted">Each row: zoomed sprites, the same at the channel's real size (1280×720), the table swatch on the dark panel, then distances: shirt to turf, shirt to panel, trim to turf.</p>
+  <div id="teams"></div>
+
+  <h2>Matchups</h2>
+  <p class="muted">Home team down the side, away team across the top. The number is the distance between the two shirts. An orange border means the away team changes into its secondary colour.</p>
+  <div id="matchups"></div>
+
+  <script type="module" src="src/channel/kitSheet.js"></script>
+</body>
+</html>

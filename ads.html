@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ident and ads</title>
+  <style>
+    @font-face { font-family: "VT323"; src: url("assets/fonts/VT323.ttf") format("truetype"); }
+    body { margin: 0; padding: 16px 20px 40px; background: #0b0c10; color: #f2efe6; font: 18px/1.3 "VT323", monospace; }
+    h1 { margin: 0 0 4px; font-size: 30px; color: #ffb627; }
+    h2 { margin: 28px 0 4px; font-size: 24px; color: #8fd3ff; }
+    h3 { margin: 14px 0 4px; font-size: 20px; color: #ffb627; }
+    p { margin: 4px 0; max-width: 1100px; }
+    .muted { color: #9aa1b2; }
+    .bad { color: #ff6b5e; }
+    .row { display: flex; gap: 24px; flex-wrap: wrap; }
+    .controls { position: sticky; top: 0; z-index: 5; display: flex; gap: 18px; flex-wrap: wrap; align-items: center; padding: 8px 0; background: #0b0c10; border-bottom: 1px solid #2c3345; }
+    .controls label { display: flex; gap: 6px; align-items: center; }
+    .part { margin-top: 36px; font-size: 28px; color: #ffb627; border-top: 1px solid #2c3345; padding-top: 12px; }
+    table { border-collapse: collapse; margin-top: 8px; }
+    th, td { text-align: left; padding: 3px 14px 3px 0; border-bottom: 1px solid #2c3345; vertical-align: top; }
+    th { color: #9aa1b2; font-weight: 400; }
+    td.used { color: #ffb627; }
+    .stage { position: relative; overflow: hidden; background: #0b0c10; }
+    .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; }
+    .time { color: #9aa1b2; font-size: 16px; margin-top: 2px; }
+  </style>
+</head>
+<body>
+  <h1>Ident and ads</h1>
+  <p class="muted">A dev page for Task 94 (channel.md §16.5a, §16.11): the channel's opening ident in three versions (Tom's direction: a ball covered in a bit of fire, almost like a comet), the in-universe ads (18, with Ad break's eleven at the top) and a channel promo, the bumpers either side of a break, a whole 30-second break, and a list of invented brands for Tom to edit. All drawn on the canvas: over the ground in Full, the whole screen in Broadcast. Everything here is a mock-up; jingles come with Task 105 on the sound board. <b>?zoom=N</b> sets the scale; <b>?freeze=ms</b> holds every stage at that moment.</p>
+  <div class="controls">
+    <label><input type="checkbox" id="slow"> Slow motion (¼ speed)</label>
+    <label><input type="checkbox" id="full"> Show in Full instead of Broadcast</label>
+  </div>
+  <div id="options"></div>
+  <script type="module" src="src/channel/spotsSheet.js"></script>
+</body>
+</html>

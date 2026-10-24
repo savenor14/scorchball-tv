@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rulebook and About</title>
+  <style>
+    @font-face { font-family: "VT323"; src: url("assets/fonts/VT323.ttf") format("truetype"); }
+    body { margin: 0; padding: 16px 20px 40px; background: #0b0c10; color: #f2efe6; font: 20px/1.3 "VT323", monospace; }
+    h1 { margin: 0 0 4px; font-size: 30px; color: #ffb627; }
+    p { margin: 6px 0; max-width: 1100px; }
+    .muted { color: #9aa1b2; }
+    button { font: inherit; background: #151924; color: #f2efe6; border: 1px solid #2c3345; padding: 2px 12px; margin-right: 6px; cursor: pointer; }
+    .row { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 12px; align-items: flex-start; }
+    iframe { flex: none; width: 960px; height: 540px; border: 1px solid #2c3345; background: #000; }
+    table { border-collapse: collapse; margin-top: 8px; }
+    th, td { text-align: left; padding: 1px 14px 1px 0; }
+    th { color: #8fd3ff; font-weight: 400; }
+    td + td, th + th { text-align: right; }
+  </style>
+</head>
+<body>
+  <h1>Rulebook and About (Tasks 163–164)</h1>
+  <p class="muted">The words from data/rulebook.json, their numbers filled in from the rules, as the channel shows them: its own Rulebook and About buttons below the side panel open them in the pane (86 px; tabs, mixed case: Tom's picks). The table says how many screens each page fills (1.0 fits without scrolling): worth a look after the words change.</p>
+  <p><button data-open="rulebook">Open the Rulebook</button><button data-open="about">Open About</button></p>
+  <div class="row">
+    <iframe id="channel" src="index.html?at=2026-10-06T08:50:00"></iframe>
+    <table id="measure"><tr><td class="muted">Measuring once the picture has loaded…</td></tr></table>
+  </div>
+  <script type="module" src="src/channel/rulebookSheet.js"></script>
+</body>
+</html>

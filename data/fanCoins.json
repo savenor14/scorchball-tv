@@ -1,0 +1,35 @@
+{
+  "_comment": "Fan Coins (docs/channel.md §29, version 2 §29.6; the numbers in config/settings.json fanCoins). chants: what a viewer can have one end sing, each sung by the crowd's voices (soundRecipes.js 'chant'): its tune, a syllable at a time: \"vowel note seconds\" (ah, eh, oh or oo, its note in semitones above the chant's root; a ! before the vowel shouts it, short and breathy), \"* seconds\" a clap of every hand, \"- seconds\" a breath; no tune is the crowd's own olé. lines: what the speech bubble shows, a line at a time, each line's syllables (claps and breaths too) in order; the end waves its arms through each line. pictures: FAN BOARD's and the ticker's words (Tom: the same for both), the general ones, then teamWords for each team ({team} its short name). shouts: the fan shout's words (Tom's notes, task 3), {team} the end's team, {star} its top scorer this season so far (left out while it has none), ♥ drawn as a pixel heart.",
+  "chants": [
+    {
+      "id": "ole",
+      "words": "OLÉ, OLÉ, OLÉ!",
+      "lines": [{ "words": "OLÉ, OLÉ, OLÉ!", "syllables": 7 }, { "words": "OLÉ, OLÉ, OLÉ!", "syllables": 6 }],
+      "tune": ["oh 0 0.3", "eh 4 0.5", "oh 0 0.3", "eh 4 0.5", "oh 0 0.3", "eh 4 0.5", "- 0.35", "oh 0 0.3", "eh 4 0.5", "oh 0 0.3", "eh 4 0.5", "oh 0 0.3", "eh 4 0.5"]
+    },
+    {
+      "id": "on_fire",
+      "words": "ON FIRE! ON FIRE!",
+      "tune": ["* 0.28", "* 0.28", "- 0.14", "ah 0 0.34", "ah 0 0.3", "eh -2 0.62", "- 0.22", "* 0.28", "* 0.28", "- 0.14", "ah 0 0.34", "ah 0 0.3", "eh -2 0.62", "- 0.22"],
+      "lines": [{ "words": "ON FIRE!", "syllables": 7 }, { "words": "ON FIRE!", "syllables": 7 }]
+    },
+    {
+      "id": "here_we_go",
+      "words": "HERE WE GO, HERE WE GO, HERE WE GO!",
+      "tune": ["!eh 2 0.34", "!eh 2 0.34", "!oh 2 0.6", "- 0.45", "!eh 2 0.34", "!eh 2 0.34", "!oh 2 0.6", "- 0.45", "!eh 2 0.34", "!eh 2 0.34", "!oh 2 0.6"],
+      "lines": [{ "words": "HERE WE GO,", "syllables": 4 }, { "words": "HERE WE GO,", "syllables": 4 }, { "words": "HERE WE GO!", "syllables": 3 }]
+    },
+    {
+      "id": "scorchball",
+      "words": "SCORCH-BALL! SCORCH-BALL!",
+      "tune": ["oh 0 0.45", "ah -3 0.65", "* 0.25", "* 0.25", "* 0.45", "oh 0 0.45", "ah -3 0.65", "* 0.25", "* 0.25", "* 0.45"],
+      "lines": [{ "words": "SCORCH-BALL!", "syllables": 5 }, { "words": "SCORCH-BALL!", "syllables": 5 }]
+    }
+  ],
+  "pictures": [
+    { "id": "hello", "words": "HELLO SCORCHBALL.TV" },
+    { "id": "watching", "words": "SCORCHERS ONLY" }
+  ],
+  "teamWords": "GO {team}!",
+  "shouts": ["GO {team}!", "LET'S GO!", "COME ON!", "GET A GOAL!", "I ♥ {star}"]
+}

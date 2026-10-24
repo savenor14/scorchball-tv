@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The write-up (the hand-off's item 2, 2026-10-23; Tom's words, his edit of Claude's draft): how Scorchball TV was
+       built with Claude Code. Plain HTML, no script, in the About page's look (assets/page.css). Served at
+       /how-it-was-built; the public copy's README is its shorter version. -->
+  <title>How Scorchball TV was built with Claude Code</title>
+  <meta name="description" content="A made-up sport simulated 24/7 as a live pixel-art channel, built in three weeks by one person directing Claude Code: the workflow, how it works, and the challenges.">
+  <link rel="canonical" href="https://scorchball.tv/how-it-was-built">
+  <link rel="icon" href="/assets/icon/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/icon/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/icon/icon-180.png">
+  <meta name="theme-color" content="#151924">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Scorchball TV">
+  <meta property="og:title" content="How Scorchball TV was built with Claude Code">
+  <meta property="og:description" content="A made-up sport simulated 24/7 as a live pixel-art channel, built in three weeks by one person directing Claude Code.">
+  <meta property="og:url" content="https://scorchball.tv/how-it-was-built">
+  <meta property="og:image" content="https://scorchball.tv/assets/icon/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="/assets/page.css">
+</head>
+<body>
+  <header class="masthead">
+    <a class="tag" href="/">SCORCHBALL TV</a>
+    <a class="watch" href="/">● WATCH LIVE</a>
+  </header>
+
+  <main>
+    <h1>How Scorchball TV was built with Claude Code</h1>
+    <p>Scorchball TV is a sports channel for a sport that doesn't exist. I wanted to create an always-running channel that people could tune in at any given moment and see something, follow along, leave and come back, and all the while the channel's content would always be marching forwards. What was built is Scorchball TV. Eight invented clubs play Scorchball, a five-a-side game a little like football mixed with hot potato, around the clock, and the channel shows it live in pixel art: the matches, the table, the studio desk, the ads, and an evening podcast. Leave it running and something's always on.</p>
+    <figure>
+      <img src="/assets/about/live.png" width="1280" height="720" alt="A live match on Scorchball TV: the Wrenhollow Stormcrows and the Lisle Vintners in the first half, the match stats beside the pitch and the day's results along the ticker.">
+      <figcaption>A live match on Scorchball TV.</figcaption>
+    </figure>
+    <p>I built it with Claude Code over three weeks in October 2026. "Built" means I directed and Claude wrote every line: almost 1,000 commits and counting, about 65,000 lines of JavaScript, and 800+ tests. My only coding experience before this was HTML and CSS, so most of what follows was new to me.</p>
+    <p>The sport itself is five a side on a walled pitch. The twist is the heat: the ball warms up the longer one team holds it, and once it glows red they must shoot or lose it. A fast, hard shot is a scorcher.</p>
+    <p>A season lasts a week: fourteen rounds from Monday, the playoffs and the final on Sunday, then the draft. A live match starts about every two hours and forty minutes, and between them the channel fills the time the way a real one would: replays, highlights, the studio desk, post-match interviews, adverts for made-up sponsors, and OFF THE BALL, a podcast, in the evenings.</p>
+    <p>The league remembers. Players are drafted, sign contracts, age, and retire. The CHRONICLE keeps every champion, record, and legend. A "Director" watches the league's numbers and proposes rule changes when they drift, and viewers vote in polls that can nudge the league in small directions.</p>
+    <figure>
+      <img src="/assets/about/studio.png" width="1280" height="720" loading="lazy" alt="The studio between matches: two presenters at the desk, the table on one side and the next match on the other.">
+      <figcaption>The studio desk between matches.</figcaption>
+    </figure>
+    <h2>The setup</h2>
+    <p>Everything is plain JavaScript: ES modules, a 2D canvas for the pitch, HTML and CSS for everything laid over it, no framework, and no build step. The same simulation code runs in Node, for testing and fast-forwarding seasons, and in the browser. I used Claude Code in the Claude desktop app on the Claude Max 5x plan, with a dev server Claude could open in its own browser pane to check what it built.</p>
+    <h2>The workflow</h2>
+    <p>The way Claude and I worked at the end was very different from how we started, and I'm sure there are still better ways I'm not using. This project is also a learning experience for me personally and what can be accomplished with Claude. What settled in:</p>
+    <p><strong>The docs are the memory.</strong> Before any code, we wrote <code>vision.md</code>: the pillars, what's in and out of scope, the milestones. Then a design doc for each part (the sport's rules, the simulation, the channel, the finances, the Director), and a <code>CLAUDE.md</code> with the working rules every session reads first. Claude doesn't remember yesterday, but the docs do. When a session's context got about half full, I started a fresh one with a hand-off at the top of the task list: where things stand, what's next, what to watch out for.</p>
+    <p><strong>Mock-ups before building.</strong> For anything visual, Claude first built a throwaway dev page showing two or three versions side by side, look A, B, and C, drawn with the real channel's code and real league data. I picked one (often "B, but with C's table"), and only then did it get built properly. Over fifty of those pages came and went.</p>
+    <p><strong>A pause after every task.</strong> Early on, Claude would happily work through five tasks in a row. Now there's a rule: finish one task, commit it, report what was done, outline the next, and wait. It costs a little speed and saves a lot of untangling, and it gives me room to change my mind between tasks.</p>
+    <p><strong>Data, not code.</strong> Teams, rules, every timing, and every line the commentators say live in data files, and the engine applies general rules to them. When I wanted a match to feel slower, or an advert to run less often, it was a number in a settings file, not a code change.</p>
+    <p><strong>Same seed, same league.</strong> All randomness comes from one seeded generator, so a seed always produces exactly the same league, down to the last goal. That made the tests meaningful and every bug reproducible.</p>
+    <p><strong>Watching, then notes.</strong> A lot of the work came from simply leaving the channel on and writing down what felt off: a commentator talking over himself, a player standing still, a jingle playing too often. Each batch of notes became a round of small tasks.</p>
+    <h2>How it works</h2>
+    <p><strong>There is no game server.</strong> Every viewer's browser runs the simulation itself. To make sure everyone sees the same match at the same moment, each browser rebuilds the league from a weekly snapshot and a small daily key. The keys come from a secret seed and are published a day at a time by a scheduled job, so the code can be public and nobody can run the league ahead and spoil Sunday's final. A "history check" replays every published day before each update and refuses to ship anything that would change a result already shown.</p>
+    <p><strong>Every browser has to agree to the last digit.</strong> Different browsers can give slightly different answers for things like <code>Math.sin</code>, and over a season tiny differences add up to a different goal. So the simulation does its own maths, and a check page compares a test league's fingerprint in the browser against Node's.</p>
+    <p><strong>Every sound is made in code.</strong> The crowd, the ball, the whistles, and the jingles are all synthesized, then recorded ahead so phones can play them cheaply.</p>
+    <p><strong>The voices are AI.</strong> The commentators, the studio presenters, the interviewed players, and the podcast hosts are ElevenLabs voices. After trying free local voices first (Kokoro and Piper), every line was written, counted, and generated ahead of time: about 11,000 clips, timed so commentary never talks over itself.</p>
+    <p><strong>The Director.</strong> Watchers measure the league season by season (goals per match, scorchers, how many different champions), and when a number stays out of its band for three seasons, the Director proposes a rule change, checked first against simulated decades. I approve it or not; viewers vote in polls that nudge the league in smaller ways.</p>
+    <h2>Challenges</h2>
+    <p><strong>Joining the simulation and the picture.</strong> The simulation doesn't model physics. It decides a match in possession phases across three zones of the pitch: who has the ball, a pass, a tackle, a shot, a goal. The channel then has to invent movement that looks like football and never contradicts what the simulation decided. If the simulation says a goal in the 23rd minute, the picture must build towards that goal, in that minute, every time and on every screen. The rule we kept to: the picture only illustrates what the simulation already decided.</p>
+    <p><strong>Making it look like a real sport.</strong> Early matches were a crowd of players in the middle of the pitch. Claude built a "pitch map" that measured where the ball and players spent their time: only an eighth of play reached the wide parts of the pitch, and nobody used the corners. Width, loose balls, and players keeping their shape came from those numbers. It's still a work in progress.</p>
+    <p><strong>Keeping the scope.</strong> A hobby project can become anything. The question I kept asking was whether something belongs on a 24/7 sports channel. A map of the world for viewers to explore is a lovely idea, but it isn't a channel, so it waits. Plenty of other ideas were dropped or parked the same way.</p>
+    <p><strong>Balancing the numbers at every length of time.</strong> The sport has to work in a single match (five to eight goals, almost never 0–0), over a season (a believable top scorer, a title race), and over decades (at least four different champions every ten seasons, careers of ten to fifteen seasons). A balance tool runs five leagues for thirty seasons in about eight seconds and checks every target, and it ran after every change to the rules.</p>
+    <p>Another challenge came from timing. Once the channel went up and was technically live, checking changes, QAing new additions, and spotting bugs became a lot harder because I had to physically watch at the right times to ensure I saw/heard what was new to the channel.</p>
+    <h2>The numbers</h2>
+    <ul>
+      <li><strong>Three weeks</strong>, 2 to 23 October 2026; season 1 went on air on 12 October.</li>
+      <li><strong>Almost 1,000 commits</strong> and counting, about <strong>65,000 lines</strong> of JavaScript, <strong>800+ tests</strong>.</li>
+      <li><strong>About 11,000 voice clips.</strong></li>
+      <li><strong>Costs:</strong> Claude Max 5x, an ElevenLabs Pro plan for the voices, and the domains (about $50 a year). Hosting is on Cloudflare's free plans: the site is static files, and a small Worker counts viewers and takes votes.</li>
+    </ul>
+    <h2>What's next</h2>
+    <p>The address goes out with season 5, on 9 November. After that: an expansion vote for two new clubs, more voices for the desk and the podcast, and whatever the people watching ask for.</p>
+
+
+    <ul class="links">
+      <li><a href="/">Watch live</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="https://bsky.app/profile/scorchball.tv">Bluesky</a></li>
+      <li><a href="https://ko-fi.com/scorchballtv">Ko-fi</a></li>
+    </ul>
+  </main>
+
+  <footer>
+    <p>© 2026 Scorchball TV</p>
+  </footer>
+</body>
+</html>

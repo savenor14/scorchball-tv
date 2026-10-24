@@ -1,0 +1,19 @@
+{
+  "_comment": "Positions, attributes and weights. See docs/simulation.md §4.2 and §5.",
+  "positions": ["K", "D", "M", "S"],
+  "keeper": "K",
+  "attributes": ["shooting", "passing", "dribbling", "tackling", "pace", "composure", "stamina", "keeping"],
+  "overallWeights": {
+    "_comment": "Overall rating = weighted average of attributes. Each position's weights must sum to 1.",
+    "K": { "passing": 0.10, "pace": 0.05, "composure": 0.15, "stamina": 0.05, "keeping": 0.65 },
+    "D": { "shooting": 0.05, "passing": 0.15, "dribbling": 0.05, "tackling": 0.40, "pace": 0.15, "composure": 0.10, "stamina": 0.10 },
+    "M": { "shooting": 0.15, "passing": 0.35, "dribbling": 0.15, "tackling": 0.05, "pace": 0.10, "composure": 0.15, "stamina": 0.05 },
+    "S": { "shooting": 0.40, "passing": 0.05, "dribbling": 0.20, "pace": 0.15, "composure": 0.15, "stamina": 0.05 }
+  },
+  "carrierWeights": {
+    "_comment": "Who has the ball in each zone (relative weights). In the attacking zone the carrier is also the shooter. Attacking was D 15, M 40, S 45 until Task 188b (Tom): midfielders scored as much as strikers and topped the scoring two seasons in three; at S 50, M 35 a striker tops it about two in three (S 49 gave 63%, S 51 73%, S 55 85%).",
+    "defensive": { "K": 15, "D": 55, "M": 25, "S": 5 },
+    "middle": { "D": 25, "M": 50, "S": 25 },
+    "attacking": { "D": 15, "M": 35, "S": 50 }
+  }
+}

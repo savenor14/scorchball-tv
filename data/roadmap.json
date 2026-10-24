@@ -1,0 +1,33 @@
+{
+  "_comment": "The League's roadmap (Task 265b; docs/director.md §9): growth ideas kept in view on the Director's desk (ROADMAP tab). No timeline (Tom, 2026-10-11): growth comes down to feel (the channel going stale, Tom's inspiration, viewers' notes and votes pointing one way). id: a lower-case name (an announcement's roadmap field and a note's link name it); title; what: what it is; needs: what must be true first; status: idea, considering, planned, building or done; notes: Tom's (left out when empty); doneSeason: the last finished season when it was marked done (set by the desk), for 'seasons since the last big change'. Read by the desk only, never by viewers' browsers.",
+  "ideas": [
+    {
+      "id": "expansion",
+      "title": "Expansion",
+      "what": "New clubs join the league, two at a time, with an expansion draft (each club protects a list and loses a player); two divisions once there are enough. Viewers vote on the cities, names and kits in AUDIENCE.",
+      "needs": "The launch, and a league with history to dilute gently; built as a milestone (teams, crests, kits, voices, the expansion draft's show), switched on at a season's start.",
+      "status": "idea"
+    },
+    {
+      "id": "extra_player",
+      "title": "An extra player per side",
+      "what": "A sixth player on the pitch (a second playmaker, or a new wide role), with bigger squads and matchday benches. Worth weighing with expansion: both are \"the league grows\".",
+      "needs": "A sim change (lineups, positions, contests, the draft) and the picture (formations, motion), checked by the balance and parity tools; switched on at a season's start after the launch.",
+      "status": "idea"
+    },
+    {
+      "id": "world_view",
+      "title": "The world view",
+      "what": "A map of the world and its regions and grounds in the centre (the pitch's place in Full); click a stadium to go to whatever is on there.",
+      "needs": "Worldbuilding first (the regions drawn, the grounds placed); a new kind of picture for the channel.",
+      "status": "idea"
+    },
+    {
+      "id": "guest_panellist",
+      "title": "A guest panellist",
+      "what": "A retired legend joins the desk for a day: beside the presenters, in the talk and the graphics, perhaps a line of their own.",
+      "needs": "Legends inducted first (Task 266, waiting for a good crop); a third seat at the desk and its look; voices only if cheap.",
+      "status": "idea"
+    }
+  ]
+}

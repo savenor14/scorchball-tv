@@ -1,0 +1,876 @@
+{
+  "_comment": "OFF THE BALL, the podcast studio segment (docs/podcast.md; Tom's picks 2026-10-20: set B4, the booth over the ground; Tamsin Tregarrow on the left, Samir Haddani on the right; a new episode each regular-season day, Standard size). A DRAFT for Tom to read and edit: not loaded or validated by the channel yet, nothing voiced. As data/analyst.json: each kind has who says it (tamsin or samir), a gesture (talk, open, point: at the window's middle pane, laugh, nod, both), when it's said (the fact that makes it true, worked out by the build; none: always fits), its subject (team: the one team it names, voiced once per team), and ways, each a pair: say (spoken and typed in the bubble: fixed, or naming one team as {team}, spoken as studio.spokenTeam, 'the Gulls') and show (the middle pane's or the lower third's words, in capitals: any facts). No line says a player's name or '{team}'s'; numbers and players are on the pane. Tamsin: a former keeper from the Gullcoast, a career backup (Tom, 2026-10-20: most analysts were never the stars), sharp and dry, trusts her eyes; Samir teases her about the bench and she gets in first, poking fun at herself. Samir: a data analyst from Sunreach, quick and precise, enjoys being right. An episode: the opening, three or four topics dealt from the pool (each topic's kinds in its order, a kind skipped when its fact isn't true, a topic skipped when it has nothing true to say), PICKS, the close.",
+  "show": "OFF THE BALL",
+  "pair": {
+    "tamsin": { "name": "Tamsin Tregarrow", "seat": "left", "role": "FORMER KEEPER", "region": "gullcoast", "voice": "aD6riP1btT197c6dACmy", "_voice": "Rachel M, an ElevenLabs Library voice (Tom's pick by ear of four, 2026-10-20)", "look": { "jacket": "#3a2f4f", "tie": "#ffd23f", "skin": 0, "hair": "#8a4a2a", "style": "long", "woman": true } },
+    "samir": { "name": "Samir Haddani", "seat": "right", "role": "DATA ANALYST", "region": "sunreach", "voice": "oJQlz7pz2yWd7MRmDUXm", "_voice": "Fadi (Lebanese, conversational), an ElevenLabs Library voice (Tom's pick by ear of six, heard in conversation with Tamsin, 2026-10-20; Ali until then: read off a script beside her)", "look": { "jacket": "#5a1f2a", "tie": "#d8a23a", "skin": 2, "hair": "#1a1a1a", "style": "short" } }
+  },
+  "episodes": {
+    "_comment": "Which opening and close each episode has: SEASON AHEAD on day 1 (last season to talk about), a daily one days 2 to 6, SEASON REVIEW the night after the final. The topics dealt from 'topics' in each; SEASON AHEAD and SEASON REVIEW lead with their own.",
+    "seasonAhead": { "open": ["openAhead", "openAheadReply"], "lead": "ahead", "close": ["closeAsk", "closeAhead"] },
+    "daily": { "open": ["open", "openReply"], "close": ["closeAsk", "close"] },
+    "seasonReview": { "open": ["openReview", "openReviewReply"], "lead": "review", "close": ["closeAsk", "closeReview"] }
+  },
+  "topics": {
+    "table": ["tableAsk", "tableTop", "tableTopReply", "tableClimber", "tableFaller", "tableBottom", "tableGamesMany or tableGamesFew"],
+    "hotTake": ["hotTakeCup or hotTakeTrouble or hotTakeUnlucky", "the other's agree or disagree (seeded)"],
+    "clip": ["clipAsk", "clipReact", "clipNumbers"],
+    "money": ["moneyAsk", "moneyCap or moneyRoom", "moneyBargain", "moneyReply"],
+    "archive": ["archiveAsk", "archiveDynasty or archiveDrought or archiveNever", "archiveReply"],
+    "kids": ["kidsAsk", "kidsRookie", "kidsReply"],
+    "vote": ["voteOpen", "voteReply"],
+    "picks": ["picksAsk", "picksLast (from the second episode: each owns up to yesterday's pick)", "pickTamsin", "pickSamir"],
+    "ahead": ["aheadChampions", "aheadChampionsReply", "aheadPick", "aheadPickReply"],
+    "review": ["reviewChampions", "reviewChampionsReply", "reviewPennant", "reviewPicks"]
+  },
+  "lines": {
+    "open": { "who": "tamsin", "gesture": "open", "ways": [
+      { "say": "Hello and welcome to Off the Ball. I'm Tamsin.", "show": "OFF THE BALL" },
+      { "say": "Welcome back to Off the Ball. I'm Tamsin, and I watched every match. Old habit from the bench.", "show": "OFF THE BALL" },
+      { "say": "This is Off the Ball. Tamsin here, coffee in hand.", "show": "OFF THE BALL" },
+      { "say": "Off the Ball, the day's talk. I'm Tamsin.", "show": "OFF THE BALL" }
+    ] },
+    "openReply": { "who": "samir", "gesture": "nod", "ways": [
+      { "say": "And I'm Samir. I'm here to tell her what she watched.", "show": "OFF THE BALL" },
+      { "say": "I'm Samir, and I've brought the numbers.", "show": "OFF THE BALL" },
+      { "say": "Samir here. Let's get into it.", "show": "OFF THE BALL" },
+      { "say": "And I'm Samir. Big day, lots to get through.", "show": "OFF THE BALL" }
+    ] },
+    "openAhead": { "who": "tamsin", "gesture": "both", "when": "the first episode of a season (day 1)", "ways": [
+      { "say": "It's back! A new season, and this is Off the Ball. I'm Tamsin.", "show": "OFF THE BALL · SEASON {season}" },
+      { "say": "Welcome to a brand new season of Off the Ball. I'm Tamsin.", "show": "OFF THE BALL · SEASON {season}" }
+    ] },
+    "openAheadReply": { "who": "samir", "gesture": "open", "ways": [
+      { "say": "And I'm Samir. Everyone starts on zero. My favourite time of year.", "show": "SEASON {season} · THE SEASON AHEAD" },
+      { "say": "I'm Samir. Clean slate, fresh numbers.", "show": "SEASON {season} · THE SEASON AHEAD" }
+    ] },
+    "openReview": { "who": "tamsin", "gesture": "open", "when": "the night after the final", "ways": [
+      { "say": "That's the season done. This is Off the Ball, the review. I'm Tamsin.", "show": "OFF THE BALL · SEASON {season} IN REVIEW" },
+      { "say": "One last Off the Ball for the season. I'm Tamsin.", "show": "OFF THE BALL · SEASON {season} IN REVIEW" }
+    ] },
+    "openReviewReply": { "who": "samir", "gesture": "nod", "ways": [
+      { "say": "And I'm Samir. What a season to look back on.", "show": "SEASON {season} IN REVIEW" },
+      { "say": "I'm Samir. Let's settle a few arguments.", "show": "SEASON {season} IN REVIEW" }
+    ] },
+
+    "tableAsk": { "who": "tamsin", "gesture": "point", "ways": [
+      { "say": "Right. The table. Who's got it?", "show": "THE TABLE" },
+      { "say": "Let's start with the table.", "show": "THE TABLE" },
+      { "say": "First, the table. Go on, Samir.", "show": "THE TABLE" }
+    ] },
+    "tableTop": { "who": "samir", "gesture": "point", "subject": "team", "when": "the leader", "ways": [
+      { "say": "{team} are top, and the numbers say they deserve it.", "show": "1 {team} · {points} PTS · GD {gd}" },
+      { "say": "It's {team} at the top. Best goal difference too.", "show": "1 {team} · {points} PTS · GD {gd}" },
+      { "say": "Top of the pile: {team}.", "show": "1 {team} · {points} PTS" }
+    ] },
+    "tableTopReply": { "who": "tamsin", "gesture": "talk", "ways": [
+      { "say": "Numbers. I watched them. They're scared of nobody.", "show": "{TEAM} · FORM {form}" },
+      { "say": "They look it, too. Nobody wants to play them.", "show": "{TEAM} · FORM {form}" },
+      { "say": "Top today. Ask me again after the last round.", "show": "{TEAM} · FORM {form}" }
+    ] },
+    "tableClimber": { "who": "samir", "gesture": "open", "subject": "team", "when": "up two places or more since the day began (not the leader)", "ways": [
+      { "say": "The climbers today: {team}.", "show": "{team} ▲{up} TO {place}" },
+      { "say": "Look at {team}, flying up the table.", "show": "{team} ▲{up} TO {place}" }
+    ] },
+    "tableFaller": { "who": "tamsin", "gesture": "laugh", "subject": "team", "when": "down two places or more since the day began", "ways": [
+      { "say": "Bad day for {team}. Down they go.", "show": "{team} ▼{down} TO {place}" },
+      { "say": "{team} won't want to see that table.", "show": "{team} ▼{down} TO {place}" }
+    ] },
+    "tableBottom": { "who": "tamsin", "gesture": "talk", "subject": "team", "when": "bottom of the table, from the third round", "ways": [
+      { "say": "And at the bottom, {team}. Somebody has to say it.", "show": "{place} {team} · {points} PTS" },
+      { "say": "Spare a thought for {team}, propping up the table.", "show": "{place} {team} · {points} PTS" }
+    ] },
+    "tableGamesMany": { "who": "samir", "gesture": "nod", "when": "more than half the regular season left", "ways": [
+      { "say": "Plenty of games left. In theory.", "show": "{left} MATCHES LEFT IN THE REGULAR SEASON" },
+      { "say": "Early days. The table always lies this early.", "show": "{left} MATCHES LEFT IN THE REGULAR SEASON" }
+    ] },
+    "tableGamesFew": { "who": "samir", "gesture": "open", "when": "half the regular season or less left", "ways": [
+      { "say": "Not many games left now. Every point counts.", "show": "{left} MATCHES LEFT · TOP FOUR GO THROUGH" },
+      { "say": "We're running out of games. The top four is all that matters.", "show": "{left} MATCHES LEFT · TOP FOUR GO THROUGH" }
+    ] },
+
+    "hotTakeCup": { "who": "tamsin", "gesture": "both", "subject": "team", "when": "in the top two, three wins or more in the last five", "ways": [
+      { "say": "Hot take. {team} win the Cup.", "show": "HOT TAKE · {team} · FORM {form}" },
+      { "say": "I'll say it now: {team} are the champions in waiting.", "show": "HOT TAKE · {team} · FORM {form}" }
+    ] },
+    "hotTakeTrouble": { "who": "tamsin", "gesture": "open", "subject": "team", "when": "in the bottom two, three defeats or more in the last five", "ways": [
+      { "say": "Hot take. {team} are in real trouble.", "show": "HOT TAKE · {team} · FORM {form}" },
+      { "say": "I'm worried about {team}. Properly worried.", "show": "HOT TAKE · {team} · FORM {form}" }
+    ] },
+    "hotTakeUnlucky": { "who": "samir", "gesture": "point", "subject": "team", "when": "goal difference three places or more better than its place", "ways": [
+      { "say": "Here's mine. {team} have been unlucky. They'll climb.", "show": "HOT TAKE · {team} · {place} · GD {gd}" },
+      { "say": "The numbers love {team}. The table will catch up.", "show": "HOT TAKE · {team} · {place} · GD {gd}" }
+    ] },
+    "agreeSamir": { "who": "samir", "gesture": "nod", "when": "after Tamsin's hot take (seeded, or the fact backs her: the leader, or bottom)", "ways": [
+      { "say": "For once, the numbers agree with you." },
+      { "say": "I hate to say it, but you're right." },
+      { "say": "Yes. I've got nothing against that." }
+    ] },
+    "disagreeSamir": { "who": "samir", "gesture": "laugh", "when": "after Tamsin's hot take (seeded)", "ways": [
+      { "say": "The numbers say no. Strongly." },
+      { "say": "Bold. Wrong, but bold." },
+      { "say": "I'll save that clip for later." }
+    ] },
+    "agreeTamsin": { "who": "tamsin", "gesture": "nod", "when": "after Samir's hot take (seeded)", "ways": [
+      { "say": "I'll give you that one. They've looked better than their place." },
+      { "say": "Agreed. I've watched them. They're close." }
+    ] },
+    "disagreeTamsin": { "who": "tamsin", "gesture": "laugh", "when": "after Samir's hot take (seeded)", "ways": [
+      { "say": "Unlucky? You can't be unlucky every week." },
+      { "say": "Spreadsheets don't score goals, Samir." }
+    ] },
+
+    "clipAsk": { "who": "samir", "gesture": "point", "when": "a scorcher in the day's matches on screen (else the day's best goal)", "ways": [
+      { "say": "Did you see that one? Roll it.", "show": "DID YOU SEE THAT?" },
+      { "say": "We have to show this. Watch.", "show": "DID YOU SEE THAT?" },
+      { "say": "Goal of the day. Have a look.", "show": "DID YOU SEE THAT?" }
+    ] },
+    "clipReact": { "who": "tamsin", "gesture": "laugh", "ways": [
+      { "say": "What a hit. I'd have been nowhere near it.", "show": "{scorer} · {match}" },
+      { "say": "Keepers have nightmares about those.", "show": "{scorer} · {match}" },
+      { "say": "Oh, the poor keeper. I've been there. Usually as the one warming up.", "show": "{scorer} · {match}" },
+      { "say": "That's not a save you make. That's a save you pray for.", "show": "{scorer} · {match}" }
+    ] },
+    "clipNumbers": { "who": "samir", "gesture": "open", "ways": [
+      { "say": "Red hot ball. That's why it flew.", "show": "SCORCHER · {scorer} · {scorchers} THIS SEASON" },
+      { "say": "A scorcher. The ball was burning by then.", "show": "SCORCHER · {scorer} · {scorchers} THIS SEASON" },
+      { "say": "And it's not the first. Check the count.", "show": "SCORCHER · {scorer} · {scorchers} THIS SEASON" }
+    ] },
+
+    "moneyAsk": { "who": "tamsin", "gesture": "talk", "ways": [
+      { "say": "Let's talk money. Samir loves this bit.", "show": "THE MONEY" },
+      { "say": "Go on then, the money.", "show": "THE MONEY" }
+    ] },
+    "moneyCap": { "who": "samir", "gesture": "point", "subject": "team", "when": "the highest payroll, 95% of the cap or more", "ways": [
+      { "say": "{team} are right up against the cap.", "show": "{team} · PAYROLL {payroll} OF {cap}" },
+      { "say": "Nobody spends like {team}. Not a guilder to spare.", "show": "{team} · PAYROLL {payroll} OF {cap}" }
+    ] },
+    "moneyRoom": { "who": "samir", "gesture": "point", "subject": "team", "when": "the most room under the cap", "ways": [
+      { "say": "{team} have the most room under the cap. Interesting.", "show": "{team} · PAYROLL {payroll} OF {cap}" },
+      { "say": "If anyone can spend this summer, it's {team}.", "show": "{team} · PAYROLL {payroll} OF {cap}" }
+    ] },
+    "moneyBargain": { "who": "samir", "gesture": "open", "subject": "team", "when": "a top-five scorer on one of the league's smallest wages (the bottom half)", "ways": [
+      { "say": "Best bargain in the league? It plays for {team}.", "show": "{player} · {goals} GOALS · {wage} A SEASON" },
+      { "say": "Here's value. {team} are paying peanuts for goals.", "show": "{player} · {goals} GOALS · {wage} A SEASON" }
+    ] },
+    "moneyReply": { "who": "tamsin", "gesture": "talk", "ways": [
+      { "say": "Money doesn't save shots." },
+      { "say": "You can't buy a keeper's nerve." },
+      { "say": "In my day the backup keeper played for a pie and a lift home." }
+    ] },
+
+    "archiveAsk": { "who": "tamsin", "gesture": "talk", "when": "from season 2 (there's history)", "ways": [
+      { "say": "Samir, you've been in the archives again.", "show": "FROM THE ARCHIVES" },
+      { "say": "History lesson time. Go on.", "show": "FROM THE ARCHIVES" }
+    ] },
+    "archiveDynasty": { "who": "samir", "gesture": "point", "subject": "team", "when": "the most Cups, two or more", "ways": [
+      { "say": "{team} have won more Cups than anyone.", "show": "{team} · {cups} CUPS" },
+      { "say": "The Cup knows the way to {team} by now.", "show": "{team} · {cups} CUPS" }
+    ] },
+    "archiveDrought": { "who": "samir", "gesture": "open", "subject": "team", "when": "the longest wait since its last Cup, three seasons or more", "ways": [
+      { "say": "{team} haven't won the Cup in a long time.", "show": "{team} · LAST CUP SEASON {last}" },
+      { "say": "It's been years for {team}. Years.", "show": "{team} · LAST CUP SEASON {last}" }
+    ] },
+    "archiveNever": { "who": "samir", "gesture": "open", "subject": "team", "when": "never won the Cup (the team with the most seasons without one)", "ways": [
+      { "say": "{team} have never won the Cup. Not once.", "show": "{team} · NO CUPS YET" },
+      { "say": "Still waiting on a first Cup: {team}.", "show": "{team} · NO CUPS YET" }
+    ] },
+    "archiveReply": { "who": "tamsin", "gesture": "nod", "ways": [
+      { "say": "History doesn't kick the ball, Samir." },
+      { "say": "I remember those days. I've got the knees to prove it." },
+      { "say": "Every streak ends. Every one." }
+    ] },
+
+    "kidsAsk": { "who": "samir", "gesture": "open", "when": "from season 2 (rookies, under the rookie rule)", "ways": [
+      { "say": "Can we talk about the rookies?", "show": "THE KIDS" },
+      { "say": "Let's do the kids.", "show": "THE KIDS" }
+    ] },
+    "kidsRookie": { "who": "samir", "gesture": "point", "subject": "team", "when": "the best rookie so far (as the Spark is given)", "ways": [
+      { "say": "The best rookie so far is at {team}.", "show": "{player} · {position} · {stat}" },
+      { "say": "Keep an eye on the youngster at {team}.", "show": "{player} · {position} · {stat}" }
+    ] },
+    "kidsReply": { "who": "tamsin", "gesture": "laugh", "ways": [
+      { "say": "I was that age once. Terrifying." },
+      { "say": "Every team has to start one. Some get lucky." },
+      { "say": "Give them a season. Then we'll talk." }
+    ] },
+
+    "voteOpen": { "who": "tamsin", "gesture": "point", "when": "a poll open in the AUDIENCE pane (never its result: that's the League's, on UPDATES)", "ways": [
+      { "say": "There's a poll open. Go and vote.", "show": "AUDIENCE · {question}" },
+      { "say": "The League wants to hear from you. The poll's open.", "show": "AUDIENCE · {question}" }
+    ] },
+    "voteReply": { "who": "samir", "gesture": "nod", "ways": [
+      { "say": "I've voted. I'm not saying how." },
+      { "say": "More data. I love it." }
+    ] },
+
+    "picksAsk": { "who": "tamsin", "gesture": "talk", "ways": [
+      { "say": "Picks. The next big one.", "show": "PICKS · {home} v {away} · {when}" },
+      { "say": "Before we go: who wins the next big match?", "show": "PICKS · {home} v {away} · {when}" }
+    ] },
+    "pickRightTamsin": { "who": "tamsin", "gesture": "both", "when": "yesterday's pick won", "ways": [
+      { "say": "And can we note I was right yesterday?", "show": "TAMSIN'S PICK · {record}" },
+      { "say": "Told you yesterday. Just saying.", "show": "TAMSIN'S PICK · {record}" }
+    ] },
+    "pickWrongTamsin": { "who": "tamsin", "gesture": "laugh", "when": "yesterday's pick didn't win", "ways": [
+      { "say": "We don't talk about my pick yesterday.", "show": "TAMSIN'S PICK · {record}" },
+      { "say": "I got yesterday's wrong. Moving on.", "show": "TAMSIN'S PICK · {record}" }
+    ] },
+    "pickRightSamir": { "who": "samir", "gesture": "open", "when": "yesterday's pick won", "ways": [
+      { "say": "My pick came in yesterday. As expected.", "show": "SAMIR'S PICK · {record}" },
+      { "say": "Right again yesterday. The model works.", "show": "SAMIR'S PICK · {record}" }
+    ] },
+    "pickWrongSamir": { "who": "samir", "gesture": "talk", "when": "yesterday's pick didn't win", "ways": [
+      { "say": "Yesterday was a statistical outlier.", "show": "SAMIR'S PICK · {record}" },
+      { "say": "I was wrong yesterday. It happens. Rarely.", "show": "SAMIR'S PICK · {record}" }
+    ] },
+    "pickTamsin": { "who": "tamsin", "gesture": "point", "subject": "team", "when": "her pick: seeded, leaning to the side in better form", "ways": [
+      { "say": "I'm going with {team}.", "show": "TAMSIN PICKS {TEAM}" },
+      { "say": "{team}. I can feel it.", "show": "TAMSIN PICKS {TEAM}" }
+    ] },
+    "pickSamir": { "who": "samir", "gesture": "point", "subject": "team", "when": "his pick: the side higher in the table (seeded when level)", "ways": [
+      { "say": "The numbers say {team}.", "show": "SAMIR PICKS {TEAM}" },
+      { "say": "{team}, and it's not close.", "show": "SAMIR PICKS {TEAM}" }
+    ] },
+
+    "aheadChampions": { "who": "samir", "gesture": "point", "subject": "team", "when": "last season's champions (SEASON AHEAD)", "ways": [
+      { "say": "Last season belonged to {team}. Can they do it again?", "show": "SEASON {last} CHAMPIONS · {team}" },
+      { "say": "{team} are the champions. Everyone's chasing them now.", "show": "SEASON {last} CHAMPIONS · {team}" }
+    ] },
+    "aheadChampionsReply": { "who": "tamsin", "gesture": "talk", "ways": [
+      { "say": "Winning it once is hard. Twice is harder." },
+      { "say": "They'll have a target on their backs all season." }
+    ] },
+    "aheadPick": { "who": "tamsin", "gesture": "both", "subject": "team", "when": "her pick for the Cup: seeded among last season's top four", "ways": [
+      { "say": "My pick for the Cup this season: {team}.", "show": "TAMSIN'S CUP PICK · {TEAM}" },
+      { "say": "Write it down. {team} win the Cup.", "show": "TAMSIN'S CUP PICK · {TEAM}" }
+    ] },
+    "aheadPickReply": { "who": "samir", "gesture": "laugh", "ways": [
+      { "say": "We'll see about that in a week." },
+      { "say": "I've written it down. I'll be reading it back." }
+    ] },
+
+    "reviewChampions": { "who": "samir", "gesture": "both", "subject": "team", "when": "this season's champions (SEASON REVIEW)", "ways": [
+      { "say": "{team} are the champions. Deserved?", "show": "SEASON {season} CHAMPIONS · {team}" },
+      { "say": "So, {team} lift the Cup. How did we get here?", "show": "SEASON {season} CHAMPIONS · {team}" }
+    ] },
+    "reviewChampionsReply": { "who": "tamsin", "gesture": "nod", "ways": [
+      { "say": "Deserved. They held their nerve when it mattered." },
+      { "say": "Finals are about nerve, and they had it." }
+    ] },
+    "reviewPennant": { "who": "samir", "gesture": "open", "subject": "team", "when": "the Pennant (the regular season's top), when not the champions", "ways": [
+      { "say": "Best in the regular season, though, was {team}.", "show": "THE PENNANT · {team} · {points} PTS" },
+      { "say": "Don't forget {team}. Top of the table, Pennant winners.", "show": "THE PENNANT · {team} · {points} PTS" }
+    ] },
+    "reviewPicks": { "who": "tamsin", "gesture": "laugh", "when": "the season's picks, both kept (the counts on the pane)", "ways": [
+      { "say": "And the picks. Let's just say one of us did better.", "show": "PICKS · TAMSIN {tamsin} · SAMIR {samir}" },
+      { "say": "Our picks this season. I'd rather not talk about it.", "show": "PICKS · TAMSIN {tamsin} · SAMIR {samir}" }
+    ] },
+
+    "_linking": "The longer show (Tom, 2026-10-20: a 9-10 minute daily event at 18:00, three discussions an episode): bridges into a discussion (said by whoever opens it), the day's goals as a reel on the booth's screen with the pair reacting (never naming a scorer: the lower third does), and the ad break in the middle. A DRAFT for Tom to read.",
+    "talkIntoTamsin": { "who": "tamsin", "gesture": "open", "when": "before a discussion Tamsin opens (the second and third)", "ways": [
+      { "say": "Right. Something I've been meaning to ask you." },
+      { "say": "Can we talk about something bigger for a minute?" },
+      { "say": "Let me throw one at you." }
+    ] },
+    "talkIntoSamir": { "who": "samir", "gesture": "open", "when": "before a discussion Samir opens (the second and third)", "ways": [
+      { "say": "Can I change the subject? I've been thinking about something." },
+      { "say": "Here's one I've been chewing on all week." },
+      { "say": "Something else, while we've got you." }
+    ] },
+    "reelAsk": { "who": "samir", "gesture": "point", "when": "the day's goals, two or more, on the screen", "ways": [
+      { "say": "Let's look at the day's goals.", "show": "THE DAY'S GOALS" },
+      { "say": "Roll the goals. Every one from today.", "show": "THE DAY'S GOALS" },
+      { "say": "Time for the goals. Let's see them.", "show": "THE DAY'S GOALS" }
+    ] },
+    "reelReactTamsin": { "who": "tamsin", "gesture": "laugh", "when": "as a goal goes in on the screen (her turn)", "ways": [
+      { "say": "Oh, I like that one." },
+      { "say": "Lovely." },
+      { "say": "The keeper won't want to watch that again." },
+      { "say": "No chance. None." },
+      { "say": "Oh, that's cruel." },
+      { "say": "Ha! Look at that." }
+    ] },
+    "reelReactSamir": { "who": "samir", "gesture": "point", "when": "as a goal goes in on the screen (his turn)", "ways": [
+      { "say": "Clinical." },
+      { "say": "That's a lovely finish." },
+      { "say": "Watch the run before it. That's the goal, right there." },
+      { "say": "Too easy." },
+      { "say": "Oh, that's good." },
+      { "say": "And it's in." }
+    ] },
+    "reelEnd": { "who": "tamsin", "gesture": "nod", "when": "after the day's goals", "ways": [
+      { "say": "And that's the day's goals." },
+      { "say": "That's your lot. Good day for the strikers." }
+    ] },
+    "breakInto": { "who": "samir", "gesture": "talk", "when": "before the break in the middle", "ways": [
+      { "say": "We'll be right back.", "show": "OFF THE BALL · BACK AFTER THIS" },
+      { "say": "Quick break. Don't go anywhere.", "show": "OFF THE BALL · BACK AFTER THIS" },
+      { "say": "Stay with us. More after this.", "show": "OFF THE BALL · BACK AFTER THIS" }
+    ] },
+    "breakBack": { "who": "tamsin", "gesture": "open", "when": "after the break", "ways": [
+      { "say": "Welcome back to Off the Ball.", "show": "OFF THE BALL" },
+      { "say": "And we're back.", "show": "OFF THE BALL" },
+      { "say": "Right, where were we?", "show": "OFF THE BALL" }
+    ] },
+
+    "closeAsk": { "who": "samir", "gesture": "talk", "ways": [
+      { "say": "That's us for today.", "show": "OFF THE BALL" },
+      { "say": "And that's the show.", "show": "OFF THE BALL" },
+      { "say": "That's all we've got time for.", "show": "OFF THE BALL" }
+    ] },
+    "close": { "who": "tamsin", "gesture": "both", "ways": [
+      { "say": "Same time tomorrow. Bye for now.", "show": "OFF THE BALL · TOMORROW" },
+      { "say": "See you tomorrow. Enjoy the matches.", "show": "OFF THE BALL · TOMORROW" },
+      { "say": "Back tomorrow. Don't miss the next one.", "show": "OFF THE BALL · TOMORROW" }
+    ] },
+    "closeAhead": { "who": "tamsin", "gesture": "both", "ways": [
+      { "say": "Here we go again. See you tomorrow.", "show": "OFF THE BALL · TOMORROW" },
+      { "say": "A whole season to come. See you tomorrow.", "show": "OFF THE BALL · TOMORROW" }
+    ] },
+    "closeReview": { "who": "tamsin", "gesture": "nod", "ways": [
+      { "say": "That's the season. See you for the next one.", "show": "OFF THE BALL · NEXT SEASON" },
+      { "say": "Thanks for watching all season. See you next time.", "show": "OFF THE BALL · NEXT SEASON" }
+    ] }
+  },
+
+  "_themes": "Tom (2026-10-20): after the hook (a topic tied to what's really going on), a longer discussion on its theme: scripted back-and-forth, sports talk in Scorchball's own terms, never naming a team or player, so it's true in any season and voiced once. Each theme lists the topics that lead into it (its hooks) and its discussions; an episode's discussion is the hook's theme's next one not yet aired (none repeats until the theme's four have all had a turn), the order seeded by the league. Batch 1 (2026-10-20): the kids and the title race; the other six themes to come (form, scoring and keeping, money, history, the fans, luck and judgement).",
+  "themes": {
+    "kids": { "hooks": ["kids"], "discussions": ["kidsFeet", "kidsVeterans", "kidsDraft", "kidsKindling"] },
+    "titleRace": { "hooks": ["table"], "discussions": ["racePressure", "raceRun", "raceLastRound", "racePennant"] },
+    "form": { "hooks": ["hotTake"], "discussions": ["formClass", "formConfidence", "formBadRun", "formMomentum"] },
+    "scoring": { "hooks": ["clip"], "discussions": ["scoreScorcher", "scoreKeepers", "scoreFreeShot", "scoreShootout"] },
+    "money": { "hooks": ["money"], "discussions": ["moneyTheCap", "moneyContracts", "moneyMoving", "moneyBargains"] },
+    "history": { "hooks": ["archive"], "discussions": ["historyDynasties", "historyDroughts", "historyRivals", "historyLegends"] },
+    "fans": { "hooks": ["vote"], "discussions": ["fansGrounds", "fansHome", "fansWant", "fansAway"] },
+    "luck": { "hooks": ["picks"], "discussions": ["luckSkill", "luckUpsets", "luckNumbersMiss", "luckWatching"] }
+  },
+  "_discussions": "Each a title for the window's middle pane and its lines in order (needs \"poll\": dealt only once a poll has opened, as it says there are polls; Tom, 2026-10-21), each line who says it, its gesture and what's said (one clip each, fixed). tag: a delivery tag for the voice (ElevenLabs v3, e.g. laughs, sighs), never shown in the bubble; used sparingly. The middle pane shows the title through the discussion and clears for its last few lines.",
+  "discussions": {
+    "kidsFeet": { "title": "ROOKIES · FINDING THEIR FEET", "lines": [
+      { "who": "tamsin", "gesture": "open", "say": "So what actually makes a rookie work? Because some walk straight in and some just vanish." },
+      { "who": "samir", "gesture": "talk", "say": "The first five matches tell you a lot. The good ones touch the ball more each game. The others hide." },
+      { "who": "tamsin", "gesture": "nod", "say": "Hiding. That's exactly it. You can see it from the stands. They drift out to the touchline and wait." },
+      { "who": "samir", "gesture": "open", "say": "And in this league you can't hide for long. Five a side, the ball finds you whether you like it or not." },
+      { "who": "tamsin", "gesture": "talk", "say": "My first start, I was terrified of the first cross. Mind you, it was my only start that season." },
+      { "who": "samir", "gesture": "laugh", "tag": "laughs", "say": "Well, here's the good news. I'd bet a rookie's second half of the season usually beats their first." },
+      { "who": "tamsin", "gesture": "talk", "say": "Of course it is. They've stopped thinking and started playing." },
+      { "who": "samir", "gesture": "open", "say": "The rookie rule helps too. Every team has to start one, so nobody gets to sit them on the bench all year." },
+      { "who": "tamsin", "gesture": "laugh", "tag": "laughs", "say": "Some managers would, believe me. Lock them in the dugout with a clipboard." },
+      { "who": "samir", "gesture": "talk", "say": "And then they'd never learn. You learn the heat by playing in it. Nobody can teach you when to let go of the ball." },
+      { "who": "tamsin", "gesture": "nod", "say": "The burns. Every rookie burns it early. Holds it too long, looks up, and it's gone." },
+      { "who": "samir", "gesture": "point", "say": "I want to count that one day. I bet rookies burn it far more in their first few weeks." },
+      { "who": "tamsin", "gesture": "open", "say": "So be patient with them. That's my advice to every fan watching." },
+      { "who": "samir", "gesture": "nod", "say": "Patient, yes. But keep an eye on the touches. The numbers usually know first." }
+    ] },
+    "kidsVeterans": { "title": "ROOKIES · THE OLD HANDS", "lines": [
+      { "who": "samir", "gesture": "open", "say": "How much does an old head in the squad help a rookie? Genuinely, I'd love to know." },
+      { "who": "tamsin", "gesture": "talk", "say": "More than any number you've got. A good veteran talks the whole match. Where to stand, when to go." },
+      { "who": "samir", "gesture": "laugh", "tag": "laughs", "say": "I'll take that as a challenge. I'm sure there's a way to measure talking." },
+      { "who": "tamsin", "gesture": "talk", "say": "There isn't. I sat beside our first-choice keeper for six seasons. Best coaching I ever had, and none of it on the pitch." },
+      { "who": "samir", "gesture": "nod", "say": "Fine. My guess is rookies in front of an experienced keeper make fewer silly mistakes." },
+      { "who": "tamsin", "gesture": "point", "say": "Because the keeper sees everything. The keeper is the one shouting." },
+      { "who": "samir", "gesture": "open", "say": "There's another side, though. The veterans are the expensive ones. Under the cap, you can't keep them all." },
+      { "who": "tamsin", "gesture": "talk", "say": "That's the hard part. Do you pay the old pro, or give the minutes to the kid who'll be better next year?" },
+      { "who": "samir", "gesture": "talk", "say": "The smart clubs do both. One veteran per line of the team, and the youngsters around them." },
+      { "who": "tamsin", "gesture": "nod", "say": "And the veteran has to want it. Some are happy to teach. Some just want the ball." },
+      { "who": "samir", "gesture": "point", "say": "You can usually tell which by the assists. The teachers pass to the rookies. The others don't look." },
+      { "who": "tamsin", "gesture": "laugh", "say": "See, that one I believe. I've sat on the bench next to both kinds." },
+      { "who": "samir", "gesture": "open", "say": "So a rookie's best friend is a generous veteran." },
+      { "who": "tamsin", "gesture": "nod", "say": "And a keeper who never stops talking. Write that down." }
+    ] },
+    "kidsDraft": { "title": "THE DRAFT · A GAMBLE", "lines": [
+      { "who": "tamsin", "gesture": "open", "say": "Let's talk about the draft. Because to me it's a lottery, in every sense." },
+      { "who": "samir", "gesture": "talk", "say": "Well, the order is a lottery for the teams that miss the playoffs. After that, it's judgement." },
+      { "who": "tamsin", "gesture": "talk", "say": "Judgement on an eighteen-year-old you've seen play a handful of times." },
+      { "who": "samir", "gesture": "open", "say": "That's why the scouting matters. The reports are never quite right. Some kids are better than they look." },
+      { "who": "tamsin", "gesture": "nod", "say": "And some look great in a highlight and then can't do it on a wet Tuesday." },
+      { "who": "samir", "gesture": "point", "say": "There are usually two big names each year. The first pick tends to be good straight away." },
+      { "who": "tamsin", "gesture": "talk", "say": "Tends to be. But the best players I've seen weren't always the first names called." },
+      { "who": "samir", "gesture": "nod", "say": "That's fair. Potential takes years to show. Some players peak late, around twenty-eight, twenty-nine." },
+      { "who": "tamsin", "gesture": "open", "say": "So what should a team draft? The best player, or what they need?" },
+      { "who": "samir", "gesture": "talk", "say": "The best player, nearly always. Needs change. A good player is good wherever you put them." },
+      { "who": "tamsin", "gesture": "laugh", "tag": "laughs", "say": "Unless you draft three keepers. Ask me what it's like being the third one." },
+      { "who": "samir", "gesture": "laugh", "tag": "laughs", "say": "I've seen the photos. Lovely tracksuit, though." },
+      { "who": "tamsin", "gesture": "talk", "say": "Honestly, the draft is the most exciting night of the off-season. All that hope." },
+      { "who": "samir", "gesture": "nod", "say": "Hope, and a lot of spreadsheets. For me, anyway." }
+    ] },
+    "kidsKindling": { "title": "THE KINDLING LEAGUE", "lines": [
+      { "who": "samir", "gesture": "open", "say": "Can we spare a minute for the Kindling League? It doesn't get talked about enough." },
+      { "who": "tamsin", "gesture": "nod", "say": "The reserves. Where the draft picks go when they don't make the squad." },
+      { "who": "samir", "gesture": "talk", "say": "Exactly. Ten in a squad, and anyone who doesn't fit plays there instead. Out of sight." },
+      { "who": "tamsin", "gesture": "talk", "say": "It's a tough place to be. You were drafted, everyone was excited, and then you're playing in front of nobody." },
+      { "who": "samir", "gesture": "open", "say": "But it's not a dead end. A call-up can come any time there's a gap in the squad." },
+      { "who": "tamsin", "gesture": "point", "say": "And when it comes you have to be ready that day. Not next week. That day." },
+      { "who": "samir", "gesture": "talk", "say": "Some of them come up better than they went down. A season of playing every week helps." },
+      { "who": "tamsin", "gesture": "nod", "say": "Playing every week is everything. You don't get better watching from the bench." },
+      { "who": "samir", "gesture": "laugh", "say": "Says the backup keeper. You sat on the bench for whole seasons." },
+      { "who": "tamsin", "gesture": "laugh", "tag": "laughs", "say": "That's why I'm so wise. I had a lot of time to think." },
+      { "who": "samir", "gesture": "talk", "say": "Seriously, though, it's a good system. Nobody's career ends just because the squad was full." },
+      { "who": "tamsin", "gesture": "open", "say": "And for the fans, it's a reason to watch the call-ups. Every one has a story." },
+      { "who": "samir", "gesture": "nod", "say": "The kid nobody talked about, suddenly starting a big match." },
+      { "who": "tamsin", "gesture": "both", "say": "That's sport. That's why we love it." }
+    ] },
+
+    "racePressure": { "title": "THE TITLE RACE · PRESSURE AT THE TOP", "lines": [
+      { "who": "samir", "gesture": "open", "say": "Is it harder to lead the table or to chase it? I go back and forth on this." },
+      { "who": "tamsin", "gesture": "talk", "say": "Leading. Every time. When you're chasing, you've got nothing to lose." },
+      { "who": "samir", "gesture": "point", "say": "I'm not so sure. Leaders hold on more often than people think." },
+      { "who": "tamsin", "gesture": "talk", "say": "Hold on, maybe. But look at their faces. Every match feels like a final." },
+      { "who": "samir", "gesture": "nod", "say": "That's fair. I'd bet the pressure shows in the late goals, when it's tight." },
+      { "who": "tamsin", "gesture": "open", "say": "Because they're defending a lead in their heads before they've even got one." },
+      { "who": "samir", "gesture": "talk", "say": "And with three points for a win, one bad afternoon and you're caught." },
+      { "who": "tamsin", "gesture": "nod", "say": "A draw feels like a defeat when you're top. A draw feels like a win when you're chasing." },
+      { "who": "samir", "gesture": "laugh", "tag": "laughs", "say": "Same point, different feelings. I love that. It drives the model mad." },
+      { "who": "tamsin", "gesture": "talk", "say": "The model doesn't have a stomach. The players do." },
+      { "who": "samir", "gesture": "open", "say": "So what does a leader do? How do you play top of the table?" },
+      { "who": "tamsin", "gesture": "talk", "say": "You play the same way that got you there. The moment you change, they smell it." },
+      { "who": "samir", "gesture": "nod", "say": "I'll give you that. The teams that sit back usually get punished." },
+      { "who": "tamsin", "gesture": "point", "say": "Keep attacking. Keep the ball hot. Let them worry about you." }
+    ] },
+    "raceRun": { "title": "THE TITLE RACE · HOW A RUN STARTS", "lines": [
+      { "who": "tamsin", "gesture": "open", "say": "Every title team has a run somewhere. Five, six wins on the bounce. Where does it come from?" },
+      { "who": "samir", "gesture": "talk", "say": "Usually a scrappy win. Not a pretty one. A win they didn't deserve." },
+      { "who": "tamsin", "gesture": "laugh", "say": "The lucky ones. Ugly goal in the last minute, and suddenly they believe." },
+      { "who": "samir", "gesture": "nod", "say": "Belief is hard to measure, but you can see it after. The shots go up, the burns go down." },
+      { "who": "tamsin", "gesture": "talk", "say": "Because they stop panicking with the ball. They know a chance is coming." },
+      { "who": "samir", "gesture": "open", "say": "And momentum helps in the moment. A scorcher, and they're on top for the next minute and a half." },
+      { "who": "tamsin", "gesture": "point", "say": "You can hear it in the crowd. The whole ground leans forward." },
+      { "who": "samir", "gesture": "talk", "say": "But a run ends. They all do. The question is how they handle the first defeat." },
+      { "who": "tamsin", "gesture": "nod", "say": "The good teams lose one and then win the next. The others lose two, then three." },
+      { "who": "samir", "gesture": "point", "say": "The bounce back is the stat I watch. It says more about a team than the run itself." },
+      { "who": "tamsin", "gesture": "talk", "say": "Character. That's what you're measuring, whether you like the word or not." },
+      { "who": "samir", "gesture": "laugh", "tag": "laughs", "say": "I'll call it a bounce-back rate, and you can call it character." },
+      { "who": "tamsin", "gesture": "open", "say": "Either way, when a team starts winning ugly, watch out." },
+      { "who": "samir", "gesture": "nod", "say": "That's the one thing we agree on today." }
+    ] },
+    "raceLastRound": { "title": "THE TITLE RACE · THE LAST ROUND", "lines": [
+      { "who": "samir", "gesture": "open", "say": "Let's talk about the last round. All the matches at once. It's chaos." },
+      { "who": "tamsin", "gesture": "both", "say": "The best night of the season. The table changes every time someone scores." },
+      { "who": "samir", "gesture": "talk", "say": "The top four go through, so the fight for fourth can be the best story of the night." },
+      { "who": "tamsin", "gesture": "nod", "say": "And the players know the scores elsewhere. You can't stop the crowd telling them." },
+      { "who": "samir", "gesture": "point", "say": "That changes how they play. A team that only needs a draw starts sitting deeper." },
+      { "who": "tamsin", "gesture": "talk", "say": "And then concedes in the last minute. I've seen it a hundred times, from the best seat in the house. The bench." },
+      { "who": "samir", "gesture": "laugh", "say": "You keep saying a hundred. The league hasn't had a hundred last rounds." },
+      { "who": "tamsin", "gesture": "laugh", "tag": "laughs", "say": "It's a figure of speech, Samir. It feels like a hundred." },
+      { "who": "samir", "gesture": "talk", "say": "What I like is that nobody can rest anyone. Every point is real, right to the end." },
+      { "who": "tamsin", "gesture": "open", "say": "For the teams already out, it's pride. And they love spoiling someone's night." },
+      { "who": "samir", "gesture": "nod", "say": "Teams with nothing to play for often do better than you'd expect. Free legs." },
+      { "who": "tamsin", "gesture": "talk", "say": "No pressure, no fear. That's when players are at their best." },
+      { "who": "samir", "gesture": "open", "say": "So tune in for all of it. Flick between the grounds." },
+      { "who": "tamsin", "gesture": "both", "say": "And don't blink. It's over in twenty minutes a half." }
+    ] },
+    "racePennant": { "title": "THE PENNANT · WHAT IT'S WORTH", "lines": [
+      { "who": "tamsin", "gesture": "open", "say": "Here's one for you. Does the Pennant actually matter, or is it all about the Cup?" },
+      { "who": "samir", "gesture": "talk", "say": "It matters to me. Top of the table after a whole regular season. That's the best team, over time." },
+      { "who": "tamsin", "gesture": "talk", "say": "Over time, maybe. But nobody remembers who won the Pennant. They remember who lifted the Cup." },
+      { "who": "samir", "gesture": "point", "say": "That's a shame, because the Pennant is the fairer prize. The Cup is two matches. Anything can happen." },
+      { "who": "tamsin", "gesture": "nod", "say": "That's the beauty of it. Two matches, and the best team can still lose." },
+      { "who": "samir", "gesture": "open", "say": "It's a beauty if you're the underdog. Ask the team that topped the table and went out in the semifinal." },
+      { "who": "tamsin", "gesture": "talk", "say": "Then they should have won the semifinal. That's the job." },
+      { "who": "samir", "gesture": "laugh", "tag": "sighs", "say": "One bad half, a golden goal, a shootout. It's harsh." },
+      { "who": "tamsin", "gesture": "talk", "say": "Harsh is what makes it exciting. If the best team always won, why would anyone watch?" },
+      { "who": "samir", "gesture": "nod", "say": "I'll admit, finishing top does help. The top seed plays the fourth, and plays at home." },
+      { "who": "tamsin", "gesture": "point", "say": "Home matters in a semifinal. The noise alone is worth a goal." },
+      { "who": "samir", "gesture": "talk", "say": "So the Pennant buys you a better path to the Cup. That's what it's worth." },
+      { "who": "tamsin", "gesture": "open", "say": "Win both, and nobody can argue." },
+      { "who": "samir", "gesture": "nod", "say": "Win both, and I'll stop arguing. For a day." }
+    ] },
+
+    "formClass": { "title": "FORM · FORM OR CLASS?", "lines": [
+      { "who": "samir", "gesture": "open", "say": "Old question. Form or class? A hot team, or the team that's just better?" },
+      { "who": "tamsin", "gesture": "talk", "say": "Form, over a week. Class, over a season. Over one match, I'll take form every time." },
+      { "who": "samir", "gesture": "point", "say": "I'm not sure form is even real. Five results is a tiny sample. Flip a coin five times." },
+      { "who": "tamsin", "gesture": "laugh", "tag": "laughs", "say": "Flip a coin. Tell that to a team that's lost four in a row." },
+      { "who": "samir", "gesture": "talk", "say": "I'm serious. A good team with bad luck looks out of form. Then it turns, and everyone calls it a revival." },
+      { "who": "tamsin", "gesture": "nod", "say": "Some of it's luck, fine. But you can see a team that's sure of itself. They pass quicker. They want the ball." },
+      { "who": "samir", "gesture": "open", "say": "That I'll accept. Fewer burns, more shots. The ball moves before it gets too hot." },
+      { "who": "tamsin", "gesture": "talk", "say": "And class shows when things go wrong. A good side goes a goal down and doesn't panic." },
+      { "who": "samir", "gesture": "nod", "say": "Class is the goal difference. Form is the last five letters on the graphic." },
+      { "who": "tamsin", "gesture": "point", "say": "Lovely. Put that on a mug." },
+      { "who": "samir", "gesture": "laugh", "say": "I might. Off the Ball merchandise. Somebody has to fund the coffee." },
+      { "who": "tamsin", "gesture": "talk", "say": "So in a big match, who do you back? The hot side, or the good side?" },
+      { "who": "samir", "gesture": "talk", "say": "The good side. Every time. Form fades. Class stays." },
+      { "who": "tamsin", "gesture": "open", "say": "And I'd back the hot side. So one of us is right this week." }
+    ] },
+    "formConfidence": { "title": "FORM · CONFIDENCE", "lines": [
+      { "who": "tamsin", "gesture": "open", "say": "Let's talk about confidence. Because you can't put it in a spreadsheet, Samir." },
+      { "who": "samir", "gesture": "laugh", "tag": "laughs", "say": "Watch me. Shots from outside the arc. Confident players shoot from further out." },
+      { "who": "tamsin", "gesture": "nod", "say": "Fair, actually. A striker with no confidence passes when they should shoot." },
+      { "who": "samir", "gesture": "talk", "say": "Or holds it, waiting for the perfect chance, and the ball burns at their feet." },
+      { "who": "tamsin", "gesture": "talk", "say": "Keepers are the same. A confident keeper comes off their line. A nervous one stays rooted." },
+      { "who": "samir", "gesture": "open", "say": "And you? Were you a come-off-your-line keeper?" },
+      { "who": "tamsin", "gesture": "laugh", "say": "I was a come-off-the-bench keeper. Very different skill. Mostly stretching." },
+      { "who": "samir", "gesture": "laugh", "tag": "laughs", "say": "That's the most honest thing anyone's said on this show." },
+      { "who": "tamsin", "gesture": "talk", "say": "Seriously, though, it's fragile. One mistake in front of the home crowd, and it's gone for weeks." },
+      { "who": "samir", "gesture": "nod", "say": "And it comes back the same way. One good moment. A scorcher, a big save." },
+      { "who": "tamsin", "gesture": "open", "say": "That's why managers keep picking a struggling player. They're waiting for that one moment." },
+      { "who": "samir", "gesture": "talk", "say": "Or they've got nobody else. That happens too." },
+      { "who": "tamsin", "gesture": "point", "say": "Trust me, I know. Nobody else is how I got all three of my starts." },
+      { "who": "samir", "gesture": "nod", "say": "Three starts. I'll look them up. For research." }
+    ] },
+    "formBadRun": { "title": "FORM · A BAD RUN", "lines": [
+      { "who": "samir", "gesture": "open", "say": "How does a team get out of a bad run? Because some never do, and some are fine a week later." },
+      { "who": "tamsin", "gesture": "talk", "say": "Simple things. Keep the ball, take fewer risks, get a clean sheet. Then build." },
+      { "who": "samir", "gesture": "point", "say": "I'd bet the opposite, actually. Teams in a bad run hold the ball too long." },
+      { "who": "tamsin", "gesture": "nod", "say": "Because they're scared to lose it. And then they burn it anyway." },
+      { "who": "samir", "gesture": "talk", "say": "Exactly. The heat doesn't care how nervous you are. Forty seconds and it's gone." },
+      { "who": "tamsin", "gesture": "open", "say": "So what would you do, coach Samir?" },
+      { "who": "samir", "gesture": "laugh", "tag": "laughs", "say": "Coach Samir. I like that. Move the ball early. Shoot more. Make the other team do the worrying." },
+      { "who": "tamsin", "gesture": "talk", "say": "That's brave. When you're losing, nobody wants to be the one who shoots and misses." },
+      { "who": "samir", "gesture": "nod", "say": "That's the trap. Everybody hides, nobody shoots, and the run gets longer." },
+      { "who": "tamsin", "gesture": "talk", "say": "It's the dressing room too. A bad run is quiet. Nobody's talking." },
+      { "who": "samir", "gesture": "open", "say": "Who breaks the silence? The captain?" },
+      { "who": "tamsin", "gesture": "laugh", "say": "Usually the backup keeper with a terrible joke. It was my one job for years." },
+      { "who": "samir", "gesture": "talk", "say": "So the secret to ending a losing run is a bad joke from the bench." },
+      { "who": "tamsin", "gesture": "both", "say": "Don't laugh. It's worked more than once." }
+    ] },
+    "formMomentum": { "title": "MOMENTUM", "lines": [
+      { "who": "tamsin", "gesture": "open", "say": "Momentum. Everyone says it in every sport. But here it's actually a thing, isn't it?" },
+      { "who": "samir", "gesture": "point", "say": "It is. A scorcher, or the other team burning the ball, and you get it for a minute and a half." },
+      { "who": "tamsin", "gesture": "nod", "say": "And you can feel it. The players with momentum just look sharper." },
+      { "who": "samir", "gesture": "talk", "say": "They are sharper. That's the point. It's a real lift while it lasts." },
+      { "who": "tamsin", "gesture": "talk", "say": "What surprised me is how often it comes from burns. The other team gives it to you." },
+      { "who": "samir", "gesture": "open", "say": "Most of it does. About two in every three times. You earn it by making them hold the ball." },
+      { "who": "tamsin", "gesture": "point", "say": "So defending well is how you attack. Press them, make them wait, let the ball burn." },
+      { "who": "samir", "gesture": "nod", "say": "And then pounce in that minute and a half. The best teams know exactly when they've got it." },
+      { "who": "tamsin", "gesture": "talk", "say": "And it doesn't stack. Score another scorcher and it just starts again." },
+      { "who": "samir", "gesture": "open", "say": "Which stops runaway games. The other side can take it straight back." },
+      { "who": "tamsin", "gesture": "laugh", "tag": "laughs", "say": "I'd have loved momentum. Mind you, I'd have needed to be on the pitch." },
+      { "who": "samir", "gesture": "laugh", "say": "You'd have had bench momentum. A really good minute and a half of sitting." },
+      { "who": "tamsin", "gesture": "talk", "say": "Elite sitting. Ask anyone who played with me." },
+      { "who": "samir", "gesture": "nod", "say": "Next time momentum swings, watch the press. That's where it starts." }
+    ] },
+
+    "scoreScorcher": { "title": "THE SCORCHER", "lines": [
+      { "who": "samir", "gesture": "open", "say": "The scorcher. The thing that makes this sport different. Why do they go in so often?" },
+      { "who": "tamsin", "gesture": "talk", "say": "Because by then the ball is red hot and moving like nothing else. A keeper barely sees it." },
+      { "who": "samir", "gesture": "point", "say": "But you have to keep the ball long enough to get it hot. That's the risk." },
+      { "who": "tamsin", "gesture": "nod", "say": "Too long and it burns. Too short and it's just a normal shot. It's all about the timing." },
+      { "who": "samir", "gesture": "talk", "say": "It's the best gamble in sport. Hold it, hold it, and either it's a scorcher or you've given it away." },
+      { "who": "tamsin", "gesture": "open", "say": "As a keeper, you know when it's coming. The crowd tells you. They get louder and louder." },
+      { "who": "samir", "gesture": "laugh", "tag": "laughs", "say": "And you'd know that from the bench, would you?" },
+      { "who": "tamsin", "gesture": "laugh", "say": "The bench is very close to the crowd, Samir. I heard everything." },
+      { "who": "samir", "gesture": "talk", "say": "The best scorers are patient. They let the team build it and arrive at the right moment." },
+      { "who": "tamsin", "gesture": "nod", "say": "And they shoot first time. No touch. A touch is a moment wasted." },
+      { "who": "samir", "gesture": "open", "say": "A scorcher gives your team momentum too. So it's worth more than a goal." },
+      { "who": "tamsin", "gesture": "talk", "say": "And for the keeper, it's the one goal nobody blames you for." },
+      { "who": "samir", "gesture": "nod", "say": "Unless you'd stepped off your line to wave at the crowd." },
+      { "who": "tamsin", "gesture": "both", "say": "That was one time, and it was a lovely wave." }
+    ] },
+    "scoreKeepers": { "title": "KEEPERS · THE LONELIEST JOB", "lines": [
+      { "who": "tamsin", "gesture": "open", "say": "Right, I have to talk about keepers. It's the loneliest job in sport." },
+      { "who": "samir", "gesture": "talk", "say": "Lonelier than the backup keeper?" },
+      { "who": "tamsin", "gesture": "laugh", "tag": "laughs", "say": "No, fine, that's lonelier. The backup is lonely and cold." },
+      { "who": "samir", "gesture": "point", "say": "It's a strange job, though. The first-choice keeper only comes off if they're injured." },
+      { "who": "tamsin", "gesture": "nod", "say": "So the backup gets one or two starts a season. If that. You live on hope and stretching." },
+      { "who": "samir", "gesture": "open", "say": "What makes a great keeper? I'll say save percentage, and you'll say something else." },
+      { "who": "tamsin", "gesture": "talk", "say": "Nerve. Concentration. You might not touch the ball for minutes, then you have to be perfect." },
+      { "who": "samir", "gesture": "nod", "say": "Fine, but the good ones also start attacks. A long ball from the keeper can set up the next goal." },
+      { "who": "tamsin", "gesture": "point", "say": "The big kick. I loved those. Well, I loved watching other people do them." },
+      { "who": "samir", "gesture": "talk", "say": "And there's the Ironclad, of course. The award for the best keeper." },
+      { "who": "tamsin", "gesture": "talk", "say": "Which only counts keepers who face a lot of shots. So a busy keeper on a bad team can win it." },
+      { "who": "samir", "gesture": "open", "say": "That's the fairest thing about it. A keeper is judged by the shots they get, not the team in front." },
+      { "who": "tamsin", "gesture": "nod", "say": "Respect your keeper. They're the last one between you and a very long week." },
+      { "who": "samir", "gesture": "laugh", "say": "And respect the backup. Somebody has to keep the bench warm." }
+    ] },
+    "scoreFreeShot": { "title": "THE FREE SHOT", "lines": [
+      { "who": "samir", "gesture": "open", "say": "The free shot. One shooter, one keeper, from the mark. Who's the favourite?" },
+      { "who": "tamsin", "gesture": "talk", "say": "The shooter, everyone says. But it's colder than you think. The ball starts cool." },
+      { "who": "samir", "gesture": "point", "say": "That's the key bit. No heat, so no scorcher. It's just skill against skill." },
+      { "who": "tamsin", "gesture": "nod", "say": "And the shooter has all the pressure. The keeper is expected to lose." },
+      { "who": "samir", "gesture": "talk", "say": "It comes from a foul in the defending team's own zone. So it's a punishment." },
+      { "who": "tamsin", "gesture": "open", "say": "Which is why defenders hate giving them away. You let your keeper down." },
+      { "who": "samir", "gesture": "laugh", "tag": "laughs", "say": "Did you ever face one?" },
+      { "who": "tamsin", "gesture": "laugh", "say": "In training, about a thousand. In a real match, once. I went the wrong way, very confidently." },
+      { "who": "samir", "gesture": "talk", "say": "What's the trick for the keeper? Guess early, or wait?" },
+      { "who": "tamsin", "gesture": "talk", "say": "Wait as long as you can. Make the shooter decide first. Then trust your hands." },
+      { "who": "samir", "gesture": "nod", "say": "And for the shooter, pick a spot and never change your mind." },
+      { "who": "tamsin", "gesture": "point", "say": "The ones who change their mind halfway through the run-up. Those are the ones we save." },
+      { "who": "samir", "gesture": "open", "say": "Or the ones you dive the wrong way for, confidently." },
+      { "who": "tamsin", "gesture": "both", "say": "I'm never living that down on this show, am I?" }
+    ] },
+    "scoreShootout": { "title": "THE SHOOTOUT", "lines": [
+      { "who": "tamsin", "gesture": "open", "say": "The shootout. The cruellest way to lose a semifinal." },
+      { "who": "samir", "gesture": "talk", "say": "Level after the golden-goal overtime, and it's free shots. Three each, then sudden death." },
+      { "who": "tamsin", "gesture": "nod", "say": "And here's the twist. Every shootout shot starts hot. No cool ball this time." },
+      { "who": "samir", "gesture": "point", "say": "Which makes it harder for the keepers. Hot shots fly." },
+      { "who": "tamsin", "gesture": "talk", "say": "As a keeper, you know you'll probably lose. So every save feels like a miracle." },
+      { "who": "samir", "gesture": "open", "say": "Is a shootout luck? I think it's closer to luck than anything else in the game." },
+      { "who": "tamsin", "gesture": "talk", "say": "Luck and nerve. Watch the walk to the mark. You can tell who's going to miss." },
+      { "who": "samir", "gesture": "laugh", "tag": "laughs", "say": "You can tell? Go on, how?" },
+      { "who": "tamsin", "gesture": "point", "say": "The ones who look at the keeper are fine. The ones who look at the ball all the way are in trouble." },
+      { "who": "samir", "gesture": "nod", "say": "I'll check that. Genuinely. That's a good one." },
+      { "who": "tamsin", "gesture": "talk", "say": "And who takes the first shot matters. You want your coolest head first, to settle everyone." },
+      { "who": "samir", "gesture": "open", "say": "Some coaches save the best for last, for the big moment." },
+      { "who": "tamsin", "gesture": "laugh", "say": "Sometimes the shootout never gets to the last one. Then your best shooter never shoots." },
+      { "who": "samir", "gesture": "nod", "say": "Right. Settle the nerves early. I can't argue with that." }
+    ] },
+
+    "moneyTheCap": { "title": "THE MONEY · THE CAP", "lines": [
+      { "who": "samir", "gesture": "open", "say": "The salary cap. Twenty million guilders, the same for every club. I think it's the best rule in the league." },
+      { "who": "tamsin", "gesture": "laugh", "tag": "laughs", "say": "Of course you do. It's a number." },
+      { "who": "samir", "gesture": "talk", "say": "It's a number that keeps things fair. The richest club can't just buy every good player." },
+      { "who": "tamsin", "gesture": "nod", "say": "I'll give you that. A bad team doesn't have to stay bad forever." },
+      { "who": "samir", "gesture": "point", "say": "And it's a hard cap. No going over it, no tricks. Every guilder has to be spent well." },
+      { "who": "tamsin", "gesture": "talk", "say": "So who gets squeezed? Because somebody always does." },
+      { "who": "samir", "gesture": "talk", "say": "The middle of the squad. A club pays its stars, pays its rookies, and the rest have to take less." },
+      { "who": "tamsin", "gesture": "open", "say": "The backup keeper, for example. I know exactly where the squeeze lands." },
+      { "who": "samir", "gesture": "laugh", "say": "Were you ever on the big money?" },
+      { "who": "tamsin", "gesture": "laugh", "tag": "laughs", "say": "I was on the minimum and a parking space. Not a good one either." },
+      { "who": "samir", "gesture": "talk", "say": "The reserves are off the cap, which helps. A club can keep its young players in the Kindling League for free, more or less." },
+      { "who": "tamsin", "gesture": "nod", "say": "Smart. Grow your own, don't buy them." },
+      { "who": "samir", "gesture": "open", "say": "That's the cap's real lesson. The clubs that draft well don't need to spend." },
+      { "who": "tamsin", "gesture": "talk", "say": "And the clubs that spend badly have nowhere to hide." }
+    ] },
+    "moneyContracts": { "title": "THE MONEY · CONTRACTS", "lines": [
+      { "who": "tamsin", "gesture": "open", "say": "Contracts. How long should a club tie a player down for?" },
+      { "who": "samir", "gesture": "talk", "say": "Depends on age. Young players sign for three or four seasons. Over thirty, one or two." },
+      { "who": "tamsin", "gesture": "nod", "say": "Because nobody wants to pay a thirty-five-year-old for four more years." },
+      { "who": "samir", "gesture": "point", "say": "Unless they're a keeper. Keepers play on longer. They retire a couple of years after everyone else." },
+      { "who": "tamsin", "gesture": "both", "say": "Finally, some respect for keepers. We're the fine wine of the squad." },
+      { "who": "samir", "gesture": "laugh", "tag": "laughs", "say": "Some of you. Others are more like the vinegar." },
+      { "who": "tamsin", "gesture": "laugh", "say": "Rude. Accurate, but rude." },
+      { "who": "samir", "gesture": "talk", "say": "Rookies are interesting. Three-season deals, paid by where they were picked. The first pick earns most." },
+      { "who": "tamsin", "gesture": "talk", "say": "And if the first pick turns out to be a dud, that's a lot of money on the bench." },
+      { "who": "samir", "gesture": "nod", "say": "But a late pick who turns out to be brilliant is the best deal in the game. Three cheap seasons." },
+      { "who": "tamsin", "gesture": "open", "say": "And then they want paying. Properly." },
+      { "who": "samir", "gesture": "point", "say": "That's when the cap bites. Pay your rising star, or let them go?" },
+      { "who": "tamsin", "gesture": "talk", "say": "Pay them. You never regret keeping a good player. You always regret losing one." },
+      { "who": "samir", "gesture": "nod", "say": "Unless paying them means losing two others. It's never simple." }
+    ] },
+    "moneyMoving": { "title": "THE MONEY · WHY PLAYERS MOVE", "lines": [
+      { "who": "samir", "gesture": "open", "say": "Why do players move clubs? It's not always the money, you know." },
+      { "who": "tamsin", "gesture": "talk", "say": "It's mostly the money. Let's be honest." },
+      { "who": "samir", "gesture": "point", "say": "For the young ones, yes, mostly. But older players care more about winning. They want a medal before they finish." },
+      { "who": "tamsin", "gesture": "nod", "say": "That's true. Late in your career you start counting what you've won. Or in my case, what I've watched other people win." },
+      { "who": "samir", "gesture": "laugh", "tag": "laughs", "say": "You've got a lot of medals for watching, though." },
+      { "who": "tamsin", "gesture": "laugh", "say": "I've got a lot of photos in the background of other people's medals." },
+      { "who": "samir", "gesture": "talk", "say": "And then there's home. Some players just want to play for their region." },
+      { "who": "tamsin", "gesture": "open", "say": "That one I understand. Playing in front of your own people. Nothing like it." },
+      { "who": "samir", "gesture": "nod", "say": "Every region has two clubs, so home is never far. But only two clubs can be home." },
+      { "who": "tamsin", "gesture": "talk", "say": "And loyalty counts too. Players often go back to the club they know." },
+      { "who": "samir", "gesture": "open", "say": "The thing is, you never know which one a player cares about. Money, winning or home. It's a secret." },
+      { "who": "tamsin", "gesture": "point", "say": "Which is why every signing is a surprise. You think you know, and then they go somewhere else." },
+      { "who": "samir", "gesture": "talk", "say": "It's my favourite part of the off-season. Watching the moves board and guessing why." },
+      { "who": "tamsin", "gesture": "nod", "say": "Mine is the draft. But I'll watch the moves with you. Bring snacks." }
+    ] },
+    "moneyBargains": { "title": "THE MONEY · BARGAINS", "lines": [
+      { "who": "tamsin", "gesture": "open", "say": "What's a bargain, Samir? Give me your definition." },
+      { "who": "samir", "gesture": "talk", "say": "A player whose goals or saves are worth far more than their wage. Value for money." },
+      { "who": "tamsin", "gesture": "nod", "say": "So a cheap player who wins you matches." },
+      { "who": "samir", "gesture": "point", "say": "Exactly. And under a cap, bargains win titles. Every guilder you save goes on someone else." },
+      { "who": "tamsin", "gesture": "talk", "say": "Where do you find them? Because if it were easy, everyone would do it." },
+      { "who": "samir", "gesture": "open", "say": "Late draft picks. Players the scouts underrated. Older players who want to win more than they want money." },
+      { "who": "tamsin", "gesture": "nod", "say": "The old pro on a cheap deal, chasing one last medal. I love that player." },
+      { "who": "samir", "gesture": "talk", "say": "The opposite is the overpaid star. A big wage, and a bad season, and the club is stuck with it." },
+      { "who": "tamsin", "gesture": "laugh", "tag": "laughs", "say": "Nobody ever called me overpaid. Underused, maybe." },
+      { "who": "samir", "gesture": "laugh", "say": "Per minute played, you might have been the most expensive keeper in history." },
+      { "who": "tamsin", "gesture": "point", "say": "That's a horrible statistic and I want you to delete it." },
+      { "who": "samir", "gesture": "talk", "say": "Seriously, though, the best clubs mix them. A couple of stars, and a lot of good value around them." },
+      { "who": "tamsin", "gesture": "nod", "say": "And a keeper who doesn't cost much and never complains." },
+      { "who": "samir", "gesture": "open", "say": "So, a backup keeper." }
+    ] },
+
+    "historyDynasties": { "title": "HISTORY · DYNASTIES", "lines": [
+      { "who": "samir", "gesture": "open", "say": "Dynasties. Is it good for a league when one club keeps winning?" },
+      { "who": "tamsin", "gesture": "talk", "say": "For a while, yes. Everyone needs a team to hate. It gives the season a story." },
+      { "who": "samir", "gesture": "nod", "say": "A villain. Every story needs one." },
+      { "who": "tamsin", "gesture": "laugh", "tag": "laughs", "say": "And everyone loves it when the villain finally loses." },
+      { "who": "samir", "gesture": "point", "say": "The rules don't make a dynasty easy, though. The cap, the rookie rule, the draft lottery for the weaker teams." },
+      { "who": "tamsin", "gesture": "talk", "say": "So when a club does win again and again, that's really something. They've earned it." },
+      { "who": "samir", "gesture": "open", "say": "What keeps one going? Good drafting, mostly. And keeping the core together." },
+      { "who": "tamsin", "gesture": "talk", "say": "And a dressing room that doesn't get bored. Winning is hard. Winning again is harder." },
+      { "who": "samir", "gesture": "nod", "say": "Every dynasty ends the same way. The stars get old, the money runs out, someone hungrier comes along." },
+      { "who": "tamsin", "gesture": "open", "say": "The hungrier ones are always the best to watch." },
+      { "who": "samir", "gesture": "talk", "say": "I keep track of the Cups by club. When one starts pulling away, it's worth noticing." },
+      { "who": "tamsin", "gesture": "point", "say": "I keep track of how many I didn't play in. It's all of them." },
+      { "who": "samir", "gesture": "laugh", "say": "That's a dynasty of its own." },
+      { "who": "tamsin", "gesture": "both", "say": "Undefeated. Never conceded in a final. Never played in one, either." }
+    ] },
+    "historyDroughts": { "title": "HISTORY · DROUGHTS", "lines": [
+      { "who": "tamsin", "gesture": "open", "say": "Let's talk about droughts. The long wait for a Cup." },
+      { "who": "samir", "gesture": "talk", "say": "Every season a club goes without one, the pressure gets heavier." },
+      { "who": "tamsin", "gesture": "nod", "say": "The fans feel it most. Every year starts with hope and ends with \"next year\"." },
+      { "who": "samir", "gesture": "point", "say": "But the rules help. The worse teams get the better draft chances. A drought shouldn't last forever." },
+      { "who": "tamsin", "gesture": "talk", "say": "Shouldn't. But some clubs keep finding new ways to miss out." },
+      { "who": "samir", "gesture": "open", "say": "Fourth place and out in the semifinal. That's the cruellest one. Close every year, never quite there." },
+      { "who": "tamsin", "gesture": "laugh", "tag": "sighs", "say": "I was close every year too. Close to getting a game." },
+      { "who": "samir", "gesture": "laugh", "say": "Did you ever think about moving clubs? To get more starts?" },
+      { "who": "tamsin", "gesture": "talk", "say": "Every season. Then I'd see the other club's backup keeper, and they looked just as cold as me." },
+      { "who": "samir", "gesture": "nod", "say": "A drought of your own. Sorry." },
+      { "who": "tamsin", "gesture": "open", "say": "But when a drought ends, it's the best day in sport. Nothing beats it." },
+      { "who": "samir", "gesture": "talk", "say": "The longer the wait, the louder the ground. You can almost measure it." },
+      { "who": "tamsin", "gesture": "point", "say": "Don't measure it. Just enjoy it. For once." },
+      { "who": "samir", "gesture": "nod", "say": "Fine. For once. But I'll be counting the seasons." }
+    ] },
+    "historyRivals": { "title": "HISTORY · RIVALRIES", "lines": [
+      { "who": "samir", "gesture": "open", "say": "Rivalries. Where do they come from in a league this young?" },
+      { "who": "tamsin", "gesture": "talk", "say": "From the big matches. Beat someone in a semifinal, and they remember it for years." },
+      { "who": "samir", "gesture": "nod", "say": "And from geography. Every region has two clubs. Neighbours never really like each other." },
+      { "who": "tamsin", "gesture": "laugh", "tag": "laughs", "say": "Ask anyone from the Gullcoast which of our two clubs they support. Then stand back." },
+      { "who": "samir", "gesture": "point", "say": "Head-to-head records start to matter too. Fans know them by heart." },
+      { "who": "tamsin", "gesture": "talk", "say": "And the players feel it. They want to win those ones more. You can see it in the tackles." },
+      { "who": "samir", "gesture": "open", "say": "I'll be honest, the numbers don't show it much. A big rivalry is still just three points." },
+      { "who": "tamsin", "gesture": "talk", "say": "Three points, and bragging rights for a whole season. That's worth more than three points." },
+      { "who": "samir", "gesture": "nod", "say": "Fine. Three points and the bragging. I'll add a column." },
+      { "who": "tamsin", "gesture": "open", "say": "A rivalry needs both sides to be good, though. If one is always losing, it's not a rivalry." },
+      { "who": "samir", "gesture": "talk", "say": "That's true. It's a rivalry when you don't know who'll win." },
+      { "who": "tamsin", "gesture": "point", "say": "And a grudge when you do." },
+      { "who": "samir", "gesture": "laugh", "say": "That's very good. Did you write that down beforehand?" },
+      { "who": "tamsin", "gesture": "both", "say": "Years ago. On the bench. I had a lot of time." }
+    ] },
+    "historyLegends": { "title": "HISTORY · LEGENDS", "lines": [
+      { "who": "tamsin", "gesture": "open", "say": "What makes a legend? Not just a good player. A legend." },
+      { "who": "samir", "gesture": "talk", "say": "Numbers over a long career. Goals, saves, seasons. And awards. The Ember Boot, the Blaze." },
+      { "who": "tamsin", "gesture": "nod", "say": "Numbers, yes. But it's moments too. The goal in the final. The save everyone remembers." },
+      { "who": "samir", "gesture": "point", "say": "I'd say both. A legend has the numbers and the moment. One without the other isn't enough." },
+      { "who": "tamsin", "gesture": "talk", "say": "And loyalty helps. One club for a whole career. Fans never forget that." },
+      { "who": "samir", "gesture": "open", "say": "Rarer than you'd think, under a cap. Most good players move at least once." },
+      { "who": "tamsin", "gesture": "laugh", "tag": "laughs", "say": "I stayed at one club my whole career. Nobody else asked." },
+      { "who": "samir", "gesture": "laugh", "say": "That's loyalty, technically. I'll count it." },
+      { "who": "tamsin", "gesture": "talk", "say": "The record book is where you look. Every record is a legend's name waiting to be beaten." },
+      { "who": "samir", "gesture": "nod", "say": "And every record gets beaten eventually. That's the fun of it." },
+      { "who": "tamsin", "gesture": "open", "say": "The farewells get me, though. A great player's last season. You want it to end well." },
+      { "who": "samir", "gesture": "talk", "say": "It's a young league. The real legends are probably playing right now. We just don't know it yet." },
+      { "who": "tamsin", "gesture": "point", "say": "So watch closely. In ten seasons you'll say you saw them." },
+      { "who": "samir", "gesture": "nod", "say": "And I'll have the numbers to prove it." }
+    ] },
+
+    "fansGrounds": { "title": "THE FANS · THE GROUNDS", "lines": [
+      { "who": "tamsin", "gesture": "point", "say": "Look at that view. Every ground has its own feel, doesn't it?" },
+      { "who": "samir", "gesture": "nod", "say": "Same size pitch, same rules, and every one is different. The stands, the noise, the light." },
+      { "who": "tamsin", "gesture": "talk", "say": "The night matches are the best. Floodlights on, the turf glowing. It feels bigger somehow." },
+      { "who": "samir", "gesture": "open", "say": "And the early ones are strange. Half-empty stands, people still arriving with their breakfast." },
+      { "who": "tamsin", "gesture": "laugh", "tag": "laughs", "say": "As a backup keeper, I knew every ground's bench intimately. Which ones were warm, which ones had splinters." },
+      { "who": "samir", "gesture": "laugh", "say": "You should write a guide. The league's benches, ranked." },
+      { "who": "tamsin", "gesture": "talk", "say": "I'd sell more copies than your stats book." },
+      { "who": "samir", "gesture": "talk", "say": "Seriously, though, people forget the groundstaff. Somebody mows that, paints the lines, fixes the nets." },
+      { "who": "tamsin", "gesture": "nod", "say": "The best people in the game, the groundstaff. They always had a cup of tea for the backup keeper." },
+      { "who": "samir", "gesture": "open", "say": "Your name on the turf, painted fresh before every home match. That's pride." },
+      { "who": "tamsin", "gesture": "talk", "say": "When you walk out and see it, it gets you. Even when you're only walking to the bench." },
+      { "who": "samir", "gesture": "point", "say": "If you've never been, go to a match. The channel's good, but it's not the same as the stands." },
+      { "who": "tamsin", "gesture": "nod", "say": "Says the man who sits in a booth with a window." },
+      { "who": "samir", "gesture": "laugh", "tag": "laughs", "say": "It's a very good window. Best seat in the house." }
+    ] },
+    "fansHome": { "title": "THE FANS · HOME ADVANTAGE", "lines": [
+      { "who": "samir", "gesture": "open", "say": "Home advantage. It's real in this league. Teams play better at home, and you can see it in the results." },
+      { "who": "tamsin", "gesture": "talk", "say": "Of course they do. Your own bed, your own dressing room, your own fans." },
+      { "who": "samir", "gesture": "nod", "say": "Most of the crowd is home fans. The away end is small. You can hear the difference." },
+      { "who": "tamsin", "gesture": "point", "say": "The boos when the away side gives away a foul. That gets under your skin." },
+      { "who": "samir", "gesture": "talk", "say": "And it matters most in the playoffs. The higher seed is at home in the semifinal and the final." },
+      { "who": "tamsin", "gesture": "open", "say": "Which is why finishing top matters. You want that last match in your own ground." },
+      { "who": "samir", "gesture": "laugh", "say": "Did you play better at home?" },
+      { "who": "tamsin", "gesture": "laugh", "tag": "laughs", "say": "I sat better at home. Much more comfortable bench." },
+      { "who": "samir", "gesture": "talk", "say": "Some teams are much better at home than away. You'd think it would even out, but it doesn't always." },
+      { "who": "tamsin", "gesture": "nod", "say": "Some squads travel badly. Long trips, unfamiliar pitch, a hostile crowd." },
+      { "who": "samir", "gesture": "open", "say": "The great teams win anywhere. That's the test, for me. Their away record." },
+      { "who": "tamsin", "gesture": "talk", "say": "Agreed. Anyone can win at home. Champions win away." },
+      { "who": "samir", "gesture": "nod", "say": "And they do it in front of the boos." },
+      { "who": "tamsin", "gesture": "both", "say": "Especially in front of the boos. That's the best feeling there is." }
+    ] },
+    "fansWant": { "title": "THE FANS · WHAT FANS WANT", "needs": "poll", "lines": [
+      { "who": "tamsin", "gesture": "open", "say": "What do fans actually want from a league? Goals? Drama? A winning team?" },
+      { "who": "samir", "gesture": "talk", "say": "All three, but mostly they want to believe. That their team has a chance, every season." },
+      { "who": "tamsin", "gesture": "nod", "say": "Hope. That's what keeps you watching. Even in a bad year." },
+      { "who": "samir", "gesture": "point", "say": "And this league does listen. There are polls, and you can send a note to the League." },
+      { "who": "tamsin", "gesture": "talk", "say": "I sent a note once. Asked for heated benches. Still waiting." },
+      { "who": "samir", "gesture": "laugh", "tag": "laughs", "say": "Maybe if more people asked." },
+      { "who": "tamsin", "gesture": "point", "say": "Everyone watching, please ask for heated benches. For the backup keepers." },
+      { "who": "samir", "gesture": "talk", "say": "Seriously, the League does change things, slowly. The rules aren't set in stone." },
+      { "who": "tamsin", "gesture": "open", "say": "Slowly is right. You don't want a league that changes every week." },
+      { "who": "samir", "gesture": "nod", "say": "No. Fans want to know the game they love will be the game next season too." },
+      { "who": "tamsin", "gesture": "talk", "say": "And they want players they can get attached to. A favourite. Somebody to follow." },
+      { "who": "samir", "gesture": "open", "say": "That's why the chronicle matters. Every season, every career, all kept." },
+      { "who": "tamsin", "gesture": "nod", "say": "Even mine. All three starts of it." },
+      { "who": "samir", "gesture": "laugh", "say": "Preserved forever. You're welcome." }
+    ] },
+    "fansAway": { "title": "THE FANS · AWAY DAYS", "lines": [
+      { "who": "samir", "gesture": "open", "say": "Let's hear it for the away fans. A small end, a long way from home, and they're always loud." },
+      { "who": "tamsin", "gesture": "nod", "say": "The best fans in any ground. They chose to be there. Nobody travels to be quiet." },
+      { "who": "samir", "gesture": "talk", "say": "Their cheer for an away goal is my favourite sound in the game. Small, but fierce." },
+      { "who": "tamsin", "gesture": "point", "say": "And the home crowd booing underneath it. That's the sound of a good away day." },
+      { "who": "samir", "gesture": "laugh", "say": "You sound like you were an away fan." },
+      { "who": "tamsin", "gesture": "laugh", "tag": "laughs", "say": "I was practically an away fan. The bench is closer to them than the pitch." },
+      { "who": "samir", "gesture": "talk", "say": "The trips are long, too. From the Kettle to Sunreach is a proper journey." },
+      { "who": "tamsin", "gesture": "talk", "say": "And from the Gullcoast to anywhere. We're out on the edge. Bring a coat." },
+      { "who": "samir", "gesture": "open", "say": "Does it matter to the players, seeing their own fans in an away ground?" },
+      { "who": "tamsin", "gesture": "nod", "say": "Hugely. You find them at the end and clap them. You know what it cost them to come." },
+      { "who": "samir", "gesture": "talk", "say": "That's one thing numbers can't capture. The clap to the away end." },
+      { "who": "tamsin", "gesture": "open", "say": "Write that down, Samir. You've finally admitted it." },
+      { "who": "samir", "gesture": "nod", "say": "One thing. Just the one." },
+      { "who": "tamsin", "gesture": "both", "say": "It's a start. To all the away fans watching: thank you." }
+    ] },
+
+    "luckSkill": { "title": "LUCK OR SKILL?", "lines": [
+      { "who": "samir", "gesture": "open", "say": "Here's the big one. How much of this sport is luck?" },
+      { "who": "tamsin", "gesture": "talk", "say": "Less than you think. Good teams make their own luck." },
+      { "who": "samir", "gesture": "point", "say": "Over a season, yes. The table is mostly fair. But one match? Plenty of luck in one match." },
+      { "who": "tamsin", "gesture": "nod", "say": "A deflection, a post, a keeper slipping. One moment and it's gone." },
+      { "who": "samir", "gesture": "talk", "say": "And knockouts are even luckier. One bad half and a whole season is over." },
+      { "who": "tamsin", "gesture": "open", "say": "But that's why the best teams win so often anyway. They give luck fewer chances." },
+      { "who": "samir", "gesture": "nod", "say": "That's a good way to put it. Keep the ball, take the good shots, cut out the silly mistakes." },
+      { "who": "tamsin", "gesture": "talk", "say": "I'll tell you where luck comes in. Injuries. One injury to the wrong player and your season changes." },
+      { "who": "samir", "gesture": "point", "say": "That's true. And the draft lottery. A ball drops, and a whole club's future changes." },
+      { "who": "tamsin", "gesture": "laugh", "tag": "laughs", "say": "My whole career was luck. Bad luck. The keeper in front of me never got injured." },
+      { "who": "samir", "gesture": "laugh", "say": "That's not luck. That's a very healthy keeper." },
+      { "who": "tamsin", "gesture": "talk", "say": "I used to leave banana skins by the dugout. Nothing." },
+      { "who": "samir", "gesture": "open", "say": "So, skill over a season, luck over a match. Can we agree on that?" },
+      { "who": "tamsin", "gesture": "nod", "say": "We can. Write it down before I change my mind." }
+    ] },
+    "luckUpsets": { "title": "UPSETS", "lines": [
+      { "who": "tamsin", "gesture": "open", "say": "Upsets. The best thing in sport. When the bottom team beats the top one." },
+      { "who": "samir", "gesture": "talk", "say": "They happen more than people think. The gap between the best and worst teams isn't that big." },
+      { "who": "tamsin", "gesture": "nod", "say": "Five a side. Get one hot shot right, and anybody can beat anybody." },
+      { "who": "samir", "gesture": "point", "say": "And the rookie rule levels it out a bit. Every team has a first-season player on the pitch." },
+      { "who": "tamsin", "gesture": "talk", "say": "What makes an upset, though? Usually it's the favourite getting comfortable." },
+      { "who": "samir", "gesture": "open", "say": "Or the underdog's keeper having the game of their life." },
+      { "who": "tamsin", "gesture": "both", "say": "Yes! The keeper's day. That's the best upset there is." },
+      { "who": "samir", "gesture": "laugh", "tag": "laughs", "say": "Did you ever have one of those?" },
+      { "who": "tamsin", "gesture": "laugh", "say": "I had a very good warm-up once. Nobody saw it, but it was something special." },
+      { "who": "samir", "gesture": "talk", "say": "The favourites hate these matches. Nothing to gain and everything to lose." },
+      { "who": "tamsin", "gesture": "nod", "say": "And the underdogs love them. No pressure at all. Just go out and swing." },
+      { "who": "samir", "gesture": "open", "say": "It's why I never make my picks too confident. Every so often the table means nothing." },
+      { "who": "tamsin", "gesture": "point", "say": "That's why you watch. Not because you know what will happen. Because you don't." },
+      { "who": "samir", "gesture": "nod", "say": "Annoying for a numbers man. Wonderful for a fan." }
+    ] },
+    "luckNumbersMiss": { "title": "WHAT THE NUMBERS MISS", "lines": [
+      { "who": "tamsin", "gesture": "open", "say": "Right, Samir, I want you to admit something today. What do your numbers miss?" },
+      { "who": "samir", "gesture": "laugh", "tag": "laughs", "say": "Very little. But fine. They miss the things that never happen." },
+      { "who": "tamsin", "gesture": "nod", "say": "Go on." },
+      { "who": "samir", "gesture": "talk", "say": "A defender who's always in the right place. The striker never gets the shot off, so there's nothing to count." },
+      { "who": "tamsin", "gesture": "point", "say": "Exactly. The best defending is invisible. You only notice it when it's gone." },
+      { "who": "samir", "gesture": "talk", "say": "And the pass before the assist. The one that opened it up. Nobody counts that one." },
+      { "who": "tamsin", "gesture": "talk", "say": "And the talking. The keeper organising everyone. Not a single number for it." },
+      { "who": "samir", "gesture": "open", "say": "What about the bench? Is there anything a backup keeper does that I'm missing?" },
+      { "who": "tamsin", "gesture": "laugh", "say": "Morale. Jokes. Holding the first-choice keeper's water bottle with great dignity." },
+      { "who": "samir", "gesture": "laugh", "say": "I'll add a column for dignity." },
+      { "who": "tamsin", "gesture": "talk", "say": "Seriously, though, your numbers are good at telling me what happened. Not why." },
+      { "who": "samir", "gesture": "nod", "say": "That's fair. The why is your job. The what is mine." },
+      { "who": "tamsin", "gesture": "open", "say": "So we need each other. Don't tell anyone." },
+      { "who": "samir", "gesture": "nod", "say": "Too late. We're on air." }
+    ] },
+    "luckWatching": { "title": "WATCHING OR COUNTING?", "lines": [
+      { "who": "samir", "gesture": "open", "say": "Our oldest argument. Do you learn more by watching a match or by counting it?" },
+      { "who": "tamsin", "gesture": "talk", "say": "Watching. You see the whole thing. The shape, the moods, who's tired." },
+      { "who": "samir", "gesture": "talk", "say": "But your eyes lie. You remember the scorcher and forget the twenty passes that went nowhere." },
+      { "who": "tamsin", "gesture": "nod", "say": "My eyes have watched more matches than anyone. From very close to the touchline." },
+      { "who": "samir", "gesture": "laugh", "tag": "laughs", "say": "From a seat that never moved." },
+      { "who": "tamsin", "gesture": "laugh", "say": "It didn't need to move. I had the best view in the ground for years." },
+      { "who": "samir", "gesture": "point", "say": "Here's my case. A player can look brilliant for ten minutes and do nothing for thirty. The numbers catch that." },
+      { "who": "tamsin", "gesture": "talk", "say": "And here's mine. A player can have quiet numbers and be the reason the team wins. The eyes catch that." },
+      { "who": "samir", "gesture": "nod", "say": "You've been saving that one." },
+      { "who": "tamsin", "gesture": "open", "say": "For about ten seasons, yes." },
+      { "who": "samir", "gesture": "talk", "say": "The best scouts do both. They watch, and then they check." },
+      { "who": "tamsin", "gesture": "nod", "say": "Watch first. Then check. In that order." },
+      { "who": "samir", "gesture": "open", "say": "Count first, then watch. In that order." },
+      { "who": "tamsin", "gesture": "both", "say": "And that's why there are two of us. See you next time." }
+    ] }
+  },
+
+  "_interjections": "Short back-channel reactions (Tom's plan, 2026-10-20), so a long line isn't heard in silence: the listener's, played softly (interjectionGain in the build's settings) under the other's line when it's longer than about 70 characters, now and then (seeded, at most one a line, never in the first or last second of it), and in the hooks' replies too. Each one clip; dealt without repeats as the desk's lines are.",
+  "interjections": {
+    "tamsin": ["Mm.", "Mm-hm.", "Right.", "Ha.", "Fair enough.", "Oh, here we go.", "Go on.", "Course.", "Steady.", "Really?", "Oh, lovely.", "No.", "Yes.", "Ha! No.", "Hm."],
+    "samir": ["Mm.", "Right.", "Exactly.", "Interesting.", "Correct.", "Ha!", "Hold on.", "Okay.", "Sure, sure.", "No, go on.", "Yes.", "Hmm.", "True.", "Oh, come on.", "Fair."]
+  }
+}

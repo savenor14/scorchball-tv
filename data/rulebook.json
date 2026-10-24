@@ -1,0 +1,172 @@
+{
+  "_comment": "The Rulebook and About panes (Task 163; docs/channel.md §17.2). The Rulebook is the league's own, in-universe: short sections, each a few numbered rules. About is out of universe (Tom: modelled on PNN's, a few short paragraphs; only what's seen or heard on air is credited; his wording, 2026-10-07). {name} is a fact worked out from data/rules.json and config/settings.json (src/channel/rulebook.js lists them), so the text can't drift from the sim; {name|word} writes a small number as a word. The Oxford comma throughout (Tom).",
+  "rulebook": {
+    "intro": "The official rules of Scorchball, as played in the Scorch League.",
+    "sections": [
+      {
+        "id": "game",
+        "tab": "GAME",
+        "title": "The game",
+        "rules": [
+          "Scorchball is played {onPitch|word} a side on a walled pitch: a keeper, {defenders|word} defenders, a midfielder, and a striker.",
+          "The ball stays in play off the boards. There are no throw-ins and no corners.",
+          "Each goal has a crease. Only the defending keeper may stand in it, and only there may the ball be handled.",
+          "A match is two halves of {halfMinutes} minutes. The home side kicks off the first half, the visitors the second.",
+          "After a goal, the keeper who conceded restarts play at once from the crease.",
+          "The side without the ball wins it back by tackling the player who has it, stealing a pass, or blocking a shot.",
+          "A tackle that fails may be a foul. A foul by the defending side in its own third gives a free shot: one shooter against the keeper from the mark, with a cool ball. Any other foul gives the ball to the side fouled, where the foul happened. There are no cards.",
+          "A team names {matchday} players for a match from a squad of {squad}: everyone who's fit. A tired or injured player may be replaced, up to {subs} times a match.",
+          "Every team must start a rookie. A player is a rookie if they were drafted and are in their first season in the League. If no rookie is fit to play, the team plays without one."
+        ]
+      },
+      {
+        "id": "heat",
+        "tab": "HEAT",
+        "title": "Heat",
+        "rules": [
+          "The ball heats up for as long as one team keeps it. Passing does not cool it. Only losing the ball does.",
+          "A cool ball is white. After {warmSeconds} seconds it turns yellow: warm. After {hotSeconds}, it glows red: hot. The heat meter under the scorebug shows how hot the ball is.",
+          "A warm ball is harder to pass, a hot one even more so. A hot ball flies harder off the boot but is less accurate.",
+          "At {burnSeconds} seconds the ball burns. It passes to the other side where it lies, and the burn goes down against the player holding it.",
+          "A scorcher gives the scoring team momentum, and a burn gives it to the other team: for a short while they're a little sharper with the ball. Another scorcher or burn refreshes momentum."
+        ]
+      },
+      {
+        "id": "goals",
+        "tab": "GOALS",
+        "title": "Goals and scorchers",
+        "rules": [
+          "Every goal counts one.",
+          "A goal from a hot ball is a scorcher. It counts one like any other, but the League keeps a record of every one.",
+          "A shot may be saved, blocked, or missed. A ball loose off a save or a block belongs to whoever gets there first."
+        ]
+      },
+      {
+        "id": "season",
+        "tab": "LEAGUE",
+        "title": "The season",
+        "rules": [
+          "The Scorch League is {teams} teams from {regions} regions. A season lasts {seasonDays} real days.","Each club plays its home matches at its own ground: {grounds}.",
+          "Every team plays every other twice, home and away, each match in its own time slot. The final {finalRoundMatches|word} matches of the season kick off at the same time.",
+          "A win is worth {win} points, a draw {draw}. Teams level on points are split by goal difference, then goals scored, then their matches against each other, and then by lot.",
+          "The team top of the table takes the Pennant for that season.",
+          "The top {playoffTeams|word} go to the playoffs on the last day: first against fourth, second against third, and the winners to the final. The better seed plays at home.",
+          "A playoff level at full time goes to {overtimeMinutes} minutes of golden-goal overtime: the first goal wins. If it's still level, a shootout: {shootoutKicks|word} kicks each, every kick from a hot ball. Level after those, the kicks go on in pairs until one side scores and the other doesn't.",
+          "The winner of the final is League Champion and lifts the Scorch Cup."
+        ]
+      },
+      {
+        "id": "offseason",
+        "tab": "LEAGUE",
+        "title": "The off-season",
+        "rules": [
+          "After the final, the League gives its awards for the regular season: the Ember Boot for the most goals, the Blaze for the most scorchers, the Compass for the most assists, the Quell for the most stops by a defender, the Ironclad for the best save percentage by a keeper, and, from the second season, the Spark for the best rookie, judged against the regulars at their own position.",
+          "Then the draft, in {draftRounds|word} rounds. The {lotteryTeams|word} teams that missed the playoffs are drawn for the first {lotteryTeams|word} picks, the worst team with the best chance. The playoff teams pick next, in reverse order of the regular-season table, the top seed last.",
+          "A squad has {squad|word} players. A draft pick who doesn't make the squad goes to the team's reserves in the {reserves}, where the team holds their rights for {rightsSeasons|word} seasons. A reserve may be called up when they're good enough, or when the team is short of players.",
+          "A player from a team's own region is home-grown there. Teams lean towards their own in the draft and in free agency, so squads lean local; the team card's SQUAD says how many.",
+          "After the draft, free agency opens: players without a team are eligible to be signed."
+        ]
+      },
+      {
+        "id": "contracts",
+        "tab": "LEAGUE",
+        "title": "Finances",
+        "rules": [
+          "Every player on a team is under contract: a wage a season, in guilders, for a set number of seasons. Draft picks sign rookie deals for {rookieSeasons|word} seasons.",
+          "A team's wages must fit under the salary cap, {cap} a season. The max contract is {maxWage} a season and may be signed for up to {maxSeasons|word} seasons. Players in the {reserves} do not count towards the cap.",
+          "When a player's contract expires, their team may offer a new one. A player may take it, or go to free agency, where any team with room under the cap can bid for them."
+        ]
+      }
+    ]
+  },
+  "about": {
+    "tab": "ABOUT",
+    "_small": "The last few paragraphs (the font, the viewer count, the version, the copyright) are set smaller and dimmer.",
+    "small": 4,
+    "paragraphs": [
+      "Scorchball TV is an AI-driven, simulated 24/7 sports channel. Scorchball is an invented game, a little like football mixed with hot potato, played around the clock by the {teams|word} clubs of the Scorch League and shown here live in pixel art: the matches, the table, the studio, and even the ads.",
+      "The league, its teams, players, places, and sponsors are fictional, and any likeness to real people, teams, or businesses is a coincidence.",
+      "A computer simulation decides every match and every season; the channel only shows what it decided. Everyone watching sees the same league at the same moment.",
+      "The commentators, the studio presenters, and the players are AI voices made with ElevenLabs. The people they voice are fictional. The crowd, ball sounds, whistles, and jingles are synthesized as you watch.",
+      "Scorchball TV is a hobby project built with Claude, Anthropic's AI. It's best watched full screen: F11 in most browsers, or Ctrl+Cmd+F on a Mac.",
+      "The lettering is VT323 by Peter Hull, under the SIL Open Font License 1.1.",
+      "Scorchball.tv counts its viewers anonymously. Your moments stay in your browser; nothing about them is sent anywhere.",
+      "Version {version} · scorchball.tv",
+      "© 2026 Scorchball TV"
+    ]
+  },
+  "guide": {
+    "_comment": "The About pane's second tab (Task 172, Tom): what's on the screen, then the channel's rhythm, for someone tuning in. Each item is a line of text, with the button's own icon (icon: a button in the row below the side panel, or sound / layout, the scorebug's), a label as the scorebug shows it (chip, in its colour: live, replay or next), or the heat meter (heat) or a glowing swatch (momentum, Task 238) beside it. No clock times: local times are on the backlog.",
+    "tab": "GUIDE",
+    "sections": [
+      {
+        "title": "The scorebug",
+        "items": [
+          { "chip": "LIVE", "chipKind": "live", "text": "A match being played right now." },
+          { "chip": "REPLAY", "chipKind": "replay", "text": "An earlier match, shown again in full." },
+          { "chip": "HIGHLIGHTS", "chipKind": "replay", "text": "The best moments of a recent match." },
+          { "chip": "NEXT", "chipKind": "next", "text": "No match on: the next live one, with a countdown to its kick-off." },
+          { "chip": "FT", "chipKind": "next", "text": "Full time: the final score." },
+          { "text": "In a match the clock is the game clock: two halves of {halfMinutes} minutes, played in about {realMinutes} real minutes. It stops for goals, substitutions, and fouls." },
+          { "heat": true, "text": "The strip under the scorebug is the heat meter: how hot the ball is (see the Rulebook)." },
+          { "momentum": true, "text": "A team's colour on the scorebug glows orange while it has momentum, fading as it wears off (see the Rulebook)." }
+        ]
+      },
+      {
+        "title": "The buttons",
+        "items": [
+          { "icon": "sound", "text": "Sound on or off (M). Click it for the levels: sound, crowd, and voices. Sound starts off." },
+          { "icon": "layout", "text": "Full or Broadcast (B). Broadcast swaps the side panel and the ticker for the stands and the crowd." },
+          { "icon": "guide", "text": "Schedule (V): everything on the channel today." },
+          { "icon": "rulebook", "text": "Rulebook (R): how Scorchball is played." },
+          { "icon": "chronicle", "text": "Chronicle (C): the latest, the League's history and every past season, and the records." },
+          { "icon": "audience", "text": "Audience (A): your moments, the League's polls, and a note to the League." },
+          { "icon": "about", "text": "Info (I): about Scorchball, and this guide." }
+        ]
+      },
+      {
+        "title": "The side panel",
+        "items": [
+          { "text": "STATS (S): the match on screen as it happens: shots, saves, possession, and the goals." },
+          { "text": "TABLE (T): the league table. The top {playoffTeams|word} go to the playoffs." },
+          { "text": "TOP (G): the season's leading scorers." },
+          { "text": "WEEK (W): this week's matches: the results, and when the rest kick off." },
+          { "text": "Select a player or a team in the side panel, the Schedule or the Chronicle to see their card." },
+          { "text": "Along the bottom, the ticker: results, the next kick-offs, and the leaders." }
+        ]
+      },
+      {
+        "title": "Moments",
+        "items": [
+          { "text": "Watch live and you collect moments: goals, scorchers, interviews, ad breaks, whole matches, every day you tune in. Each one levels up as you see more." },
+          { "text": "When one levels up, a small ticket pops up under the scorebug. Click it, or open Audience (A), to see them all." },
+          { "text": "Some moments are secret: rare things you'll only find by watching." },
+          { "text": "Only what's live counts, while the channel is on screen. Moments are kept in this browser." }
+        ]
+      },
+      {
+        "title": "The final round",
+        "items": [
+          { "text": "The season's last {finalRoundMatches|word} matches kick off at once. The strip above the pitch flips between them (keys 1 to {finalRoundMatches}); a red dot marks the channel's pick (0 follows it). Goals in the other matches pop up as alerts." }
+        ]
+      },
+      {
+        "title": "A day on the channel",
+        "items": [
+          { "text": "One live match at a time, about every {liveEvery}." },
+          { "text": "Each one gets its own hour: the teams before kick-off, the walk-out, the match, the handshakes, then the post-match show: the player of the match interviewed, the highlights, and the studio." },
+          { "text": "Between live matches: earlier matches shown again in full, highlights, the studio desk talking through the results and the table, and ad breaks." }
+        ]
+      },
+      {
+        "title": "A week on the channel",
+        "items": [
+          { "text": "A season lasts {seasonDays} days: {matches} matches, every team playing every other twice." },
+          { "text": "On day {finalRoundDay}, the final round: all {finalRoundMatches|word} matches at once." },
+          { "text": "On day {seasonDays}, the playoffs: two semifinals, then the final. Then the champions lift the Scorch Cup, and the off-season: retirements, and the draft that brings in new players." },
+          { "text": "The next day a new season begins." }
+        ]
+      }
+    ]
+  }
+}

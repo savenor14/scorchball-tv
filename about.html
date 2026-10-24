@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The About page (the SEO basics, docs/launch-plan.md; Tom's pick 2026-10-23: aboutmock.html's look B, C's questions as
+       its headings): plain HTML for search engines and link previews, which see little of the channel's canvas. No script.
+       Served at /about by the host; the pictures are stills of the live league in assets/about/. -->
+  <title>About Scorchball TV: a made-up sport, live around the clock</title>
+  <meta name="description" content="Scorchball TV is a sports channel for a sport that doesn't exist: eight invented clubs play around the clock, shown live in pixel art. A solo hobby project built with Claude Code.">
+  <link rel="canonical" href="https://scorchball.tv/about">
+  <link rel="icon" href="/assets/icon/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/icon/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/icon/icon-180.png">
+  <meta name="theme-color" content="#151924">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Scorchball TV">
+  <meta property="og:title" content="About Scorchball TV">
+  <meta property="og:description" content="A made-up sport, simulated around the clock and shown as a live pixel-art sports channel. Tune in any time and something's on.">
+  <meta property="og:url" content="https://scorchball.tv/about">
+  <meta property="og:image" content="https://scorchball.tv/assets/icon/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="/assets/page.css">
+</head>
+<body>
+  <header class="masthead">
+    <a class="tag" href="/">SCORCHBALL TV</a>
+    <a class="watch" href="/">● WATCH LIVE</a>
+  </header>
+
+  <main>
+    <h1>A made-up sport, live around the clock</h1>
+    <p class="lead">Scorchball TV is a sports channel for a sport that doesn't exist. Eight invented clubs play Scorchball, a five-a-side game a little like football mixed with hot potato, around the clock, and the channel shows it live in pixel art: the matches, the table, the studio, the ads, and an evening podcast. Tune in any time and something's on.</p>
+    <figure>
+      <img src="/assets/about/live.png" width="1280" height="720" alt="A live match on Scorchball TV: the Wrenhollow Stormcrows and the Lisle Vintners in the first half, the match stats beside the pitch and the day's results along the ticker.">
+      <figcaption>A live match: the Wrenhollow Stormcrows against the Lisle Vintners.</figcaption>
+    </figure>
+
+    <h2>Is Scorchball real?</h2>
+    <p>No. The sport, the league, its clubs, players, places, and sponsors are all invented. Scorchball is five a side on a walled pitch, the ball kept in play off the boards. The twist is the heat: the ball warms up the longer one team holds it, and once it glows red they must shoot or lose it. A fast, hard shot is a scorcher; holding on too long is a burn. Two halves of 20 minutes, a golden goal in extra time, and a shootout if that fails.</p>
+    <div class="pics">
+      <figure>
+        <img src="/assets/about/scorcher.png" width="1280" height="720" loading="lazy" alt="FROM THE VAULT: last season's final replayed, a scorcher by J. Laity marked with rings of heat on the pitch.">
+        <figcaption>A scorcher, from the vault.</figcaption>
+      </figure>
+      <figure>
+        <img src="/assets/about/fulltime.png" width="1280" height="720" loading="lazy" alt="The full-time card: Skarren Rime 8, Varenne Royale 8, every scorer listed and the scorchers marked.">
+        <figcaption>Full time, every scorer and scorcher.</figcaption>
+      </figure>
+    </div>
+
+    <h2>Is it really live?</h2>
+    <p>Yes: one league for everyone, on one clock. A season is a week: fourteen rounds from Monday, the playoffs and the final on Sunday, then the draft. A live match starts about every 2h 40m, with replays, highlights, the studio desk, interviews, and the ads between them, and OFF THE BALL, the podcast, in the evenings.</p>
+    <p>The league remembers. Players are drafted, sign contracts, age, and retire; the CHRONICLE keeps every season's champions, records, and legends. Viewers vote in polls that nudge the league, and the Director proposes rule changes when the numbers drift.</p>
+    <div class="pics">
+      <figure>
+        <img src="/assets/about/studio.png" width="1280" height="720" loading="lazy" alt="The studio between matches: two presenters at the desk, the table on one side and the next match on the other.">
+        <figcaption>The studio desk between matches.</figcaption>
+      </figure>
+      <figure>
+        <img src="/assets/about/offtheball.png" width="1280" height="720" loading="lazy" alt="OFF THE BALL, the evening podcast: two hosts in the booth talking about the title race.">
+        <figcaption>OFF THE BALL, the evening podcast.</figcaption>
+      </figure>
+    </div>
+
+    <h2>How does it work?</h2>
+    <p>There is no game server. The league is a simulation that runs in your browser: every browser rebuilds the same league from a weekly snapshot and a daily key, so everyone watching sees the same match at the same moment. The keys come from a secret seed, published a day at a time, so nobody can run ahead and spoil the final. The simulation does its own maths so that every browser agrees to the last digit.</p>
+
+    <h2>Is it made with AI?</h2>
+    <p>Yes. Scorchball TV is a solo hobby project built with Claude Code, Anthropic's AI, which wrote every line of it: almost 1,000 commits and counting, over three weeks in October 2026. Plain JavaScript, a 2D canvas, no framework, and no build step. The pixel art is drawn by that code. The whole story is in <a href="/how-it-was-built">How Scorchball TV was built with Claude Code</a>.</p>
+    <p>The commentators, the studio presenters, and the players are AI voices made ahead with ElevenLabs, about 11,000 clips; the people they voice are fictional. The crowd, the ball, the whistles, and the jingles are synthesized as you watch.</p>
+
+    <h2>Can I play?</h2>
+    <p>You watch, and you can nudge: viewers vote in polls that change the league, and Fan Coins earned by watching go on FAN BOARD. MOMENTS collects what you've seen, in your own browser.</p>
+
+    <h2>Can I watch on my phone?</h2>
+    <p>Yes, and you can add it to your home screen. It's at its best on a big screen, full screen: F11 in most browsers, or Ctrl+Cmd+F on a Mac.</p>
+
+    <ul class="links">
+      <li><a href="/">Watch live</a></li>
+      <li><a href="/how-it-was-built">How it was built</a></li>
+      <li><a href="https://bsky.app/profile/scorchball.tv">Bluesky</a></li>
+      <li><a href="https://ko-fi.com/scorchballtv">Ko-fi</a></li>
+    </ul>
+  </main>
+
+  <footer>
+    <p>The league, its teams, players, places, and sponsors are fictional, and any likeness to real people, teams, or businesses is a coincidence. Scorchball.tv counts its viewers anonymously and sets no cookies. The lettering is VT323 by Peter Hull, under the SIL Open Font License 1.1.</p>
+    <p>© 2026 Scorchball TV</p>
+  </footer>
+</body>
+</html>

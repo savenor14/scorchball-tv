@@ -1,0 +1,11 @@
+{
+  "_comment": "Rules by season (Task 229b; docs/simulation.md §2a). data/rules.json is season 1's rules; each change here applies from its season on, merged over the rules before it (objects merge, lists and values replace). id: a lower-case name; season: the first season played under it (2 or later); never announced on its own (Task 265, Tom: upkeep is quiet; an announcement is its own entry in data/decisions.json); reason: the League's reason, in-universe; changes: a partial data/rules.json. Each season's merged rules are checked like data/rules.json. Logged as rule_change at the start of its season.",
+  "changes": [
+    {
+      "id": "rookie_rule",
+      "season": 2,
+      "reason": "With its first draft, the League brings in the rookie rule: every side starts a rookie.",
+      "changes": { "roster": { "rookieStarters": 1 } }
+    }
+  ]
+}

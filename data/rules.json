@@ -1,0 +1,215 @@
+{
+  "_comment": "Sport and engine values. See docs/sport.md and docs/simulation.md. Tuned in Task 14 (and Task 19: fewer tackles, longer possessions) against the balance targets: run `npm run balance` after changing anything here.",
+  "match": {
+    "halfMinutes": 20,
+    "overtimeMinutes": 5,
+    "actionSeconds": { "min": 5, "max": 9 },
+    "_breakawaySeconds": "The action after a breakaway (the run in and the shot) comes this soon instead (Task 40).",
+    "breakawaySeconds": { "min": 2, "max": 4 },
+    "maxSubstitutions": 4,
+    "homeBonus": 1.2,
+    "shorthandedPenalty": 4
+  },
+  "heat": {
+    "_comment": "Heat 0–100. Burn at 100. Penalties/bonuses are in rating points, scaled by (1 - composure/99).",
+    "burnSeconds": 40,
+    "warmAt": 50,
+    "hotAt": 80,
+    "warmPenalty": 4,
+    "hotPenalty": 8,
+    "hotPower": 6,
+    "hotAccuracy": 8
+  },
+  "momentum": {
+    "_comment": "momentum (Momentum, Tasks 236–237; Tom): a scorcher gives the scoring team momentum, a burn gives it to the other team: every one of its players gains bonus rating points in every contest, fading steadily to nothing over seconds game seconds. It doesn't stack: a scorcher or burn in the window starts it again, full, from that moment; the other team's takes it over. It ends with the period. bonus 0: off. Task 237 (Tom, from the quick model, simulation.md 10c): 3 points over 90 s, with the ball only (on every contest it was mostly defensive: the team with it stopped the other scoring rather than scoring more).",
+    "bonus": 3,
+    "seconds": 90,
+    "withBall": true
+  },
+  "tactics": {
+    "_comment": "In the attacking zone, a carrier with no defender contesting who is in range (the team has worked the ball there at least once this attack) shoots with openShotChance; otherwise pShoot = shootBase + tempo*shootTempo + heatStage*shootPerHeatStage (heatStage: 0 cool, 1 warm, 2 hot). pContest = contestBase + aggression*contestAggression. pRecycle (keep the ball instead of advancing) = recycleBase * (1 - tempo). Advance attack rating adds (carrier pace - defender pace) * advancePaceWeight. In the carrier's own defensive zone pContest is multiplied by pressFactor, or by restartPressFactor while the keeper restarts play after a goal, miss or held save, until the team first gets the ball out of that zone (Task 88).",
+    "_styles": "Task 233 (Tom): a club's style (tempo, aggression) is its flavour, not an edge, and shows in the box score. Before, contestAggression 0.25 and shootTempo 0.2 made aggression 0.8 against 0.3 worth 2.7 points a season and tempo 1.3, so the aggressive and quick clubs won every league. Tempo: shootTempo 0.05 with shootBase 0.175 (a 0.5 club shoots as before). Aggression keeps most of its pressing (contestAggression 0.2, contestBase 0.525) and pays in fatigue (fatigue.aggressionRate, aggressionRelief): within about half a point a season either way, tackles, steals and fouls still clearly higher.",
+    "recycleBase": 0.8,
+    "advancePaceWeight": 0.2,
+    "shootBase": 0.175,
+    "shootTempo": 0.05,
+    "shootPerHeatStage": 0.3,
+    "openShotChance": 0.9,
+    "workItQuality": 5,
+    "contestBase": 0.525,
+    "contestAggression": 0.2,
+    "pressFactor": 0.4,
+    "restartPressFactor": 0.12,
+    "foulBase": 0.025,
+    "foulAggression": 0.03,
+    "freeShotAccuracyBonus": 0,
+    "shootoutAccuracyBonus": 10,
+    "parryChance": 0.35
+  },
+  "contests": {
+    "_comment": "p = clamp(logistic((attack - defend)/scale + bias), pMin, pMax). Sides: advance carrier v defender; block defender v shooter; onTarget shooter v baseline; save keeper v shot power; looseBall attacker v defender (pace); breakaway carrier v the fastest defender (pace), after an unchallenged advance into the attacking zone. Wide scales keep rating gaps from snowballing over ~50 shots a match (Task 14).",
+    "advance": { "scale": 40, "bias": -0.8, "pMin": 0.1, "pMax": 0.9 },
+    "block": { "scale": 37.5, "bias": -1.3, "pMin": 0.02, "pMax": 0.4 },
+    "onTarget": { "scale": 37.5, "bias": -0.3, "pMin": 0.25, "pMax": 0.9, "baseline": 50 },
+    "save": { "scale": 37.5, "bias": 1.05, "pMin": 0.2, "pMax": 0.95 },
+    "looseBall": { "scale": 37.5, "bias": -0.2, "pMin": 0.2, "pMax": 0.8 },
+    "breakaway": { "scale": 100, "bias": -2.2, "pMin": 0.02, "pMax": 0.4 }
+  },
+  "fatigue": {
+    "_comment": "fatigue += ratePerMinute * (1.5 - stamina/99) each game-minute (times keeperRate for whoever is in goal); ratings x (1 - maxFade * fatigue). A player past subThreshold comes off at the next chance, except keepers, who never come off tired (Task 174b).",
+    "_aggression": "Task 233 (Tom): pressing is tiring. An outfield player's rate is times 1 + aggressionRate x (aggression - 0.5) for a side above 0.5, 1 + aggressionRelief x (aggression - 0.5) below it (a sitting-back side saves more than a pressing one spends: a fresh player can only be so fresh). A middling 0.5 as before.",
+    "ratePerMinute": 0.024,
+    "keeperRate": 0.5,
+    "maxFade": 0.15,
+    "subThreshold": 0.6,
+    "aggressionRate": 0.75,
+    "aggressionRelief": 1.75
+  },
+  "injuries": {
+    "chancePerMatch": 0.01,
+    "fatigueMultiplier": 1.0,
+    "severity": [
+      { "weight": 60, "minMatches": 1, "maxMatches": 1, "seasonEnding": false },
+      { "weight": 30, "minMatches": 2, "maxMatches": 4, "seasonEnding": false },
+      { "weight": 9, "minMatches": 5, "maxMatches": 10, "seasonEnding": false },
+      { "weight": 1, "minMatches": 1, "maxMatches": 1, "seasonEnding": true }
+    ]
+  },
+  "points": { "win": 3, "draw": 1, "loss": 0 },
+  "tiebreakers": ["points", "goalDifference", "goalsFor", "h2hPoints", "h2hGoalDifference", "lots"],
+  "playoffs": {
+    "teams": 4,
+    "shootoutKicks": 3
+  },
+  "roster": {
+    "size": 10,
+    "matchday": 10,
+    "lineup": { "K": 1, "D": 2, "M": 1, "S": 1 },
+    "minimums": { "K": 2, "D": 3, "M": 2, "S": 2 },
+    "_backupKeeperStarts": "Each team's backup keeper starts this many regular-season matches a season, never in the final round (Task 174b); the first-choice keeper sits on the bench.",
+    "backupKeeperStarts": { "min": 1, "max": 2 },
+    "_localBonus": "Task 176 (Tom): added to a home-region player's value (rating points) when a team drafts or signs, so rosters lean local. A preference, not a quota: it never changes a player's ratings. Eased from 10 to 5 (Task 232, Tom): home-minded free agents now carry the regions' flavour too.",
+    "localBonus": 5,
+    "_styleWeight": "Task 177: times a player's fit with the team's style (draft.js styleFit: tempo leans to shooting and pace or to passing and composure, aggression to tackling or composure; about ±20), added to their value when a team drafts or signs.",
+    "styleWeight": 2,
+    "_rookieStarters": "Task 230 (Tom): the rookie rule. How many rookies (drafted players in their first League season: never played before it) each team must start. 0 here (season 1 has no rookies); data/ruleChanges.json brings it in at season 2. A rookie comes off only tired or injured; a keeper counts; the rule lapses for a match when no rookie is fit. Teams keep one on the roster through the off-season.",
+    "rookieStarters": 0
+  },
+  "reserves": {
+    "_comment": "Task 194b (Tom): the Kindling League, the reserves. A draft pick who doesn't make their team's roster goes to its reserves instead of being released; the team holds their rights for rightsSeasons seasons. Reserves don't count towards the roster or play matches; each off-season they develop as if they'd played playingTimeShare of a season's minutes. A reserve more valuable than the team's weakest player at their position is called up (that player released), and teams short of players call up a reserve before signing a free agent. A reserve never called up is released when their rights run out.",
+    "name": "Kindling League",
+    "rightsSeasons": 3,
+    "playingTimeShare": 0.5,
+    "callUpMargin": 8
+  },
+  "finances": {
+    "_comment": "Task 231 (docs/finances.md §3). Money in thousands a season. A player's market wage is wageAt60 at a value (players.playerValue) of 60, times wagePerPoint per point above or below, between minWage and the maximum contract (maxContractShare of the cap). The cap is hard and the same for every team; the reserves are off it. Draft picks sign rookie deals for rookieSeasons, paid by pick from rookieScale.first down to .last. Other deals run contractSeasons by age (the first band whose maxAge covers the player); the founding squads' deals are staggered (each has 1 to its full length left).",
+    "cap": 20000,
+    "minWage": 250,
+    "wageAt60": 400,
+    "wagePerPoint": 1.1,
+    "maxContractShare": 0.25,
+    "rookieSeasons": 3,
+    "rookieScale": { "first": 1200, "last": 300 },
+    "contractSeasons": [
+      { "maxAge": 24, "min": 3, "max": 4 },
+      { "maxAge": 30, "min": 2, "max": 4 },
+      { "maxAge": 99, "min": 1, "max": 2 }
+    ]
+  },
+  "motives": {
+    "_comment": "Task 232 (docs/finances.md §3): what a player wants. Each has three hidden weights (money, winning, home; each drawn N(0,1) once). Every season of age past pivotAge moves agePerSeason from money to winning (before it, the other way); home gets homeBias; the strongest is their motive. Fitted to Tom's mix: under 25 money 50% winning 20% home 30%, 25-30 35/35/30, 31+ 20/50/30. In free agency a player scores each offer: money takes the biggest; winning adds winningPremium times how far the team is going (its best five against the league's, 0 to 1); home adds homePremium for their region's team; their old club gets familiarity on top. Offers: the market wage, or the room a team has down to offerFloor of it; a team with overMarket.roomShare of the cap free may offer overMarket.premium above the market for a player whose market wage is at least overMarket.fromWage (premium 0: never), never over the maximum contract.",
+    "agePerSeason": 0.06,
+    "pivotAge": 27.5,
+    "homeBias": -0.05,
+    "winningPremium": 0.25,
+    "homePremium": 0.25,
+    "familiarity": 0.05,
+    "offerFloor": 0.75,
+    "overMarket": { "roomShare": 0.25, "premium": 0.2, "fromWage": 2500 }
+  },
+  "draft": {
+    "_comment": "Draft value = potentialWeight * (potential + scouting error) + (1 - potentialWeight) * current overall, + needBonus if the team is short at that position. Lottery weights apply to the non-playoff teams, worst first.",
+    "rounds": 2,
+    "extraProspects": 2,
+    "lotteryWeights": [40, 30, 20, 10],
+    "scoutingNoise": 6,
+    "potentialWeight": 0.7,
+    "needBonus": 8,
+    "_statNeed": "Tom's note 7 (2026-10-18): a statistical need. The teams that scored least last season lean to the attack positions, the ones that conceded most to the defence positions: bonus for the worst, less by rank, nothing from the middle of the table on. In the draft, and in free agency's filling pass when freeAgency (the market is the player's choice). bonus 0: off.",
+    "statNeed": { "bonus": 6, "freeAgency": false, "attack": ["S"], "defence": ["D"] },
+    "prospectAge": { "min": 18, "max": 20 },
+    "prospectOverall": { "min": 35, "max": 60 },
+    "potential": { "mean": 62, "sd": 11, "min": 40, "max": 95 },
+    "_headliners": "Task 175 (Tom): each class's headline prospects, best first, each with its own ranges for overall at the draft and potential (the rest of the class uses prospectOverall and potential). They usually go first and second.",
+    "headliners": [
+      { "overall": { "min": 72, "max": 80 }, "potential": { "min": 86, "max": 95 } },
+      { "overall": { "min": 66, "max": 73 }, "potential": { "min": 78, "max": 88 } }
+    ]
+  },
+  "development": {
+    "growthFraction": 0.25,
+    "noise": 2,
+    "playingTimeBonus": 0.15,
+    "peakAge": {
+      "outfield": { "min": 26, "max": 30 },
+      "keeper": { "min": 28, "max": 32 }
+    },
+    "plateauYears": 2,
+    "decline": { "base": 1, "perYear": 0.6, "physicalMultiplier": 1.5, "mentalMultiplier": 0.5 },
+    "attributeGroups": {
+      "physical": ["pace", "stamina"],
+      "mental": ["composure", "passing"]
+    }
+  },
+  "retirement": {
+    "centerAge": 34,
+    "keeperCenterAge": 36,
+    "steepness": 0.8,
+    "maxAge": 40,
+    "replacementOverall": 45,
+    "belowReplacementBoost": 0.15,
+    "freeAgentSeasons": 1,
+    "freeAgentBoost": 0.4
+  },
+  "awards": {
+    "_comment": "The season's awards (the off-season show, Task 188). oneATeam (Tom, 2026-10-18, the Ironclad): the two runners-up from two other teams, one a team, while enough teams qualify (a team's two keepers had been first and third). from regular-season stats, logged as award events after season_end and kept in league.history. stat: a counting stat, stops (tackles, steals among them, plus blocks) or savePct (saves over shots on target faced, saves + conceded). positions: who can win it (everyone when left out). minFacedShare: for savePct, at least this share of the shots faced by the season's busiest keeper (backups face 10-40, starters 40-220). Ties go to fewer appearances, then a seeded draw. A stat nobody has any of gives no award.",
+    "list": [
+      { "id": "ember_boot", "name": "The Ember Boot", "stat": "goals" },
+      { "id": "blaze", "name": "The Blaze", "stat": "scorchers" },
+      { "id": "compass", "name": "The Compass", "stat": "assists" },
+      { "id": "quell", "name": "The Quell", "stat": "stops", "positions": ["D"] },
+      { "id": "ironclad", "name": "The Ironclad", "stat": "savePct", "positions": ["K"], "minFacedShare": 0.5, "oneATeam": true },
+      { "id": "spark", "name": "The Spark", "stat": "rookieBlend", "minMinutesShare": 0.25, "blend": {
+        "K": { "savesAdded": 1 },
+        "D": { "stops": 1, "assists": 0.5, "goals": 0.5 },
+        "M": { "assists": 1, "goals": 0.75, "stops": 0.5 },
+        "S": { "goals": 1, "assists": 0.5, "scorchers": 0.5 }
+      } }
+    ]
+  },
+  "league": {
+    "_comment": "initialPotentialMean: average peak overall of season-1 players. Set near the steady state the draft settles into (teams keep the best prospects, so rostered potential ends up well above draft.potential.mean), so the league doesn't drift upward in its early seasons.",
+    "initialPotentialMean": 80,
+    "teamStrengthSpread": 3,
+    "initialAge": { "min": 19, "max": 33 },
+    "initialFreeAgents": 8,
+    "freeAgentPoolMax": 30,
+    "homeRegionChance": 0.7
+  },
+  "generation": {
+    "_comment": "Player creation. Peak overall ~ normal(team level, playerSpread). Current overall falls short of peak by youthGapPerYear per year before peakAge, and by initialDeclinePerYear per year past the plateau. Attributes a position weights ~ normal(target, weightedSd); the rest ~ normal(target - unweightedGap, unweightedSd).",
+    "playerSpread": 7,
+    "freeAgentGap": 8,
+    "youthGapPerYear": 2.5,
+    "initialDeclinePerYear": 1.5,
+    "weightedSd": 6,
+    "unweightedGap": 18,
+    "unweightedSd": 7,
+    "minOverall": 20,
+    "specialists": {
+      "_comment": "Attributes only one position really has. Everyone else gets normal(othersMean, othersSd), e.g. outfield players are poor in goal.",
+      "keeping": { "position": "K", "othersMean": 12, "othersSd": 4 }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "_comment": "The AUDIENCE pane's polls (Task 260; docs/channel.md §23). One at a time, written as dated data so every browser shows the same: id: a lower-case name (votes are kept by it); question: as the pane shows it (in capitals); options: \"teams\" (every team in data/teams.json, as crests); season, opens, closes: the season and its day times (like config/settings.json's calendar), the poll seen from opens and voted on until closes; result (added once announced, Tom on the Director's desk): votes by option id. Tallies are never shown before the result is in (Tom, 2026-10-11).",
+  "polls": [
+    { "id": "favourite_team", "question": "Who's your favourite team?", "options": "teams", "season": 5, "opens": "day 1 00:00", "closes": "day 7 21:00" }
+  ]
+}

@@ -1,0 +1,674 @@
+{
+  "_comment": "The talk at the desk (docs/channel.md §16.7; Task 98). looks: what the presenters can wear and look like (each picked once from the league's seed and kept for its whole history): jackets, ties, hair colours and styles (short, long, bun). lines: each kind of line the presenters say, with the gesture the speaker makes while saying it (open: an open hand, making a point; point: pointing at the screens; laugh; both: both arms up; talk: just talking) and the ways of saying it, one picked by the segment's seed, {blanks} filled from real facts. draw to next: the stand-in lines (the latest result, a reaction, the leader, the next match) for the talk not written yet (gap clips, the tee-up, the welcome). matchWin to championsFirst (Task 99): the match talk, the interview's tee-up and wrap-up, the final round, and the talk opening the champions (the off-season's talk went in Task 207, the show having aired all it named). standingsLeader to teeUpKickoff (Task 101): the gap's clips (standings, scorers, upcoming; they never name a result) and the tee-up before each live match. welcomeHello to welcomeLeader (Task 106): the welcome that opens the channel's day. scorersPlayoffs and playoffsOtherSemi to playoffsReact (Task 155, Tom): in the playoffs the gap's standings clip becomes the playoffs (who's through, the final ahead; it reuses knockoutSemi and standingsFinal, voiced for every team) and the scorers clip names the playoffs' scorers too. The stand-in lines (draw to next) now only fill in when a talk has nothing to say. Task 131 (vision §12, the desk speaks, the graphics inform): each way is a pair, say (what's spoken and typed in the bubble: fixed, or naming one team as {team}, the fill named by the kind's subject, spoken as spokenTeam) and show (the graphic under the speaker, in capitals: any facts). So every spoken line can be made ahead, one clip per team where it names one. presenters (Task 132, Tom): who sits at the desk, left first (the left one speaks first): Hedrek Vosper, voiced by Raymond (ElevenLabs Library), and Ysolde Stavik, a woman (a scarf, a bun, earrings), voiced by Alice; look: which of the two seeded looks each wears (Hedrek keeps his). jingle (Task 137, Tom): the short trumpet tune each time the studio returns (as the glass sweep into the scene ends; at the Back to the studio bumper after an ad break), on the anthems' brass; notes are MIDI, beats at the bpm; with: other notes sounded with it (a chord); rest: a pause. Tom's tune: two quick chords and a pause, stepping down four times, then a quick run up in thirds to a held C major.",
+  "looks": {"jackets":["#2c3345","#7a1f3d","#1f4f6b","#4a3a6b"],"ties":["#ffb627","#e8392f","#f2efe6","#3a7bd5"],"hair":["#2a1d14","#5a3a22","#c9a15a","#1a1a1a","#8a4a2a","#b8b8b0"],"hairStyles":["short","long","bun"]},
+  "presenters": [
+    { "id": "hedrek", "name": "Hedrek Vosper", "look": 1, "voice": "wugaZEaf0ges0jVSol8z" },
+    { "id": "ysolde", "name": "Ysolde Stavik", "look": 0, "woman": true, "voice": "Xb7hH8MSUJpSbSDYk0k2" }
+  ],
+  "jingle": { "instrument": "brass", "bpm": 150, "at": 0, "notes": [
+    { "note": 79, "with": [76], "beats": 0.25 },
+    { "note": 79, "with": [76], "beats": 0.25 },
+    { "rest": true, "beats": 0.5 },
+    { "note": 76, "with": [72], "beats": 0.25 },
+    { "note": 76, "with": [72], "beats": 0.25 },
+    { "rest": true, "beats": 0.5 },
+    { "note": 72, "with": [69], "beats": 0.25 },
+    { "note": 72, "with": [69], "beats": 0.25 },
+    { "rest": true, "beats": 0.5 },
+    { "note": 69, "with": [65], "beats": 0.25 },
+    { "note": 69, "with": [65], "beats": 0.25 },
+    { "rest": true, "beats": 0.5 },
+    { "note": 72, "with": [69], "beats": 0.25 },
+    { "note": 74, "with": [71], "beats": 0.25 },
+    { "note": 76, "with": [72], "beats": 0.25 },
+    { "note": 77, "with": [74], "beats": 0.25 },
+    { "note": 79, "with": [76], "beats": 0.25 },
+    { "note": 81, "with": [77], "beats": 0.25 },
+    { "note": 84, "with": [79, 76], "beats": 2.5 }
+  ] },
+  "_bumpers": "The bumper sound (Task 168, Tom's pick A): in plays as WE'LL BE RIGHT BACK opens an ad break (the jingle's opening stabs, falling), out as BACK TO THE STUDIO closes it (the jingle's run, rising to its top chord); each inside the bumper's settings.ads.bumperSeconds.",
+  "bumpers": {
+    "in": { "instrument": "brass", "bpm": 150, "at": 0, "notes": [
+      { "note": 79, "with": [76], "beats": 0.25 },
+      { "note": 79, "with": [76], "beats": 0.25 },
+      { "rest": true, "beats": 0.5 },
+      { "note": 76, "with": [72], "beats": 0.25 },
+      { "note": 76, "with": [72], "beats": 0.25 },
+      { "rest": true, "beats": 0.25 },
+      { "note": 72, "with": [69], "beats": 1 }
+    ] },
+    "out": { "instrument": "brass", "bpm": 150, "at": 0, "notes": [
+      { "note": 72, "with": [69], "beats": 0.25 },
+      { "note": 74, "with": [71], "beats": 0.25 },
+      { "note": 76, "with": [72], "beats": 0.25 },
+      { "note": 77, "with": [74], "beats": 0.25 },
+      { "note": 79, "with": [76], "beats": 0.25 },
+      { "note": 84, "with": [79,76], "beats": 1 }
+    ] }
+  },
+  "spokenTeam": "the {name}",
+  "_sayAs": "Task 278e (Tom): a team's name as the voices should say it, where spokenTeam reads wrong (Hedrek said the Rime as \"Reem\"); for voicing only (npm run voices), the screen keeps spokenTeam. Clips already made keep their words: only re-voiced ones change.",
+  "sayAs": { "t-rime": "the Rhyme" },
+  "_facts": "Talk that remembers (Task 246a): factRematch to factMomentumDecider are said after a match when the facts module (src/chronicle/facts.js) has something notable (the heaviest the desk can speak to, from facts.deskFrom); teeUpRematch, teeUpRunOver and teeUpOldClub before one. Said: generic or naming one team; shown: the specifics (players, numbers). A way with {surname} says a player's surname inside the sentence (Task 244: whole lines, never joined), one clip per surname; such ways are dealt only with playerNames true, once their clips are made (the batch, Task 248): always, or a kind's namedShare of the time (Tom: the frequent ones mostly named, with some variety; the rare ones always). interviewTeeUpNamed: the interview's tee-up naming the player, in interviewTeeUp's place with playerNames, its namedShare of the time.",
+  "playerNames": true,
+  "lines": {
+    "draw": { "gesture": "open", "ways": [
+      { "say": "Honours even in that one.", "show": "{home} {score} {away}" },
+      { "say": "Nothing to split them there.", "show": "{home} {score} {away}" },
+      { "say": "They shared the points.", "show": "{home} {score} {away}" }
+    ] },
+    "drawReaction": { "gesture": "talk", "ways": [
+      { "say": "A point apiece. Fair, I thought." },
+      { "say": "Neither side will be thrilled with that." },
+      { "say": "You could argue both ways on that one." }
+    ] },
+    "win": { "gesture": "open", "subject": "winner", "ways": [
+      { "say": "A win for {team}.", "show": "{winner} {score} {loser}" },
+      { "say": "{team} got the job done.", "show": "{winner} {score} {loser}" },
+      { "say": "Three points for {team}.", "show": "{winner} {score} {loser}" }
+    ] },
+    "bigReaction": { "gesture": "laugh", "subject": "winner", "ways": [
+      { "say": "{team} were on another level." },
+      { "say": "A statement from {team}." },
+      { "say": "That was a thumping from {team}." }
+    ] },
+    "reaction": { "gesture": "talk", "subject": "winner", "ways": [
+      { "say": "{team} will take that." },
+      { "say": "Big points for {team}." },
+      { "say": "A good afternoon for {team}." }
+    ] },
+    "leader": { "gesture": "point", "subject": "name", "ways": [
+      { "say": "{team} are still top.", "show": "1ST · {name} · {points} PTS" },
+      { "say": "At the top, it's {team}.", "show": "1ST · {name} · {points} PTS" },
+      { "say": "{team} lead the way.", "show": "1ST · {name} · {points} PTS" }
+    ] },
+    "next": { "gesture": "both", "subject": "home", "ways": [
+      { "say": "Coming up next: {team}.", "show": "NEXT · {home} v {away} · {when}" },
+      { "say": "{team} are next on. Don't go anywhere.", "show": "NEXT · {home} v {away} · {when}" },
+      { "say": "Next up, {team} at home.", "show": "NEXT · {home} v {away} · {when}" }
+    ] },
+    "matchWin": { "gesture": "open", "subject": "winner", "ways": [
+      { "say": "A win for {team}.", "show": "{winner} {score} {loser}" },
+      { "say": "{team} got the job done.", "show": "{winner} {score} {loser}" },
+      { "say": "Three points for {team}. What a game.", "show": "{winner} {score} {loser}", "not": ["semis", "finalSet", "done"] },
+      { "say": "{team} take the win.", "show": "{winner} {score} {loser}" },
+      { "say": "Victory for {team}.", "show": "{winner} {score} {loser}" },
+      { "say": "{team} come out on top.", "show": "{winner} {score} {loser}" }
+    ] },
+    "matchDraw": { "gesture": "open", "ways": [
+      { "say": "Honours even in that one.", "show": "{home} {score} {away}" },
+      { "say": "Nothing to split them there.", "show": "{home} {score} {away}" },
+      { "say": "They shared the points.", "show": "{home} {score} {away}" },
+      { "say": "All square at the end there.", "show": "{home} {score} {away}" },
+      { "say": "No winner in that one.", "show": "{home} {score} {away}" }
+    ] },
+    "matchOvertime": { "gesture": "open", "subject": "winner", "ways": [
+      { "say": "{team} win it in golden-goal time!", "show": "{winner} {score} {loser} · GOLDEN GOAL" },
+      { "say": "Golden goal! {team} edge it.", "show": "{winner} {score} {loser} · GOLDEN GOAL" }
+    ] },
+    "matchShootout": { "gesture": "open", "subject": "winner", "ways": [
+      { "say": "{team} hold their nerve in the shootout.", "show": "{winner} {score} {loser} · {shootout} ON THE SHOOTOUT" },
+      { "say": "It took a shootout, and {team} are through.", "show": "{winner} {score} {loser} · {shootout} ON THE SHOOTOUT" }
+    ] },
+    "storyComeback": { "gesture": "laugh", "subject": "winner", "ways": [
+      { "say": "{team} came from behind to win it.", "show": "CAME BACK FROM {down} DOWN" },
+      { "say": "{team} turned that right round.", "show": "CAME BACK FROM {down} DOWN" }
+    ] },
+    "storyLateWinner": { "gesture": "both", "ways": [
+      { "say": "And it was won late.", "show": "WINNER · {scorer} {minute}" },
+      { "say": "The winner came right at the end.", "show": "WINNER · {scorer} {minute}" }
+    ] },
+    "storyLateEqualiser": { "gesture": "both", "ways": [
+      { "say": "They snatched the draw late on.", "show": "EQUALISER · {scorer} {minute}" },
+      { "say": "Late drama, and it's level.", "show": "EQUALISER · {scorer} {minute}" }
+    ] },
+    "storyHatTrick": { "gesture": "point", "ways": [
+      { "say": "A hat-trick in that one. Some game.", "show": "{scorer} · {goals} GOALS" },
+      { "say": "What a day for the scorer: a hat-trick.", "show": "{scorer} · {goals} GOALS" }
+    ] },
+    "storyScorchers": { "gesture": "point", "subject": "team", "ways": [
+      { "say": "{team} ran it hot all game.", "show": "{team} · {count} SCORCHERS" },
+      { "say": "The ball was on fire for {team}.", "show": "{team} · {count} SCORCHERS" }
+    ] },
+    "storySaves": { "gesture": "open", "subject": "team", "ways": [
+      { "say": "The keeper kept {team} in it.", "show": "{keeper} · {saves} SAVES" },
+      { "say": "Credit to the keeper for {team}.", "show": "{keeper} · {saves} SAVES" }
+    ] },
+    "storyBurns": { "gesture": "talk", "ways": [
+      { "say": "Plenty of burns in that one. Too hot to handle.", "show": "{burns} BURNS" },
+      { "say": "They kept burning it.", "show": "{burns} BURNS" }
+    ] },
+    "storyPlain": { "gesture": "talk", "ways": [
+      { "say": "Plenty of chances at both ends." },
+      { "say": "A real end-to-end game." },
+      { "say": "Not much in it for long spells." }
+    ] },
+    "reactWin": { "gesture": "talk", "subject": "winner", "ways": [
+      { "say": "{team} will be happy with that." },
+      { "say": "Good points for {team}.", "not": ["semis", "finalSet", "done"] },
+      { "say": "{team} will take that." }
+    ] },
+    "reactBig": { "gesture": "laugh", "subject": "winner", "ways": [
+      { "say": "{team} were on another level." },
+      { "say": "A statement from {team}." },
+      { "say": "That was a thumping from {team}." }
+    ] },
+    "reactDraw": { "gesture": "talk", "ways": [
+      { "say": "A point apiece. Fair, I thought." },
+      { "say": "Neither side will be thrilled with that." },
+      { "say": "You could argue both ways on that one." }
+    ] },
+    "tableTop": { "gesture": "point", "subject": "team", "ways": [
+      { "say": "That puts {team} top of the table.", "show": "1ST · {team} · {points} PTS" },
+      { "say": "{team} go top with that win.", "show": "1ST · {team} · {points} PTS" }
+    ] },
+    "tableStillTop": { "gesture": "point", "subject": "team", "ways": [
+      { "say": "{team} stay top.", "show": "1ST · {team} · {points} PTS" },
+      { "say": "Still {team} at the top.", "show": "1ST · {team} · {points} PTS" }
+    ] },
+    "tableIntoFour": { "gesture": "point", "subject": "team", "ways": [
+      { "say": "{team} climb into the top four.", "show": "{team} · INTO THE TOP FOUR" },
+      { "say": "That lifts {team} into a playoff place.", "show": "{team} · INTO THE TOP FOUR" }
+    ] },
+    "tableOutOfFour": { "gesture": "talk", "subject": "team", "ways": [
+      { "say": "{team} drop out of the top four.", "show": "{team} · OUT OF THE TOP FOUR" },
+      { "say": "{team} slip out of the playoff places.", "show": "{team} · OUT OF THE TOP FOUR" }
+    ] },
+    "tableWinStreak": { "gesture": "both", "subject": "team", "ways": [
+      { "say": "That's another win for {team}. They're flying.", "show": "{team} · {n} WINS IN A ROW" },
+      { "say": "{team} just keep on winning.", "show": "{team} · {n} WINS IN A ROW" }
+    ] },
+    "tableLossStreak": { "gesture": "talk", "subject": "team", "ways": [
+      { "say": "Another defeat for {team}.", "show": "{team} · {n} DEFEATS IN A ROW" },
+      { "say": "{team} can't buy a win right now.", "show": "{team} · {n} DEFEATS IN A ROW" }
+    ] },
+    "knockoutSemi": { "gesture": "both", "subject": "winner", "ways": [
+      { "say": "{team} are into the final!", "show": "{winner} · INTO THE FINAL" },
+      { "say": "{team} march on to the final.", "show": "{winner} · INTO THE FINAL" }
+    ] },
+    "knockoutFinal": { "gesture": "both", "subject": "winner", "ways": [
+      { "say": "{team} are the champions!", "show": "{winner} · CHAMPIONS" },
+      { "say": "And {team} lift the title!", "show": "{winner} · CHAMPIONS" }
+    ] },
+    "interviewTeeUp": { "gesture": "open", "ways": [
+      { "say": "Let's hear from the player of the match.", "show": "PLAYER OF THE MATCH · {player} · {team}" },
+      { "say": "Our player of the match. Let's hear from them.", "show": "PLAYER OF THE MATCH · {player} · {team}" },
+      { "say": "Time to hear from the player of the match.", "show": "PLAYER OF THE MATCH · {player} · {team}" },
+      { "say": "Here's our player of the match.", "show": "PLAYER OF THE MATCH · {player} · {team}" }
+    ] },
+    "wrapUp": { "gesture": "talk", "ways": [
+      { "say": "Well said." },
+      { "say": "Great stuff there." },
+      { "say": "Thanks for that." },
+      { "say": "Lovely stuff." }
+    ] },
+    "highlightsNext": { "gesture": "point", "ways": [
+      { "say": "Highlights of that one, next." },
+      { "say": "Let's look back at how it happened." },
+      { "say": "Here are the highlights." },
+      { "say": "Let's see the best of it." }
+    ] },
+    "championsNext": { "gesture": "both", "ways": [
+      { "say": "The champions, next." },
+      { "say": "Stay with us for the trophy." }
+    ] },
+    "roundIntro": { "gesture": "open", "ways": [
+      { "say": "What a final round." },
+      { "say": "Final day, and what a day it was." }
+    ] },
+    "roundPlayoffs": { "gesture": "point", "ways": [
+      { "say": "Here are the playoff four.", "show": "INTO THE PLAYOFFS · {teams}" },
+      { "say": "These four go into the playoffs.", "show": "INTO THE PLAYOFFS · {teams}" }
+    ] },
+    "roundPennant": { "gesture": "both", "subject": "team", "ways": [
+      { "say": "And {team} take the Pennant.", "show": "SEASON {season} PENNANT · {team}" },
+      { "say": "{team} finish top and take the Pennant.", "show": "SEASON {season} PENNANT · {team}" }
+    ] },
+    "championsTitle": { "gesture": "both", "subject": "team", "ways": [
+      { "say": "{team} are the champions!", "show": "SEASON {season} CHAMPIONS · {team}" },
+      { "say": "This season belongs to {team}!", "show": "SEASON {season} CHAMPIONS · {team}" }
+    ] },
+    "championsHow": { "gesture": "open", "ways": [
+      { "say": "They won it in the final.", "show": "FINAL · {score} v {runnerUp}" },
+      { "say": "And what a final it was.", "show": "FINAL · {score} v {runnerUp}" }
+    ] },
+    "championsFirst": { "gesture": "talk", "ways": [
+      { "say": "Their first ever title.", "show": "FIRST TITLE" },
+      { "say": "A first title for them.", "show": "FIRST TITLE" }
+    ] },
+    "championsAgain": { "gesture": "talk", "ways": [
+      { "say": "Another title for the cabinet.", "show": "TITLE NUMBER {titles}" },
+      { "say": "They've done it again.", "show": "TITLE NUMBER {titles}" }
+    ] },
+    "awardsIntro": { "gesture": "open", "ways": [
+      { "say": "Now, the season's awards: the best of the regular season.", "show": "THE AWARDS · SEASON {season}" },
+      { "say": "Time to hand out the awards for the regular season.", "show": "THE AWARDS · SEASON {season}" },
+      { "say": "The awards next, for the best of the regular season.", "show": "THE AWARDS · SEASON {season}" }
+    ] },
+    "awardsList": { "gesture": "point", "ways": [
+      { "say": "Five of them, and the Ember Boot last.", "show": "{list}" },
+      { "say": "Five prizes, the Ember Boot to finish.", "show": "{list}" }
+    ] },
+    "awardsListSix": { "gesture": "point", "ways": [
+      { "say": "Six of them, the Spark first, for the best rookie, and the Ember Boot last.", "show": "{list}" },
+      { "say": "Six prizes, starting with the Spark for the season's best rookie.", "show": "{list}" },
+      { "say": "Six to hand out, from the Spark for the best newcomer to the Ember Boot.", "show": "{list}" }
+    ] },
+    "signoffDone": { "gesture": "open", "ways": [
+      { "say": "And that's the season done.", "show": "SEASON {season} · DONE" },
+      { "say": "That's all for this season.", "show": "SEASON {season} · DONE" }
+    ] },
+    "signoffNext": { "gesture": "point", "subject": "home", "ways": [
+      { "say": "The new season opens with {team} at home.", "show": "SEASON {next} · {when} · {home} v {away}" },
+      { "say": "Next season starts with {team} at home.", "show": "SEASON {next} · {when} · {home} v {away}" }
+    ] },
+    "signoffBye": { "gesture": "both", "ways": [
+      { "say": "See you then!" },
+      { "say": "Thanks for watching. See you then." }
+    ] },
+    "standingsLeader": { "gesture": "point", "subject": "team", "ways": [
+      { "say": "{team} are top of the table.", "show": "1ST · {team} · {points} PTS · {margin} CLEAR" },
+      { "say": "{team} lead the table.", "show": "1ST · {team} · {points} PTS · {margin} CLEAR" },
+      { "say": "At the top, it's {team}.", "show": "1ST · {team} · {points} PTS · {margin} CLEAR" },
+      { "say": "Top of the pile, then.", "show": "1ST · {team} · {points} PTS · {margin} CLEAR" },
+      { "say": "Here's the leader.", "show": "1ST · {team} · {points} PTS · {margin} CLEAR" }
+    ] },
+    "standingsLevel": { "gesture": "open", "ways": [
+      { "say": "It's tight at the top.", "show": "{team} {points} · {other} {points}" },
+      { "say": "Level at the top of the table.", "show": "{team} {points} · {other} {points}" },
+      { "say": "Nothing between them at the top.", "show": "{team} {points} · {other} {points}" },
+      { "say": "Neck and neck at the top.", "show": "{team} {points} · {other} {points}" },
+      { "say": "Level on points at the top.", "show": "{team} {points} · {other} {points}" }
+    ] },
+    "standingsCut": { "gesture": "point", "subject": "inside", "ways": [
+      { "say": "Look at the race for the top four.", "show": "4TH {inside} · {gap} AHEAD OF {outside} · {left} TO GO" },
+      { "say": "Fourth is {team}'s for now.", "show": "4TH {inside} · {gap} AHEAD OF {outside} · {left} TO GO" },
+      { "say": "{team} hold the last playoff place.", "show": "4TH {inside} · {gap} AHEAD OF {outside} · {left} TO GO" },
+      { "say": "The playoff line, then.", "show": "4TH {inside} · {gap} AHEAD OF {outside} · {left} TO GO" },
+      { "say": "Here's where the playoff race stands.", "show": "4TH {inside} · {gap} AHEAD OF {outside} · {left} TO GO" }
+    ] },
+    "standingsCutLevel": { "gesture": "open", "ways": [
+      { "say": "Fourth place is anyone's.", "show": "{inside} {points} · {outside} {points} · {left} TO PLAY" },
+      { "say": "Two sides level, fighting for fourth.", "show": "{inside} {points} · {outside} {points} · {left} TO PLAY" },
+      { "say": "It's level in the race for fourth.", "show": "{inside} {points} · {outside} {points} · {left} TO PLAY" }
+    ] },
+    "standingsBottom": { "gesture": "talk", "subject": "team", "ways": [
+      { "say": "Down at the bottom, {team}.", "show": "BOTTOM · {team} · {points} PTS" },
+      { "say": "Spare a thought for {team}.", "show": "BOTTOM · {team} · {points} PTS" },
+      { "say": "{team} prop up the table.", "show": "BOTTOM · {team} · {points} PTS" },
+      { "say": "And at the foot of the table.", "show": "BOTTOM · {team} · {points} PTS" },
+      { "say": "Propping up the table, sadly.", "show": "BOTTOM · {team} · {points} PTS" },
+      { "say": "Down at the bottom, it's tough going.", "show": "BOTTOM · {team} · {points} PTS" },
+      { "say": "A hard season at the bottom.", "show": "BOTTOM · {team} · {points} PTS" }
+    ] },
+    "standingsReact": { "gesture": "talk", "ways": [
+      { "say": "Plenty still to play for." },
+      { "say": "It's shaping up nicely." },
+      { "say": "Every point counts from here." },
+      { "say": "Still a long way to go." },
+      { "say": "It's tight in places." },
+      { "say": "The table's taking shape." },
+      { "say": "Lots of matches left." }
+    ] },
+    "standingsFinal": { "gesture": "point", "subject": "team", "ways": [
+      { "say": "The table's settled, and {team} finished top.", "show": "1ST · {team} · {points} PTS" },
+      { "say": "{team} topped the table.", "show": "1ST · {team} · {points} PTS" }
+    ] },
+    "standingsFinalFour": { "gesture": "open", "ways": [
+      { "say": "Here's the top four.", "show": "THE TOP FOUR · {teams}" },
+      { "say": "These four went into the playoffs.", "show": "THE TOP FOUR · {teams}" }
+    ] },
+    "standingsFinalBottom": { "gesture": "talk", "subject": "team", "ways": [
+      { "say": "{team} finished bottom.", "show": "BOTTOM · {team} · {points} PTS" },
+      { "say": "And {team} ended up bottom.", "show": "BOTTOM · {team} · {points} PTS" }
+    ] },
+    "standingsFinalReact": { "gesture": "talk", "ways": [
+      { "say": "What a season it's been." },
+      { "say": "Some table, that." }
+    ] },
+    "standingsEarly": { "gesture": "open", "ways": [
+      { "say": "No table to speak of yet: the season's only just begun." },
+      { "say": "Everyone's level on nothing so far." }
+    ] },
+    "scorersLeader": { "gesture": "point", "subject": "team", "ways": [
+      { "say": "The top scorer plays for {team}.", "show": "TOP SCORER · {player} · {team} · {goals}" },
+      { "say": "Here's who's leading the scoring.", "show": "TOP SCORER · {player} · {team} · {goals}", "not": ["settled", "semis", "finalSet", "done"] },
+      { "say": "Nobody has more goals than this one.", "show": "TOP SCORER · {player} · {team} · {goals}" },
+      { "say": "Top of the scoring charts.", "show": "TOP SCORER · {player} · {team} · {goals}" },
+      { "say": "The leading scorer, then.", "show": "TOP SCORER · {player} · {team} · {goals}" },
+      { "say": "The goals keep coming for this one.", "show": "TOP SCORER · {player} · {team} · {goals}", "not": ["settled", "semis", "finalSet", "done"] },
+      { "say": "Here's the league's top scorer.", "show": "TOP SCORER · {player} · {team} · {goals}" },
+      { "say": "Leading the way in goals.", "show": "TOP SCORER · {player} · {team} · {goals}", "not": ["settled", "semis", "finalSet", "done"] }
+    ] },
+    "scorersShared": { "gesture": "open", "ways": [
+      { "say": "It's level at the top of the scoring.", "show": "{player} · {other} · {goals} EACH" },
+      { "say": "Two players share the lead.", "show": "{player} · {other} · {goals} EACH", "not": ["settled", "semis", "finalSet", "done"] }
+    ] },
+    "scorersChasing": { "gesture": "open", "subject": "team", "ways": [
+      { "say": "The closest challenger plays for {team}.", "show": "NEXT · {player} · {team} · {goals} · {behind} BACK", "not": ["settled", "semis", "finalSet", "done"] },
+      { "say": "And here's who's chasing.", "show": "NEXT · {player} · {team} · {goals} · {behind} BACK", "not": ["settled", "semis", "finalSet", "done"] },
+      { "say": "Not far behind, one from {team}.", "show": "NEXT · {player} · {team} · {goals} · {behind} BACK", "not": ["settled", "semis", "finalSet", "done"] },
+      { "say": "Hot on their heels is this one.", "show": "NEXT · {player} · {team} · {goals} · {behind} BACK", "not": ["settled", "semis", "finalSet", "done"] },
+      { "say": "The chasing pack is led by this one.", "show": "NEXT · {player} · {team} · {goals} · {behind} BACK", "not": ["settled", "semis", "finalSet", "done"] },
+      { "say": "And second in the scoring.", "show": "NEXT · {player} · {team} · {goals} · {behind} BACK" },
+      { "say": "Close behind, here's the challenger.", "show": "NEXT · {player} · {team} · {goals} · {behind} BACK", "not": ["settled", "semis", "finalSet", "done"] },
+      { "say": "Not far off the pace.", "show": "NEXT · {player} · {team} · {goals} · {behind} BACK", "not": ["settled", "semis", "finalSet", "done"] },
+      { "say": "Second in the scoring, in the end.", "show": "NEXT · {player} · {team} · {goals} · {behind} BACK", "not": ["season"] },
+      { "say": "And the runner-up.", "show": "NEXT · {player} · {team} · {goals} · {behind} BACK", "not": ["season"] },
+      { "say": "Not far behind at the finish.", "show": "NEXT · {player} · {team} · {goals} · {behind} BACK", "not": ["season"] }
+    ] },
+    "scorersScorchers": { "gesture": "laugh", "ways": [
+      { "say": "Most scorchers? Hot stuff.", "show": "MOST SCORCHERS · {player} · {scorchers}" },
+      { "say": "Here's the scorcher specialist.", "show": "MOST SCORCHERS · {player} · {scorchers}" },
+      { "say": "Somebody likes it hot.", "show": "MOST SCORCHERS · {player} · {scorchers}" },
+      { "say": "The scorcher count makes good reading.", "show": "MOST SCORCHERS · {player} · {scorchers}" },
+      { "say": "Nobody's hit more scorchers.", "show": "MOST SCORCHERS · {player} · {scorchers}" },
+      { "say": "When the ball's hot, this one finishes.", "show": "MOST SCORCHERS · {player} · {scorchers}" },
+      { "say": "Top of the scorcher charts.", "show": "MOST SCORCHERS · {player} · {scorchers}" },
+      { "say": "Scorchers are this one's speciality.", "show": "MOST SCORCHERS · {player} · {scorchers}" }
+    ] },
+    "scorersReact": { "gesture": "talk", "ways": [
+      { "say": "Keep an eye on that race.", "not": ["settled", "semis", "finalSet", "done"] },
+      { "say": "The scoring race could go either way.", "not": ["settled", "semis", "finalSet", "done"] },
+      { "say": "Goals win games, as they say." },
+      { "say": "That's a tight race at the top.", "not": ["settled", "semis", "finalSet", "done"] },
+      { "say": "Who'll finish as top scorer?", "not": ["settled", "semis", "finalSet", "done"] },
+      { "say": "The Ember Boot is up for grabs.", "not": ["settled", "semis", "finalSet", "done"] },
+      { "say": "Goals are flying in this season." },
+      { "say": "Plenty of time to catch up.", "not": ["settled", "semis", "finalSet", "done"] },
+      { "say": "The Ember Boot is settled.", "not": ["season"] },
+      { "say": "What a season for goals.", "not": ["season"] },
+      { "say": "Some numbers, those.", "not": ["season"] },
+      { "say": "The playoffs start everyone from scratch.", "not": ["season", "done"] }
+    ] },
+    "scorersPlayoffs": { "gesture": "point", "ways": [
+      { "say": "And here's who's scoring in the playoffs.", "show": "PLAYOFF SCORERS · {player} · {team} · {goals}", "not": ["done"] }
+    ] },
+    "scorersPlayoffsDone": { "gesture": "point", "ways": [
+      { "say": "And the playoffs' top scorer.", "show": "PLAYOFF TOP SCORER · {player} · {team} · {goals}" },
+      { "say": "Here's who scored most in the playoffs.", "show": "PLAYOFF TOP SCORER · {player} · {team} · {goals}" }
+    ] },
+    "playoffsOtherSemi": { "gesture": "open", "ways": [
+      { "say": "They'll meet the winner of the other semifinal.", "show": "SEMIFINAL · {home} v {away} · {when}" },
+      { "say": "The other semifinal decides who they'll face.", "show": "SEMIFINAL · {home} v {away} · {when}" }
+    ] },
+    "playoffsFinalSet": { "gesture": "both", "ways": [
+      { "say": "So the final is set.", "show": "THE FINAL · {home} v {away} · {when}" },
+      { "say": "And that's our final.", "show": "THE FINAL · {home} v {away} · {when}" }
+    ] },
+    "playoffsReact": { "gesture": "talk", "ways": [
+      { "say": "It's going to be some final.", "not": ["done"] },
+      { "say": "Everything comes down to one match.", "not": ["semis", "done"] },
+      { "say": "I can't wait for this one.", "not": ["done"] },
+      { "say": "One down, one to go.", "not": ["settled", "finalSet", "done"] },
+      { "say": "Now for the other semifinal.", "not": ["settled", "finalSet", "done"] }
+    ] },
+    "seasonDoneReact": { "gesture": "talk", "ways": [
+      { "say": "What a way to end the season." },
+      { "say": "A season to remember." },
+      { "say": "Now the wait for next season begins." }
+    ] },
+    "scorersFinal": { "gesture": "point", "subject": "team", "ways": [
+      { "say": "The season's top scorer played for {team}.", "show": "TOP SCORER · {player} · {team} · {goals}" },
+      { "say": "Here's who finished top of the scoring.", "show": "TOP SCORER · {player} · {team} · {goals}" },
+      { "say": "Here's who finished as top scorer.", "show": "TOP SCORER · {player} · {team} · {goals}" },
+      { "say": "Nobody scored more this season.", "show": "TOP SCORER · {player} · {team} · {goals}" },
+      { "say": "The regular season's top scorer.", "show": "TOP SCORER · {player} · {team} · {goals}" },
+      { "say": "Top of the scoring when it mattered.", "show": "TOP SCORER · {player} · {team} · {goals}" }
+    ] },
+    "scorersNone": { "gesture": "open", "ways": [
+      { "say": "Nobody's on the scoresheet yet this season." },
+      { "say": "No goals yet. That'll change soon." }
+    ] },
+    "upcomingIntro": { "gesture": "point", "ways": [
+      { "say": "Here's what's coming up." },
+      { "say": "A look at the next few games." },
+      { "say": "Let's look ahead." },
+      { "say": "What's next on the schedule?" },
+      { "say": "Here are the next few matches." },
+      { "say": "Coming up on the channel." },
+      { "say": "Let's see what's on next." },
+      { "say": "Here's what we've got coming." },
+      { "say": "The schedule, then." }
+    ] },
+    "upcomingFirst": { "gesture": "open", "subject": "home", "ways": [
+      { "say": "First, {team} at home.", "show": "{when} · {home} v {away}" },
+      { "say": "Next up, it's {team}.", "show": "{when} · {home} v {away}" },
+      { "say": "First up, this one.", "show": "{when} · {home} v {away}" },
+      { "say": "To start with, this.", "show": "{when} · {home} v {away}" },
+      { "say": "Coming up first.", "show": "{when} · {home} v {away}" },
+      { "say": "The next match is this one.", "show": "{when} · {home} v {away}" },
+      { "say": "First on the list.", "show": "{when} · {home} v {away}" }
+    ] },
+    "upcomingThen": { "gesture": "talk", "subject": "home", "ways": [
+      { "say": "Then {team} at home.", "show": "{when} · {home} v {away}" },
+      { "say": "After that, {team} play host.", "show": "{when} · {home} v {away}" },
+      { "say": "And then it's {team}.", "show": "{when} · {home} v {away}" },
+      { "say": "Then this one.", "show": "{when} · {home} v {away}" },
+      { "say": "After that, this.", "show": "{when} · {home} v {away}" },
+      { "say": "And following that.", "show": "{when} · {home} v {away}" },
+      { "say": "Later on, this one.", "show": "{when} · {home} v {away}" },
+      { "say": "Then there's this.", "show": "{when} · {home} v {away}" },
+      { "say": "Next in line.", "show": "{when} · {home} v {away}" },
+      { "say": "Then we have this one.", "show": "{when} · {home} v {away}" },
+      { "say": "And after that one.", "show": "{when} · {home} v {away}" },
+      { "say": "Keep an eye on this one, too.", "show": "{when} · {home} v {away}" },
+      { "say": "This one comes after.", "show": "{when} · {home} v {away}" },
+      { "say": "Then it's this fixture.", "show": "{when} · {home} v {away}" }
+    ] },
+    "upcomingSemi": { "gesture": "open", "subject": "home", "ways": [
+      { "say": "A semifinal, with {team} at home.", "show": "SEMIFINAL · {when} · {home} v {away}" },
+      { "say": "Semifinal time for {team}.", "show": "SEMIFINAL · {when} · {home} v {away}" },
+      { "say": "Here's a semifinal.", "show": "SEMIFINAL · {when} · {home} v {away}" }
+    ] },
+    "upcomingFinal": { "gesture": "both", "subject": "home", "ways": [
+      { "say": "The final, with {team} at home!", "show": "THE FINAL · {when} · {home} v {away}" },
+      { "say": "{team} host the final!", "show": "THE FINAL · {when} · {home} v {away}" }
+    ] },
+    "upcomingTbc": { "gesture": "talk", "ways": [
+      { "say": "Teams still to be decided.", "show": "{stage} · {when} · TEAMS TBC" },
+      { "say": "Who'll be in it? We'll see.", "show": "{stage} · {when} · TEAMS TBC" }
+    ] },
+    "upcomingNewSeason": { "gesture": "both", "ways": [
+      { "say": "A new season is on the way.", "show": "SEASON {season} STARTS · {when}" },
+      { "say": "Mark it down: the new season kicks off soon.", "show": "SEASON {season} STARTS · {when}" }
+    ] },
+    "upcomingQuiet": { "gesture": "talk", "ways": [
+      { "say": "Until then, the best of the season." },
+      { "say": "Plenty of replays till then." }
+    ] },
+    "teeUpMatch": { "gesture": "both", "subject": "home", "ways": [
+      { "say": "Coming up: {team}, live.", "show": "{home} v {away} · LIVE NEXT" },
+      { "say": "Next, it's {team} at home.", "show": "{home} v {away} · LIVE NEXT" },
+      { "say": "{team} are live, next.", "show": "{home} v {away} · LIVE NEXT" },
+      { "say": "Here's what's live next.", "show": "{home} v {away} · LIVE NEXT" }
+    ] },
+    "teeUpSemi": { "gesture": "both", "subject": "home", "ways": [
+      { "say": "A place in the final at stake, with {team} at home.", "show": "SEMIFINAL · {home} v {away}" },
+      { "say": "Semifinal time, and {team} are at home.", "show": "SEMIFINAL · {home} v {away}" }
+    ] },
+    "teeUpFinal": { "gesture": "both", "subject": "home", "ways": [
+      { "say": "This is it: the final. {team} are at home.", "show": "THE FINAL · {home} v {away}" },
+      { "say": "The final, next, with {team} at home.", "show": "THE FINAL · {home} v {away}" }
+    ] },
+    "teeUpRound": { "gesture": "both", "ways": [
+      { "say": "Final day! All the matches kick off at once.", "show": "{n} MATCHES · ONE KICK-OFF" },
+      { "say": "It's the final round: every match at the same time.", "show": "{n} MATCHES · ONE KICK-OFF" }
+    ] },
+    "teeUpFeatured": { "gesture": "point", "subject": "home", "ways": [
+      { "say": "We'll start with {team}.", "show": "{home} v {away}" },
+      { "say": "Our main match has {team} at home.", "show": "{home} v {away}" }
+    ] },
+    "teeUpPlaces": { "gesture": "point", "ways": [
+      { "say": "Here's how they stand.", "show": "{home} {homePlace} · {away} {awayPlace}" },
+      { "say": "A look at the table first.", "show": "{home} {homePlace} · {away} {awayPlace}" },
+      { "say": "Where they sit in the table.", "show": "{home} {homePlace} · {away} {awayPlace}" },
+      { "say": "First, the table.", "show": "{home} {homePlace} · {away} {awayPlace}" }
+    ] },
+    "teeUpForm": { "gesture": "open", "ways": [
+      { "say": "And their form coming in.", "show": "{home} {homeWins} IN {homeN} · {away} {awayWins} IN {awayN}" },
+      { "say": "Here's the form guide.", "show": "{home} {homeWins} IN {homeN} · {away} {awayWins} IN {awayN}" },
+      { "say": "How they've been doing lately.", "show": "{home} {homeWins} IN {homeN} · {away} {awayWins} IN {awayN}" }
+    ] },
+    "teeUpWatch": { "gesture": "point", "subject": "team", "ways": [
+      { "say": "One to watch for {team}.", "show": "{player} · {goals} THIS SEASON" },
+      { "say": "Keep an eye on this one from {team}.", "show": "{player} · {goals} THIS SEASON" },
+      { "say": "One player to keep an eye on.", "show": "{player} · {goals} THIS SEASON" },
+      { "say": "Watch out for this one.", "show": "{player} · {goals} THIS SEASON" }
+    ] },
+    "teeUpKickoff": { "gesture": "both", "ways": [
+      { "say": "Kick-off in five minutes." },
+      { "say": "We're five minutes from kick-off. Stay with us." },
+      { "say": "Five minutes to kick-off." },
+      { "say": "Not long now. Kick-off in five." }
+    ] },
+    "welcomeHello": { "gesture": "open", "ways": [
+      { "say": "Hello, and welcome to Scorchball.", "show": "{day}" },
+      { "say": "Welcome to Scorchball.", "show": "{day}" },
+      { "say": "Hello, everyone, and this is Scorchball.", "show": "{day}" },
+      { "say": "Welcome along to Scorchball.", "show": "{day}" },
+      { "say": "Good to have you with us. This is Scorchball.", "show": "{day}" },
+      { "say": "Hello, and welcome to another day of Scorchball.", "show": "{day}" }
+    ] },
+    "welcomeRound": { "gesture": "point", "ways": [
+      { "say": "The season rolls on today.", "show": "SEASON {season} · ROUND {round}" },
+      { "say": "Another round of matches today.", "show": "SEASON {season} · ROUND {round}" },
+      { "say": "The league is back in action today.", "show": "SEASON {season} · ROUND {round}" },
+      { "say": "More of the season today.", "show": "SEASON {season} · ROUND {round}" }
+    ] },
+    "welcomeSeasonStart": { "gesture": "both", "ways": [
+      { "say": "A new season starts today!", "show": "SEASON {season} · DAY ONE" },
+      { "say": "It's the first day of the season!", "show": "SEASON {season} · DAY ONE" }
+    ] },
+    "welcomeFinalRound": { "gesture": "both", "ways": [
+      { "say": "It's the final round: every match at once.", "show": "FINAL ROUND · {n} MATCHES" },
+      { "say": "Final day of the season, all at the same time.", "show": "FINAL ROUND · {n} MATCHES" }
+    ] },
+    "welcomeSemis": { "gesture": "both", "ways": [
+      { "say": "It's playoffs day: the semifinals are on." },
+      { "say": "Semifinal day, everyone. Four teams, two places in the final." }
+    ] },
+    "welcomeFinal": { "gesture": "both", "subject": "home", "ways": [
+      { "say": "It's final day, and {team} host it.", "show": "THE FINAL · {home} v {away}" },
+      { "say": "The final is today, with {team} at home.", "show": "THE FINAL · {home} v {away}" }
+    ] },
+    "welcomeToday": { "gesture": "point", "subject": "home", "ways": [
+      { "say": "Live matches today, starting with {team}.", "show": "{n} LIVE TODAY · FIRST {home} v {away} · {when}" },
+      { "say": "First up today, {team} at home.", "show": "{n} LIVE TODAY · FIRST {home} v {away} · {when}" },
+      { "say": "We start today with {team} at home.", "show": "{n} LIVE TODAY · FIRST {home} v {away} · {when}" },
+      { "say": "Our first match today: {team} at home.", "show": "{n} LIVE TODAY · FIRST {home} v {away} · {when}" }
+    ] },
+    "welcomeTodayOne": { "gesture": "point", "subject": "home", "ways": [
+      { "say": "One live match today, with {team} at home.", "show": "LIVE TODAY · {home} v {away} · {when}" },
+      { "say": "Just the one today: {team} at home.", "show": "LIVE TODAY · {home} v {away} · {when}" }
+    ] },
+    "welcomeLeader": { "gesture": "talk", "subject": "team", "ways": [
+      { "say": "{team} lead the table.", "show": "1ST · {team} · {points} PTS" },
+      { "say": "At the top, {team}.", "show": "1ST · {team} · {points} PTS" },
+      { "say": "{team} are top of the table.", "show": "1ST · {team} · {points} PTS" },
+      { "say": "{team} are the team to catch.", "show": "1ST · {team} · {points} PTS" }
+    ] },
+    "factRematch": { "gesture": "point", "subject": "team", "ways": [
+      { "say": "Last season's finalists, and {team} have done it again.", "show": "{team} BEAT {opponent} · LAST SEASON'S FINAL AGAIN" },
+      { "say": "A repeat of the final, and the same winners: {team}.", "show": "{team} BEAT {opponent} · LAST SEASON'S FINAL AGAIN" }
+    ] },
+    "factRematchRevenge": { "gesture": "both", "subject": "team", "ways": [
+      { "say": "Revenge for {team}, after losing last season's final.", "show": "{team} BEAT {opponent} · REVENGE FOR THE FINAL" },
+      { "say": "{team} have paid them back for that final.", "show": "{team} BEAT {opponent} · REVENGE FOR THE FINAL" }
+    ] },
+    "factFirstWinOver": { "gesture": "both", "subject": "team", "ways": [
+      { "say": "{team} have finally got the better of them.", "show": "{team} · FIRST WIN OVER {opponent} IN {n} MEETINGS" },
+      { "say": "At long last, a win over that lot for {team}.", "show": "{team} · FIRST WIN OVER {opponent} IN {n} MEETINGS" },
+      { "say": "That's a long-awaited win, that one.", "show": "{team} · FIRST WIN OVER {opponent} IN {n} MEETINGS" }
+    ] },
+    "factWinlessEnded": { "gesture": "both", "subject": "team", "ways": [
+      { "say": "A win at last for {team}.", "show": "{team} · FIRST WIN IN {n} MATCHES" },
+      { "say": "That's been coming: a win for {team}.", "show": "{team} · FIRST WIN IN {n} MATCHES" },
+      { "say": "What a relief that will be.", "show": "{team} · FIRST WIN IN {n} MATCHES" }
+    ] },
+    "factFirstFinal": { "gesture": "both", "subject": "team", "ways": [
+      { "say": "{team} are in a final for the first time!", "show": "{team} · THEIR FIRST FINAL" },
+      { "say": "A first ever final for {team}.", "show": "{team} · THEIR FIRST FINAL" }
+    ] },
+    "factFinalDrought": { "gesture": "both", "subject": "team", "ways": [
+      { "say": "{team} are back in a final, after a long wait.", "show": "{team} · FIRST FINAL IN {n} SEASONS" },
+      { "say": "It's been a while since {team} reached one of these.", "show": "{team} · FIRST FINAL IN {n} SEASONS" }
+    ] },
+    "factFinalsInARow": { "gesture": "point", "subject": "team", "ways": [
+      { "say": "Another final for {team}. They just keep getting there.", "show": "{team} · {n} FINALS IN A ROW" },
+      { "say": "{team} make the final again.", "show": "{team} · {n} FINALS IN A ROW" }
+    ] },
+    "factFirstCup": { "gesture": "both", "subject": "team", "ways": [
+      { "say": "History for {team}: the Cup, for the first time.", "show": "{team} · THEIR FIRST SCORCH CUP" },
+      { "say": "{team} have won the Cup at last.", "show": "{team} · THEIR FIRST SCORCH CUP" }
+    ] },
+    "factCupDrought": { "gesture": "both", "subject": "team", "ways": [
+      { "say": "The long wait is over for {team}.", "show": "{team} · FIRST CUP IN {n} SEASONS" },
+      { "say": "{team} fans have waited a long time for this.", "show": "{team} · FIRST CUP IN {n} SEASONS" }
+    ] },
+    "factCupsInARow": { "gesture": "both", "subject": "team", "ways": [
+      { "say": "{team} do it again. Champions once more.", "show": "{team} · {n} CUPS IN A ROW" },
+      { "say": "Nobody can stop {team} right now.", "show": "{team} · {n} CUPS IN A ROW" }
+    ] },
+    "factDynasty": { "gesture": "point", "subject": "team", "ways": [
+      { "say": "{team} are a dynasty now.", "show": "{team} · {n} CUPS IN {seasons} SEASONS" },
+      { "say": "{team} are the team of the era.", "show": "{team} · {n} CUPS IN {seasons} SEASONS" }
+    ] },
+    "factMilestone": { "gesture": "both", "namedShare": 0.67, "ways": [
+      { "say": "A landmark there, too.", "show": "{player} · {milestone}" },
+      { "say": "And a milestone reached in that one.", "show": "{player} · {milestone}" },
+      { "say": "A landmark for {surname}.", "show": "{player} · {milestone}" }
+    ] },
+    "factRecord": { "gesture": "both", "ways": [
+      { "say": "And a record has fallen!", "show": "{player} · {record}" },
+      { "say": "History made: a new record.", "show": "{player} · {record}" },
+      { "say": "A new record for {surname}!", "show": "{player} · {record}" }
+    ] },
+    "factBackFromInjury": { "gesture": "open", "ways": [
+      { "say": "Back from injury, and straight into the action.", "show": "{player} · BACK AFTER {n} MATCHES OUT" },
+      { "say": "What a return from injury that was.", "show": "{player} · BACK AFTER {n} MATCHES OUT" }
+    ] },
+    "factOldClubLetGo": { "gesture": "point", "subject": "opponent", "ways": [
+      { "say": "{team} let that one go, and they've paid for it.", "show": "{player} BEATS {opponent} · {n} SEASONS THERE" },
+      { "say": "A point proved against an old club.", "show": "{player} BEATS {opponent} · {n} SEASONS THERE" },
+      { "say": "{surname} got one over the old club.", "show": "{player} BEATS {opponent} · {n} SEASONS THERE" }
+    ] },
+    "factOldClubLeft": { "gesture": "point", "subject": "opponent", "ways": [
+      { "say": "Beaten by a former player, {team}.", "show": "{player} BEATS {opponent} · {n} SEASONS THERE" },
+      { "say": "An old favourite comes back to haunt them.", "show": "{player} BEATS {opponent} · {n} SEASONS THERE" }
+    ] },
+    "factLikelyLast": { "gesture": "open", "ways": [
+      { "say": "That may have been the last we see of a fine career.", "show": "{player} · {n} SEASONS · RETIRING?" },
+      { "say": "If that was goodbye, what a career it's been.", "show": "{player} · {n} SEASONS · RETIRING?" },
+      { "say": "Was that the last we'll see of {surname}?", "show": "{player} · {n} SEASONS · RETIRING?" }
+    ] },
+    "factOneMore": { "gesture": "both", "ways": [
+      { "say": "We thought they'd hang up the boots, but no.", "show": "{player} · BACK FOR SEASON {n}" },
+      { "say": "One more season for an old favourite.", "show": "{player} · BACK FOR SEASON {n}" }
+    ] },
+    "factScorcherDecider": { "gesture": "both", "subject": "team", "ways": [
+      { "say": "And a scorcher settled it, late on.", "show": "{player} · LATE SCORCHER · {minute}" },
+      { "say": "Red hot at the death for {team}.", "show": "{player} · LATE SCORCHER · {minute}" }
+    ] },
+    "factMomentumDecider": { "gesture": "point", "subject": "team", "ways": [
+      { "say": "{team} rode the momentum all the way.", "show": "{team} · SCORED ON MOMENTUM · {minute}" },
+      { "say": "Once {team} had the momentum, they made it count.", "show": "{team} · SCORED ON MOMENTUM · {minute}" }
+    ] },
+    "teeUpRematch": { "gesture": "point", "ways": [
+      { "say": "A rematch of last season's final, this.", "show": "LAST SEASON'S FINAL · {winner} WON IT" },
+      { "say": "These two met in the final last season.", "show": "LAST SEASON'S FINAL · {winner} WON IT" }
+    ] },
+    "teeUpRunOver": { "gesture": "point", "subject": "team", "ways": [
+      { "say": "{team} have won the last few between these two.", "show": "{team} · {n} WINS IN A ROW OVER {opponent}" },
+      { "say": "{team} have had the better of this one lately.", "show": "{team} · {n} WINS IN A ROW OVER {opponent}" }
+    ] },
+    "teeUpOldClub": { "gesture": "open", "ways": [
+      { "say": "A reunion for one player here.", "show": "{player} FACES {opponent} · {n} SEASONS THERE" },
+      { "say": "Somebody's facing an old club for the first time.", "show": "{player} FACES {opponent} · {n} SEASONS THERE" },
+      { "say": "{surname} faces the old club for the first time.", "show": "{player} FACES {opponent} · {n} SEASONS THERE" }
+    ] },
+    "interviewTeeUpNamed": { "gesture": "open", "namedShare": 0.67, "ways": [
+      { "say": "Our player of the match, {surname}.", "show": "PLAYER OF THE MATCH · {player} · {team}" }
+    ] }
+  }
+}

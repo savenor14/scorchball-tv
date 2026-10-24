@@ -1,0 +1,28 @@
+{
+  "_comment": "The tour (Milestone 5⅞; docs/channel.md §26; Tom's picks on tour.html, 2026-10-13): offered once, on a first visit, by the welcome; then the steps, each pointing at one thing on screen (target: scorebug, layout, side, schedule, audience, info), the rest of the screen dimmed. notice: the step shows an example MOMENTS ticket under the scorebug. coins: shown only while Fan Coins are on (settings.fanCoins.enabled; the tour, round 2, Tom 2026-10-17). phone: the phone's own steps (Tom: fewer), pointing at its buttons in the bands (target: scorebug, buttons the right band, audience, close INFO and the layout); the welcome is the same. infoIcon in the welcome's small print: INFO's own icon goes before the word INFO.",
+  "welcome": {
+    "title": "WELCOME TO SCORCHBALL TV",
+    "text": "A made-up sport, played live around the clock. New here? Take a one-minute look around.",
+    "take": "TAKE THE TOUR",
+    "skip": "NO THANKS",
+    "small": "Or find it all later in INFO, under GUIDE."
+  },
+  "steps": [
+    { "target": "scorebug", "title": "THE SCOREBUG", "text": "LIVE means it's happening right now. Between live matches the channel shows REPLAYS and HIGHLIGHTS. The strip underneath is the heat meter: how hot the ball is. It acts as a shot clock." },
+    { "target": "layout", "title": "FULL OR BROADCAST", "text": "This switch (B) swaps the stats and panels for an immersive broadcast view, with the stands and the crowd." },
+    { "target": "side", "title": "THE SIDE PANEL", "text": "The match as it happens, the table, the top scorers and the week. Select any player or team for their card." },
+    { "target": "schedule", "title": "WHAT'S ON", "text": "SCHEDULE (V) lists the whole day. Live matches are marked in red." },
+    { "target": "audience", "title": "MOMENTS", "text": "Everything you watch live counts: goals, scorchers, interviews, whole matches. Each levels up the more you see it, and a ticket like the one in the upper left corner pops up when it does. Find them all in AUDIENCE (A).", "notice": true },
+    { "target": "audience", "title": "FAN COINS", "text": "Watching earns Fan Coins, fastest in live matches and the off-season show. Spend them on chants, flags, the ticker and more, in AUDIENCE (A) under COINS.", "coins": true },
+    { "target": "info", "title": "THAT'S IT", "text": "All of this is in INFO, under GUIDE (I). Enjoy Scorchball!" }
+  ],
+  "phone": {
+    "steps": [
+      { "target": "scorebug", "title": "THE SCOREBUG", "text": "LIVE means it's happening right now. Between live matches the channel shows REPLAYS and HIGHLIGHTS. The strip underneath is the heat meter: how hot the ball is. It acts as a shot clock." },
+      { "target": "buttons", "title": "THE BUTTONS", "text": "The match, the table, the top scorers and the week; then the day's SCHEDULE (live matches in red), the RULEBOOK and the CHRONICLE. Tap a dotted name for its card." },
+      { "target": "audience", "title": "MOMENTS", "text": "Everything you watch live counts: goals, scorchers, interviews, whole matches. Each levels up the more you see it, and a ticket like the one in the corner pops up when it does. Find them all in AUDIENCE.", "notice": true },
+      { "target": "audience", "title": "FAN COINS", "text": "Watching earns Fan Coins, fastest in live matches and the off-season show. Spend them on chants, flags, the ticker and more, in AUDIENCE under COINS.", "coins": true },
+      { "target": "close", "title": "THAT'S IT", "text": "BROADCAST, bottom left, swaps the panels for the stands and the crowd. All of this is in INFO, under GUIDE. Enjoy Scorchball!" }
+    ]
+  }
+}

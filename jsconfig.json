@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "nodenext",
+    "target": "es2024",
+    "checkJs": true,
+    "strict": true,
+    "noEmit": true
+  },
+  "include": ["src/**/*.js", "tests/**/*.js"]
+}

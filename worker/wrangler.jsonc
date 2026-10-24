@@ -1,0 +1,13 @@
+// The audience service (the launch, Task 276; docs/live.md §7): a Cloudflare Worker on scorchball.tv/api/audience/*,
+// with a D1 database. Deployed with npm run worker. Its secrets (VOTE_SALT, DIRECTOR_TOKEN) are set with
+// wrangler secret put, never written here.
+{
+  "name": "scorchball-audience",
+  "main": "audience.js",
+  "compatibility_date": "2026-09-01",
+  "routes": [{ "pattern": "scorchball.tv/api/audience/*", "zone_name": "scorchball.tv" }],
+  "d1_databases": [
+    { "binding": "DB", "database_name": "scorchball-audience", "database_id": "f66bc188-9f28-48b6-afcb-02ff3ed1fe76", "migrations_dir": "migrations" }
+  ],
+  "observability": { "enabled": true }
+}

@@ -1,0 +1,4 @@
+{
+  "_comment": "Proposals Tom rejected on the Director's desk (Task 264; docs/director.md §8), oldest first. A rejected rule change silences its watcher until its measure has come back inside the band at least once (Tom, 2026-10-11); a rejected poll result is never proposed again. id: the proposal's; kind: rule_change or poll_result; watcher: the rule change's watcher (left out for a poll); finished: the last finished season when rejected; rejected: when (ISO); summary: what was proposed, in a line; note: Tom's (left out without one). Written by the desk; the REJECTIONS tab shows the history.",
+  "rejections": []
+}

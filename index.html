@@ -1,0 +1,1046 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scorchball TV</title>
+  <!-- The icon and the link's preview (Task 277): assets/icon/ (npm run icon; og.png drawn by og.html). -->
+  <meta name="description" content="An invented sport played around the clock by the eight clubs of the Scorch League, live in pixel art: the matches, the studio, the ads, and a history that remembers every one.">
+  <link rel="icon" href="assets/icon/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icon/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/icon/icon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#151924">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Scorchball TV">
+  <meta property="og:title" content="Scorchball TV">
+  <meta property="og:description" content="An invented sport, played around the clock by the Scorch League. Live in pixel art, 24/7.">
+  <meta property="og:url" content="https://scorchball.tv/">
+  <meta property="og:image" content="https://scorchball.tv/assets/icon/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <style>
+    /* VT323, SIL Open Font License 1.1: see assets/fonts/OFL.txt */
+    @font-face {
+      font-family: 'VT323';
+      src: url('assets/fonts/VT323.ttf') format('truetype');
+      font-display: block;
+    }
+
+    /* Colours are set as CSS variables from src/channel/palette.js at boot; these are fallbacks. */
+    :root { --backdrop: #0b0c10; }
+    html, body { margin: 0; height: 100%; background: var(--backdrop); overflow: hidden; }
+    /* The bars either side of the picture on a desktop window wider (or taller) than 16:9 (Tom's pick D on bars.html,
+       2026-10-18): the panels' night blue, a thin edge a stage pixel off the picture. The phone keeps its black bands.
+       Only once the first picture is drawn (body.on-air, main.js), so TUNING IN and the picture's first frame come up on
+       black as before and everything appears together. The palette's variables arrive with the script (applyPalette),
+       so the colours are here too. */
+    html:has(body.on-air:not(.phone)), body.on-air:not(.phone) { background: var(--panel, #151924); }
+    body.on-air:not(.phone) #stage { box-shadow: 0 0 0 var(--px) var(--panel, #151924), 0 0 0 calc(var(--px) * 2) var(--panel-edge, #2c3345); }
+    body { display: grid; place-items: center; }
+    /* The loading card (Task 227, Tom): up from the first paint while the league is rebuilt from its seed (docs/channel.md
+       §3), gone once the stage shows. Before the palette is applied, so the colours are written out (accent, panel). */
+    #loading { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; font-family: 'VT323', monospace; }
+    #loading[hidden] { display: none; }
+    #loading .tag { background: var(--accent, #ff8f1c); color: var(--panel, #151924); font-weight: 700; font-size: 32px; padding: 2px 14px; }
+    #loading .msg { color: var(--accent, #ff8f1c); font-size: 22px; animation: loading-blink 1.2s steps(2, jump-none) infinite; }
+    @keyframes loading-blink { 50% { opacity: 0.35; } }
+    /* Before season 1 (Task 275): when it starts and the countdown, under the blinking title. */
+    #loading .when { color: var(--accent, #ff8f1c); font-size: 20px; }
+
+    /* Everything inside the stage is sized in stage pixels: calc(var(--px) * N). */
+    #stage {
+      --px: 1px;
+      position: relative;
+      font-family: 'VT323', ui-monospace, monospace;
+      font-synthesis: none; /* VT323 has one weight: no smeared fake bold */
+      font-size: calc(var(--px) * 10);
+      line-height: 1;
+      color: var(--panel-ink);
+      -webkit-font-smoothing: none;
+      user-select: none;
+    }
+    #pitch { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; }
+    /* The graphics' text, sharp at the screen's own resolution over the scaled-up picture (Task 200; sharpText.js). */
+    #sharp { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .overlay { position: absolute; }
+    .panel { background: var(--panel); box-shadow: 0 0 0 var(--px) var(--panel-edge); }
+
+    /* The broadcast frame (Task 31, layout C): plates on the screen edges. Top left: the scorebug, then (final round)
+       the match picker, in one row; under them the heat strip runs the width of the pitch area. Bottom: the caption
+       (left) and goal alerts (right) sit on the ticker. The right-hand column is the stats panel (Task 32). */
+    #topbar { left: 0; top: 0; width: calc(var(--px) * 394); height: calc(var(--px) * 18); display: flex; align-items: stretch; gap: calc(var(--px) * 4); }
+    #scorebug { position: relative; display: flex; align-items: stretch; height: 100%; }
+    /* Narrow enough that the ad still beside it in Full (strips.js) always fits: 3 px a side, and no wider clock than
+       "1H 10:42" (the widest playoff scorebug, HIGHLIGHTS FINAL, ends by 210; Tom, after Groundwork). */
+    #scorebug > div { display: flex; align-items: center; padding: 0 calc(var(--px) * 3); }
+    #bug { font-weight: 700; background: var(--live); color: #fff; }
+    #bug.replay { background: var(--replay); }
+    #bug.next { background: var(--panel-edge); }
+    #stage-label { color: var(--accent); font-weight: 700; }
+    #stage-label:empty { display: none !important; }
+    .team { gap: calc(var(--px) * 3); }
+    /* Kit swatches get a faint light outline so dark kits (the Stormcrows) still show on the dark panels. */
+    .kit { width: calc(var(--px) * 4); height: calc(var(--px) * 8); box-shadow: inset calc(var(--px) * -1) 0 0 var(--kit2, transparent); outline: max(1px, calc(var(--px) * 0.5)) solid rgb(255 255 255 / 0.3); }
+    #score { font-weight: 700; justify-content: center; }
+    #clock { color: var(--panel-ink); min-width: calc(var(--px) * 31); justify-content: center; gap: calc(var(--px) * 3); }
+    #period { color: var(--panel-ink); }
+    /* The clock is stopped for a goal or substitution: it blinks, like a stadium clock. */
+    #time.stopped { animation: clock-stopped 1s steps(1) infinite; }
+    @keyframes clock-stopped { 50% { visibility: hidden; } }
+    /* The heat strip: a thin bar along the scorebug's bottom edge, in the ball's colour. */
+    #heat-strip { position: absolute; left: 0; right: 0; bottom: calc(var(--px) * -2); height: calc(var(--px) * 2); background: var(--panel-edge); }
+    #heat-fill { height: 100%; width: 0; background: var(--heat-cool); }
+
+    /* Lower-third caption (just below the pitch) */
+    #caption { left: 0; top: calc(var(--px) * 238); height: calc(var(--px) * 18); display: flex; align-items: stretch; transition: none; }
+    #caption[hidden] { display: none; }
+    #caption-stripe { width: calc(var(--px) * 4); }
+    #caption-title { display: flex; align-items: center; padding: 0 calc(var(--px) * 6); font-weight: 700; font-size: calc(var(--px) * 12); color: var(--accent); }
+    #caption-detail { display: flex; align-items: center; padding: 0 calc(var(--px) * 8) 0 0; color: var(--panel-ink); }
+    #caption.scorcher #caption-title { color: var(--heat-hot); text-shadow: 0 0 calc(var(--px) * 2) var(--heat-warm); }
+    #caption.golden #caption-title, #caption.record #caption-title { color: var(--accent); text-shadow: 0 0 calc(var(--px) * 2) color-mix(in srgb, var(--accent) 55%, #000); }
+    #caption.burn #caption-title { color: var(--heat-orange); }
+    #caption.period #caption-title, #caption.shootout #caption-title { color: var(--panel-ink); }
+
+    /* The side panel right of the pitch (Task 32): tabs on top, the chosen view below, all within the column. */
+    #side-tabs { left: calc(var(--px) * 394); top: 0; width: calc(var(--px) * 86); height: calc(var(--px) * 18); display: flex; }
+    .side-tab { all: unset; cursor: pointer; flex: auto; display: flex; align-items: center; justify-content: center; padding: 0 calc(var(--px) * 1); font-size: calc(var(--px) * 7); color: var(--panel-muted); white-space: nowrap; }
+    .side-tab.on { background: var(--accent); color: var(--panel); }
+    #side { left: calc(var(--px) * 394); top: calc(var(--px) * 20); width: calc(var(--px) * 86); height: calc(var(--px) * 218); box-sizing: border-box; padding: calc(var(--px) * 3) calc(var(--px) * 4); font-size: calc(var(--px) * 9); overflow: hidden; }
+    #side [hidden] { display: none !important; }
+    #side p { margin: 0; }
+    .side-status { color: var(--accent); font-weight: 700; margin-bottom: calc(var(--px) * 3) !important; }
+    .side-status.is-live { color: var(--live); }
+    .side-status.is-replay { color: var(--replay); }
+    .side-status:has(+ .side-played) { margin-bottom: 0 !important; }
+    .side-played { color: var(--panel-muted); margin-bottom: calc(var(--px) * 3) !important; }
+    .side-head, .side-row { display: grid; grid-template-columns: 1fr calc(var(--px) * 22) calc(var(--px) * 22); align-items: center; }
+    .side-head { color: var(--panel-ink); padding-bottom: calc(var(--px) * 2); margin-bottom: calc(var(--px) * 2); border-bottom: var(--px) solid var(--panel-edge); }
+    .side-head span, .side-row span { text-align: right; white-space: nowrap; }
+    .side-head .kit, .side-goal .kit, .side-list .kit { display: inline-block; width: calc(var(--px) * 3); height: calc(var(--px) * 6); vertical-align: middle; }
+    .side-row { line-height: calc(var(--px) * 11); }
+    .side-row .label { text-align: left; color: var(--panel-muted); }
+    /* The score, first and in amber (Groundwork): between matches the panel shows how the last one ended. */
+    .side-row.goals span { color: var(--accent); font-weight: 700; }
+    .side-sub { color: var(--panel-muted); font-size: calc(var(--px) * 8); margin: calc(var(--px) * 5) 0 calc(var(--px) * 2) !important; }
+    .side-sub.side-playoffs { color: var(--accent); margin-top: calc(var(--px) * 8) !important; }
+    /* The stats view fills the panel; the goals list takes the rest and scrolls, with a thin scrollbar, once it's too long. */
+    #side-stats { height: 100%; display: flex; flex-direction: column; }
+    .side-goals { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--panel-edge) transparent; padding-right: calc(var(--px) * 1); }
+    .side-goals::-webkit-scrollbar { width: calc(var(--px) * 2); }
+    .side-goals::-webkit-scrollbar-thumb { background: var(--panel-edge); }
+    .side-goals::-webkit-scrollbar-track { background: transparent; }
+    .side-goal { font-size: calc(var(--px) * 8); line-height: calc(var(--px) * 10); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .side-goal.scorcher { color: var(--heat-orange); }
+    .side-goal .min { color: var(--panel-muted); }
+    .side-empty { color: var(--panel-muted); }
+    .side-list { display: grid; grid-template-columns: calc(var(--px) * 9) calc(var(--px) * 5) 1fr calc(var(--px) * 9); align-items: center; line-height: calc(var(--px) * 11); font-size: calc(var(--px) * 8); }
+    .side-list .pos { color: var(--panel-muted); }
+    .side-list .num { text-align: right; font-weight: 700; }
+    .side-list .name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .side-week { display: grid; grid-template-columns: calc(var(--px) * 21) 1fr; line-height: calc(var(--px) * 10); font-size: calc(var(--px) * 8); white-space: nowrap; }
+    .side-day { color: var(--accent); font-size: calc(var(--px) * 7); margin-top: calc(var(--px) * 3) !important; }
+    .side-week .when { color: var(--panel-muted); }
+    .side-week.live .when { color: var(--live); font-weight: 700; }
+    .side-week.replay .when { color: var(--replay); font-weight: 700; }
+
+    /* The TABLE view, inside the side panel (STANDINGS until Groundwork). */
+    #table h2 { margin: 0 0 calc(var(--px) * 3); font-size: inherit; color: var(--accent); }
+    #table ol { list-style: none; margin: 0; padding: 0; }
+    #table .head, #table li { display: grid; grid-template-columns: calc(var(--px) * 8) calc(var(--px) * 6) 1fr calc(var(--px) * 9) calc(var(--px) * 13) calc(var(--px) * 12); align-items: center; gap: calc(var(--px) * 1); padding: calc(var(--px) * 2) 0; }
+    #table .head { color: var(--panel-muted); font-size: calc(var(--px) * 8); padding-top: 0; }
+    #table .head span:nth-child(n+4), #table li span:nth-child(n+4) { text-align: right; }
+    #table li .pos, #table li .gp, #table li .gd { color: var(--panel-muted); }
+    #table li .pts { font-weight: 700; }
+    #table li.live { background: rgb(255 255 255 / 0.07); }
+    #table li.cut { box-shadow: 0 var(--px) 0 var(--accent); }
+
+    /* The icon buttons under the side panel (Task 50): all dimmed until their content exists; the first is held for the TV guide (Task 110). */
+    #buttons { left: calc(var(--px) * 394); top: calc(var(--px) * 240); width: calc(var(--px) * 86); height: calc(var(--px) * 14); display: flex; align-items: center; justify-content: space-around; padding: 0 calc(var(--px) * 2); box-sizing: border-box; }
+    .icon-btn { all: unset; cursor: pointer; position: relative; width: calc(var(--px) * 12); height: calc(var(--px) * 12); display: flex; align-items: center; justify-content: center; color: var(--panel-ink); }
+    .icon-btn svg { width: calc(var(--px) * 9); height: calc(var(--px) * 9); fill: currentColor; }
+    .icon-btn:hover { background: var(--panel-edge); }
+    .icon-btn.later { color: var(--panel-edge); cursor: default; }
+    .icon-btn.later:hover { background: none; }
+    .icon-btn.lit, .icon-btn.lit:hover { color: var(--panel); background: var(--accent); }
+
+    /* The pop-up pane (Task 115; channel.md §17.2): what the buttons open, over the side column (its tabs and panel; the
+       buttons stay showing below), on the dark plate with an amber title bar. The TV guide is the first. Full only. */
+    #pane { left: calc(var(--px) * 394); top: 0; width: calc(var(--px) * 86); height: calc(var(--px) * 238); z-index: 20; display: flex; flex-direction: column; font-size: calc(var(--px) * 8); }
+    #pane[hidden] { display: none; }
+    .pane-head { flex: none; display: flex; align-items: center; gap: calc(var(--px) * 3); height: calc(var(--px) * 14); padding: 0 calc(var(--px) * 1) 0 calc(var(--px) * 4); background: var(--accent); color: var(--panel); font-weight: 700; white-space: nowrap; }
+    .pane-sub { font-weight: 400; font-size: calc(var(--px) * 7); opacity: 0.8; overflow: hidden; }
+    .pane-x { all: unset; cursor: pointer; margin-left: auto; padding: 0 calc(var(--px) * 3); }
+    .pane-x:hover { background: rgb(0 0 0 / 0.15); }
+    .pane-bar { flex: none; padding: calc(var(--px) * 3) calc(var(--px) * 4) calc(var(--px) * 2); border-bottom: var(--px) solid var(--panel-edge); }
+    .pane-bar[hidden] { display: none; }
+    .pane-body { flex: 1; min-height: 0; overflow-y: auto; padding: calc(var(--px) * 2) calc(var(--px) * 3) calc(var(--px) * 4) calc(var(--px) * 4); scrollbar-width: thin; scrollbar-color: var(--panel-edge) transparent; }
+    .pane-body::-webkit-scrollbar { width: calc(var(--px) * 2); }
+    .pane-body::-webkit-scrollbar-thumb { background: var(--panel-edge); }
+    .guide-bar { display: flex; gap: calc(var(--px) * 2); }
+    .guide-filter { all: unset; cursor: pointer; flex: 1; text-align: center; font-size: calc(var(--px) * 7); line-height: calc(var(--px) * 9); color: var(--panel-muted); box-shadow: inset 0 0 0 var(--px) var(--panel-edge); }
+    .guide-filter.on { color: var(--panel); background: var(--panel-ink); box-shadow: none; }
+    .guide-row { position: relative; display: grid; grid-template-columns: calc(var(--px) * 17) 1fr; line-height: calc(var(--px) * 10); white-space: nowrap; }
+    .guide-row .when { color: var(--panel-muted); }
+    .guide-row .what { overflow: hidden; text-overflow: ellipsis; }
+    .guide-row .stage { margin-left: calc(var(--px) * 2); color: var(--accent); }
+    .guide-row .kit { display: inline-block; width: calc(var(--px) * 3); height: calc(var(--px) * 6); vertical-align: middle; margin-right: var(--px); }
+    .guide-row.live .when { color: var(--live); font-weight: 700; }
+    /* The AUDIENCE pane (Task 260; channel.md §23; Tom's picks in Task 259, audience.html): TELL THE LEAGUE, a line,
+       POLLS (the poll in gold, then past ones), each poll opening in the pane's place; the opened poll fits one view. */
+    .aud { line-height: calc(var(--px) * 9); }
+    .aud-h { color: var(--panel-muted); font-weight: 700; margin: calc(var(--px) * 6) 0 calc(var(--px) * 1); }
+    .aud-h:first-child { margin-top: 0; }
+    .aud-q { color: var(--accent); font-weight: 700; margin: 0 0 calc(var(--px) * 1); }
+    .aud-note { color: var(--panel-muted); font-size: calc(var(--px) * 7); line-height: calc(var(--px) * 8); margin: calc(var(--px) * 1) 0 calc(var(--px) * 2); }
+    .aud-rule { height: var(--px); background: var(--panel-edge); margin: calc(var(--px) * 7) 0 calc(var(--px) * 1); }
+    .aud-btn { all: unset; box-sizing: border-box; cursor: pointer; display: block; width: 100%; text-align: center; margin-top: calc(var(--px) * 3); padding: calc(var(--px) * 2) 0; color: var(--panel); background: var(--accent); font-weight: 700; }
+    .aud-btn[disabled] { opacity: 0.35; cursor: default; }
+    /* SUPPORT THE CHANNEL (donations, Tom's pick B on donate.html, in the channel's amber, the SCORCHBALL tag's, since
+       2026-10-18: the gold was jarring): an amber-edged box on top of FEEDBACK, DONATE a link out to Ko-fi. */
+    .aud-give { padding: calc(var(--px) * 4); background: var(--well); box-shadow: inset 0 0 0 var(--px) var(--accent); }
+    .aud-give .aud-h { color: var(--accent); }
+    .aud-give-btn { box-sizing: border-box; display: block; width: 100%; text-align: center; margin-top: calc(var(--px) * 3); padding: calc(var(--px) * 2) 0; color: var(--accent); box-shadow: inset 0 0 0 var(--px) var(--accent); font-weight: 700; text-decoration: none; }
+    .aud-give-btn:hover, .aud-give-btn:focus-visible { background: var(--accent); color: var(--panel); outline: none; }
+    .aud-plate { cursor: default; color: var(--panel-muted); background: none; box-shadow: inset 0 0 0 var(--px) var(--panel-edge); }
+    .aud-past { all: unset; box-sizing: border-box; width: 100%; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: calc(var(--px) * 2); padding: calc(var(--px) * 1) 0; }
+    .aud-past:hover { background: rgb(255 255 255 / 0.08); }
+    .aud-past .m { color: var(--panel-muted); font-size: calc(var(--px) * 7); align-self: center; }
+    .aud-past .sub { display: block; color: var(--panel-muted); font-size: calc(var(--px) * 6.5); line-height: calc(var(--px) * 7.5); }
+    .aud-past.current, .aud-past.current .m { color: var(--accent); }
+    .aud-opt { all: unset; box-sizing: border-box; width: 100%; display: flex; align-items: center; gap: calc(var(--px) * 3); padding: calc(var(--px) * 0.5) calc(var(--px) * 2); cursor: pointer; white-space: nowrap; }
+    .aud-opt:hover { background: rgb(255 255 255 / 0.08); }
+    .aud-opt .crest { flex: none; }
+    .aud-opt.picked { box-shadow: inset 0 0 0 var(--px) var(--panel-ink); }
+    .aud-opt.mine { box-shadow: inset 0 0 0 var(--px) var(--accent); color: var(--accent); }
+    .aud-opt .tag { margin-left: auto; font-size: calc(var(--px) * 6); color: var(--accent); }
+    .aud-poll.voted .aud-opt:not(.mine), .aud-poll.closed .aud-opt { opacity: 0.45; cursor: default; }
+    .aud-poll.voted .aud-opt:hover, .aud-poll.closed .aud-opt:hover { background: none; }
+    .aud .card-back { all: unset; display: block; cursor: pointer; color: var(--accent); margin-bottom: calc(var(--px) * 3); }
+    .aud-res { display: grid; grid-template-columns: auto calc(var(--px) * 13) 1fr calc(var(--px) * 13); align-items: center; gap: calc(var(--px) * 2); margin-bottom: calc(var(--px) * 1); white-space: nowrap; }
+    .aud-res .bar { height: calc(var(--px) * 4); background: var(--panel-edge); }
+    .aud-res .bar i { display: block; height: 100%; background: var(--panel-muted); }
+    .aud-res.win, .aud-res.win .bar i { color: var(--accent); }
+    .aud-res.win .bar i { background: var(--accent); }
+    .aud-res .r { text-align: right; }
+    /* MOMENTS (Milestone 5¾; docs/channel.md §25; Tom's picks on moments.html): the notice below the scorebug, a ticket
+       stub (the icon on an amber stub, a perforated edge, the words on paper; gold for a secret), shooting in with a
+       flash, a glint and its edge glowing twice; and the AUDIENCE pane's MOMENTS tab, a wall of stubs two to a row. */
+    .mo-stub { --cut: calc(var(--px) * 18); position: relative; display: flex; height: calc(var(--px) * 16); color: var(--chip-ink);
+      -webkit-mask: radial-gradient(circle at var(--cut) 0, #0000 calc(var(--px) * 2), #000 calc(var(--px) * 2.2)) top / 100% 51% no-repeat, radial-gradient(circle at var(--cut) 100%, #0000 calc(var(--px) * 2), #000 calc(var(--px) * 2.2)) bottom / 100% 51% no-repeat;
+      mask: radial-gradient(circle at var(--cut) 0, #0000 calc(var(--px) * 2), #000 calc(var(--px) * 2.2)) top / 100% 51% no-repeat, radial-gradient(circle at var(--cut) 100%, #0000 calc(var(--px) * 2), #000 calc(var(--px) * 2.2)) bottom / 100% 51% no-repeat; }
+    .mo-stub .l { flex: none; width: var(--cut); display: flex; align-items: center; justify-content: center; background: var(--accent); }
+    .mo-stub .l svg, .mo-tile .n svg { width: calc(var(--px) * 9); height: calc(var(--px) * 9); fill: var(--panel); }
+    .mo-stub .r { position: relative; overflow: hidden; flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; padding: 0 calc(var(--px) * 4); background: #efe3c2; border-left: var(--px) dashed var(--chip-ink); line-height: calc(var(--px) * 6.5); white-space: nowrap; }
+    .mo-stub .k { font-size: calc(var(--px) * 6); opacity: 0.6; }
+    .mo-stub .t { font-size: calc(var(--px) * 8); font-weight: 700; overflow: hidden; text-overflow: ellipsis; }
+    .mo-stub.secret .l { background: var(--accent); }
+    .mo-stub.secret .l svg { fill: var(--chip-ink); }
+    .mo-stub.secret .r { background: #fff4c9; }
+    .mo-stub.none .l { background: var(--well); }
+    .mo-stub.none .l svg { fill: var(--panel-muted); }
+    .mo-stub.none .r { background: var(--well); color: var(--panel-muted); border-left-color: var(--panel-edge); }
+    #moment-notice { all: unset; position: absolute; z-index: 25; left: calc(var(--px) * 2); top: calc(var(--px) * 23); width: calc(var(--px) * 96); cursor: pointer; filter: drop-shadow(0 calc(var(--px) * 1) 0 rgb(0 0 0 / 0.6)); animation: mo-in var(--mo-ms) both; }
+    #moment-notice[hidden] { display: none; }
+    #moment-notice .mo-stub .r::after { content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: calc(var(--px) * 10); background: rgb(255 255 255 / 0.85); skew: -20deg; translate: calc(var(--px) * -20) 0; animation: mo-glint var(--mo-ms) both; }
+    @keyframes mo-in {
+      0% { opacity: 1; translate: calc(var(--px) * -110) 0; animation-timing-function: steps(5); }
+      5% { translate: calc(var(--px) * 5) 0; animation-timing-function: steps(2); }
+      7% { translate: 0 0; filter: drop-shadow(0 0 calc(var(--px) * 3) #fff) brightness(1.8); }
+      11% { filter: drop-shadow(0 0 calc(var(--px) * 2) var(--accent)); }
+      15% { filter: drop-shadow(0 calc(var(--px) * 1) 0 rgb(0 0 0 / 0.6)); }
+      19% { filter: drop-shadow(0 0 calc(var(--px) * 2) var(--accent)); }
+      23%, 90% { opacity: 1; translate: 0 0; filter: drop-shadow(0 calc(var(--px) * 1) 0 rgb(0 0 0 / 0.6)); }
+      100% { opacity: 0; translate: 0 calc(var(--px) * -6); }
+    }
+    @keyframes mo-glint { 0%, 7% { translate: calc(var(--px) * -20) 0; } 16%, 100% { translate: calc(var(--px) * 90) 0; } }
+    .mo { line-height: calc(var(--px) * 8); }
+    .mo-intro { color: var(--panel-muted); font-size: calc(var(--px) * 6.5); line-height: calc(var(--px) * 7.5); margin: 0 0 calc(var(--px) * 3); }
+    .mo-intro b { color: var(--panel-ink); font-weight: 400; }
+    .mo-h { color: var(--panel-muted); font-weight: 700; margin: calc(var(--px) * 5) 0 calc(var(--px) * 2); font-size: calc(var(--px) * 7); }
+    .mo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--px) * 2); }
+    .mo-tile { all: unset; display: flex; flex-direction: column; height: calc(var(--px) * 32); color: var(--chip-ink); --cut: calc(var(--px) * 13);
+      -webkit-mask: radial-gradient(circle at 0 var(--cut), #0000 calc(var(--px) * 2), #000 calc(var(--px) * 2.2)) left / 51% 100% no-repeat, radial-gradient(circle at 100% var(--cut), #0000 calc(var(--px) * 2), #000 calc(var(--px) * 2.2)) right / 51% 100% no-repeat;
+      mask: radial-gradient(circle at 0 var(--cut), #0000 calc(var(--px) * 2), #000 calc(var(--px) * 2.2)) left / 51% 100% no-repeat, radial-gradient(circle at 100% var(--cut), #0000 calc(var(--px) * 2), #000 calc(var(--px) * 2.2)) right / 51% 100% no-repeat; }
+    button.mo-tile { cursor: pointer; }
+    button.mo-tile:hover { filter: brightness(1.12); }
+    .mo-tile .n { flex: none; height: var(--cut); display: flex; align-items: center; justify-content: center; background: var(--accent); }
+    .mo-tile .w { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 calc(var(--px) * 1); background: #efe3c2; border-top: var(--px) dashed var(--chip-ink); font-size: calc(var(--px) * 5.5); line-height: calc(var(--px) * 6); }
+    .mo-tile .w b { font-size: calc(var(--px) * 9); line-height: calc(var(--px) * 8); }
+    .mo-tile.secret .n { background: var(--accent); }
+    .mo-tile.secret .n svg { fill: var(--chip-ink); }
+    .mo-tile.secret .w { background: #fff4c9; }
+    .mo-tile.hidden .n, .mo-tile.none .n { background: var(--well); }
+    .mo-tile.hidden .n svg { fill: var(--accent); }
+    .mo-tile.none .n svg { fill: var(--panel-muted); opacity: 0.5; }
+    .mo-tile.hidden .w, .mo-tile.none .w { background: var(--well); color: var(--panel-muted); border-top-color: var(--panel-edge); }
+    .mo-foot { margin-top: calc(var(--px) * 6); padding-top: calc(var(--px) * 3); border-top: var(--px) solid var(--panel-edge); color: var(--panel-muted); font-size: calc(var(--px) * 6.5); line-height: calc(var(--px) * 7.5); }
+    .mo-foot b { color: var(--panel-ink); font-weight: 400; }
+    .mo-switch { all: unset; cursor: pointer; display: block; width: 100%; box-sizing: border-box; margin-bottom: calc(var(--px) * 3); padding: calc(var(--px) * 1) 0; text-align: center; font-size: calc(var(--px) * 7); color: var(--panel-muted); box-shadow: inset 0 0 0 var(--px) var(--panel-edge); }
+    .mo-switch b { color: var(--accent); font-weight: 700; }
+    .mo .card-back { all: unset; display: block; cursor: pointer; color: var(--accent); margin-bottom: calc(var(--px) * 3); }
+    .mo-big { margin-bottom: calc(var(--px) * 3); height: calc(var(--px) * 22); }
+    .mo-prog .bar { height: calc(var(--px) * 3); background: var(--panel-edge); }
+    .mo-prog .bar i { display: block; height: 100%; background: var(--accent); }
+    .mo-prog .c { margin-top: calc(var(--px) * 1); text-align: right; color: var(--panel-muted); font-size: calc(var(--px) * 6.5); line-height: calc(var(--px) * 7.5); }
+    .mo-big .r { white-space: normal; }
+    .mo-big .t { line-height: calc(var(--px) * 7); }
+    .mo-how { color: var(--panel-ink); font-size: calc(var(--px) * 7); }
+    .mo-when { color: var(--panel-muted); font-size: calc(var(--px) * 7); }
+    .mo-steps { display: grid; grid-template-columns: auto 1fr auto; gap: 0 calc(var(--px) * 3); font-size: calc(var(--px) * 7); }
+    .mo-steps .got { color: var(--accent); }
+    .mo-steps .not { color: var(--panel-muted); }
+    .mo-team { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: calc(var(--px) * 1) calc(var(--px) * 3); font-size: calc(var(--px) * 7); }
+    .mo-team .h { color: var(--panel-muted); font-size: calc(var(--px) * 6); }
+    .mo-team canvas { width: calc(var(--px) * 7); height: auto; }
+    /* Fan Coins, version 1 (docs/channel.md §29): the AUDIENCE pane's COINS tab, the +1, the chant's bubble. */
+    .fc { line-height: calc(var(--px) * 8); }
+    .fc svg { width: calc(var(--px) * 7); height: calc(var(--px) * 7); fill: currentColor; flex: none; }
+    .fc-h { color: var(--panel-muted); font-weight: 700; margin: calc(var(--px) * 5) 0 calc(var(--px) * 2); font-size: calc(var(--px) * 7); }
+    .fc-bal { display: flex; align-items: center; gap: calc(var(--px) * 3); color: var(--gold); }
+    .fc-bal svg { width: calc(var(--px) * 12); height: calc(var(--px) * 12); }
+    .fc-bal b { font-size: calc(var(--px) * 16); line-height: calc(var(--px) * 14); }
+    .fc-bal small { display: block; font-size: calc(var(--px) * 6.5); line-height: calc(var(--px) * 7); color: var(--panel-muted); }
+    .fc-today { font-size: calc(var(--px) * 6.5); line-height: calc(var(--px) * 7); color: var(--panel-muted); margin-top: calc(var(--px) * 3); }
+    .fc-today.full { color: var(--gold); }
+    .fc-bar { height: calc(var(--px) * 3); background: var(--well); box-shadow: 0 0 0 var(--px) var(--panel-edge); margin: calc(var(--px) * 1) 0; }
+    .fc-bar i { display: block; height: 100%; background: var(--gold); }
+    .fc-small, .fc-foot { font-size: calc(var(--px) * 6.5); line-height: calc(var(--px) * 7.5); color: var(--panel-muted); }
+    .fc-foot { margin-top: calc(var(--px) * 5); }
+    .fc-intro { font-size: calc(var(--px) * 6.5); line-height: calc(var(--px) * 7.5); color: var(--panel-muted); margin: calc(var(--px) * 3) 0 calc(var(--px) * 4); }
+    .fc-foot b { color: var(--panel-ink); font-weight: 400; }
+    .fc-row { all: unset; box-sizing: border-box; width: 100%; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0 calc(var(--px) * 2); padding: calc(var(--px) * 1.5) 0; border-bottom: var(--px) solid var(--panel-edge); cursor: pointer; }
+    .fc-row:hover { background: rgb(255 255 255 / 0.06); }
+    .fc-row .nm { color: var(--panel-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .fc-row .pr { color: var(--gold); display: flex; align-items: center; gap: var(--px); }
+    .fc-row .pr svg { width: calc(var(--px) * 5); height: calc(var(--px) * 5); }
+    .fc-row .st { grid-column: 2 / 4; font-size: calc(var(--px) * 6.5); line-height: calc(var(--px) * 7); color: var(--panel-muted); }
+    .fc-row .st.ok { color: var(--accent); }
+    .fc-row.off .nm, .fc-row.off > span:first-child { opacity: 0.55; }
+    .fc .card-back { all: unset; display: block; cursor: pointer; color: var(--accent); margin-bottom: calc(var(--px) * 3); }
+    .fc-opt { all: unset; box-sizing: border-box; width: 100%; display: flex; align-items: center; gap: calc(var(--px) * 2); padding: calc(var(--px) * 1) calc(var(--px) * 2); margin-bottom: calc(var(--px) * 1.5); cursor: pointer; box-shadow: inset 0 0 0 var(--px) var(--panel-edge); font-size: calc(var(--px) * 7); line-height: calc(var(--px) * 7.5); }
+    .fc-opt.on { box-shadow: inset 0 0 0 var(--px) var(--gold); color: var(--gold); }
+    .fc-opt.busy { opacity: 0.45; cursor: default; }
+    .fc-opt canvas { width: calc(var(--px) * 7); height: auto; flex: none; }
+    .fc-go { all: unset; box-sizing: border-box; width: 100%; display: flex; justify-content: center; align-items: center; gap: calc(var(--px) * 2); margin-top: calc(var(--px) * 3); height: calc(var(--px) * 13); cursor: pointer; background: var(--gold); color: var(--chip-ink); font-weight: 700; }
+    .fc-go.off { background: var(--well); color: var(--panel-muted); box-shadow: inset 0 0 0 var(--px) var(--panel-edge); cursor: default; }
+    .fc-done { margin-top: calc(var(--px) * 3); padding: calc(var(--px) * 2) calc(var(--px) * 3); background: var(--well); box-shadow: inset 0 0 0 var(--px) var(--gold); color: var(--gold); font-size: calc(var(--px) * 7); line-height: calc(var(--px) * 7.5); }
+    .fc-done small { display: block; color: var(--panel-muted); font-size: calc(var(--px) * 6.5); }
+    /* Version 2 (Tom's picks on coinqueue.html): one's own spend queued, the queue's slots and the countdown; once it starts, a bar under the scorebug. */
+    .fc-slots { display: flex; gap: calc(var(--px) * 2); margin-top: calc(var(--px) * 1); }
+    .fc-slots i { flex: 1; height: calc(var(--px) * 9); box-shadow: inset 0 0 0 var(--px) var(--panel-edge); display: flex; align-items: center; justify-content: center; font-style: normal; font-size: calc(var(--px) * 6); color: var(--panel-muted); }
+    .fc-slots i.on { background: var(--accent); color: var(--panel); box-shadow: none; }
+    .fc-slots i.ahead { background: var(--panel-edge); box-shadow: none; }
+    .fc-slots i.you { background: var(--gold); color: var(--chip-ink); box-shadow: none; font-weight: 700; }
+    .fc-legend { font-size: calc(var(--px) * 6); color: var(--panel-muted); margin-top: calc(var(--px) * 1); }
+    .fc-count { margin-top: calc(var(--px) * 2); padding: calc(var(--px) * 2) calc(var(--px) * 3); background: var(--well); box-shadow: inset 0 0 0 var(--px) var(--gold); color: var(--gold); font-size: calc(var(--px) * 7); line-height: calc(var(--px) * 8); }
+    .fc-count b { font-size: calc(var(--px) * 11); display: block; line-height: calc(var(--px) * 11); }
+    .fc-onbar { all: unset; position: absolute; z-index: 26; left: calc(var(--px) * 2); top: calc(var(--px) * 23); height: calc(var(--px) * 12); display: flex; align-items: center; gap: calc(var(--px) * 3); padding: 0 calc(var(--px) * 4); background: var(--gold); color: var(--chip-ink); font-weight: 700; font-size: calc(var(--px) * 7.5); cursor: pointer; box-shadow: 0 calc(var(--px) * 1) 0 rgb(0 0 0 / 0.6); white-space: nowrap; }
+    .fc-onbar[hidden] { display: none; }
+    .fc-onbar.below { top: calc(var(--px) * 41); }
+    .fc-onbar svg { width: calc(var(--px) * 7); height: calc(var(--px) * 7); fill: currentColor; }
+    .fc-onbar span { background: var(--chip-ink); color: var(--gold); padding: 0 calc(var(--px) * 3); line-height: calc(var(--px) * 9); }
+    .guide-filter .fc-n { color: var(--gold); margin-left: calc(var(--px) * 1.5); }
+    .guide-filter.on .fc-n { color: inherit; }
+    .fc-plus { position: absolute; z-index: 41; display: flex; align-items: center; gap: var(--px); color: var(--gold); font-weight: 700; font-size: calc(var(--px) * 8); line-height: 1; text-shadow: 0 var(--px) 0 #000; pointer-events: none; animation: fc-up var(--fc-plus, 1.6s) steps(12) forwards; }
+    .fc-plus svg { width: calc(var(--px) * 7); height: calc(var(--px) * 7); fill: var(--gold); filter: drop-shadow(0 var(--px) 0 #000); }
+    @keyframes fc-up { 0% { opacity: 0; translate: 0 0; } 15% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; translate: 0 calc(var(--px) * -12); } }
+    .fc-bubble { position: absolute; z-index: 30; pointer-events: none; box-sizing: border-box; width: calc(var(--px) * 37); padding: calc(var(--px) * 2) calc(var(--px) * 1); background: #f6f1e4; color: var(--chip-ink); text-align: center; font-weight: 700; font-size: calc(var(--px) * 8); line-height: calc(var(--px) * 7.5);
+      box-shadow: 0 0 0 var(--px) var(--chip-ink), 0 calc(var(--px) * 2) 0 var(--px) rgb(0 0 0 / 0.5); animation: fc-beat 0.72s steps(1) infinite; }
+    .fc-bubble[hidden] { display: none; }
+    .fc-bubble::after { content: ''; position: absolute; left: 50%; bottom: calc(var(--px) * -5); width: calc(var(--px) * 6); height: calc(var(--px) * 5); translate: -50% 0; background: #f6f1e4; clip-path: polygon(0 0, 100% 0, 30% 100%); }
+    .fc-bubble .l { display: block; opacity: 0.45; }
+    .fc-bubble .l.on { opacity: 1; color: #b33a10; }
+    @keyframes fc-beat { 0%, 49% { translate: 0 0; } 50%, 100% { translate: 0 calc(var(--px) * -1); } }
+    .fc-shout { position: absolute; z-index: 31; pointer-events: none; box-sizing: border-box; width: calc(var(--px) * 32); padding: calc(var(--px) * 1.5) calc(var(--px) * 1); background: #f6f1e4; color: var(--chip-ink); font-weight: 700; font-size: calc(var(--px) * 7); line-height: calc(var(--px) * 7); text-align: center;
+      box-shadow: 0 0 0 var(--px) var(--team), 0 calc(var(--px) * 1.5) 0 var(--px) rgb(0 0 0 / 0.5); }
+    .fc-shout[hidden] { display: none; }
+    .fc-shout::after { content: ''; position: absolute; left: calc(var(--px) * 7); bottom: calc(var(--px) * -4); width: calc(var(--px) * 5); height: calc(var(--px) * 4); background: #f6f1e4; clip-path: polygon(0 0, 100% 0, 20% 100%); }
+    /* The away end's (Tom): its tail out of the bubble's right-hand side, pointing on along the stand to the corner. */
+    .fc-shout.right::after { left: auto; bottom: auto; right: calc(var(--px) * -4); top: calc(var(--px) * 4); width: calc(var(--px) * 4); height: calc(var(--px) * 5); clip-path: polygon(0 0, 100% 80%, 0 100%); }
+    .fc-shout svg { display: inline-block; width: calc(var(--px) * 6); height: calc(var(--px) * 6); vertical-align: calc(var(--px) * -0.5); fill: var(--team, var(--panel-ink)); margin: 0 calc(var(--px) * 1); }
+    /* Shouted (Tom): after the pop, a shake in pixel steps every beat, the bubble still in between. translate and rotate
+       on their own, so they sit on the pop's scale. */
+    .fc-shout.pop { animation: fc-pop 0.3s steps(3) both, fc-shout 1.1s steps(1, end) 0.4s infinite; }
+    @keyframes fc-shout { 0% { translate: calc(var(--px) * -1) 0; rotate: -2deg; } 8% { translate: calc(var(--px) * 1) calc(var(--px) * -1); rotate: 2deg; } 16% { translate: 0 calc(var(--px) * -1); rotate: -1deg; } 24%, 100% { translate: 0 0; rotate: 0deg; } }
+    @keyframes fc-pop { 0% { scale: 0.6; } 60% { scale: 1.12; } 100% { scale: 1; } }
+    /* The tour (Milestone 5⅞; docs/channel.md §26; Tom's pick B on tour.html): the welcome centred over the pitch; each
+       step's thing lit in amber, gently pulsing, the rest dimmed, an amber box beside it; clicks stop at .tour-block. */
+    .tour-block { position: absolute; z-index: 58; inset: 0; }
+    .tour-box { position: absolute; z-index: 60; background: var(--panel); color: var(--panel-ink); font-size: calc(var(--px) * 7.5); line-height: calc(var(--px) * 8.5); box-shadow: 0 0 0 var(--px) var(--accent), 0 calc(var(--px) * 2) calc(var(--px) * 8) rgb(0 0 0 / 0.6); }
+    .tour-head { display: flex; align-items: center; height: calc(var(--px) * 12); padding: 0 calc(var(--px) * 1) 0 calc(var(--px) * 4); background: var(--accent); color: var(--panel); font-weight: 700; font-size: calc(var(--px) * 8); }
+    .tour-head button { all: unset; cursor: pointer; margin-left: auto; padding: 0 calc(var(--px) * 3); }
+    .tour-head button:hover { background: rgb(0 0 0 / 0.15); }
+    .tour-text { padding: calc(var(--px) * 3) calc(var(--px) * 4); }
+    .tour-foot { display: flex; align-items: center; gap: calc(var(--px) * 3); padding: 0 calc(var(--px) * 4) calc(var(--px) * 3); }
+    .tour-foot .n { color: var(--panel-muted); margin-right: auto; }
+    .tour-foot button { all: unset; cursor: pointer; padding: 0 calc(var(--px) * 4); font-weight: 700; color: var(--panel-muted); box-shadow: inset 0 0 0 var(--px) var(--panel-edge); line-height: calc(var(--px) * 10); }
+    .tour-foot button.go { color: var(--panel); background: var(--accent); box-shadow: none; }
+    .tour-foot button[disabled] { opacity: 0.35; cursor: default; }
+    .tour-arrow { position: absolute; width: calc(var(--px) * 8); height: calc(var(--px) * 5); background: var(--accent); }
+    .tour-arrow.up { top: calc(var(--px) * -5); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+    .tour-arrow.down { bottom: calc(var(--px) * -5); clip-path: polygon(0 0, 100% 0, 50% 100%); }
+    .tour-arrow.right { right: calc(var(--px) * -5); width: calc(var(--px) * 5); height: calc(var(--px) * 8); clip-path: polygon(0 0, 100% 50%, 0 100%); }
+    .tour-lit { position: absolute; z-index: 59; pointer-events: none; box-shadow: 0 0 0 var(--px) var(--accent), 0 0 calc(var(--px) * 4) var(--accent); animation: tour-pulse 1.2s ease-in-out infinite alternate; }
+    .tour-lit.dim { box-shadow: 0 0 0 var(--px) var(--accent), 0 0 calc(var(--px) * 4) var(--accent), 0 0 0 calc(var(--px) * 600) rgb(5 7 12 / 0.62); }
+    @keyframes tour-pulse { from { outline: 0 solid transparent; } to { outline: var(--px) solid color-mix(in srgb, var(--accent) 35%, transparent); outline-offset: calc(var(--px) * 2); } }
+    .tour-welcome { position: absolute; z-index: 60; left: calc(var(--px) * 92); top: calc(var(--px) * 70); width: calc(var(--px) * 210); background: var(--panel); color: var(--panel-ink); text-align: center; font-size: calc(var(--px) * 8); line-height: calc(var(--px) * 9); box-shadow: 0 0 0 var(--px) var(--accent), 0 calc(var(--px) * 2) calc(var(--px) * 10) rgb(0 0 0 / 0.7); padding-bottom: calc(var(--px) * 5); }
+    #stage.broadcast .tour-welcome { display: none; }
+    .tour-welcome .tour-head { justify-content: center; padding: 0; }
+    .tour-welcome p { margin: calc(var(--px) * 4) calc(var(--px) * 7) calc(var(--px) * 5); }
+    .tour-welcome .row { display: flex; justify-content: center; gap: calc(var(--px) * 4); }
+    .tour-welcome .row button { all: unset; cursor: pointer; padding: 0 calc(var(--px) * 6); line-height: calc(var(--px) * 12); font-weight: 700; color: var(--panel-muted); box-shadow: inset 0 0 0 var(--px) var(--panel-edge); }
+    .tour-welcome .row button.go { color: var(--panel); background: var(--accent); box-shadow: none; }
+    .tour-welcome small { display: block; margin-top: calc(var(--px) * 4); color: var(--panel-muted); font-size: calc(var(--px) * 6.5); }
+    .tour-icon svg { display: inline-block; width: calc(var(--px) * 7); height: calc(var(--px) * 7); vertical-align: calc(var(--px) * -1); fill: var(--panel-ink); }
+    /* The tour on a phone (the tour, round 2; Tom's pick A): over the whole page in CSS px, large enough to read and tap;
+       the box over the picture beside what it points at. Hidden upright, under TURN YOUR PHONE. */
+    body.phone .tour-block { position: fixed; }
+    body.phone .tour-lit { position: fixed; box-shadow: 0 0 0 2px var(--accent), 0 0 8px var(--accent); animation-name: tour-pulse-phone; }
+    body.phone .tour-lit.dim { box-shadow: 0 0 0 2px var(--accent), 0 0 8px var(--accent), 0 0 0 3000px rgb(5 7 12 / 0.66); }
+    @keyframes tour-pulse-phone { from { outline: 0 solid transparent; } to { outline: 2px solid color-mix(in srgb, var(--accent) 35%, transparent); outline-offset: 4px; } }
+    body.phone .tour-box, body.phone .tour-welcome { position: fixed; font: 16px/17px 'VT323', monospace; box-sizing: border-box; }
+    body.phone .tour-box { box-shadow: 0 0 0 2px var(--accent), 0 4px 16px rgb(0 0 0 / 0.6); }
+    body.phone .tour-head { height: 28px; padding: 0 0 0 10px; font-size: 18px; }
+    body.phone .tour-head button { min-width: 40px; padding: 0; align-self: stretch; display: flex; align-items: center; justify-content: center; }
+    body.phone .tour-text { padding: 7px 10px; }
+    body.phone .tour-foot { gap: 8px; padding: 0 10px 8px; }
+    body.phone .tour-foot button { padding: 0 12px; line-height: 34px; font-size: 17px; box-shadow: inset 0 0 0 2px var(--panel-edge); }
+    body.phone .tour-foot button.go { box-shadow: none; }
+    body.phone .tour-arrow.up { top: -9px; width: 16px; height: 9px; }
+    body.phone .tour-arrow.right { right: -9px; width: 9px; height: 16px; }
+    body.phone .tour-arrow.left { left: -9px; width: 9px; height: 16px; clip-path: polygon(100% 0, 0 50%, 100% 100%); }
+    body.phone .tour-welcome { left: 0; top: 0; padding-bottom: 10px; box-shadow: 0 0 0 2px var(--accent), 0 4px 20px rgb(0 0 0 / 0.7); }
+    body.phone .tour-welcome .tour-head { padding: 0; }
+    body.phone .tour-welcome p { margin: 8px 14px 10px; }
+    body.phone .tour-welcome .row { gap: 10px; }
+    body.phone .tour-welcome .row button { padding: 0 16px; line-height: 40px; font-size: 18px; box-shadow: inset 0 0 0 2px var(--panel-edge); }
+    body.phone .tour-welcome .row button.go { box-shadow: none; }
+    body.phone .tour-welcome small { margin-top: 8px; font-size: 15px; }
+    body.phone .tour-icon svg { width: 13px; height: 13px; vertical-align: -1px; }
+    body.phone:has(#stage.broadcast) .tour-welcome { display: none; }
+    @media (orientation: portrait) { body.phone :is(.tour-block, .tour-lit, .tour-box, .tour-welcome) { display: none; } }
+    #tour-notice { position: absolute; z-index: 61; left: calc(var(--px) * 2); top: calc(var(--px) * 23); width: calc(var(--px) * 96); filter: drop-shadow(0 calc(var(--px) * 1) 0 rgb(0 0 0 / 0.6)); }
+    .rb-tour { margin-bottom: calc(var(--px) * 6); }
+    /* INFO's UPDATES tab (Task 265, Tom's pick B; channel.md §24): the newest in full, older ones a line each. */
+    .upd { line-height: calc(var(--px) * 9); }
+    .upd-item { margin-bottom: calc(var(--px) * 6); }
+    .upd-when, .upd-note { color: var(--panel-muted); font-size: calc(var(--px) * 7); line-height: calc(var(--px) * 8); }
+    .upd-kind { display: inline-block; font-size: calc(var(--px) * 6.5); line-height: calc(var(--px) * 8); padding: 0 calc(var(--px) * 2); color: var(--panel); background: var(--accent); margin: calc(var(--px) * 1) 0 calc(var(--px) * 2); }
+    .upd-kind.poll_open, .upd-kind.poll_result { background: var(--panel-ink); }
+    .upd-words { color: var(--panel-ink); }
+    .upd-win { display: flex; align-items: center; gap: calc(var(--px) * 3); margin-top: calc(var(--px) * 2); color: var(--accent); }
+    .upd-gold { color: var(--accent); font-size: calc(var(--px) * 7); line-height: calc(var(--px) * 8); margin-top: calc(var(--px) * 2); }
+    .upd-older { color: var(--panel-muted); font-weight: 700; margin: calc(var(--px) * 2) 0 calc(var(--px) * 1); padding-top: calc(var(--px) * 4); border-top: var(--px) solid var(--panel-edge); }
+    .upd-line { all: unset; box-sizing: border-box; width: 100%; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: calc(var(--px) * 2); padding: calc(var(--px) * 1) 0; }
+    .upd-line:hover { background: rgb(255 255 255 / 0.08); }
+    .upd-line .m { color: var(--panel-muted); font-size: calc(var(--px) * 7); align-self: center; }
+    .upd-line .sub { display: block; color: var(--panel-muted); font-size: calc(var(--px) * 6.5); line-height: calc(var(--px) * 7.5); }
+    .upd .card-back { all: unset; display: block; cursor: pointer; color: var(--accent); margin-bottom: calc(var(--px) * 3); }
+    /* A dot on a button (INFO's, while there's an announcement not yet seen). */
+    .icon-btn { position: relative; }
+    .btn-dot { position: absolute; right: calc(var(--px) * 1); top: calc(var(--px) * 1); width: calc(var(--px) * 3); height: calc(var(--px) * 3); background: var(--live); border-radius: 50%; box-shadow: 0 0 calc(var(--px) * 2) var(--live); pointer-events: none; }
+    /* The note's form (Task 261; look C): rising from the button row, over the pane. */
+    .fb { position: absolute; z-index: 30; display: flex; flex-direction: column; font-size: calc(var(--px) * 8); background: var(--panel); box-shadow: 0 0 0 var(--px) var(--panel-edge), 0 calc(var(--px) * 2) calc(var(--px) * 8) rgb(0 0 0 / 0.6); }
+    .fb[hidden], #stage.broadcast .fb { display: none; }
+    .fb-head { flex: none; display: flex; align-items: center; height: calc(var(--px) * 14); padding: 0 calc(var(--px) * 1) 0 calc(var(--px) * 4); background: var(--accent); color: var(--panel); font-weight: 700; white-space: nowrap; }
+    .fb-head button { all: unset; cursor: pointer; margin-left: auto; padding: 0 calc(var(--px) * 3); }
+    .fb-head button:hover { background: rgb(0 0 0 / 0.15); }
+    .fb-body { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: calc(var(--px) * 3); padding: calc(var(--px) * 4); }
+    .fb textarea { flex: 1; min-height: 0; resize: none; box-sizing: border-box; width: 100%; padding: calc(var(--px) * 2) calc(var(--px) * 3); font: inherit; font-size: calc(var(--px) * 9); line-height: calc(var(--px) * 10); color: var(--panel-ink); background: var(--well); border: none; outline: var(--px) solid var(--panel-edge); user-select: text; }
+    .fb textarea:focus { outline-color: var(--accent); }
+    .fb textarea::placeholder { color: var(--panel-muted); }
+    .fb-sent { color: var(--panel-muted); font-size: calc(var(--px) * 6.5); line-height: calc(var(--px) * 7.5); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .fb-failed { color: var(--live); font-size: calc(var(--px) * 7); line-height: calc(var(--px) * 8); }
+    .fb-failed[hidden] { display: none; }
+    .fb-foot { flex: none; display: flex; align-items: center; gap: calc(var(--px) * 3); }
+    .fb-count { color: var(--panel-muted); font-size: calc(var(--px) * 7); margin-right: auto; }
+    .fb-foot button { all: unset; cursor: pointer; padding: calc(var(--px) * 1) calc(var(--px) * 5); font-weight: 700; color: var(--panel-muted); box-shadow: inset 0 0 0 var(--px) var(--panel-edge); }
+    .fb-foot button.send { color: var(--panel); background: var(--accent); box-shadow: none; }
+    .fb-foot button.send[disabled] { opacity: 0.4; cursor: default; }
+    .fb-thanks { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: calc(var(--px) * 3); color: var(--panel-ink); }
+    .fb-thanks b { color: var(--accent); }
+    .fb-again { all: unset; cursor: pointer; color: var(--accent); }
+    .guide-row.reair .when, .guide-row.vault .when { color: var(--replay); font-weight: 700; }
+    .guide-row.studio .what, .guide-row.opening .what, .guide-row.offseason .what { color: var(--panel-muted); }
+    .guide-row.preview .when { color: var(--accent); font-weight: 700; }
+    .guide-row.preview .what { color: var(--panel-muted); }
+    /* OFF THE BALL (Tom, 2026-10-21): the time in amber, the name in white. */
+    .guide-row.podcast .when { color: var(--accent); font-weight: 700; }
+    .guide-row.podcast .what { color: var(--panel-ink); }
+    .guide-row.podcast.repeat .when { color: var(--replay); }
+    .guide-row.past { opacity: 0.45; }
+    .guide-row.now { background: color-mix(in srgb, var(--accent) 16%, transparent); box-shadow: inset var(--px) 0 0 var(--accent); }
+    .guide-now-bar { position: absolute; left: 0; bottom: 0; height: var(--px); background: var(--accent); }
+    .guide-wait { color: var(--panel-muted); padding-top: calc(var(--px) * 4); }
+    /* The Rulebook and About (Task 164): the Rulebook's sections in the guide's tabs, rules numbered by section. */
+    .rb { line-height: calc(var(--px) * 9); }
+    .rb-intro { color: var(--panel-muted); margin-bottom: calc(var(--px) * 5); }
+    .rb-head { color: var(--accent); font-weight: 700; margin: calc(var(--px) * 2) 0 calc(var(--px) * 3); }
+    .rb-rule { display: grid; grid-template-columns: calc(var(--px) * 13) 1fr; margin-bottom: calc(var(--px) * 3); }
+    .rb-rule .n { color: var(--panel-muted); }
+    .rb-about p { margin: 0 0 calc(var(--px) * 5); }
+    .rb-about p.small { color: var(--panel-muted); }
+    /* The CHRONICLE (Task 219, channel.md §20): past seasons and their pages, records one stat at a time. */
+    .chr { line-height: calc(var(--px) * 9); }
+    .chr-h { color: var(--accent); font-weight: 700; margin: calc(var(--px) * 6) 0 calc(var(--px) * 2); }
+    .chr-h:first-child { margin-top: calc(var(--px) * 1); }
+    .chr-sub { color: var(--panel-muted); font-weight: 700; margin: calc(var(--px) * 4) 0 calc(var(--px) * 1); }
+    .chr-sub:first-child { margin-top: calc(var(--px) * 1); }
+    .chr-note { color: var(--panel-muted); font-size: calc(var(--px) * 7); line-height: calc(var(--px) * 8); margin: calc(var(--px) * 2) 0 calc(var(--px) * 3); }
+    .chr-row { display: grid; align-items: center; white-space: nowrap; }
+    .chr-row > * { overflow: hidden; text-overflow: ellipsis; }
+    .chr-row .r { text-align: right; }
+    .chr .m { color: var(--panel-muted); }
+    .chr-row.link { cursor: pointer; }
+    .chr-row.link:hover { background: rgb(255 255 255 / 0.08); }
+    .chr-row.cut { box-shadow: 0 var(--px) 0 var(--accent); }
+    /* The swatch keeps the channel's faint outline (Tom: they get lost on the dark plate without it), a pixel clear of the letters. */
+    .chr .kit { display: inline-block; width: calc(var(--px) * 3); height: calc(var(--px) * 6); vertical-align: middle; margin: 0 calc(var(--px) * 2) 0 var(--px); }
+    .chr .tm { white-space: nowrap; }
+    /* MONEY (Task 234): a payroll's bar against the cap, gold when nearly full, red over it. */
+    .chr-bar { height: calc(var(--px) * 2); background: rgb(255 255 255 / 0.12); margin: 0 0 calc(var(--px) * 2); }
+    .chr-bar > span { display: block; height: 100%; background: var(--panel-ink); }
+    .chr-bar > span.full { background: var(--accent); }
+    .chr-bar > span.over { background: var(--live); }
+    .chr-team { padding-bottom: calc(var(--px) * 3); margin-bottom: calc(var(--px) * 5); border-bottom: var(--px) solid var(--panel-edge); }
+    .chr-item { display: grid; grid-template-columns: calc(var(--px) * 13) 1fr; margin-bottom: calc(var(--px) * 3); }
+    .chr-item .when { color: var(--panel-muted); }
+    .chr-item.big .when { color: var(--accent); }
+    .chr-item.run .when { color: var(--replay); }
+    .chr-line { margin-bottom: calc(var(--px) * 3); }
+    .chr-line.big { color: var(--accent); }
+    .chr-back { cursor: pointer; color: var(--accent); margin-bottom: calc(var(--px) * 3); }
+    .chr-honour { display: flex; align-items: center; gap: calc(var(--px) * 4); margin-bottom: calc(var(--px) * 2); }
+    .chr-step { display: flex; align-items: center; justify-content: space-between; font-size: calc(var(--px) * 8); margin-top: calc(var(--px) * 3); }
+    .chr-step[hidden] { display: none; }
+    .chr-step button { all: unset; cursor: pointer; padding: 0 calc(var(--px) * 3); color: var(--panel-ink); }
+    /* The player card (Task 222, channel.md §20.5): in the CHRONICLE pane's place, one scroll. */
+    .card { line-height: calc(var(--px) * 9); }
+    .card .m { color: var(--panel-muted); }
+    .card .kit { display: inline-block; width: calc(var(--px) * 3); height: calc(var(--px) * 6); vertical-align: middle; margin: 0 calc(var(--px) * 2) 0 var(--px); }
+    .card .tm { white-space: nowrap; }
+    .card-back { cursor: pointer; color: var(--accent); margin-bottom: calc(var(--px) * 3); }
+    .card-name { font-weight: 700; font-size: calc(var(--px) * 9); line-height: calc(var(--px) * 10); }
+    .card-standing { color: var(--accent); font-weight: 700; margin: calc(var(--px) * 1) 0; }
+    .card-standing.legend { color: var(--accent); text-shadow: 0 0 calc(var(--px) * 2) color-mix(in srgb, var(--accent) 55%, #000); }
+    .card-small { color: var(--panel-muted); font-size: calc(var(--px) * 7); line-height: calc(var(--px) * 8); }
+    .card-h { color: var(--accent); font-weight: 700; margin: calc(var(--px) * 6) 0 calc(var(--px) * 2); }
+    .card-sub { color: var(--panel-muted); font-weight: 700; margin: calc(var(--px) * 4) 0 calc(var(--px) * 1); }
+    .card-row { display: grid; align-items: center; white-space: nowrap; }
+    .card-row > * { overflow: hidden; text-overflow: ellipsis; }
+    .card-row .r { text-align: right; }
+    .card-row.head { color: var(--panel-muted); font-size: calc(var(--px) * 7); }
+    .card-row .cup { color: var(--accent); }
+    .card-line { margin-bottom: calc(var(--px) * 2); }
+    .card-team { margin: calc(var(--px) * 3) 0 calc(var(--px) * 1); white-space: nowrap; }
+    .card-row.total { box-shadow: 0 calc(var(--px) * -1) 0 var(--panel-edge); margin-top: calc(var(--px) * 2); }
+    /* The team card (Task 223, channel.md §20.6): the player card's styles, plus these. */
+    .card .cup { color: var(--accent); }
+    .tc-head { display: flex; align-items: center; gap: calc(var(--px) * 4); margin-bottom: calc(var(--px) * 2); }
+    .tc-head .card-name { white-space: normal; }
+    .tc-rookie { display: inline-grid; place-items: center; width: calc(var(--px) * 6); height: calc(var(--px) * 6); margin-left: calc(var(--px) * 2); font-size: calc(var(--px) * 6); line-height: 1; background: var(--accent); color: var(--chip-ink); vertical-align: middle; }
+    .tc-inj { margin-left: calc(var(--px) * 2); font-weight: 700; color: var(--live); }
+    .tc-tabs { margin: calc(var(--px) * 4) 0 0; }
+    .tc-view { margin: 0 0 calc(var(--px) * 3); }
+    /* SQUAD's STATS (Task 278n): the name, its numbers on a line under it across the card. */
+    .tc-stat { margin-bottom: calc(var(--px) * 2); }
+    .tc-nums { display: grid; grid-template-columns: repeat(3, 1fr); padding-left: calc(var(--px) * 3); font-size: calc(var(--px) * 8); line-height: calc(var(--px) * 9); }
+    .tc-nums.k { grid-template-columns: 1fr 2fr; }
+    /* A name that opens its card (Tasks 222–224): the CHRONICLE, the side panel, the schedule. */
+    .pl { cursor: pointer; }
+    .pl:hover { text-decoration: underline; }
+    /* A card in the side panel's place, under its tabs (Task 224), at the pane's text size. */
+    #side .side-card { height: 100%; overflow-y: auto; font-size: calc(var(--px) * 8); margin-right: calc(var(--px) * -2); padding-right: calc(var(--px) * 2); scrollbar-width: thin; scrollbar-color: var(--panel-edge) transparent; }
+    #side .side-card::-webkit-scrollbar { width: calc(var(--px) * 2); }
+    #side .side-card::-webkit-scrollbar-thumb { background: var(--panel-edge); }
+    /* About's guide (Task 172): a line beside its button's icon, a scorebug label above its line, the heat meter. */
+    .rb-gitem { margin-bottom: calc(var(--px) * 4); }
+    .rb-gitem.pic { display: grid; grid-template-columns: calc(var(--px) * 13) 1fr; align-items: start; }
+    .rb-icon { display: flex; width: calc(var(--px) * 9); height: calc(var(--px) * 9); margin-top: calc(var(--px) * 0.5); color: var(--panel-ink); }
+    .rb-icon svg { width: 100%; height: 100%; fill: currentColor; }
+    .rb-chip { display: inline-block; font-weight: 700; font-size: calc(var(--px) * 7); line-height: calc(var(--px) * 9); padding: 0 calc(var(--px) * 3); color: #fff; background: var(--live); }
+    .rb-chip.replay { background: var(--replay); }
+    .rb-chip.next { background: var(--panel-edge); }
+    /* The GUIDE's momentum line (Task 238): a kit swatch glowing as on the scorebug. */
+    .rb-momentum { display: block; margin: calc(var(--px) * 1) 0 0 calc(var(--px) * 3); background: #1f4fa3; --kit2: #f2efe6; box-shadow: inset calc(var(--px) * -1) 0 0 var(--kit2), 0 0 0 var(--px) var(--heat-orange), 0 0 calc(var(--px) * 4) var(--px) var(--heat-orange) !important; }
+    .rb-heat { display: block; width: calc(var(--px) * 10); height: calc(var(--px) * 2); margin-top: calc(var(--px) * 4); background: linear-gradient(90deg, var(--heat-cool), var(--heat-warm) 50%, var(--heat-hot)); }
+
+    /* Broadcast mode (Task 55; channel.md §14.3): the side panel, ticker and buttons fade out (the stands are drawn on
+       the canvas); the caption and goal alerts float over the bottom stand (below the turf with the home name, Task 72), with a border pulsing in the scoring team's
+       colour on goals; overlays on the pitch move with it (--shift, stage px); the scorebug gains its two controls. */
+    #side-tabs, #side, #ticker, #buttons { transition: opacity 0.6s; }
+    #stage.broadcast #side-tabs, #stage.broadcast #side, #stage.broadcast #ticker, #stage.broadcast #buttons, #stage.broadcast #pane { opacity: 0; pointer-events: none; }
+    /* Task 278d: Broadcast's scorebug steps aside for the ad breaks and the opening (main.js scorebugAside). */
+    #topbar { transition: opacity 0.6s; }
+    #topbar.aside { opacity: 0; pointer-events: none; }
+    #card, #card-ghost, #callout, .callout { translate: calc(var(--shift, 0) * var(--px)) 0; }
+    #stage.sliding #caption, #stage.sliding #alert { transition: top 0.6s, left 0.6s, right 0.6s; }
+    #stage.broadcast #caption { top: calc(var(--px) * 250); left: calc(var(--px) * 6); }
+    #stage.broadcast #alert { top: calc(var(--px) * 250); right: calc(var(--px) * 6); }
+    #stage.broadcast #caption.goal, #stage.broadcast #caption.scorcher, #stage.broadcast #caption.golden, #stage.broadcast #alert { background: var(--well); animation: team-pulse 0.7s ease-in-out infinite alternate; }
+    @keyframes team-pulse {
+      from { box-shadow: 0 0 0 var(--px) var(--team, var(--accent)); }
+      to { box-shadow: 0 0 0 calc(var(--px) * 2) var(--team, var(--accent)), 0 0 calc(var(--px) * 5) var(--team, var(--accent)); }
+    }
+    .bug-ctl { all: unset; display: flex; cursor: pointer; align-items: center; padding: 0 calc(var(--px) * 3); color: var(--panel-muted); border-left: var(--px) solid var(--panel-edge); }
+    .bug-ctl svg { width: calc(var(--px) * 8); height: calc(var(--px) * 8); fill: currentColor; }
+    .bug-ctl:hover { color: var(--panel-ink); }
+    /* Tooltips (Task 277b, Tom's pick B; overlays/tooltip.js): amber like the pane heads, a closing key in a dark cap. */
+    .tip { z-index: 50; pointer-events: none; white-space: nowrap; font-size: calc(var(--px) * 8); line-height: 1; display: flex; align-items: center; gap: calc(var(--px) * 3); padding: calc(var(--px) * 2) calc(var(--px) * 3); }
+    .tip[hidden] { display: none; }
+    .tip-key { padding: 0 calc(var(--px) * 2); }
+    .tip-amber { background: var(--accent); color: var(--panel); }
+    .tip-amber .tip-key { background: var(--panel); color: var(--accent); }
+    #bug-sound .wave { display: none; }
+    #bug-sound.on { color: var(--accent); }
+    #bug-sound.on .wave { display: inline; }
+    #bug-sound.lit { color: var(--panel); background: var(--accent); }
+
+    /* The levels pane (Task 129; channel.md §18.4): three on/off switches in the scorebug's row, over the ad strip (Full)
+       or the crowd beside the scorebug (Broadcast). Each switch has a lamp, lit when on; the label is struck through
+       when off (Tom's pick, look B). */
+    #levels { flex: 1; min-width: 0; display: flex; align-items: stretch; }
+    #levels[hidden], #topbar.levels-open #picker { display: none; }
+    .lv { all: unset; cursor: pointer; flex: 1; display: flex; align-items: center; justify-content: center; gap: calc(var(--px) * 2.5); font-size: calc(var(--px) * 9); color: var(--panel-muted); white-space: nowrap; }
+    .lv + .lv { border-left: max(1px, calc(var(--px) * 0.5)) solid var(--panel-edge); }
+    .lv:hover { color: var(--panel-ink); }
+    .lv.on { color: var(--panel-ink); }
+    .lv.muted { opacity: 0.5; }
+    .lv-lamp { display: inline-block; width: calc(var(--px) * 4); height: calc(var(--px) * 4); background: var(--panel-edge); }
+    .lv.on .lv-lamp { background: var(--accent); box-shadow: 0 0 calc(var(--px) * 3) var(--accent); }
+    /* The layout switch (Task 70): in both layouts, showing the one it switches to; swapped once the slide is over. */
+    #bug-layout .to-full, #bug-layout.broadcast .to-broadcast { display: none; }
+    #bug-layout.broadcast .to-full { display: inline; }
+
+    /* On every load until sound is on (the tour, Tom 2026-10-13: a first visit had no hint; browsers need a click before
+       sound can start). */
+    /* Under the speaker, pointing up at it (MOMENTS, Tom: the notice took its old place at the left edge); main.js keeps
+       it under the speaker as the scorebug's width changes. */
+    #sound-prompt::before { content: ''; position: absolute; left: calc(var(--px) * 10); top: calc(var(--px) * -4); width: calc(var(--px) * 6); height: calc(var(--px) * 4); background: var(--accent); clip-path: polygon(50% 0, 100% 100%, 0 100%); translate: -50% 0; }
+    #sound-prompt { all: unset; position: absolute; left: calc(var(--px) * 131); top: calc(var(--px) * 24); cursor: pointer; padding: calc(var(--px) * 2) calc(var(--px) * 5); background: var(--accent); color: var(--panel); font-weight: 700; font-size: calc(var(--px) * 8); box-shadow: 0 0 0 var(--px) var(--panel-edge); }
+    #sound-prompt[hidden] { display: none; }
+    /* UPDATE READY (Task 274): a new version is out while sound plays; a click reloads, back at the same moment. */
+    #update-ready { all: unset; position: absolute; right: 0; top: calc(var(--px) * 24); cursor: pointer; padding: calc(var(--px) * 2) calc(var(--px) * 5); background: var(--accent); color: var(--panel); font-weight: 700; font-size: calc(var(--px) * 8); box-shadow: 0 0 0 var(--px) var(--panel-edge); }
+    #update-ready[hidden] { display: none; }
+
+    /* The instant goal replay's frame (Task 57): the replay itself is drawn on the canvas under it. */
+    #replay { box-shadow: 0 0 0 var(--px) var(--panel-edge), 0 calc(var(--px) * 1) calc(var(--px) * 4) rgb(0 0 0 / 0.6); pointer-events: none; }
+    #replay[hidden] { display: none; }
+    #replay span { position: absolute; left: 0; top: 0; padding: 0 calc(var(--px) * 3); background: var(--replay); color: #fff; font-weight: 700; font-size: calc(var(--px) * 8); line-height: calc(var(--px) * 10); }
+
+    /* The studio's speech bubble (Task 58): over whoever is talking, their name on top, the line typing out. */
+    #studio-bubble { width: calc(var(--px) * 150); padding: calc(var(--px) * 3) calc(var(--px) * 5); background: #fff; color: var(--chip-ink); font-size: calc(var(--px) * 9); line-height: calc(var(--px) * 10); box-shadow: 0 0 0 var(--px) #111; translate: -50% -100%; pointer-events: none; }
+    #studio-bubble[hidden] { display: none; }
+    /* The desk's graphic (Task 131; vision §12, the desk speaks, the graphics inform): the facts of the line being said, in
+       capitals under the speaker, like the interview's lower third. */
+    #studio-lower { translate: -50% 0; white-space: nowrap; padding: calc(var(--px) * 1.5) calc(var(--px) * 5); background: var(--well); color: var(--panel-ink); font-size: calc(var(--px) * 9); line-height: calc(var(--px) * 10); box-shadow: inset calc(var(--px) * 2) 0 0 var(--accent), 0 0 0 var(--px) var(--panel-edge); pointer-events: none; }
+    #studio-lower[hidden] { display: none; }
+    /* OFF THE BALL: each one's name under them (Tom, 2026-10-21). */
+    .pod-name { translate: -50% 0; white-space: nowrap; padding: calc(var(--px) * 1.5) calc(var(--px) * 4); background: var(--well); color: var(--panel-ink); font-size: calc(var(--px) * 8); line-height: calc(var(--px) * 9); box-shadow: inset calc(var(--px) * 2) 0 0 var(--accent), 0 0 0 var(--px) var(--panel-edge); pointer-events: none; }
+    .pod-name[hidden] { display: none; }
+    #studio-bubble b { display: block; color: #5b6170; font-weight: 400; font-size: calc(var(--px) * 7); line-height: calc(var(--px) * 8); }
+    #studio-bubble::after { content: ''; position: absolute; left: 50%; bottom: calc(var(--px) * -4); width: calc(var(--px) * 6); height: calc(var(--px) * 4); background: #fff; clip-path: polygon(0 0, 100% 0, 50% 100%); translate: -50% 0; }
+
+    /* The player-of-the-match interview (Task 100): the badge, the caption bar edged in the team's colour, the quote, RECORDED in re-airs */
+    #interview { left: 0; top: 0; }
+    #interview[hidden], #interview [hidden] { display: none; }
+    #interview > * { position: absolute; pointer-events: none; white-space: nowrap; }
+    #interview-bubble { white-space: normal; }
+    #interview-badge { padding: calc(var(--px) * 2) calc(var(--px) * 5); background: var(--accent); color: var(--panel); font-size: calc(var(--px) * 9); line-height: calc(var(--px) * 9); }
+    #interview-lower { display: flex; align-items: center; gap: calc(var(--px) * 5); padding: calc(var(--px) * 3) calc(var(--px) * 6) calc(var(--px) * 3) calc(var(--px) * 8); box-sizing: border-box; background: rgb(21 25 36 / 0.95); border-left: calc(var(--px) * 3) solid var(--team, var(--accent)); }
+    #interview-lower .iv-text { display: flex; flex-direction: column; justify-content: center; gap: calc(var(--px) * 2); min-width: 0; }
+    #interview-lower canvas { flex: none; image-rendering: pixelated; }
+    #interview-lower p { margin: 0; line-height: 1; white-space: nowrap; overflow: hidden; }
+    #interview-name { font-size: calc(var(--px) * 14); }
+    #interview-sub { color: var(--panel-muted); font-size: calc(var(--px) * 9); }
+    #interview-stats { color: var(--accent); font-size: calc(var(--px) * 9); }
+    /* The fact strip (Task 247a, Tom's look A): hangs from the bottom of the name box, the team's colour on its edge. */
+    #interview-fact { position: absolute; left: calc(var(--px) * -3); top: 100%; display: flex; align-items: center; height: calc(var(--px) * 11); padding: 0 calc(var(--px) * 6); background: color-mix(in srgb, var(--accent) 16%, var(--well)); color: var(--accent); border-left: calc(var(--px) * 3) solid var(--team, var(--accent)); font-size: calc(var(--px) * 8); white-space: nowrap; }
+    #interview-bubble { padding: calc(var(--px) * 3) calc(var(--px) * 5); background: #fff; color: var(--chip-ink); font-size: calc(var(--px) * 9); line-height: calc(var(--px) * 10); min-height: calc(var(--px) * 20); box-sizing: border-box; box-shadow: 0 0 0 var(--px) #111; }
+    #interview-bubble::after { content: ''; position: absolute; left: 80%; bottom: calc(var(--px) * -4); width: calc(var(--px) * 6); height: calc(var(--px) * 4); background: #fff; clip-path: polygon(0 0, 100% 0, 50% 100%); }
+    #interview-rec { padding: calc(var(--px) * 2) calc(var(--px) * 5); background: var(--replay); color: #fff; font-size: calc(var(--px) * 9); line-height: calc(var(--px) * 9); translate: -100% 0; }
+
+    /* Ticker (bottom) */
+    #ticker { left: 0; right: 0; bottom: 0; height: calc(var(--px) * 14); display: flex; align-items: center; overflow: hidden; white-space: nowrap; }
+    /* The season, book-ending the ticker on the right (Tom, after Task 234: the TABLE tab isn't the default view). */
+    #ticker-season { background: var(--accent); color: var(--panel); font-weight: 700; height: 100%; display: flex; align-items: center; padding: 0 calc(var(--px) * 5); }
+    #ticker-tag { background: var(--accent); color: var(--panel); font-weight: 700; height: 100%; display: flex; align-items: center; padding: 0 calc(var(--px) * 5); }
+    #ticker-text { position: relative; flex: 1; height: 100%; overflow: hidden; }
+    #ticker-tape { position: absolute; left: 0; top: 0; height: 100%; display: flex; align-items: center; will-change: transform; }
+    .tick { padding: 0 calc(var(--px) * 6); }
+    .tick.live { color: var(--panel-ink); }
+    .tick-on-air { color: var(--live); }
+    .tick-name { color: var(--panel-ink); }
+    .tick.flash .tick-on-air { color: inherit; }
+    .tick.flash { background: var(--live); color: #fff; }
+    .tick.next, .tick.leader, .tick.scorer { color: var(--panel-muted); }
+    /* An announcement (Task 265; channel.md §24): the headline after an amber LEAGUE tag. */
+    .tick.league { color: var(--panel-ink); }
+    /* The big matches promoted: a fiery tag, the teams and when in gold */
+    .tick.big { color: var(--panel-ink); }
+    .tick-big { background: linear-gradient(90deg, var(--heat-hot), var(--heat-orange)); color: #fff; font-weight: 700; padding: 0 calc(var(--px) * 3); margin-right: calc(var(--px) * 3); }
+    .tick-show { color: var(--accent); font-weight: 700; }
+    .tick-league { background: var(--accent); color: var(--panel); font-weight: 700; padding: 0 calc(var(--px) * 3); margin-right: calc(var(--px) * 3); }
+    .guide-tomorrow { margin: calc(var(--px) * 4) 0 calc(var(--px) * 2); padding-top: calc(var(--px) * 2); border-top: var(--px) dashed var(--panel-edge); color: var(--accent); font-weight: 700; }
+    .guide-tomorrow small { color: var(--panel-muted); font-weight: 400; font-size: calc(var(--px) * 7); }
+    .guide-row.tomorrow { opacity: 0.8; }
+    .tick-fans { background: var(--gold); color: var(--chip-ink); font-weight: 700; padding: 0 calc(var(--px) * 3); margin-right: calc(var(--px) * 3); }
+    .tick.fans { color: var(--gold); }
+    .tick-sep { color: var(--panel-edge); }
+    /* Centred on the abbreviation's capitals (Tom: middle centred it on lowercase letters, a pixel or two low): its
+       bottom raised from the baseline by half VT323's cap height (0.533em) less half its own height. */
+    .tick-kit { display: inline-block; width: calc(var(--px) * 3); height: calc(var(--px) * 6); vertical-align: calc(0.2667em - var(--px) * 3); margin-right: calc(var(--px) * 1.5); }
+
+    /* Final round: the match selector strip and goal alerts from the other matches */
+    /* The final-round picker fills the rest of the row to the edge of the pitch area. */
+    #picker { flex: 1; min-width: 0; overflow: hidden; display: flex; align-items: stretch; padding: 0 calc(var(--px) * 1); }
+    #picker[hidden], #alert[hidden] { display: none; }
+    .chip-pick { all: unset; cursor: pointer; flex: 1; display: flex; align-items: center; justify-content: center; gap: var(--px); padding: 0 calc(var(--px) * 1); font-size: calc(var(--px) * 9); color: var(--panel-muted); white-space: nowrap; min-width: 0; position: relative; }
+    .chip-pick + .chip-pick { border-left: max(1px, calc(var(--px) * 0.5)) solid var(--panel-edge); }
+    /* Kits never shrink, so neither team's colours get squeezed out when the strip is tight (Task 109). */
+    .chip-pick .kit { flex: none; width: calc(var(--px) * 3); height: calc(var(--px) * 6); }
+    .chip-pick.on { color: var(--panel-ink); box-shadow: inset 0 calc(var(--px) * -2) 0 var(--accent); }
+    .chip-pick.flash { background: var(--live); color: #fff; }
+    /* The channel's own pick: a red dot over the score (Task 110: bigger, and clearly on its own chip). */
+    .chip-pick.featured::after { content: ''; position: absolute; top: calc(var(--px) * 1); left: 50%; translate: -50% 0; width: calc(var(--px) * 3); height: calc(var(--px) * 3); background: var(--live); }
+    .chip-pick.done { opacity: 0.6; }
+    #alert { right: calc(var(--px) * 88); top: calc(var(--px) * 238); height: calc(var(--px) * 18); display: flex; align-items: stretch; font-size: calc(var(--px) * 9); }
+    .alert-stripe { width: calc(var(--px) * 4); }
+    .alert-text { display: flex; align-items: center; padding: 0 calc(var(--px) * 5); font-weight: 700; color: #fff; }
+    .alert-hint { display: flex; align-items: center; padding-right: calc(var(--px) * 5); color: var(--panel-muted); }
+
+    /* The big card over the pitch: full time, pre-match, studio cards */
+    :is(#card, #card-ghost) { left: calc(var(--px) * 41); top: calc(var(--px) * 56); width: calc(var(--px) * 312); height: calc(var(--px) * 160); padding: calc(var(--px) * 8) calc(var(--px) * 10); box-sizing: border-box; background: rgb(21 25 36 / 0.94); overflow: hidden; }
+    #card[hidden] { display: none; }
+    :is(#card, #card-ghost) h3 { margin: 0 0 calc(var(--px) * 6); font-size: calc(var(--px) * 12); color: var(--accent); }
+    :is(#card, #card-ghost) p { margin: 0 0 calc(var(--px) * 4); }
+    /* A swatch in a line of text (the Pennant on FINAL DAY, Task 182): sized like one in a row, not a bare outline. */
+    :is(#card, #card-ghost) .kit { display: inline-block; vertical-align: middle; }
+    :is(#card, #card-ghost) .muted { color: var(--panel-muted); }
+    :is(#card, #card-ghost) .scorcher, :is(#card, #card-ghost) .hot { color: var(--heat-orange); }
+    .card-team { display: flex; align-items: center; gap: calc(var(--px) * 4); font-weight: 700; }
+    .card-score { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: calc(var(--px) * 8); margin: calc(var(--px) * 6) 0 calc(var(--px) * 8); }
+    /* Both names meet the middle (Task 109: the home name sat at the far left, so the score or "v" looked off centre between them). */
+    .card-score .home { justify-content: flex-end; }
+    .card-score .away { justify-content: flex-end; flex-direction: row-reverse; }
+    .card-score.pair { grid-template-columns: 1fr 1fr; gap: calc(var(--px) * 14); }
+    .card-score .big { font-size: calc(var(--px) * 20); font-weight: 700; }
+    .card-cols { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--px) * 12); }
+    .card-list { list-style: none; margin: 0; padding: 0; }
+    .card-list li { padding: calc(var(--px) * 1.5) 0; display: flex; align-items: center; gap: calc(var(--px) * 4); white-space: pre; }
+    .card-list.rows li { padding: calc(var(--px) * 3) 0; }
+    .card-list .slot { color: var(--panel-muted); min-width: calc(var(--px) * 8); }
+    /* The rookie (Task 234, Tom's pick A): a gold R chip after the name, like the form chips. */
+    .card-list .rookie { display: inline-grid; place-items: center; width: calc(var(--px) * 7); height: calc(var(--px) * 7); font-size: calc(var(--px) * 7); background: var(--accent); color: var(--chip-ink); }
+    .card-note { color: var(--panel-muted); margin-top: calc(var(--px) * 6) !important; }
+    .form { display: flex; gap: calc(var(--px) * 2); margin-bottom: calc(var(--px) * 5); min-height: calc(var(--px) * 8); }
+    .chip { width: calc(var(--px) * 8); height: calc(var(--px) * 8); display: grid; place-items: center; font-size: calc(var(--px) * 8); color: var(--chip-ink); }
+    .chip.W { background: var(--good); } .chip.D { background: var(--panel-muted); } .chip.L { background: var(--live); color: #fff; }
+    /* Crests (Task 166): drawn on canvases a stage pixel per pixel, scaled up crisp. */
+    canvas.crest { flex: none; image-rendering: pixelated; }
+    .crest-head { display: flex; align-items: center; gap: calc(var(--px) * 5); }
+    .card-feature { display: flex; align-items: center; gap: calc(var(--px) * 8); margin-bottom: calc(var(--px) * 6); }
+    /* Player of the match: their quote in a speech bubble, typed out as if spoken. */
+    .kit.big { width: calc(var(--px) * 16); height: calc(var(--px) * 24); box-shadow: inset calc(var(--px) * -4) 0 0 var(--kit2, transparent); }
+    .card-name { font-size: calc(var(--px) * 14); font-weight: 700; }
+    /* The desk's career card (Task 226): the career in big totals. */
+    .cc-totals { display: flex; gap: calc(var(--px) * 14); margin: calc(var(--px) * 6) 0 calc(var(--px) * 4); }
+    .cc-total { display: flex; flex-direction: column; }
+    .cc-big { font-size: calc(var(--px) * 18); line-height: 1; font-weight: 700; color: var(--accent); }
+    .card-blurb { line-height: 1.4; }
+    .card-list.two-col { display: grid; grid-template-columns: 1fr 1fr; column-gap: calc(var(--px) * 10); }
+    :is(#card, #card-ghost) h3.hot { color: var(--heat-hot); }
+
+    /* Glass (Task 102, Tom's pick from Task 93): studio cards over the scene, see-through with a light edge, a slanted orange header, the top-right corner cut on the light bars' diagonal */
+    :is(#card, #card-ghost).glass { padding: 0 calc(var(--px) * 10) calc(var(--px) * 6); background: rgb(14 24 52 / 0.72); box-shadow: inset 0 0 0 var(--px) rgb(160 210 255 / 0.45); clip-path: polygon(0 0, calc(100% - var(--px) * 18) 0, 100% calc(var(--px) * 30), 100% 100%, 0 100%); }
+    :is(#card, #card-ghost).glass h3 { margin: 0 calc(var(--px) * -10) calc(var(--px) * 6); padding: calc(var(--px) * 4) calc(var(--px) * 10); font-size: calc(var(--px) * 11); color: var(--panel); background: linear-gradient(100deg, var(--accent) 0 70%, transparent 70.2%); }
+    :is(#card, #card-ghost).glass h3.hot { color: var(--panel); background: linear-gradient(100deg, var(--heat-hot) 0 70%, transparent 70.2%); }
+    /* The big matches promoted (Tom's pick C, the poster; bigmatches.html): a fire-red column with the event stacked large */
+    :is(#card, #card-ghost).glass.card-promo { padding: 0; }
+    .promo { display: grid; grid-template-columns: calc(var(--px) * 96) 1fr; height: 100%; }
+    .promo-col { background: linear-gradient(170deg, #e2471b 0%, #a3200f 55%, #4d0b07 100%); color: #fff; padding: calc(var(--px) * 8) calc(var(--px) * 7); display: flex; flex-direction: column; box-shadow: inset calc(var(--px) * -1) 0 0 var(--accent); }
+    .promo-col .w { font-size: calc(var(--px) * 20); line-height: calc(var(--px) * 17); font-weight: 700; text-shadow: 0 var(--px) 0 #4d0b07; }
+    .promo-col .w.sm { font-size: calc(var(--px) * 15); line-height: calc(var(--px) * 13); }
+    .promo-col .when { margin-top: auto; color: var(--accent); }
+    :is(#card, #card-ghost) .promo-col .promo-cd { margin: 0; color: #fff; font-size: calc(var(--px) * 12); line-height: calc(var(--px) * 12); }
+    .promo-body { padding: calc(var(--px) * 9) calc(var(--px) * 16) calc(var(--px) * 6) calc(var(--px) * 9); overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: calc(var(--px) * 3); }
+    .promo-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; column-gap: calc(var(--px) * 5); white-space: nowrap; font-weight: 700; }
+    .promo-row .h { justify-self: end; display: flex; align-items: center; gap: calc(var(--px) * 3); }
+    .promo-row .a { display: flex; align-items: center; gap: calc(var(--px) * 3); }
+    .promo-row .kit { width: calc(var(--px) * 4); height: calc(var(--px) * 7); }
+    .promo-row .won, .promo-row .lost { color: var(--panel-ink); } /* names white, the score carries the win (docs/colours.md) */
+    .promo-row .score { color: var(--panel-ink); }
+    :is(#card, #card-ghost) p.promo-sub { margin: 0; text-align: center; color: var(--panel-muted); font-size: calc(var(--px) * 7); line-height: calc(var(--px) * 8); }
+    :is(#card, #card-ghost) p.promo-sub.watch { color: var(--panel-ink); }
+    :is(#card, #card-ghost) p.promo-sub.hot { color: var(--heat-orange); }
+    .promo-face { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; column-gap: calc(var(--px) * 6); }
+    .promo-side { display: flex; flex-direction: column; align-items: center; gap: calc(var(--px) * 2); text-align: center; }
+    .promo-side .nm { font-weight: 700; }
+    .promo-face .vs { font-size: calc(var(--px) * 14); color: var(--accent); }
+    /* FROM THE VAULT's cards (Tom's note 14; his picks on vault.html) */
+    .vt-open { display: flex; flex-direction: column; align-items: center; gap: calc(var(--px) * 4); text-align: center; padding-top: calc(var(--px) * 6); }
+    .vt-head { font-size: calc(var(--px) * 16); line-height: calc(var(--px) * 15); font-weight: 700; }
+    .vt-face { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; column-gap: calc(var(--px) * 8); }
+    .vt-face .vs { font-size: calc(var(--px) * 24); font-weight: 700; color: var(--panel-ink); }
+    .vt-cols { display: grid; grid-template-columns: 1fr 1fr; column-gap: calc(var(--px) * 10); }
+    .vt-side { display: flex; flex-direction: column; align-items: center; gap: calc(var(--px) * 1); text-align: center; }
+    .vt-side .nm { font-weight: 700; }
+    :is(#card, #card-ghost) .honour { color: var(--accent); }
+    :is(#card, #card-ghost) .amb { color: var(--accent); }
+    /* The PLAYOFF PREVIEW show's cards (the big matches promoted; Tom's picks on preview.html) */
+    :is(#card, #card-ghost).glass.card-preview_open { padding: 0; }
+    .pv-open { justify-content: center; }
+    :is(#card, #card-ghost) .pv-open p { margin: 0; }
+    :is(#card, #card-ghost) .pv-open .pv-amb { color: var(--accent); }
+    .pv-chart { display: block; width: calc(var(--px) * 292); height: calc(var(--px) * 112); }
+    .pv-label { font: 7px "VT323", monospace; fill: var(--panel-ink); }
+    .pv-label.pts { fill: var(--panel-muted); }
+    :is(#card, #card-ghost) .pv-foot { position: absolute; left: calc(var(--px) * 10); right: calc(var(--px) * 10); bottom: calc(var(--px) * 4); display: flex; justify-content: space-between; color: var(--panel-muted); font-size: calc(var(--px) * 7); }
+    .pv-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(var(--px) * 4); }
+    .pv-tile { box-shadow: inset 0 0 0 var(--px) rgb(160 210 255 / 0.35); padding: calc(var(--px) * 3) calc(var(--px) * 4); overflow: hidden; white-space: nowrap; }
+    .pv-tile .n { font-size: calc(var(--px) * 16); line-height: calc(var(--px) * 15); color: var(--accent); font-weight: 700; }
+    .pv-tile .what { color: var(--panel-muted); font-size: calc(var(--px) * 7); line-height: calc(var(--px) * 8); }
+    .pv-tile .who { overflow: hidden; text-overflow: ellipsis; }
+    .pv-tiles.n7 .pv-tile, .pv-tiles.n8 .pv-tile, .pv-tiles.n9 .pv-tile { padding: calc(var(--px) * 1) calc(var(--px) * 4); }
+    .pv-tiles.n7 .n, .pv-tiles.n8 .n, .pv-tiles.n9 .n { font-size: calc(var(--px) * 11); line-height: calc(var(--px) * 11); }
+    .pv-tape { display: grid; grid-template-columns: 1fr calc(var(--px) * 46) 1fr; column-gap: calc(var(--px) * 4); row-gap: calc(var(--px) * 0.5); white-space: nowrap; }
+    .pv-tape .r { text-align: right; }
+    .pv-tape .l { text-align: center; color: var(--panel-muted); font-size: calc(var(--px) * 7); }
+    .pv-tape .b { font-weight: 700; margin-bottom: calc(var(--px) * 1); }
+    .pv-tape .hi { color: var(--accent); }
+    :is(#card, #card-ghost) p.pv-meet { margin: calc(var(--px) * 2) 0 0; text-align: center; color: var(--panel-muted); font-size: calc(var(--px) * 7); line-height: calc(var(--px) * 8); }
+    .pv-halves { display: grid; grid-template-columns: 1fr 1fr; column-gap: calc(var(--px) * 10); }
+    .pv-half { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .pv-small { color: var(--panel-muted); font-size: calc(var(--px) * 7); line-height: calc(var(--px) * 8); }
+    .pv-player { margin-top: calc(var(--px) * 5); }
+    .pv-player .big { font-size: calc(var(--px) * 16); line-height: calc(var(--px) * 15); font-weight: 700; color: var(--accent); }
+    .pv-player .big.honour { color: var(--accent); }
+    /* FINALS PREVIEW's road (Tom's pick B): the semifinals' boxes, into the final's. */
+    .pv-road { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; column-gap: calc(var(--px) * 6); margin-top: calc(var(--px) * 4); }
+    .pv-road-semis { display: flex; flex-direction: column; gap: calc(var(--px) * 5); }
+    .pv-road-box { box-shadow: inset 0 0 0 var(--px) rgb(160 210 255 / 0.35); padding: calc(var(--px) * 2) calc(var(--px) * 4); white-space: nowrap; }
+    .pv-road-box.final { box-shadow: inset 0 0 0 var(--px) var(--accent); text-align: center; padding: calc(var(--px) * 4); }
+    .pv-road-box .honour { color: var(--accent); font-weight: 700; }
+    .pv-road-row { display: grid; grid-template-columns: calc(var(--px) * 12) calc(var(--px) * 5) 1fr auto; align-items: center; column-gap: calc(var(--px) * 2); color: var(--panel-muted); }
+    .pv-road-row.hi { color: var(--accent); }
+    .pv-road-row .g { font-weight: 700; }
+    .pv-road-to { font-size: calc(var(--px) * 16); color: var(--accent); }
+    .pv-tape .honour { color: var(--accent); }
+    #card-ghost { animation: card-dissolve linear both; pointer-events: none; }
+    @keyframes card-dissolve { from { opacity: 1; } to { opacity: 0; } }
+    /* Task 102's grid cards: the form guide, the playoff race, the other leaders, head-to-head */
+    .card-grid { display: grid; column-gap: calc(var(--px) * 5); row-gap: calc(var(--px) * 1.5); align-items: center; white-space: nowrap; }
+    .card-grid > * { overflow: hidden; text-overflow: ellipsis; }
+    .card-grid .m { color: var(--panel-muted); }
+    .card-grid .hi { color: var(--accent); }
+    .card-grid .r { text-align: right; justify-self: end; }
+    .card-grid .c { text-align: center; }
+    /* The new studio cards (Tom's note 11): the Cup, the Pennant and the record in gold; LAST SEASON's table wider than its awards, the gaps tighter. */
+    .card-grid .honour { color: var(--accent); }
+    .card-blocks.tight { grid-template-columns: 13fr 7fr; column-gap: calc(var(--px) * 6); }
+    .card-blocks.tight .card-grid { column-gap: calc(var(--px) * 3); }
+    .card-grid .kit { width: calc(var(--px) * 4); height: calc(var(--px) * 7); }
+    /* PAYROLLS (Task 234): a payroll's bar against the cap, gold when nearly full. */
+    .card-grid .bar { height: calc(var(--px) * 3); background: rgb(255 255 255 / 0.15); }
+    .card-grid .bar > span { display: block; height: 100%; background: var(--panel-ink); }
+    .card-grid .bar > span.full { background: var(--accent); }
+    .card-chips { display: inline-flex; gap: calc(var(--px) * 1.5); }
+    .card-chips .chip { width: calc(var(--px) * 9); height: calc(var(--px) * 9); }
+    .card-cut { grid-column: 1 / -1; height: 0; border-top: var(--px) dashed var(--accent); margin: calc(var(--px) * 0.5) 0; }
+    .card-cut.quiet { border-top-style: solid; border-color: rgb(160 210 255 / 0.3); }
+    .card-blocks { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--px) * 5) calc(var(--px) * 10); }
+    .card-blocks h4, :is(#card, #card-ghost) > h4 { margin: 0 0 calc(var(--px) * 2); font-weight: 400; color: var(--accent); font-size: calc(var(--px) * 9); }
+    :is(#card, #card-ghost) > h4 { margin-top: calc(var(--px) * 5); }
+
+    /* On-pitch callout bubble (TACKLE!, SAVE!, FOUL! …): a white bubble edged in the team's shirt, with a tail. */
+    .callout { padding: 0 calc(var(--px) * 3); background: #fff; color: var(--chip-ink); border: calc(var(--px) * 1) solid var(--edge, var(--chip-ink)); font-size: calc(var(--px) * 9); line-height: calc(var(--px) * 9); white-space: nowrap; pointer-events: none; transform-origin: 50% 100%; }
+    .callout::after { content: ""; position: absolute; left: 50%; bottom: calc(var(--px) * -3); width: calc(var(--px) * 2); height: calc(var(--px) * 2); margin-left: calc(var(--px) * -1); background: inherit; border-right: inherit; border-bottom: inherit; transform: rotate(45deg); }
+    .callout[hidden] { display: none; }
+    .callout.foul { background: var(--kick-plate); border-color: var(--chip-ink); }
+    .callout.burn { background: #fff6c8; color: #c4260f; }
+    .callout.goal { font-weight: 700; }
+    .callout.golden { font-weight: 700; background: var(--accent); color: #3a0d08; border-color: color-mix(in srgb, var(--accent) 55%, #000); }
+
+    /* Dev panel: toggle with the ` key */
+    #devbox { left: calc(var(--px) * 6); top: calc(var(--px) * 26); z-index: 10; display: flex; align-items: flex-start; gap: calc(var(--px) * 4); font-size: calc(var(--px) * 8); line-height: 1.3; }
+    #dev, #dev-help { display: none; padding: calc(var(--px) * 4); background: rgb(0 0 0 / 0.93); }
+    #dev.open, #dev-help.open { display: block; }
+    #dev-foot { margin-top: calc(var(--px) * 3); text-align: right; }
+    #dev-help { width: calc(var(--px) * 280); max-height: calc(var(--px) * 236); overflow-y: auto; }
+    #dev-help h4 { margin: 0 0 calc(var(--px) * 3); font-size: calc(var(--px) * 10); color: var(--accent); }
+    #dev-help h5 { margin: calc(var(--px) * 5) 0 calc(var(--px) * 2); font-size: calc(var(--px) * 9); color: #8fd3ff; }
+    #dev-help p { margin: 0; }
+    #dev-help .dim { opacity: 0.6; font-size: calc(var(--px) * 8); }
+    #dev-help dl { display: grid; grid-template-columns: calc(var(--px) * 58) 1fr; gap: calc(var(--px) * 1) calc(var(--px) * 6); margin: 0; }
+    #dev-help dt { color: #fff; }
+    #dev-help dd { margin: 0; color: #c9d1d9; }
+    #dev pre { margin: 0; font: inherit; white-space: pre; }
+    #dev a { color: #8fd3ff; text-decoration: none; cursor: pointer; }
+    #dev a:hover { text-decoration: underline; }
+    #dev-jumps { display: grid; grid-auto-flow: column; column-gap: calc(var(--px) * 8); margin-top: calc(var(--px) * 3); padding-top: calc(var(--px) * 3); border-top: 1px solid rgb(255 255 255 / 0.25); }
+    #dev-jumps .past { opacity: 0.55; }
+    #error { color: #ff7a6b; font: 14px/1.4 ui-monospace, monospace; white-space: pre-wrap; padding: 16px; }
+    /* On a phone (phones, step 4; docs/channel.md §28; overlays/phoneControls.js): the desktop's controls hidden, large
+       buttons in the bands beside the picture; the side panel and the panes from the top down to the ticker. */
+    body.phone #bug-layout, body.phone #bug-sound, body.phone #side-tabs, body.phone #buttons, body.phone #sound-prompt, body.phone #levels { display: none !important; }
+    body.phone #side { top: calc(var(--px) * 14); height: calc(var(--px) * 242); }
+    .phone-side-head { display: none; }
+    body.phone .phone-side-head { display: flex; position: absolute; left: calc(var(--px) * 394); top: 0; width: calc(var(--px) * 86); z-index: 2; box-sizing: border-box; transition: opacity 0.6s; }
+    body.phone #stage.broadcast .phone-side-head { opacity: 0; }
+    /* Names that open a card, marked on a phone (no hover there to underline them); a card's back a wide button. */
+    body.phone .pl { text-decoration: underline dotted; text-underline-offset: calc(var(--px) * 1.5); }
+    body.phone .card-back { all: unset; display: block; cursor: pointer; margin-bottom: calc(var(--px) * 4); padding: 0 calc(var(--px) * 4); line-height: calc(var(--px) * 13); font-size: calc(var(--px) * 8); color: var(--accent); box-shadow: inset 0 0 0 var(--px) var(--accent); }
+    body.phone #pane { height: calc(var(--px) * 256); }
+    /* The panes on a phone (Tom's pick A on panetabs.html): no ✕ (a pane closes from its own button), and their tabs
+       stacked, a full-width row each, a little taller and further apart than the mock-up's. */
+    body.phone .pane-x { display: none; }
+    body.phone .guide-bar { flex-direction: column; gap: calc(var(--px) * 3); }
+    body.phone .guide-filter { flex: none; text-align: left; padding: 0 calc(var(--px) * 4); line-height: calc(var(--px) * 13); font-size: calc(var(--px) * 8); }
+    .phone-band { transition: opacity 0.5s; }
+    .phone-band.faded { opacity: 0; pointer-events: none; }
+    .phone-band { position: fixed; top: 0; bottom: 0; z-index: 30; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4px 0; box-sizing: border-box; font-family: 'VT323', monospace; }
+    .phone-band.left { left: 0; }
+    .phone-band.right { right: 0; }
+    .phone-band .gap { flex: 1; }
+    .phone-btn { all: unset; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; width: 72px; max-width: 100%; font-size: 12px; line-height: 1; text-align: center; color: var(--panel-ink); -webkit-tap-highlight-color: transparent; }
+    .phone-btn svg { width: 20px; height: 20px; fill: currentColor; flex: none; }
+    .phone-btn.on { color: var(--accent); }
+    .phone-btn.lit { color: var(--panel); background: var(--accent); }
+    .phone-btn.ask { color: var(--accent); animation: phone-ask 1.1s ease-out infinite; border-radius: 6px; }
+    @keyframes phone-ask { from { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 90%, transparent); } to { box-shadow: 0 0 0 8px transparent; } }
+    .phone-levels { position: absolute; left: 0; top: calc(var(--px) * 20); width: calc(var(--px) * 86); z-index: 25; display: grid; gap: calc(var(--px) * 3); padding: calc(var(--px) * 4); box-sizing: border-box; }
+    .phone-levels[hidden] { display: none; }
+    .phone-lv { all: unset; cursor: pointer; display: flex; align-items: center; gap: calc(var(--px) * 4); height: calc(var(--px) * 16); padding: 0 calc(var(--px) * 4); font-size: calc(var(--px) * 8); color: var(--panel-ink); box-shadow: inset 0 0 0 var(--px) var(--panel-edge); }
+    .phone-lv .lamp { width: calc(var(--px) * 5); height: calc(var(--px) * 5); background: var(--panel-edge); flex: none; }
+    .phone-lv.on .lamp { background: var(--accent); box-shadow: 0 0 calc(var(--px) * 3) var(--accent); }
+    .phone-turn { position: fixed; inset: 0; z-index: 40; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: rgb(5 7 12 / 0.92); color: var(--panel-ink); font: 22px 'VT323', monospace; text-align: center; }
+    .phone-turn[hidden] { display: none; }
+    .phone-turn svg { width: 64px; height: 64px; fill: var(--accent); animation: phone-turn 2.4s ease-in-out infinite; }
+    .phone-turn small { font-size: 16px; color: var(--panel-muted); max-width: 260px; }
+    .phone-go { all: unset; cursor: pointer; font-size: 16px; color: var(--panel); background: var(--accent); padding: 0 16px; line-height: 40px; }
+    @keyframes phone-turn { 0%, 30% { transform: rotate(0); } 60%, 100% { transform: rotate(-90deg); } }
+  </style>
+</head>
+<body>
+  <!-- For search engines and anyone without scripts (the SEO basics): what this is, and the About page. -->
+  <noscript><p>Scorchball TV: a made-up sport, simulated around the clock and shown as a live pixel-art sports channel. The channel needs JavaScript. <a href="/about">About Scorchball TV</a>.</p></noscript>
+  <div id="loading"><div class="tag">SCORCHBALL</div><div class="msg">TUNING IN…</div></div>
+  <div id="stage" hidden>
+    <canvas id="pitch"></canvas>
+    <canvas id="sharp"></canvas>
+    <div id="topbar" class="overlay">
+    <div id="scorebug" class="panel">
+      <div id="bug">LIVE</div>
+      <div id="stage-label"></div>
+      <div class="team"><span id="home-kit" class="kit"></span><span id="home">---</span></div>
+      <div id="score">-</div>
+      <div class="team"><span id="away">---</span><span id="away-kit" class="kit"></span></div>
+      <div id="clock"><span id="period"></span><span id="time"></span></div>
+      <button id="bug-layout" class="bug-ctl" title="Broadcast layout: the stands and the crowd (B)"><svg class="to-broadcast" viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="1" width="9" height="1"/><rect x="0" y="7" width="9" height="1"/><rect x="0" y="1" width="1" height="7"/><rect x="8" y="1" width="1" height="7"/><rect x="3" y="3" width="3" height="3"/></svg><svg class="to-full" viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="1" width="9" height="1"/><rect x="0" y="7" width="9" height="1"/><rect x="0" y="1" width="1" height="7"/><rect x="8" y="1" width="1" height="7"/><rect x="5" y="2" width="1" height="5"/></svg></button>
+      <button id="bug-sound" class="bug-ctl" title="Sound (M)"><svg viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="3" width="2" height="3"/><rect x="2" y="2" width="1" height="5"/><rect x="3" y="1" width="1" height="7"/><rect x="5" y="3" width="1" height="3" class="wave"/><rect x="7" y="2" width="1" height="5" class="wave"/></svg></button>
+      <span id="heat-strip"><span id="heat-fill" style="display:block"></span></span>
+    </div>
+    <div id="picker" class="panel" hidden></div>
+    <div id="levels" class="panel" hidden></div>
+    </div>
+    <div id="caption" class="overlay panel" hidden>
+      <div id="caption-stripe"></div>
+      <div id="caption-title"></div>
+      <div id="caption-detail"></div>
+    </div>
+    <div id="side-tabs" class="overlay panel"></div>
+    <div id="side" class="overlay panel">
+      <div id="side-stats"></div>
+      <div id="table" hidden>
+        <h2 id="table-title">TABLE</h2>
+        <div class="head"><span></span><span></span><span></span><span>GP</span><span>GD</span><span>PTS</span></div>
+        <ol id="table-rows"></ol>
+      </div>
+      <div id="side-top" hidden></div>
+      <div id="side-week" hidden></div>
+    </div>
+    <div id="buttons" class="overlay panel"></div>
+    <div id="pane" class="overlay panel" hidden></div>
+    <button id="sound-prompt" hidden>CLICK FOR SOUND</button>
+    <button id="update-ready" hidden>UPDATE READY · RELOAD</button>
+    <div id="ticker" class="overlay panel"><div id="ticker-tag">SCORCHBALL</div><div id="ticker-text"><div id="ticker-tape"></div></div><div id="ticker-season"></div></div>
+    <div id="callout" class="overlay callout" hidden></div>
+    <div id="replay" class="overlay" hidden><span>REPLAY</span></div>
+    <div id="studio-bubble" class="overlay" hidden><b></b><span></span></div>
+    <div id="studio-lower" class="overlay" hidden></div>
+    <div id="pod-name-0" class="overlay pod-name" hidden></div>
+    <div id="pod-name-1" class="overlay pod-name" hidden></div>
+    <div id="interview" class="overlay" hidden><div id="interview-bubble"></div><div id="interview-badge">PLAYER OF THE MATCH</div><div id="interview-lower"><canvas id="interview-crest"></canvas><div class="iv-text"><p id="interview-name"></p><p id="interview-sub"></p><p id="interview-stats"></p></div><div id="interview-fact" hidden></div></div><div id="interview-rec"></div></div>
+    <div id="alert" class="overlay panel" hidden></div>
+    <div id="card" class="overlay panel" hidden></div>
+    <div id="devbox" class="overlay">
+      <div id="dev"><pre id="dev-status"></pre><div id="dev-jumps"></div><div id="dev-foot"><a id="dev-help-link">Help (H)</a> · <a id="dev-share-link">Match share</a></div></div>
+      <div id="dev-help">
+        <h4>Dev panel help <span class="dim">(H or ` to close)</span></h4>
+        <p>The channel always shows "now", and the big moments come once a week. These tools let you visit any moment as if it were live.</p>
+
+        <h5>URL options (address bar)</h5>
+        <dl>
+          <dt>?at=</dt><dd>Start at this moment, then run on normally. The jump links write it for you.</dd>
+          <dt>?speed=</dt><dd>Fast-forward. 60 = a match in 16 s, 10 = gentler. Good for pacing and flow. Watch movement and captions at normal speed.</dd>
+          <dt>?seed=</dt><dd>A different league (any word). Checks whether something is general or a quirk of one league. Same seed, same league, for both of us. Seed f has a shootout.</dd>
+          <dt>Combine</dt><dd>?seed=f&amp;speed=10&amp;at=… A typo stops the page with an error.</dd>
+        </dl>
+
+        <h5>Status lines</h5>
+        <dl>
+          <dt>now</dt><dd>League time (pasteable as ?at=), speed, FPS. Well under 60 fps means something is slow.</dd>
+          <dt>season</dt><dd>Season, regular or playoffs, matches kicked off out of 59.</dd>
+          <dt>segment</dt><dd>What the programme is showing and when it ends. "Why is this on now?" Around each match: pre_match, walk_out, live, handshakes, then the post-match show (full_time, highlights, studio, marked "post-match show").</dd>
+          <dt>on air</dt><dd>The match being drawn: score, time in, live or highlights (which clip), your pick or the channel's (final round).</dd>
+          <dt>next</dt><dd>The next kick-off.</dd>
+          <dt>seed</dt><dd>Which league, build time, events stored.</dd>
+        </dl>
+
+        <h5>Jump links (keep your seed and speed)</h5>
+        <dl>
+          <dt>This moment</dt><dd>A bookmark for right now. Right-click, copy, and send it to Claude to show exactly what you saw.</dd>
+          <dt>Match share</dt><dd>Click to work out how much of this season's week shows a match being played, live or re-aired (about a second). The aim is well over half; about two-thirds is expected.</dd>
+          <dt>Last handshakes, Last post-match show</dt><dd>15 s into the handshakes or the post-match show of the match that finished most recently.</dd>
+          <dt>?hl=1.5</dt><dd>Plays highlights at another speed on this screen only (the setting is highlights.speed).</dd>
+          <dt>S, T, G, W</dt><dd>The side panel's tabs, on this screen only: STATS (the match on screen), TABLE (T), TOP (scorers, G), WEEK. Clicks work too; every load starts on STATS.</dd>
+          <dt>Next walk-out</dt><dd>15 s into the walk-out before the next match.</dd>
+          <dt>Next match</dt><dd>2 min into the next live match.</dd>
+          <dt>Opening match</dt><dd>The season's first match: empty table, no form yet.</dd>
+          <dt>Final day card</dt><dd>3 min before the final round: the four fixtures and the races.</dd>
+          <dt>Final round</dt><dd>6 min into the four simultaneous matches. Test flipping (1–4, 0 = auto) and goal alerts.</dd>
+          <dt>Semis, final</dt><dd>2 min into each playoff match: knockout scorebug, overtime, shootouts.</dd>
+          <dt>Champions</dt><dd>The champions card. May pause briefly first to work out when the final ends.</dd>
+          <dt>Off-season</dt><dd>Retirements, draft lottery, draft.</dd>
+          <dt>Countdown</dt><dd>Just before next season: the countdown card and scorebug.</dd>
+          <dt>Next opener</dt><dd>Checks the week loops into the next season.</dd>
+          <dt>Dimmed</dt><dd>Already passed. Still works.</dd>
+        </dl>
+
+        <h5>Keys</h5>
+        <dl>
+          <dt>`</dt><dd>Dev panel on/off.</dd>
+          <dt>H</dt><dd>This help (while the panel is open).</dd>
+          <dt>Next studio desk</dt><dd>(Dev panel jump) Searches ahead for the studio desk (Task 58), which only comes round now and then in the gaps.</dd>
+          <dt>1–4, 0</dt><dd>Final round: watch match N; 0 returns to the channel's pick.</dd>
+          <dt>B</dt><dd>Layout: Full (the side panel, ticker and buttons) or Broadcast (stands all round, the pitch in the middle, like TV). Every load starts in Full.</dd>
+          <dt>M</dt><dd>Sound on/off. The speaker beside the scorebug opens switches for sound, the crowd and the voices. Every load starts silent.</dd>
+          <dt>V</dt><dd>The TV guide: today on the channel (also the first button under the side panel). Esc or ✕ closes it. Full only.</dd>
+        </dl>
+
+        <h5>Next tasks</h5>
+        <dl>
+          <dt>18 kits</dt><dd>Next match and final round on a few seeds. Send a This moment link for any bad kit.</dd>
+          <dt>19 tune</dt><dd>Normal speed for movement, ?speed=10 for a day's pacing.</dd>
+          <dt>20 check</dt><dd>Panel closed, plain URL with no options: the real channel.</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <div id="error" hidden></div>
+  <script type="module" src="src/channel/main.js"></script>
+</body>
+</html>

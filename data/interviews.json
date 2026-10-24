@@ -1,0 +1,280 @@
+{
+  "_comment": "Player of the match and the post-match interview (docs/channel.md §7a). The pick scores each player's match stats with potm.weights (a scorcher counts as a goal plus scorcher; tackles 0.05 and shots on target 0.1 from 2026-10-18, were 0.3 each: players make 7 to 21 tackles a match, which decided it over goals, Tom's note 6), plus winBonus for the winning side (shootouts included); ties go to the winning side, then a seeded pick. quotes: canned lines by role (scorer: scored; keeper: the keeper; other) and result from the player's side, one picked per match, seeded. Task 133 (vision §12): voices: the player of the match speaks in their birth region's voice, a man's or a woman's by their first name (data/regions.json womensNames), all ElevenLabs Library voices Tom picked by ear. Quotes have no blanks, so each is one recorded clip per voice; the team, the opponent and the numbers are on the lower third. Voices or AI-written quotes replace these later (vision §12).",
+  "potm": {
+    "weights": {
+      "goals": 3,
+      "scorchers": 1,
+      "assists": 2,
+      "saves": 0.6,
+      "tackles": 0.05,
+      "shotsOnTarget": 0.1,
+      "burns": -0.5,
+      "fouls": -0.3
+    },
+    "winBonus": 1.5
+  },
+  "voices": {
+    "gullcoast": { "man": { "name": "Connor", "voice": "xtw8E1CXDMtNKx4sgP7u" }, "woman": { "name": "Lucy", "voice": "lcMyyd2HUfFzxdCaC4Ta" } },
+    "varenne": { "man": { "name": "Jamie", "voice": "K8nDX2f6wjv6bCh5UeZi" }, "woman": { "name": "Silvia", "voice": "NeTWyxKL7qMefrZEowed" } },
+    "kettle": { "man": { "name": "John", "voice": "1akQNyt9mMzTni2Y99lv" }, "woman": { "name": "Freya", "voice": "oVXQ3H21hRI9OtM4YH5K" } },
+    "sunreach": { "man": { "name": "Mahmoud", "voice": "Os2frcqCuUz8b9F93RuI" }, "woman": { "name": "Salma", "voice": "aCChyB4P5WEomwRsOKRh" } }
+  },
+  "quotes": {
+    "scorer": {
+      "win": [
+        "The points stay with us. I'll take that every week.",
+        "The ball was glowing and I just thought: hit it. Glad I did.",
+        "They made us work, but once the first one went in I felt it.",
+        "The team kept finding me in space. I only had to finish it off."
+      ],
+      "draw": [
+        "Nice to score, but I wanted all three points. We go again.",
+        "Goals for me and still only a draw. That one will sting on the bus home.",
+        "They never gave up. Fair result, if I'm honest."
+      ],
+      "loss": [
+        "Goals don't mean much when you lose. We have to be better.",
+        "I'd swap my goals for a win in a heartbeat. Tough day for us.",
+        "We gave them too many chances. Back to the training ground."
+      ]
+    },
+    "keeper": {
+      "win": [
+        "Saves? I stopped counting. The defence made it easy for me.",
+        "When the heat is on, you just stay big and trust your hands.",
+        "Clean hands, happy fans. Good night's work for us."
+      ],
+      "draw": [
+        "I kept us in it. A point feels fair.",
+        "Busy afternoon, and we still nicked a point.",
+        "They threw everything at us. I'm proud we held on for a draw."
+      ],
+      "loss": [
+        "I made a few stops, but it wasn't enough. Credit to them.",
+        "Plenty of saves and we still lost. That's this game for you.",
+        "Some days the ball just finds a way past you. We move on."
+      ]
+    },
+    "other": {
+      "win": [
+        "My job is to win the ball and give it to the strikers. Job done.",
+        "Big team performance. I just did my bit.",
+        "We kept the ball cool and picked our moments. Great result."
+      ],
+      "draw": [
+        "Hard work in the middle today. A point is no disaster.",
+        "We had chances to win it. Next time we take them.",
+        "Tough game. Nobody stopped running from the first whistle to the last."
+      ],
+      "loss": [
+        "Nice award, wrong result. We have to regroup.",
+        "We were second best today. No excuses.",
+        "I'll take the award, but I'd rather have the points."
+      ]
+    }
+  },
+  "_talk": "Talk that remembers (Task 245; vision §12 4½): when the facts module (src/chronicle/facts.js) has something about the player of the match or their team that fits the result, the interview is two sentences, each its own clip: a reaction (reactions, by the result from their side) and a fact (facts, by the fact's kind, or kind.variant: milestone by stat, old_club by how they left, late_decider by what it decided, likely_last.champion, final_rematch.revenge); the heaviest fact with a way for the result is said. Otherwise one of quotes, as before. Each way's results: the results it fits. Every line first person, gender-neutral, with no numbers and no team names (Tom), so each is one clip a voice. A player kind is said only by that player; a team kind by anyone on that team.",
+  "reactions": {
+    "win": [
+      "Really pleased with that.",
+      "That's a good day's work.",
+      "We earned that one.",
+      "What a feeling, honestly."
+    ],
+    "draw": [
+      "A point, and we'll take it.",
+      "Not quite the result we wanted.",
+      "Honours even, I suppose.",
+      "We'll have to settle for a draw."
+    ],
+    "loss": [
+      "Not our day, sadly.",
+      "That one hurts.",
+      "We came up short.",
+      "Hard to take, that."
+    ]
+  },
+  "facts": {
+    "first_goal": [
+      { "say": "My first goal in this league, and it came in a win!", "results": ["win"] },
+      { "say": "I've waited a long time for that first goal.", "results": ["win", "draw", "loss"] },
+      { "say": "First goal for me, and I'm still buzzing.", "results": ["win", "draw"] },
+      { "say": "My first goal, though I'd trade it for a better result.", "results": ["loss"] }
+    ],
+    "milestone.goals": [
+      { "say": "To reach that many goals in this league is really special.", "results": ["win", "draw", "loss"] },
+      { "say": "Another landmark goal, and that one means a lot.", "results": ["win", "draw"] }
+    ],
+    "milestone.assists": [
+      { "say": "I love setting up my teammates, so that landmark means a lot.", "results": ["win", "draw", "loss"] },
+      { "say": "All those assists, and I've enjoyed every one.", "results": ["win", "draw"] }
+    ],
+    "milestone.appearances": [
+      { "say": "That many games in this league, and I still love every one.", "results": ["win", "draw", "loss"] },
+      { "say": "Reaching that many games is a proud moment for me.", "results": ["win", "draw", "loss"] }
+    ],
+    "milestone.saves": [
+      { "say": "That many saves, and my hands are still going strong.", "results": ["win", "draw", "loss"] },
+      { "say": "Reaching that landmark as a keeper makes me proud.", "results": ["win", "draw", "loss"] }
+    ],
+    "milestone.stops": [
+      { "say": "Winning the ball back is what I do, and that landmark shows it.", "results": ["win", "draw", "loss"] },
+      { "say": "All those tackles and blocks, and I'd make every one again.", "results": ["win", "draw", "loss"] }
+    ],
+    "record": [
+      { "say": "To put my name in the record books is something else.", "results": ["win", "draw", "loss"] },
+      { "say": "Breaking that record is a dream come true.", "results": ["win", "draw"] },
+      { "say": "The record's nice, but I wanted the result more.", "results": ["loss"] }
+    ],
+    "back_from_injury": [
+      { "say": "It's been a long road back from that injury.", "results": ["win", "draw", "loss"] },
+      { "say": "After that injury, this feels amazing.", "results": ["win"] },
+      { "say": "Just good to be back out there with the team.", "results": ["draw", "loss"] }
+    ],
+    "old_club.let_go": [
+      { "say": "They let me go, so beating them feels extra special.", "results": ["win"] },
+      { "say": "I think I proved a point against my old club.", "results": ["win"] }
+    ],
+    "old_club.left": [
+      { "say": "I loved my time there, but I made the right move.", "results": ["win"] },
+      { "say": "Beating my old club is a strange feeling, but a good one.", "results": ["win"] }
+    ],
+    "likely_last": [
+      { "say": "If that's my last game, I'm going out with a win.", "results": ["win"] },
+      { "say": "If that was my last game, I've loved every minute of it.", "results": ["win", "draw", "loss"] },
+      { "say": "Whatever happens next, I'm proud of my career.", "results": ["win", "draw", "loss"] }
+    ],
+    "likely_last.champion": [
+      { "say": "If that's my last game, what a way to go out.", "results": ["win"] },
+      { "say": "Lifting the Cup in what might be my last game is perfect.", "results": ["win"] }
+    ],
+    "one_more_season": [
+      { "say": "Everyone thought I was done, but I'm not finished yet.", "results": ["win", "draw", "loss"] },
+      { "say": "I came back for one more season, and this is why.", "results": ["win"] },
+      { "say": "I'm still here, and I still love it.", "results": ["win", "draw", "loss"] }
+    ],
+    "scorcher_decider": [
+      { "say": "When the ball's that hot at the end, you just hit it.", "results": ["win", "draw"] },
+      { "say": "A late scorcher to decide it, I've dreamed of that.", "results": ["win"] },
+      { "say": "A scorcher to save a point, I'll take that.", "results": ["draw"] }
+    ],
+    "momentum_decider": [
+      { "say": "We had the momentum at the end, and we made it count.", "results": ["win", "draw"] },
+      { "say": "Once we got the momentum, I knew we'd get something.", "results": ["win", "draw"] }
+    ],
+    "late_decider.winner": [
+      { "say": "Scoring the winner that late is the best feeling there is.", "results": ["win"] },
+      { "say": "Last few minutes, and it falls to me. Amazing.", "results": ["win"] },
+      { "say": "I just kept believing the chance would come.", "results": ["win"] }
+    ],
+    "late_decider.equaliser": [
+      { "say": "Getting us level at the death feels like a win.", "results": ["draw"] },
+      { "say": "We never gave up, and that late goal proves it.", "results": ["draw"] }
+    ],
+    "late_decider.golden_goal": [
+      { "say": "A golden goal! I'll never forget that one.", "results": ["win"] },
+      { "say": "Next goal wins, and it was mine. Unbelievable.", "results": ["win"] }
+    ],
+    "goal_haul": [
+      { "say": "Scoring that many in one game, I'm keeping the match ball.", "results": ["win", "draw"] },
+      { "say": "Everything I hit seemed to go in.", "results": ["win", "draw", "loss"] },
+      { "say": "All those goals, and I'd swap them for the win.", "results": ["loss"] },
+      { "say": "Some days you just know it's going to go in.", "results": ["win", "draw"] },
+      { "say": "My teammates kept finding me, and I kept finishing.", "results": ["win", "draw"] },
+      { "say": "I could have kept shooting all day.", "results": ["win", "draw"] }
+    ],
+    "comeback": [
+      { "say": "We never stopped believing, even when we were down.", "results": ["win"] },
+      { "say": "What a comeback, the dressing room will be rocking.", "results": ["win"] },
+      { "say": "Nobody gave us a chance at that point, but look at us now.", "results": ["win"] }
+    ],
+    "win_run": [
+      { "say": "We're on a great run, and we want to keep it going.", "results": ["win"] },
+      { "say": "Win after win, the confidence is flowing.", "results": ["win"] },
+      { "say": "Nobody wants to play us right now.", "results": ["win"] }
+    ],
+    "winless_ended": [
+      { "say": "That's been a long time coming. Finally, a win.", "results": ["win"] },
+      { "say": "We needed that win so badly.", "results": ["win"] }
+    ],
+    "head_to_head_ended": [
+      { "say": "We hadn't beaten them in a long time, so that's sweet.", "results": ["win"] },
+      { "say": "They've had our number for a while. Not this time.", "results": ["win"] }
+    ],
+    "head_to_head_run": [
+      { "say": "We seem to have their number at the moment.", "results": ["win"] },
+      { "say": "We always seem to raise our game against them.", "results": ["win"] }
+    ],
+    "final_rematch": [
+      { "say": "We beat them in the final, and we've done it again.", "results": ["win"] }
+    ],
+    "final_rematch.revenge": [
+      { "say": "They beat us in the final, so this one meant a lot.", "results": ["win"] },
+      { "say": "We've waited a long time to get them back for that final.", "results": ["win"] }
+    ],
+    "first_final": [
+      { "say": "Our first ever final. I can't wait.", "results": ["win"] },
+      { "say": "This club has never been to a final before. What a feeling.", "results": ["win"] }
+    ],
+    "final_drought_ended": [
+      { "say": "It's been a long wait for this club to reach a final.", "results": ["win"] },
+      { "say": "Our fans have waited so long for another final.", "results": ["win"] }
+    ],
+    "finals_in_a_row": [
+      { "say": "Another final! This group just keeps delivering.", "results": ["win"] },
+      { "say": "Final after final, I'm so proud of this team.", "results": ["win"] }
+    ],
+    "first_cup": [
+      { "say": "The first Cup in the club's history, and I'm part of it.", "results": ["win"] },
+      { "say": "We've made history. Nobody can take that away.", "results": ["win"] }
+    ],
+    "cup_drought_ended": [
+      { "say": "This club has waited so long for this Cup.", "results": ["win"] },
+      { "say": "All those years without the Cup, and now it's ours.", "results": ["win"] }
+    ],
+    "cups_in_a_row": [
+      { "say": "Champions again! This team just doesn't stop.", "results": ["win"] },
+      { "say": "Winning it once is hard. Doing it again is something else.", "results": ["win"] }
+    ],
+    "dynasty": [
+      { "say": "This team keeps winning Cups, and I'm proud to be part of it.", "results": ["win"] },
+      { "say": "People will remember this team for a long time.", "results": ["win"] }
+    ]
+  },
+  "_strip": "The fact strip (Task 247a, Tom's look A): the fact on screen under the name and stat line while the fact sentence is said, by the same key as facts; a graphic, so names and numbers are fine: {n} the fact's number, {team} and {opponent} short names, {minute}, {seasons}, {milestone} (100TH GOAL), {record} (ALL-TIME GOALS RECORD · 153).",
+  "strip": {
+    "comeback": "CAME BACK FROM {n} DOWN",
+    "win_run": "{n} WINS IN A ROW",
+    "winless_ended": "FIRST WIN IN {n} MATCHES",
+    "head_to_head_ended": "FIRST WIN OVER {opponent} IN {n} MEETINGS",
+    "head_to_head_run": "{n} WINS IN A ROW OVER {opponent}",
+    "final_rematch": "LAST SEASON'S FINAL · {opponent} BEATEN AGAIN",
+    "final_rematch.revenge": "LAST SEASON'S FINAL · REVENGE ON {opponent}",
+    "late_decider.winner": "LATE WINNER · {minute}",
+    "late_decider.equaliser": "LATE EQUALISER · {minute}",
+    "late_decider.golden_goal": "GOLDEN GOAL",
+    "goal_haul": "{n} GOALS IN ONE MATCH",
+    "scorcher_decider": "LATE SCORCHER · {minute}",
+    "momentum_decider": "SCORED ON MOMENTUM · {minute}",
+    "first_goal": "FIRST LEAGUE GOAL",
+    "record": "{record}",
+    "back_from_injury": "BACK FROM INJURY · {n} MATCHES OUT",
+    "old_club.let_go": "BEAT {opponent}, WHO LET THEM GO · {n} SEASONS THERE",
+    "old_club.left": "BEAT OLD CLUB {opponent} · {n} SEASONS THERE",
+    "first_final": "THE CLUB'S FIRST FINAL",
+    "final_drought_ended": "FIRST FINAL IN {n} SEASONS",
+    "finals_in_a_row": "{n} FINALS IN A ROW",
+    "first_cup": "THE CLUB'S FIRST SCORCH CUP",
+    "cup_drought_ended": "FIRST CUP IN {n} SEASONS",
+    "cups_in_a_row": "{n} CUPS IN A ROW",
+    "dynasty": "{n} CUPS IN {seasons} SEASONS",
+    "milestone.goals": "{milestone} IN THE LEAGUE",
+    "milestone.assists": "{milestone} IN THE LEAGUE",
+    "milestone.appearances": "{milestone} IN THE LEAGUE",
+    "milestone.saves": "{milestone} IN THE LEAGUE",
+    "milestone.stops": "{milestone} IN THE LEAGUE",
+    "likely_last": "{n} SEASONS · RETIRING?",
+    "likely_last.champion": "CHAMPION · {n} SEASONS · RETIRING?",
+    "one_more_season": "BACK FOR SEASON {n}"
+  }
+}

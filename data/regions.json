@@ -1,0 +1,41 @@
+{
+  "_comment": "Regions of the invented world. Players are born in a region and named from its pools. Names are ASCII-only so pixel fonts can render them. 'weight' = how often free agents and prospects come from here. womensNames (Task 133): which of the first names are women's, so a player's interview voice matches their name (the sim doesn't read it).",
+  "regions": [
+    {
+      "id": "gullcoast",
+      "name": "The Gullcoast",
+      "blurb": "A windswept coast of harbours, sea-cliffs and fishing towns. Proud, stubborn, superstitious about the tide.",
+      "weight": 1,
+      "firstNames": ["Tamsin", "Corwen", "Brannoc", "Ysolde", "Jory", "Morwen", "Kenver", "Elowen", "Peder", "Lowena", "Treve", "Demelza", "Austol", "Kerra", "Gawen", "Senara", "Hedrek", "Wenna", "Talan", "Bryok", "Jenna", "Casvelyn", "Ruan", "Tegen", "Piran", "Jowan", "Ebrel", "Loveday", "Mabyn", "Petrok", "Derwa", "Steren", "Tristan", "Endelyn", "Conan", "Wella", "Meraud", "Kenwyn", "Morvoren", "Gerens"],
+      "womensNames": ["Tamsin", "Ysolde", "Morwen", "Elowen", "Lowena", "Demelza", "Kerra", "Senara", "Wenna", "Jenna", "Casvelyn", "Tegen"],
+      "lastNames": ["Penhallow", "Treharne", "Kestle", "Polgrean", "Carnell", "Trevose", "Jago", "Nancarrow", "Rosevear", "Pendeen", "Tregarth", "Hocking", "Chegwin", "Lanyon", "Menear", "Pascoe", "Tremayne", "Vosper", "Angwin", "Polkinghorn", "Trewin", "Retallack", "Couch", "Rowse", "Trelawny", "Penrose", "Bolitho", "Carlyon", "Trethewey", "Polglaze", "Tregenza", "Pengelly", "Treloar", "Rescorla", "Trebilcock", "Penhaligon", "Kitto", "Tonkin", "Jewell", "Nankivell", "Penberthy", "Trenwith", "Roskilly", "Carveth", "Polwhele", "Trevail", "Bosanko", "Curnow", "Hosken", "Laity", "Opie", "Pengilly", "Rodda", "Spargo", "Trudgeon", "Uren", "Bennetto", "Hichens", "Keast", "Lobb", "Maddern", "Nance", "Paynter", "Sobey", "Teague", "Trezise", "Bray", "Chenoweth", "Glasson", "Hendra"]
+    },
+    {
+      "id": "varenne",
+      "name": "Varenne Basin",
+      "blurb": "Wide river valleys, vineyards and old stone cities. Wealthy, elegant and convinced of its own good taste.",
+      "weight": 1,
+      "firstNames": ["Aurel", "Lisandre", "Matteo", "Corentin", "Isaure", "Bastien", "Noemi", "Ilario", "Severine", "Lucan", "Ombretta", "Tancrede", "Giselle", "Renaud", "Faustine", "Amadeo", "Clemence", "Orsino", "Vittoria", "Anselme", "Delphine", "Silvano", "Marcelle", "Evrard", "Ariane", "Benedetto", "Cosima", "Damien", "Eliane", "Fabrizio", "Hortense", "Lorenzo", "Margaux", "Ottavio", "Perrine", "Raffaele", "Solange", "Teodoro", "Valery", "Zelie"],
+      "womensNames": ["Lisandre", "Isaure", "Noemi", "Severine", "Ombretta", "Giselle", "Faustine", "Clemence", "Vittoria", "Delphine", "Marcelle"],
+      "lastNames": ["Castellan", "Duvall", "Morenne", "Beaucourt", "Valtorre", "Arnaud", "Sabrier", "Montclare", "Ferrandi", "Lavigne", "Corvassier", "Delorme", "Brisac", "Fontaine", "Marchetti", "Roussel", "Vasseur", "Albrecci", "Chanteloup", "Severin", "Malaterre", "Guidoni", "Poissard", "Ravel", "Aubertin", "Bonnefoy", "Cavalcanti", "Dardenne", "Escoffier", "Fabbri", "Galliard", "Hautecoeur", "Joubert", "Lafitte", "Mancini", "Narbonne", "Orsini", "Peyrol", "Quintal", "Rambaud", "Santoro", "Tessier", "Valmont", "Benedetti", "Carpentier", "Deschamps", "Fiorentino", "Granier", "Lucchesi", "Marivaux", "Navarre", "Ottaviani", "Perrault", "Rinaldi", "Sauveterre", "Tolomei", "Vannier", "Belcastel", "Colonna", "Duroc", "Ferrante", "Gaspari", "Lombard", "Mazzone", "Pellegrin", "Rocheblave", "Salvini", "Thibault", "Verdier", "Brunel"]
+    },
+    {
+      "id": "kettle",
+      "name": "The Kettle Highlands",
+      "blurb": "Mountain towns built around mines and foundries, where the valleys steam all winter. Hard-working, hard-tackling.",
+      "weight": 1,
+      "firstNames": ["Brynja", "Torvald", "Vesna", "Oskar", "Halla", "Radomir", "Sigrun", "Bogdan", "Jarek", "Liv", "Stanko", "Ylva", "Dragan", "Solveig", "Arvid", "Mila", "Kasimir", "Thora", "Vidar", "Zora", "Leif", "Branka", "Ostap", "Ingrid", "Asger", "Bozena", "Dagny", "Emil", "Freya", "Goran", "Hilde", "Ivo", "Jorunn", "Kaja", "Lars", "Milos", "Nora", "Petra", "Runar", "Tomasz"],
+      "womensNames": ["Brynja", "Vesna", "Halla", "Sigrun", "Liv", "Ylva", "Solveig", "Mila", "Thora", "Zora", "Branka", "Ingrid"],
+      "lastNames": ["Halvorsk", "Dranek", "Stoyan", "Kettleson", "Varga", "Bjornholt", "Krenn", "Ostrova", "Hagstrom", "Volk", "Rusenko", "Tindar", "Grisak", "Skov", "Dahlquist", "Petrak", "Lindqvar", "Zelenko", "Rask", "Hollin", "Vorhaug", "Brannik", "Stavik", "Kolar", "Arnholt", "Bergvik", "Dobrev", "Eklund", "Fjellstad", "Grozdan", "Haraldsen", "Ivarov", "Jandrik", "Kovacs", "Lysenko", "Moravik", "Nyberg", "Odegard", "Pavlik", "Ruskan", "Sandvik", "Tordal", "Ulvang", "Vranek", "Wolnik", "Yarosh", "Zelnik", "Brandvold", "Cernik", "Drozd", "Engvall", "Falkov", "Gunnarsen", "Hrabal", "Isaksen", "Jovanek", "Karst", "Lunde", "Mrazek", "Norrvik", "Orlik", "Prochazka", "Rydberg", "Sorvik", "Tesar", "Uhlir", "Vesterlund", "Wolden", "Zahradnik", "Baranek"]
+    },
+    {
+      "id": "sunreach",
+      "name": "Sunreach",
+      "blurb": "Sun-baked trading cities on the edge of the red desert, linked by caravan roads. Loud markets, louder stadiums.",
+      "weight": 1,
+      "firstNames": ["Idrin", "Samira", "Tarek", "Leyla", "Kaveh", "Nadira", "Zaid", "Soraya", "Amar", "Yasmin", "Faris", "Ilham", "Rami", "Darya", "Hakan", "Mina", "Rashan", "Lina", "Zeyna", "Bashir", "Talia", "Navid", "Esra", "Karim", "Arash", "Basma", "Cyrus", "Dalia", "Emre", "Farah", "Ghazal", "Hamid", "Inas", "Jamal", "Kiana", "Laleh", "Murat", "Nour", "Omid", "Parisa"],
+      "womensNames": ["Samira", "Leyla", "Nadira", "Soraya", "Yasmin", "Ilham", "Darya", "Mina", "Lina", "Zeyna", "Talia", "Esra"],
+      "lastNames": ["Qadesh", "Marrakai", "Haddar", "Sabbagh", "Nouri", "Farrokh", "Bahar", "Kassem", "Tamiri", "Darwan", "Zahiri", "Rostam", "Mansour", "Okan", "Selim", "Jabari", "Kader", "Amrani", "Navabi", "Yazdan", "Toumi", "Ardalan", "Saffar", "Halabi", "Abadi", "Bakhtiar", "Celik", "Dabbagh", "Esfahani", "Fakhoury", "Ghazali", "Hamdan", "Ibrahimi", "Jalili", "Karimi", "Lahham", "Madani", "Nasser", "Osmani", "Parvizi", "Qureshi", "Rahimi", "Shirazi", "Tabrizi", "Usmani", "Vahdat", "Yilmaz", "Zamani", "Asadi", "Behzad", "Darwish", "Eldin", "Farahani", "Ghanem", "Hijazi", "Issawi", "Jaber", "Khalil", "Lutfi", "Mahdavi", "Nabavi", "Oktay", "Rezaei", "Saleh", "Tahan", "Wahbi", "Yazici", "Zand", "Aydin", "Barakat"]
+    }
+  ]
+}

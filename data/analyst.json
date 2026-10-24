@@ -1,0 +1,143 @@
+{
+  "_comment": "The playoff analyst (docs/channel.md §30.2; mock-ups on analyst.html; loaded and validated by src/config.js, said by src/channel/analystTalk.js, voiced by npm run voices -- --analyst). The PLAYOFF PREVIEW show's desk bits: THE FOUR after THE TABLE'S STORY, and one per semifinal before its TALE OF THE TAPE. Tom's pick (2026-10-17): Radomir Brodek (Krenn until 2026-10-18), in Hedrek's seat on the left; Ysolde hosts from her seat on the right, in her own voice, asking; the analyst answers. As data/studio.json's lines: each kind has who says it (host or analyst), a gesture, when it's said (the fact that makes it true, in 'when', worked out by the build), and ways, each a pair: say (spoken and typed in the bubble: fixed, or naming one team as {team}, one clip per team) and show (the graphic under the speaker: any facts, in capitals). Players are named on the graphics only, not spoken (a new voice would need a clip per surname, and every draft brings new ones).",
+  "pick": "brodek",
+  "host": "ysolde",
+  "candidates": [
+    { "id": "polgrean", "name": "Tamsin Polgrean", "about": "A former keeper from the Gullcoast, sharp and dry", "look": { "jacket": "#3a2f4f", "tie": "#ffd23f", "skin": 0, "hair": "#8a4a2a", "style": "long", "woman": true } },
+    { "id": "brodek", "name": "Radomir Brodek", "_name": "Krenn until 2026-10-18 (Tom): Krenn is in the Kettle's surname pool, Brodek in none", "about": "A veteran coach from the Kettle, grey and gruff", "voice": "WtDqMP4cPOGB6kDiLZgi", "_voice": "Did Vishchun - Carpathian Elder (ElevenLabs Library; Tom's pick by ear, 2026-10-17)", "look": { "jacket": "#1c2a22", "tie": "#e8392f", "skin": 1, "hair": "#b8b8b0", "style": "short" } },
+    { "id": "farrokh", "name": "Samira Farrokh", "about": "A data analyst from Sunreach, quick and precise", "look": { "jacket": "#5a1f2a", "tie": "#f2efe6", "skin": 2, "hair": "#1a1a1a", "style": "bun", "woman": true } }
+  ],
+  "bits": {
+    "four": ["hostIntro", "analystHello", "caseTop", "hostRest", "a case for each of the other three"],
+    "semi": ["hostSemi", "favourite or tooClose", "upset, or else wonBoth or split", "hostWho", "topScorer or stopScorer", "keeper if true", "analystClose"],
+    "road": ["hostIntro", "analystHelloFinal", "the home finalist's road", "hostOther", "the other finalist's road"],
+    "final": ["hostFinal", "favourite or tooClose", "upset, or else wonBoth or split", "hostWho", "topScorer or stopScorer", "keeper if true", "analystClose"]
+  },
+  "lines": {
+    "hostIntro": { "who": "host", "gesture": "open", "ways": [
+      { "say": "Joining me for the playoffs, our analyst, {analyst}.", "show": "{ANALYST} · PLAYOFF ANALYST" },
+      { "say": "With me for the playoffs, as ever, {analyst}.", "show": "{ANALYST} · PLAYOFF ANALYST" }
+    ] },
+    "analystHello": { "who": "analyst", "gesture": "talk", "ways": [
+      { "say": "Thanks. Four teams left, and one Cup." },
+      { "say": "Good to be here. Four sides, two semifinals, one Cup." }
+    ] },
+    "caseTop": { "who": "analyst", "gesture": "point", "subject": "team", "when": "the top seed", "ways": [
+      { "say": "{team} have been the best side all season.", "show": "{team} · 1ST · {points} PTS" },
+      { "say": "You have to start with {team}. Top of the table, and deserved.", "show": "{team} · 1ST · {points} PTS" }
+    ] },
+    "hostRest": { "who": "host", "gesture": "open", "ways": [
+      { "say": "And the other three?" },
+      { "say": "Who else catches your eye?" }
+    ] },
+    "caseAttack": { "who": "analyst", "gesture": "point", "subject": "team", "when": "the most goals of the four", "ways": [
+      { "say": "Nobody scores like {team}.", "show": "{team} · {goalsFor} GOALS" },
+      { "say": "{team} can outscore anyone on their day.", "show": "{team} · {goalsFor} GOALS" }
+    ] },
+    "caseDefence": { "who": "analyst", "gesture": "open", "subject": "team", "when": "the fewest conceded of the four", "ways": [
+      { "say": "{team} are the hardest side to score against.", "show": "{team} · {goalsAgainst} AGAINST" },
+      { "say": "Breaking down {team} is a job in itself.", "show": "{team} · {goalsAgainst} AGAINST" }
+    ] },
+    "caseHot": { "who": "analyst", "gesture": "both", "subject": "team", "when": "four or five wins in their last five", "ways": [
+      { "say": "{team} come in on a run, and that matters.", "show": "{team} · FORM {form}" },
+      { "say": "Nobody's in better form than {team}.", "show": "{team} · FORM {form}" }
+    ] },
+    "caseCold": { "who": "analyst", "gesture": "talk", "subject": "team", "when": "one win or none in their last five", "ways": [
+      { "say": "{team} have limped in, if I'm honest.", "show": "{team} · FORM {form}" },
+      { "say": "{team} need to find something, and quickly.", "show": "{team} · FORM {form}" }
+    ] },
+    "caseScraped": { "who": "analyst", "gesture": "laugh", "subject": "team", "when": "fourth, within a win of fifth", "ways": [
+      { "say": "{team} only just made it, and that can make a side dangerous.", "show": "{team} · 4TH · {gap} PTS CLEAR" },
+      { "say": "{team} squeezed in. Nothing to lose now.", "show": "{team} · 4TH · {gap} PTS CLEAR" }
+    ] },
+    "caseHome": { "who": "analyst", "gesture": "open", "subject": "team", "when": "the best home record of the four, playing at home", "ways": [
+      { "say": "And {team} are a different side at home.", "show": "{team} · HOME {home}" },
+      { "say": "Good luck winning away at {team}.", "show": "{team} · HOME {home}" }
+    ] },
+    "caseSteady": { "who": "analyst", "gesture": "talk", "subject": "team", "when": "none of the above: by their place", "ways": [
+      { "say": "{team} have been steady all season. Don't overlook them.", "show": "{team} · {place} · {points} PTS" },
+      { "say": "{team} quietly got the job done.", "show": "{team} · {place} · {points} PTS" }
+    ] },
+    "hostSemi1": { "who": "host", "gesture": "point", "ways": [
+      { "say": "Let's look at the first semifinal.", "show": "SEMIFINAL 1 · {home} v {away} · {when}" },
+      { "say": "Semifinal one, then.", "show": "SEMIFINAL 1 · {home} v {away} · {when}" }
+    ] },
+    "hostSemi2": { "who": "host", "gesture": "point", "ways": [
+      { "say": "And the second semifinal.", "show": "SEMIFINAL 2 · {home} v {away} · {when}" },
+      { "say": "On to semifinal two.", "show": "SEMIFINAL 2 · {home} v {away} · {when}" }
+    ] },
+    "favourite": { "who": "analyst", "gesture": "open", "subject": "team", "when": "the better seed by more than a win's points, or won both meetings", "ways": [
+      { "say": "{team} go in as favourites, no question.", "show": "{team} · {points} PTS v {otherPoints}" },
+      { "say": "This one is for {team} to lose.", "show": "{team} · {points} PTS v {otherPoints}" }
+    ] },
+    "wonBoth": { "who": "analyst", "gesture": "point", "subject": "team", "when": "won both regular-season meetings", "ways": [
+      { "say": "{team} won both meetings this season.", "show": "THIS SEASON · {meetings}" },
+      { "say": "{team} have had the better of this one twice already.", "show": "THIS SEASON · {meetings}" }
+    ] },
+    "split": { "who": "analyst", "gesture": "talk", "when": "a meeting each, or draws", "ways": [
+      { "say": "They shared the meetings this season. Nothing in it.", "show": "THIS SEASON · {meetings}" },
+      { "say": "One each this season, so it's all square.", "show": "THIS SEASON · {meetings}" }
+    ] },
+    "tooClose": { "who": "analyst", "gesture": "open", "when": "within a win's points of each other", "ways": [
+      { "say": "Honestly, this one is too close to call." },
+      { "say": "I really can't split these two." }
+    ] },
+    "upset": { "who": "analyst", "gesture": "laugh", "subject": "team", "when": "the lower seed, in better form", "ways": [
+      { "say": "But don't rule out {team}.", "show": "{team} · FORM {form}" },
+      { "say": "Mind you, {team} have the momentum.", "show": "{team} · FORM {form}" }
+    ] },
+    "hostWho": { "who": "host", "gesture": "talk", "ways": [
+      { "say": "So who decides it?" },
+      { "say": "Where's this one won?" }
+    ] },
+    "topScorer": { "who": "analyst", "gesture": "point", "subject": "team", "when": "the league's top scorer plays for them", "ways": [
+      { "say": "{team} have the best finisher in the league.", "show": "{player} · {goals} GOALS · THE MOST" },
+      { "say": "Good luck stopping the top scorer for {team}.", "show": "{player} · {goals} GOALS · THE MOST" }
+    ] },
+    "stopScorer": { "who": "analyst", "gesture": "point", "subject": "team", "when": "otherwise: the side whose scorer has the most goals", "ways": [
+      { "say": "Stop the top scorer and you stop {team}.", "show": "{player} · {goals} GOALS" },
+      { "say": "{team} lean on one player for their goals.", "show": "{player} · {goals} GOALS" }
+    ] },
+    "keeper": { "who": "analyst", "gesture": "open", "subject": "team", "when": "the better save %, five points or more ahead", "ways": [
+      { "say": "The keeper for {team} could steal this one.", "show": "{player} · {pct}% SAVED" },
+      { "say": "Watch the keeper. {team} have the better one.", "show": "{player} · {pct}% SAVED" }
+    ] },
+    "analystHelloFinal": { "who": "analyst", "gesture": "talk", "ways": [
+      { "say": "Thanks. Two teams left, and one Cup." },
+      { "say": "Good to be back. One match for the Cup." }
+    ] },
+    "roadShootout": { "who": "analyst", "gesture": "open", "subject": "team", "when": "through on a shootout", "ways": [
+      { "say": "{team} held their nerve in the shootout.", "show": "{team} · {score} v {opponent} · {shootout} ON THE SHOOTOUT" },
+      { "say": "{team} needed a shootout, but they're here.", "show": "{team} · {score} v {opponent} · {shootout} ON THE SHOOTOUT" }
+    ] },
+    "roadGoldenGoal": { "who": "analyst", "gesture": "open", "subject": "team", "when": "through on a golden goal", "ways": [
+      { "say": "{team} got there with a golden goal.", "show": "{team} · {score} v {opponent} · GOLDEN GOAL" },
+      { "say": "It took a golden goal, but {team} found it.", "show": "{team} · {score} v {opponent} · GOLDEN GOAL" }
+    ] },
+    "roadUpset": { "who": "analyst", "gesture": "point", "subject": "team", "when": "beat a higher seed", "ways": [
+      { "say": "{team} knocked out a higher seed to get here.", "show": "{team} · {place} · BEAT {opponent} ({opponentPlace})" },
+      { "say": "Nobody expected {team} to be here.", "show": "{team} · {place} · BEAT {opponent} ({opponentPlace})" }
+    ] },
+    "roadBig": { "who": "analyst", "gesture": "both", "subject": "team", "when": "won by three goals or more", "ways": [
+      { "say": "{team} cruised through their semifinal.", "show": "{team} · {score} v {opponent}" },
+      { "say": "{team} were never in trouble.", "show": "{team} · {score} v {opponent}" }
+    ] },
+    "roadNarrow": { "who": "analyst", "gesture": "talk", "subject": "team", "when": "none of the above", "ways": [
+      { "say": "{team} were made to work for it.", "show": "{team} · {score} v {opponent}" },
+      { "say": "It was tight, but {team} are through.", "show": "{team} · {score} v {opponent}" }
+    ] },
+    "hostOther": { "who": "host", "gesture": "open", "ways": [
+      { "say": "And the other finalists?" },
+      { "say": "And what about their opponents?" }
+    ] },
+    "hostFinal": { "who": "host", "gesture": "point", "ways": [
+      { "say": "So, the final itself.", "show": "THE FINAL · {home} v {away} · {when}" },
+      { "say": "Now, the big one.", "show": "THE FINAL · {home} v {away} · {when}" }
+    ] },
+    "analystClose": { "who": "analyst", "gesture": "both", "ways": [
+      { "say": "Should be a cracker." },
+      { "say": "I can't wait for this one." },
+      { "say": "Get comfortable for this one." }
+    ] }
+  }
+}

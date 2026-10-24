@@ -1,0 +1,4 @@
+{
+  "_comment": "The Director's decisions other than rule changes (Task 262; docs/director.md §3): each a dated entry, written once Tom approves it on the Director's desk (Task 264). id: a lower-case name; announced: { season, at: \"day N HH:MM\" }, when it airs (INFO's UPDATES and the ticker, Task 265; channel.md §24). kind \"announcement\" (Task 265): the League's news, written by Tom (roadmap items and their run-up, new ways for viewers to take part): headline (the ticker's, in capitals), words (UPDATES'), roadmap (optional: the roadmap idea it belongs to); never logged. kind \"induction\" (a legend inducted): season (when it takes effect, logged at that season's start, right after its rule changes, as `induction`, the player its subject; announced no later), playerId, reason (the League's, in-universe). Rule changes stay in data/ruleChanges.json, poll results in data/polls.json.",
+  "decisions": []
+}

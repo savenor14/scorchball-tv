@@ -1,0 +1,103 @@
+{
+  "_comment": "The chronicle's thresholds (It remembers, Task 216; docs/simulation.md §12b). Counts are over a career, the regular season and playoffs together, unless said otherwise. From 50 seasons of seed 'dist': retired players' median career 15 goals and 117 appearances, the best about 600 goals, 250 assists, 270 appearances, 2,300 saves; a busy keeper faces about 140 shots on target a season.",
+  "milestones": {
+    "_comment": "A milestone each time a career total passes a multiple of its step (the 100th goal, the 200th, ...), in the match it came in. stops: tackles plus blocks (the Quell's stat). Steps for about 2-3 a season each (Tom, 2026-10-08; 30 seasons of seed 'ms'): goals 100 (2.3 a season; 50 gave 6.2, the top striker one nearly every season), assists 50 (2.6), saves 500 (1.5), stops 1000 (2.5); appearances 100 (6.1, but the 100th and 200th are the classic ones; LATEST can show them quieter).",
+    "goals": 100,
+    "assists": 50,
+    "appearances": 100,
+    "saves": 500,
+    "stops": 1000
+  },
+  "notableMatch": {
+    "_comment": "A player's match is kept (for the single-match records) when it reaches any of these: about 41 three-goal matches a season, 9 three-assist ones, and the top 1% of keepers' saves.",
+    "goals": 3,
+    "assists": 3,
+    "saves": 15
+  },
+  "records": {
+    "_comment": "listLength: how many in each record list. Save percentage needs at least seasonMinFaced shots on target faced in a regular season, careerMinFaced over a career.",
+    "listLength": 10,
+    "seasonMinFaced": 60,
+    "careerMinFaced": 500
+  },
+  "latest": {
+    "_comment": "What makes LATEST (Task 220; docs/channel.md §20.3): a match of matchGoals goals, matchAssists assists or matchSaves saves (50 seasons of seed 'lat': 6.6, 2.0 and 1.1 a season; 4 goals came 17 times a season), a run of winRun wins or winlessRun games without a win (1.1 and 1.5), every milestone but games, which only from appearancesFrom (1.5 a season; the 100th comes 4.4 times), the Pennant, the playoff places and the Cup: about 25 lines a season, so the week fits.",
+    "matchGoals": 5,
+    "matchAssists": 4,
+    "matchSaves": 18,
+    "winRun": 5,
+    "winlessRun": 6,
+    "appearancesFrom": 200
+  },
+  "history": {
+    "_comment": "HISTORY's landmarks (Task 220): a Cup ending a drought of droughtSeasons or more since the team's last; all-time records (goals, assists, saves, stops; not games, which changed hands 9 times in 45 seasons) changing hands from recordsFrom seasons on (before that, every season would break one).",
+    "droughtSeasons": 8,
+    "recordsFrom": 5
+  },
+  "legends": {
+    "_comment": "A legend (Tom: by rules, at retirement; HISTORY's Hall of Fame): a career of goals goals, assists assists, saves saves or stops stops (tackles plus blocks) or more, the regular season and playoffs together; or awards awards or more; or cups Scorch Cups or more as a regular (at least regularShare of their team's regular-season games). Fixed bars (Task 220): ranking against the all-time lists made a young league's first long careers legends wholesale. 350/175/2000/2800, 3 awards, 6 Cups made about 1 a season (Tom: a touch too often); these make about 21 in 50 seasons (three seeds: 20, 22, 22), one every two or three weeks, every position among them.",
+    "goals": 450,
+    "assists": 225,
+    "saves": 2500,
+    "stops": 3500,
+    "awards": 5,
+    "cups": 7,
+    "regularShare": 0.5
+  },
+  "careerCard": {
+    "_comment": "The desk's career card (Task 226): a studio card on one player's career, its focus cycling: a star from the next match's teams (minSeasons seasons played or more), or a milestone in sight (an active player within milestoneWithin of a milestone's step: 5 goals of the next 100, 25 saves of the next 500; games only from latest.appearancesFrom). Tom, Task 226: once a player has several seasons in; a recent player of the match dropped (not always an interesting player).",
+    "minSeasons": 5,
+    "milestoneWithin": 0.05
+  },
+  "standing": {
+    "_comment": "A player's standing in words on the cards (Task 221; Tom: no ratings or numbers): each season, STAR PLAYER for the top starShare of everyone who played that regular season by their overall that season, else STARTER for starting starterShare or more of their team's games, else SQUAD PLAYER; RESERVE while in the Kindling League. Tagged RISING up to risingAge, VETERAN from veteranYears past their peak age. Ratings drifted up (season 20 of flareball: starters' median 79), so the words follow where they stand that season, not fixed numbers.",
+    "starShare": 0.1,
+    "starterShare": 0.5,
+    "risingAge": 22,
+    "veteranYears": 3
+  },
+  "facts": {
+    "_comment": "The facts module (Talk that remembers, Task 243; src/chronicle/facts.js): what's notable about a match for the desk and the interview. lateShare: a decider counts as late from this share of regulation (as talk.js's late winner). A run against one club (headToHeadRun meetings), a team's win run (winRun) or a first win in winlessRun matches or more; a final reached for the first time, after finalDrought seasons, or inARow seasons running; a Cup for the first time, after cupDrought seasons, back to back, or dynastyCups in dynastySeasons; back from an injury of injuryMatches matches or more (or season-ending) and scoring or player of the match; beating a club they played oldClubSeasons seasons or more for (starting, or scoring); a likely last match: the team's season over, the odds of retiring (rules.retirement) lastMatch.chance or more, a career of lastMatch.seasons seasons and lastMatch.appearances matches; one more season: a player's first match of a season after a likely last match that wasn't (Tom). The match's own moments, for the interview (Task 245): a late decider (any), a haul (haulGoals goals or more: three come in about 7 matches in 10, so a hat-trick is no story here), a comeback from comebackFrom goals down (talk.js works out its own for the desk). weights: how notable each kind is, the desk saying the heaviest.",
+    "lateShare": 0.85,
+    "headToHeadRun": 5,
+    "winRun": 5,
+    "winlessRun": 6,
+    "inARow": 3,
+    "finalDrought": 5,
+    "cupDrought": 8,
+    "dynastyCups": 3,
+    "dynastySeasons": 5,
+    "injuryMatches": 3,
+    "oldClubSeasons": 2,
+    "deskFrom": 5,
+    "haulGoals": 4,
+    "comebackFrom": 2,
+    "lastMatch": { "chance": 0.5, "seasons": 10, "appearances": 140 },
+    "weights": {
+      "record": 10,
+      "likely_last": 9,
+      "one_more_season": 7,
+      "first_cup": 9,
+      "cup_drought_ended": 9,
+      "cups_in_a_row": 9,
+      "dynasty": 9,
+      "final_rematch": 7,
+      "old_club": 7,
+      "first_final": 7,
+      "final_drought_ended": 7,
+      "finals_in_a_row": 7,
+      "milestone": 6,
+      "scorcher_decider": 6,
+      "momentum_decider": 5,
+      "late_decider": 5,
+      "goal_haul": 3,
+      "comeback": 5,
+      "head_to_head_ended": 5,
+      "winless_ended": 5,
+      "back_from_injury": 5,
+      "win_run": 4,
+      "head_to_head_run": 3,
+      "first_goal": 3
+    }
+  }
+}

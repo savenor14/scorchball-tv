@@ -1,0 +1,2948 @@
+{
+ "_comment": "The recordings (docs/channel.md §27): written by the dev server as recordings.html records them. Never edit by hand.",
+ "recordings": {
+  "anthem/t-anvils-14000": {
+   "file": "anthem/t-anvils-14000.1aa15951e4.mp3",
+   "hash": "1aa15951e4",
+   "rate": 48000,
+   "samples": 494533,
+   "channels": 1,
+   "gain": 1
+  },
+  "anthem/t-anvils-28800": {
+   "file": "anthem/t-anvils-28800.59a0df3e27.mp3",
+   "hash": "59a0df3e27",
+   "rate": 48000,
+   "samples": 984746,
+   "channels": 1,
+   "gain": 1
+  },
+  "anthem/t-gulls-14000": {
+   "file": "anthem/t-gulls-14000.d3b9a5bdee.mp3",
+   "hash": "d3b9a5bdee",
+   "rate": 48000,
+   "samples": 496466,
+   "channels": 1,
+   "gain": 1.216850961957659
+  },
+  "anthem/t-gulls-28800": {
+   "file": "anthem/t-gulls-28800.9fbbe6cbbb.mp3",
+   "hash": "9fbbe6cbbb",
+   "rate": 48000,
+   "samples": 971518,
+   "channels": 1,
+   "gain": 1.216850840315527
+  },
+  "anthem/t-oasis-14000": {
+   "file": "anthem/t-oasis-14000.a04b151f82.mp3",
+   "hash": "a04b151f82",
+   "rate": 48000,
+   "samples": 533976,
+   "channels": 1,
+   "gain": 1
+  },
+  "anthem/t-oasis-28800": {
+   "file": "anthem/t-oasis-28800.d2660bba79.mp3",
+   "hash": "d2660bba79",
+   "rate": 48000,
+   "samples": 1063631,
+   "channels": 1,
+   "gain": 1
+  },
+  "anthem/t-rime-14000": {
+   "file": "anthem/t-rime-14000.c6777477a8.mp3",
+   "hash": "c6777477a8",
+   "rate": 48000,
+   "samples": 522073,
+   "channels": 1,
+   "gain": 1
+  },
+  "anthem/t-rime-28800": {
+   "file": "anthem/t-rime-28800.f6cbbd1775.mp3",
+   "hash": "f6cbbd1775",
+   "rate": 48000,
+   "samples": 1039826,
+   "channels": 1,
+   "gain": 1
+  },
+  "anthem/t-royale-14000": {
+   "file": "anthem/t-royale-14000.89daebf21a.mp3",
+   "hash": "89daebf21a",
+   "rate": 48000,
+   "samples": 474525,
+   "channels": 1,
+   "gain": 1
+  },
+  "anthem/t-royale-28800": {
+   "file": "anthem/t-royale-28800.585ee1fff1.mp3",
+   "hash": "585ee1fff1",
+   "rate": 48000,
+   "samples": 944729,
+   "channels": 1,
+   "gain": 1
+  },
+  "anthem/t-stormcrows-14000": {
+   "file": "anthem/t-stormcrows-14000.96e0253f45.mp3",
+   "hash": "96e0253f45",
+   "rate": 48000,
+   "samples": 451699,
+   "channels": 1,
+   "gain": 1
+  },
+  "anthem/t-stormcrows-28800": {
+   "file": "anthem/t-stormcrows-28800.8a253a9b22.mp3",
+   "hash": "8a253a9b22",
+   "rate": 48000,
+   "samples": 1346456,
+   "channels": 1,
+   "gain": 1
+  },
+  "anthem/t-sunhawks-14000": {
+   "file": "anthem/t-sunhawks-14000.fe6b0b98c5.mp3",
+   "hash": "fe6b0b98c5",
+   "rate": 48000,
+   "samples": 533976,
+   "channels": 1,
+   "gain": 1
+  },
+  "anthem/t-sunhawks-28800": {
+   "file": "anthem/t-sunhawks-28800.1dc3005e6a.mp3",
+   "hash": "1dc3005e6a",
+   "rate": 48000,
+   "samples": 1063631,
+   "channels": 1,
+   "gain": 1
+  },
+  "anthem/t-vintners-14000": {
+   "file": "anthem/t-vintners-14000.81b7cb7344.mp3",
+   "hash": "81b7cb7344",
+   "rate": 48000,
+   "samples": 553118,
+   "channels": 1,
+   "gain": 1.2190980570656913
+  },
+  "anthem/t-vintners-28800": {
+   "file": "anthem/t-vintners-28800.606c124cef.mp3",
+   "hash": "606c124cef",
+   "rate": 48000,
+   "samples": 1082773,
+   "channels": 1,
+   "gain": 1.2200618276790698
+  },
+  "applause/v0": {
+   "file": "applause/v0.f3129b9c7f.mp3",
+   "hash": "f3129b9c7f",
+   "rate": 24000,
+   "samples": 80400,
+   "channels": 1,
+   "gain": 1
+  },
+  "applause/v1": {
+   "file": "applause/v1.84b8a1f91e.mp3",
+   "hash": "84b8a1f91e",
+   "rate": 24000,
+   "samples": 80400,
+   "channels": 1,
+   "gain": 1
+  },
+  "applause/v2": {
+   "file": "applause/v2.f8ecdb5d09.mp3",
+   "hash": "f8ecdb5d09",
+   "rate": 24000,
+   "samples": 80400,
+   "channels": 1,
+   "gain": 1
+  },
+  "applause/v3": {
+   "file": "applause/v3.3a178a6a11.mp3",
+   "hash": "3a178a6a11",
+   "rate": 24000,
+   "samples": 80400,
+   "channels": 1,
+   "gain": 1
+  },
+  "applause/v4": {
+   "file": "applause/v4.55443f3572.mp3",
+   "hash": "55443f3572",
+   "rate": 24000,
+   "samples": 80400,
+   "channels": 1,
+   "gain": 1
+  },
+  "applause/v5": {
+   "file": "applause/v5.61c45b7858.mp3",
+   "hash": "61c45b7858",
+   "rate": 24000,
+   "samples": 80400,
+   "channels": 1,
+   "gain": 1
+  },
+  "block/v0": {
+   "file": "block/v0.28fb0ddb11.mp3",
+   "hash": "28fb0ddb11",
+   "rate": 48000,
+   "samples": 6817,
+   "channels": 1,
+   "gain": 1
+  },
+  "block/v1": {
+   "file": "block/v1.c738b473de.mp3",
+   "hash": "c738b473de",
+   "rate": 48000,
+   "samples": 6817,
+   "channels": 1,
+   "gain": 1
+  },
+  "block/v2": {
+   "file": "block/v2.aec49769bb.mp3",
+   "hash": "aec49769bb",
+   "rate": 48000,
+   "samples": 6817,
+   "channels": 1,
+   "gain": 1
+  },
+  "block/v3": {
+   "file": "block/v3.869c860624.mp3",
+   "hash": "869c860624",
+   "rate": 48000,
+   "samples": 6817,
+   "channels": 1,
+   "gain": 1
+  },
+  "block/v4": {
+   "file": "block/v4.4b517c08cf.mp3",
+   "hash": "4b517c08cf",
+   "rate": 48000,
+   "samples": 6817,
+   "channels": 1,
+   "gain": 1
+  },
+  "block/v5": {
+   "file": "block/v5.72f15b22f2.mp3",
+   "hash": "72f15b22f2",
+   "rate": 48000,
+   "samples": 6817,
+   "channels": 1,
+   "gain": 1
+  },
+  "block/v6": {
+   "file": "block/v6.90616ee20a.mp3",
+   "hash": "90616ee20a",
+   "rate": 48000,
+   "samples": 6817,
+   "channels": 1,
+   "gain": 1
+  },
+  "block/v7": {
+   "file": "block/v7.fa4d3cdf69.mp3",
+   "hash": "fa4d3cdf69",
+   "rate": 48000,
+   "samples": 6817,
+   "channels": 1,
+   "gain": 1
+  },
+  "burn/v0": {
+   "file": "burn/v0.a6f24a3c6b.mp3",
+   "hash": "a6f24a3c6b",
+   "rate": 48000,
+   "samples": 35041,
+   "channels": 1,
+   "gain": 1
+  },
+  "burn/v1": {
+   "file": "burn/v1.bcddec4b44.mp3",
+   "hash": "bcddec4b44",
+   "rate": 48000,
+   "samples": 35041,
+   "channels": 1,
+   "gain": 1
+  },
+  "burn/v2": {
+   "file": "burn/v2.b5592e18f7.mp3",
+   "hash": "b5592e18f7",
+   "rate": 48000,
+   "samples": 35041,
+   "channels": 1,
+   "gain": 1
+  },
+  "burn/v3": {
+   "file": "burn/v3.dd11af9d66.mp3",
+   "hash": "dd11af9d66",
+   "rate": 48000,
+   "samples": 35041,
+   "channels": 1,
+   "gain": 1
+  },
+  "burn/v4": {
+   "file": "burn/v4.798f708065.mp3",
+   "hash": "798f708065",
+   "rate": 48000,
+   "samples": 35041,
+   "channels": 1,
+   "gain": 1
+  },
+  "burn/v5": {
+   "file": "burn/v5.4ada13e03a.mp3",
+   "hash": "4ada13e03a",
+   "rate": 48000,
+   "samples": 35041,
+   "channels": 1,
+   "gain": 1
+  },
+  "burn/v6": {
+   "file": "burn/v6.a7195e7a37.mp3",
+   "hash": "a7195e7a37",
+   "rate": 48000,
+   "samples": 35041,
+   "channels": 1,
+   "gain": 1
+  },
+  "burn/v7": {
+   "file": "burn/v7.876e049c11.mp3",
+   "hash": "876e049c11",
+   "rate": 48000,
+   "samples": 35041,
+   "channels": 1,
+   "gain": 1
+  },
+  "chant/55f6f81ae2-v0": {
+   "file": "chant/55f6f81ae2-v0.2f7f4d0bbf.mp3",
+   "hash": "2f7f4d0bbf",
+   "rate": 24000,
+   "samples": 126032,
+   "channels": 1,
+   "gain": 1
+  },
+  "chant/55f6f81ae2-v1": {
+   "file": "chant/55f6f81ae2-v1.449ca98fa8.mp3",
+   "hash": "449ca98fa8",
+   "rate": 24000,
+   "samples": 125987,
+   "channels": 1,
+   "gain": 1
+  },
+  "chant/55f6f81ae2-v2": {
+   "file": "chant/55f6f81ae2-v2.ababa55680.mp3",
+   "hash": "ababa55680",
+   "rate": 24000,
+   "samples": 126097,
+   "channels": 1,
+   "gain": 1
+  },
+  "chant/55f6f81ae2-v3": {
+   "file": "chant/55f6f81ae2-v3.da18e3afb4.mp3",
+   "hash": "da18e3afb4",
+   "rate": 24000,
+   "samples": 126108,
+   "channels": 1,
+   "gain": 1
+  },
+  "chant/55f6f81ae2-v4": {
+   "file": "chant/55f6f81ae2-v4.cfd4418006.mp3",
+   "hash": "cfd4418006",
+   "rate": 24000,
+   "samples": 126028,
+   "channels": 1,
+   "gain": 1
+  },
+  "chant/55f6f81ae2-v5": {
+   "file": "chant/55f6f81ae2-v5.6fd9b5ab2a.mp3",
+   "hash": "6fd9b5ab2a",
+   "rate": 24000,
+   "samples": 125831,
+   "channels": 1,
+   "gain": 1
+  },
+  "chant/66895454c7-v0": {
+   "file": "chant/66895454c7-v0.2be1dbe5e8.mp3",
+   "hash": "2be1dbe5e8",
+   "rate": 24000,
+   "samples": 107396,
+   "channels": 1,
+   "gain": 1
+  },
+  "chant/66895454c7-v1": {
+   "file": "chant/66895454c7-v1.25612f1119.mp3",
+   "hash": "25612f1119",
+   "rate": 24000,
+   "samples": 107392,
+   "channels": 1,
+   "gain": 1
+  },
+  "chant/66895454c7-v2": {
+   "file": "chant/66895454c7-v2.deae4ed384.mp3",
+   "hash": "deae4ed384",
+   "rate": 24000,
+   "samples": 107393,
+   "channels": 1,
+   "gain": 1
+  },
+  "chant/66895454c7-v3": {
+   "file": "chant/66895454c7-v3.918f208fde.mp3",
+   "hash": "918f208fde",
+   "rate": 24000,
+   "samples": 107339,
+   "channels": 1,
+   "gain": 1
+  },
+  "chant/66895454c7-v4": {
+   "file": "chant/66895454c7-v4.34ee19d590.mp3",
+   "hash": "34ee19d590",
+   "rate": 24000,
+   "samples": 107226,
+   "channels": 1,
+   "gain": 1
+  },
+  "chant/66895454c7-v5": {
+   "file": "chant/66895454c7-v5.6ea851e006.mp3",
+   "hash": "6ea851e006",
+   "rate": 24000,
+   "samples": 107364,
+   "channels": 1,
+   "gain": 1
+  },
+  "chant/dc56b95e1c-v0": {
+   "file": "chant/dc56b95e1c-v0.e10542a792.mp3",
+   "hash": "e10542a792",
+   "rate": 24000,
+   "samples": 101483,
+   "channels": 1,
+   "gain": 1.7035557299244162
+  },
+  "chant/dc56b95e1c-v1": {
+   "file": "chant/dc56b95e1c-v1.b490c1dfb9.mp3",
+   "hash": "b490c1dfb9",
+   "rate": 24000,
+   "samples": 101657,
+   "channels": 1,
+   "gain": 1.861575306678305
+  },
+  "chant/dc56b95e1c-v2": {
+   "file": "chant/dc56b95e1c-v2.d47d6d7628.mp3",
+   "hash": "d47d6d7628",
+   "rate": 24000,
+   "samples": 101665,
+   "channels": 1,
+   "gain": 1.939254026023709
+  },
+  "chant/dc56b95e1c-v3": {
+   "file": "chant/dc56b95e1c-v3.de2762aed5.mp3",
+   "hash": "de2762aed5",
+   "rate": 24000,
+   "samples": 101640,
+   "channels": 1,
+   "gain": 1.888230747106124
+  },
+  "chant/dc56b95e1c-v4": {
+   "file": "chant/dc56b95e1c-v4.4456453bba.mp3",
+   "hash": "4456453bba",
+   "rate": 24000,
+   "samples": 101584,
+   "channels": 1,
+   "gain": 2.0397973303892174
+  },
+  "chant/dc56b95e1c-v5": {
+   "file": "chant/dc56b95e1c-v5.08c524a509.mp3",
+   "hash": "08c524a509",
+   "rate": 24000,
+   "samples": 101668,
+   "channels": 1,
+   "gain": 1.8410719170862315
+  },
+  "chant/f5d97158b9-v0": {
+   "file": "chant/f5d97158b9-v0.b836d453fd.mp3",
+   "hash": "b836d453fd",
+   "rate": 24000,
+   "samples": 90710,
+   "channels": 1,
+   "gain": 1.8434570760143048
+  },
+  "chant/f5d97158b9-v1": {
+   "file": "chant/f5d97158b9-v1.52a0c7eb22.mp3",
+   "hash": "52a0c7eb22",
+   "rate": 24000,
+   "samples": 90779,
+   "channels": 1,
+   "gain": 2.424950988925233
+  },
+  "chant/f5d97158b9-v2": {
+   "file": "chant/f5d97158b9-v2.8825c58d07.mp3",
+   "hash": "8825c58d07",
+   "rate": 24000,
+   "samples": 90855,
+   "channels": 1,
+   "gain": 2.122633311213279
+  },
+  "chant/f5d97158b9-v3": {
+   "file": "chant/f5d97158b9-v3.4cc66b836e.mp3",
+   "hash": "4cc66b836e",
+   "rate": 24000,
+   "samples": 90809,
+   "channels": 1,
+   "gain": 1.801491270259935
+  },
+  "chant/f5d97158b9-v4": {
+   "file": "chant/f5d97158b9-v4.cb286c836b.mp3",
+   "hash": "cb286c836b",
+   "rate": 24000,
+   "samples": 90841,
+   "channels": 1,
+   "gain": 2.0278028079441617
+  },
+  "chant/f5d97158b9-v5": {
+   "file": "chant/f5d97158b9-v5.a4cf93709a.mp3",
+   "hash": "a4cf93709a",
+   "rate": 24000,
+   "samples": 90734,
+   "channels": 1,
+   "gain": 2.1668847726315867
+  },
+  "chant/v0": {
+   "file": "chant/v0.9718f2d157.mp3",
+   "hash": "9718f2d157",
+   "rate": 24000,
+   "samples": 124832,
+   "channels": 1,
+   "gain": 1
+  },
+  "chant/v1": {
+   "file": "chant/v1.1217d7d846.mp3",
+   "hash": "1217d7d846",
+   "rate": 24000,
+   "samples": 124787,
+   "channels": 1,
+   "gain": 1
+  },
+  "chant/v2": {
+   "file": "chant/v2.a69bee29c7.mp3",
+   "hash": "a69bee29c7",
+   "rate": 24000,
+   "samples": 124897,
+   "channels": 1,
+   "gain": 1
+  },
+  "chant/v3": {
+   "file": "chant/v3.be21ebcce2.mp3",
+   "hash": "be21ebcce2",
+   "rate": 24000,
+   "samples": 124908,
+   "channels": 1,
+   "gain": 1
+  },
+  "chant/v4": {
+   "file": "chant/v4.e14a97d91c.mp3",
+   "hash": "e14a97d91c",
+   "rate": 24000,
+   "samples": 124828,
+   "channels": 1,
+   "gain": 1
+  },
+  "chant/v5": {
+   "file": "chant/v5.b5f11ef09f.mp3",
+   "hash": "b5f11ef09f",
+   "rate": 24000,
+   "samples": 124631,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/boot": {
+   "file": "effect/boot.197b1132ec.mp3",
+   "hash": "197b1132ec",
+   "rate": 48000,
+   "samples": 10609,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/broom": {
+   "file": "effect/broom.61a20368c6.mp3",
+   "hash": "61a20368c6",
+   "rate": 48000,
+   "samples": 45600,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/cheer": {
+   "file": "effect/cheer.7e230db4d8.mp3",
+   "hash": "7e230db4d8",
+   "rate": 48000,
+   "samples": 91200,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/chug": {
+   "file": "effect/chug.ce0e905025.mp3",
+   "hash": "ce0e905025",
+   "rate": 48000,
+   "samples": 195360,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/click": {
+   "file": "effect/click.0d9b4eb22a.mp3",
+   "hash": "0d9b4eb22a",
+   "rate": 48000,
+   "samples": 13201,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/clink": {
+   "file": "effect/clink.2c1e176fcc.mp3",
+   "hash": "2c1e176fcc",
+   "rate": 48000,
+   "samples": 19488,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/clunk": {
+   "file": "effect/clunk.ac926d13b3.mp3",
+   "hash": "ac926d13b3",
+   "rate": 48000,
+   "samples": 28417,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/crickets": {
+   "file": "effect/crickets.e1e0d52dba.mp3",
+   "hash": "e1e0d52dba",
+   "rate": 48000,
+   "samples": 200640,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/crunch": {
+   "file": "effect/crunch.d1ee58dc68.mp3",
+   "hash": "d1ee58dc68",
+   "rate": 48000,
+   "samples": 17315,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/fizz": {
+   "file": "effect/fizz.595e1d134c.mp3",
+   "hash": "595e1d134c",
+   "rate": 48000,
+   "samples": 72555,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/gull": {
+   "file": "effect/gull.69f161d730.mp3",
+   "hash": "69f161d730",
+   "rate": 48000,
+   "samples": 44160,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/hop": {
+   "file": "effect/hop.1beae006df.mp3",
+   "hash": "1beae006df",
+   "rate": 48000,
+   "samples": 11280,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/horn": {
+   "file": "effect/horn.ccc6489abc.mp3",
+   "hash": "ccc6489abc",
+   "rate": 48000,
+   "samples": 67200,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/ignite": {
+   "file": "effect/ignite.fe56c551ef.mp3",
+   "hash": "fe56c551ef",
+   "rate": 48000,
+   "samples": 62400,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/mower": {
+   "file": "effect/mower.9a7baaacdb.mp3",
+   "hash": "9a7baaacdb",
+   "rate": 48000,
+   "samples": 146400,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/page": {
+   "file": "effect/page.8908fed26a.mp3",
+   "hash": "8908fed26a",
+   "rate": 48000,
+   "samples": 10081,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/pop": {
+   "file": "effect/pop.cd11c7da73.mp3",
+   "hash": "cd11c7da73",
+   "rate": 48000,
+   "samples": 7297,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/pour": {
+   "file": "effect/pour.521cb7eff6.mp3",
+   "hash": "521cb7eff6",
+   "rate": 48000,
+   "samples": 127200,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/radio": {
+   "file": "effect/radio.0b96d772eb.mp3",
+   "hash": "0b96d772eb",
+   "rate": 48000,
+   "samples": 32353,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/rain": {
+   "file": "effect/rain.13e89a3c39.mp3",
+   "hash": "13e89a3c39",
+   "rate": 48000,
+   "samples": 276000,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/riffle": {
+   "file": "effect/riffle.bf2424cf70.mp3",
+   "hash": "bf2424cf70",
+   "rate": 48000,
+   "samples": 150816,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/rise": {
+   "file": "effect/rise.ff9ce362ad.mp3",
+   "hash": "ff9ce362ad",
+   "rate": 48000,
+   "samples": 69601,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/roll": {
+   "file": "effect/roll.97edbf8546.mp3",
+   "hash": "97edbf8546",
+   "rate": 48000,
+   "samples": 110400,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/shatter": {
+   "file": "effect/shatter.c15a77f88c.mp3",
+   "hash": "c15a77f88c",
+   "rate": 48000,
+   "samples": 185046,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/sizzle": {
+   "file": "effect/sizzle.88f1de2d84.mp3",
+   "hash": "88f1de2d84",
+   "rate": 48000,
+   "samples": 98400,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/sparkle": {
+   "file": "effect/sparkle.f5512e3e68.mp3",
+   "hash": "f5512e3e68",
+   "rate": 48000,
+   "samples": 35616,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/splash": {
+   "file": "effect/splash.64c0f9b31e.mp3",
+   "hash": "64c0f9b31e",
+   "rate": 48000,
+   "samples": 49564,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/splat": {
+   "file": "effect/splat.742c1bc39d.mp3",
+   "hash": "742c1bc39d",
+   "rate": 48000,
+   "samples": 9312,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/sprinkler": {
+   "file": "effect/sprinkler.433764bc9c.mp3",
+   "hash": "433764bc9c",
+   "rate": 48000,
+   "samples": 87657,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/squelch": {
+   "file": "effect/squelch.1da24484c0.mp3",
+   "hash": "1da24484c0",
+   "rate": 48000,
+   "samples": 12480,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/stamp": {
+   "file": "effect/stamp.4082d57889.mp3",
+   "hash": "4082d57889",
+   "rate": 48000,
+   "samples": 9216,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/steps": {
+   "file": "effect/steps.e0a9e547aa.mp3",
+   "hash": "e0a9e547aa",
+   "rate": 48000,
+   "samples": 143616,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/swoosh": {
+   "file": "effect/swoosh.a87c263cf7.mp3",
+   "hash": "a87c263cf7",
+   "rate": 48000,
+   "samples": 26401,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/tap": {
+   "file": "effect/tap.d90d577045.mp3",
+   "hash": "d90d577045",
+   "rate": 48000,
+   "samples": 64128,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/tear": {
+   "file": "effect/tear.2a5640233d.mp3",
+   "hash": "2a5640233d",
+   "rate": 48000,
+   "samples": 10560,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/thump": {
+   "file": "effect/thump.fed3e71cd0.mp3",
+   "hash": "fed3e71cd0",
+   "rate": 48000,
+   "samples": 43201,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/thunder": {
+   "file": "effect/thunder.d495ca8dcc.mp3",
+   "hash": "d495ca8dcc",
+   "rate": 48000,
+   "samples": 111840,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/tick": {
+   "file": "effect/tick.62c2036f95.mp3",
+   "hash": "62c2036f95",
+   "rate": 48000,
+   "samples": 3505,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/till": {
+   "file": "effect/till.c125aa8b39.mp3",
+   "hash": "c125aa8b39",
+   "rate": 48000,
+   "samples": 61008,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/wave": {
+   "file": "effect/wave.90564df6ef.mp3",
+   "hash": "90564df6ef",
+   "rate": 48000,
+   "samples": 79200,
+   "channels": 1,
+   "gain": 1
+  },
+  "effect/whirl": {
+   "file": "effect/whirl.bafa20bbaa.mp3",
+   "hash": "bafa20bbaa",
+   "rate": 48000,
+   "samples": 170400,
+   "channels": 1,
+   "gain": 1
+  },
+  "fire/torch-07645fa3c8-v0": {
+   "file": "fire/torch-07645fa3c8-v0.b6773d8fa4.mp3",
+   "hash": "b6773d8fa4",
+   "rate": 48000,
+   "samples": 225121,
+   "channels": 2,
+   "gain": 1
+  },
+  "fire/torch-07645fa3c8-v1": {
+   "file": "fire/torch-07645fa3c8-v1.9f867585fb.mp3",
+   "hash": "9f867585fb",
+   "rate": 48000,
+   "samples": 225121,
+   "channels": 2,
+   "gain": 1
+  },
+  "fire/torch-07645fa3c8-v2": {
+   "file": "fire/torch-07645fa3c8-v2.32a83d8204.mp3",
+   "hash": "32a83d8204",
+   "rate": 48000,
+   "samples": 225121,
+   "channels": 2,
+   "gain": 1
+  },
+  "fire/torch-07645fa3c8-v3": {
+   "file": "fire/torch-07645fa3c8-v3.4d9b055b1f.mp3",
+   "hash": "4d9b055b1f",
+   "rate": 48000,
+   "samples": 225121,
+   "channels": 2,
+   "gain": 1
+  },
+  "fire/torch-07645fa3c8-v4": {
+   "file": "fire/torch-07645fa3c8-v4.a22db8268a.mp3",
+   "hash": "a22db8268a",
+   "rate": 48000,
+   "samples": 225121,
+   "channels": 2,
+   "gain": 1
+  },
+  "fire/torch-07645fa3c8-v5": {
+   "file": "fire/torch-07645fa3c8-v5.24cf2026bd.mp3",
+   "hash": "24cf2026bd",
+   "rate": 48000,
+   "samples": 225121,
+   "channels": 2,
+   "gain": 1
+  },
+  "fire/torch-07645fa3c8-v6": {
+   "file": "fire/torch-07645fa3c8-v6.3712cffb8e.mp3",
+   "hash": "3712cffb8e",
+   "rate": 48000,
+   "samples": 225121,
+   "channels": 2,
+   "gain": 1
+  },
+  "fire/torch-07645fa3c8-v7": {
+   "file": "fire/torch-07645fa3c8-v7.02ff6c2272.mp3",
+   "hash": "02ff6c2272",
+   "rate": 48000,
+   "samples": 225121,
+   "channels": 2,
+   "gain": 1
+  },
+  "fire/torch-3ee5ac7911-v0": {
+   "file": "fire/torch-3ee5ac7911-v0.f5388f2cd7.mp3",
+   "hash": "f5388f2cd7",
+   "rate": 48000,
+   "samples": 225121,
+   "channels": 2,
+   "gain": 1
+  },
+  "fire/torch-3ee5ac7911-v1": {
+   "file": "fire/torch-3ee5ac7911-v1.47977a1739.mp3",
+   "hash": "47977a1739",
+   "rate": 48000,
+   "samples": 225121,
+   "channels": 2,
+   "gain": 1
+  },
+  "fire/torch-3ee5ac7911-v2": {
+   "file": "fire/torch-3ee5ac7911-v2.26a04797c4.mp3",
+   "hash": "26a04797c4",
+   "rate": 48000,
+   "samples": 225121,
+   "channels": 2,
+   "gain": 1
+  },
+  "fire/torch-3ee5ac7911-v3": {
+   "file": "fire/torch-3ee5ac7911-v3.a489c45719.mp3",
+   "hash": "a489c45719",
+   "rate": 48000,
+   "samples": 225121,
+   "channels": 2,
+   "gain": 1
+  },
+  "fire/torch-3ee5ac7911-v4": {
+   "file": "fire/torch-3ee5ac7911-v4.fb010a2c3d.mp3",
+   "hash": "fb010a2c3d",
+   "rate": 48000,
+   "samples": 225121,
+   "channels": 2,
+   "gain": 1
+  },
+  "fire/torch-3ee5ac7911-v5": {
+   "file": "fire/torch-3ee5ac7911-v5.ecc4602223.mp3",
+   "hash": "ecc4602223",
+   "rate": 48000,
+   "samples": 225121,
+   "channels": 2,
+   "gain": 1
+  },
+  "fire/torch-3ee5ac7911-v6": {
+   "file": "fire/torch-3ee5ac7911-v6.a32e732c10.mp3",
+   "hash": "a32e732c10",
+   "rate": 48000,
+   "samples": 225121,
+   "channels": 2,
+   "gain": 1
+  },
+  "fire/torch-3ee5ac7911-v7": {
+   "file": "fire/torch-3ee5ac7911-v7.439b3a9669.mp3",
+   "hash": "439b3a9669",
+   "rate": 48000,
+   "samples": 225121,
+   "channels": 2,
+   "gain": 1
+  },
+  "groan/v0": {
+   "file": "groan/v0.cd904861c3.mp3",
+   "hash": "cd904861c3",
+   "rate": 24000,
+   "samples": 35548,
+   "channels": 1,
+   "gain": 1
+  },
+  "groan/v1": {
+   "file": "groan/v1.d1fbf617d8.mp3",
+   "hash": "d1fbf617d8",
+   "rate": 24000,
+   "samples": 35183,
+   "channels": 1,
+   "gain": 1
+  },
+  "groan/v2": {
+   "file": "groan/v2.19f461efe7.mp3",
+   "hash": "19f461efe7",
+   "rate": 24000,
+   "samples": 35529,
+   "channels": 1,
+   "gain": 1.1919707668070891
+  },
+  "groan/v3": {
+   "file": "groan/v3.7e27325452.mp3",
+   "hash": "7e27325452",
+   "rate": 24000,
+   "samples": 35929,
+   "channels": 1,
+   "gain": 1.1850017674115239
+  },
+  "groan/v4": {
+   "file": "groan/v4.211c613ff1.mp3",
+   "hash": "211c613ff1",
+   "rate": 24000,
+   "samples": 35001,
+   "channels": 1,
+   "gain": 1.0096747656257785
+  },
+  "groan/v5": {
+   "file": "groan/v5.4b685db762.mp3",
+   "hash": "4b685db762",
+   "rate": 24000,
+   "samples": 35182,
+   "channels": 1,
+   "gain": 1.0813472222308724
+  },
+  "ident/v0": {
+   "file": "ident/v0.630a60ccd3.mp3",
+   "hash": "630a60ccd3",
+   "rate": 48000,
+   "samples": 91921,
+   "channels": 1,
+   "gain": 1.1822696851224315
+  },
+  "ident/v1": {
+   "file": "ident/v1.65009e8a80.mp3",
+   "hash": "65009e8a80",
+   "rate": 48000,
+   "samples": 91921,
+   "channels": 1,
+   "gain": 1.1088186380814533
+  },
+  "ident/v2": {
+   "file": "ident/v2.ad8c20e465.mp3",
+   "hash": "ad8c20e465",
+   "rate": 48000,
+   "samples": 91921,
+   "channels": 1,
+   "gain": 1.1151901313236783
+  },
+  "ident/v3": {
+   "file": "ident/v3.c81d7de802.mp3",
+   "hash": "c81d7de802",
+   "rate": 48000,
+   "samples": 91921,
+   "channels": 1,
+   "gain": 1.117095168755979
+  },
+  "ident/v4": {
+   "file": "ident/v4.23e70e310b.mp3",
+   "hash": "23e70e310b",
+   "rate": 48000,
+   "samples": 91921,
+   "channels": 1,
+   "gain": 1.1775508218882036
+  },
+  "ident/v5": {
+   "file": "ident/v5.d3f04169fc.mp3",
+   "hash": "d3f04169fc",
+   "rate": 48000,
+   "samples": 91921,
+   "channels": 1,
+   "gain": 1.0837672924508854
+  },
+  "ident/v6": {
+   "file": "ident/v6.8c51b135a6.mp3",
+   "hash": "8c51b135a6",
+   "rate": 48000,
+   "samples": 91921,
+   "channels": 1,
+   "gain": 1.1558278482787463
+  },
+  "ident/v7": {
+   "file": "ident/v7.07cbe52bc1.mp3",
+   "hash": "07cbe52bc1",
+   "rate": 48000,
+   "samples": 91921,
+   "channels": 1,
+   "gain": 1.1482677897628473
+  },
+  "jeer/v0": {
+   "file": "jeer/v0.7108352fdf.mp3",
+   "hash": "7108352fdf",
+   "rate": 24000,
+   "samples": 46058,
+   "channels": 1,
+   "gain": 1.0067094345482028
+  },
+  "jeer/v1": {
+   "file": "jeer/v1.cad919a07e.mp3",
+   "hash": "cad919a07e",
+   "rate": 24000,
+   "samples": 44337,
+   "channels": 1,
+   "gain": 1
+  },
+  "jeer/v2": {
+   "file": "jeer/v2.1a48124174.mp3",
+   "hash": "1a48124174",
+   "rate": 24000,
+   "samples": 46186,
+   "channels": 1,
+   "gain": 1
+  },
+  "jeer/v3": {
+   "file": "jeer/v3.b1675a2ca1.mp3",
+   "hash": "b1675a2ca1",
+   "rate": 24000,
+   "samples": 46034,
+   "channels": 1,
+   "gain": 1
+  },
+  "jeer/v4": {
+   "file": "jeer/v4.9e6a81c629.mp3",
+   "hash": "9e6a81c629",
+   "rate": 24000,
+   "samples": 45746,
+   "channels": 1,
+   "gain": 1.3316346674549338
+  },
+  "jeer/v5": {
+   "file": "jeer/v5.b45323c89b.mp3",
+   "hash": "b45323c89b",
+   "rate": 24000,
+   "samples": 47726,
+   "channels": 1,
+   "gain": 1.0112209587681051
+  },
+  "jingle/05e9600601": {
+   "file": "jingle/05e9600601.5a19233916.mp3",
+   "hash": "5a19233916",
+   "rate": 48000,
+   "samples": 121964,
+   "channels": 1,
+   "gain": 1
+  },
+  "jingle/15092dcb5f": {
+   "file": "jingle/15092dcb5f.23996febcc.mp3",
+   "hash": "23996febcc",
+   "rate": 48000,
+   "samples": 99360,
+   "channels": 1,
+   "gain": 1
+  },
+  "jingle/1f1681dee2": {
+   "file": "jingle/1f1681dee2.c84941b66c.mp3",
+   "hash": "c84941b66c",
+   "rate": 48000,
+   "samples": 121800,
+   "channels": 1,
+   "gain": 1
+  },
+  "jingle/2a1bf20c3e": {
+   "file": "jingle/2a1bf20c3e.b424f284af.mp3",
+   "hash": "b424f284af",
+   "rate": 48000,
+   "samples": 68360,
+   "channels": 1,
+   "gain": 1
+  },
+  "jingle/2cd9f29ff4": {
+   "file": "jingle/2cd9f29ff4.4df3f2fea4.mp3",
+   "hash": "4df3f2fea4",
+   "rate": 48000,
+   "samples": 180961,
+   "channels": 1,
+   "gain": 1
+  },
+  "jingle/2ff31ae66e": {
+   "file": "jingle/2ff31ae66e.d76f3f8d65.mp3",
+   "hash": "d76f3f8d65",
+   "rate": 48000,
+   "samples": 99789,
+   "channels": 1,
+   "gain": 1
+  },
+  "jingle/32aabdc09e": {
+   "file": "jingle/32aabdc09e.29beac3e67.mp3",
+   "hash": "29beac3e67",
+   "rate": 48000,
+   "samples": 65760,
+   "channels": 1,
+   "gain": 1
+  },
+  "jingle/6abc71ce57": {
+   "file": "jingle/6abc71ce57.2d50dfc84b.mp3",
+   "hash": "2d50dfc84b",
+   "rate": 48000,
+   "samples": 79440,
+   "channels": 1,
+   "gain": 1.2926870462845783
+  },
+  "jingle/6f127ceec3": {
+   "file": "jingle/6f127ceec3.2dd46259bf.mp3",
+   "hash": "2dd46259bf",
+   "rate": 48000,
+   "samples": 56161,
+   "channels": 1,
+   "gain": 1
+  },
+  "jingle/859477eb53": {
+   "file": "jingle/859477eb53.5ece655480.mp3",
+   "hash": "5ece655480",
+   "rate": 48000,
+   "samples": 89075,
+   "channels": 1,
+   "gain": 1
+  },
+  "jingle/9ed72a549a": {
+   "file": "jingle/9ed72a549a.842fd78696.mp3",
+   "hash": "842fd78696",
+   "rate": 48000,
+   "samples": 76404,
+   "channels": 1,
+   "gain": 1
+  },
+  "jingle/a302b02cf2": {
+   "file": "jingle/a302b02cf2.2ac98c6da8.mp3",
+   "hash": "2ac98c6da8",
+   "rate": 48000,
+   "samples": 114789,
+   "channels": 1,
+   "gain": 1
+  },
+  "jingle/a7a0e94760": {
+   "file": "jingle/a7a0e94760.512d27ee40.mp3",
+   "hash": "512d27ee40",
+   "rate": 48000,
+   "samples": 110100,
+   "channels": 1,
+   "gain": 1
+  },
+  "jingle/abd040a793": {
+   "file": "jingle/abd040a793.463b20f0cc.mp3",
+   "hash": "463b20f0cc",
+   "rate": 48000,
+   "samples": 90789,
+   "channels": 1,
+   "gain": 1
+  },
+  "jingle/afe5ccaf4b": {
+   "file": "jingle/afe5ccaf4b.414a076342.mp3",
+   "hash": "414a076342",
+   "rate": 48000,
+   "samples": 100146,
+   "channels": 1,
+   "gain": 1.111329088405687
+  },
+  "jingle/c6e2466958": {
+   "file": "jingle/c6e2466958.2c180527f2.mp3",
+   "hash": "2c180527f2",
+   "rate": 48000,
+   "samples": 82451,
+   "channels": 1,
+   "gain": 1
+  },
+  "jingle/c7358c99f3": {
+   "file": "jingle/c7358c99f3.8fde783754.mp3",
+   "hash": "8fde783754",
+   "rate": 48000,
+   "samples": 109800,
+   "channels": 1,
+   "gain": 1
+  },
+  "jingle/db46f17552": {
+   "file": "jingle/db46f17552.4db2ccccf6.mp3",
+   "hash": "4db2ccccf6",
+   "rate": 48000,
+   "samples": 85179,
+   "channels": 1,
+   "gain": 1
+  },
+  "jingle/f46f37bed0": {
+   "file": "jingle/f46f37bed0.d2418bce74.mp3",
+   "hash": "d2418bce74",
+   "rate": 48000,
+   "samples": 93360,
+   "channels": 1,
+   "gain": 1
+  },
+  "jingle/fe8374d406": {
+   "file": "jingle/fe8374d406.3c03fbc9a6.mp3",
+   "hash": "3c03fbc9a6",
+   "rate": 48000,
+   "samples": 111360,
+   "channels": 1,
+   "gain": 1
+  },
+  "jingle/ff5297d46d": {
+   "file": "jingle/ff5297d46d.56b0b1376f.mp3",
+   "hash": "56b0b1376f",
+   "rate": 48000,
+   "samples": 111360,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p0-v0": {
+   "file": "kick/p0-v0.db8e245bdf.mp3",
+   "hash": "db8e245bdf",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p0-v1": {
+   "file": "kick/p0-v1.c87d75eaab.mp3",
+   "hash": "c87d75eaab",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p0-v2": {
+   "file": "kick/p0-v2.1776b21419.mp3",
+   "hash": "1776b21419",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p0-v3": {
+   "file": "kick/p0-v3.82559a89af.mp3",
+   "hash": "82559a89af",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p0-v4": {
+   "file": "kick/p0-v4.e880d3a781.mp3",
+   "hash": "e880d3a781",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p0-v5": {
+   "file": "kick/p0-v5.c43c5f02dd.mp3",
+   "hash": "c43c5f02dd",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p0-v6": {
+   "file": "kick/p0-v6.6b3d21ea43.mp3",
+   "hash": "6b3d21ea43",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p0-v7": {
+   "file": "kick/p0-v7.265c64875b.mp3",
+   "hash": "265c64875b",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p1-v0": {
+   "file": "kick/p1-v0.c1899ff71f.mp3",
+   "hash": "c1899ff71f",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p1-v1": {
+   "file": "kick/p1-v1.efd6cb5004.mp3",
+   "hash": "efd6cb5004",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p1-v2": {
+   "file": "kick/p1-v2.4fc88033fe.mp3",
+   "hash": "4fc88033fe",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p1-v3": {
+   "file": "kick/p1-v3.7e80decc4f.mp3",
+   "hash": "7e80decc4f",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p1-v4": {
+   "file": "kick/p1-v4.21d7193bc6.mp3",
+   "hash": "21d7193bc6",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p1-v5": {
+   "file": "kick/p1-v5.b032125cea.mp3",
+   "hash": "b032125cea",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p1-v6": {
+   "file": "kick/p1-v6.5e3a3577a8.mp3",
+   "hash": "5e3a3577a8",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p1-v7": {
+   "file": "kick/p1-v7.85d3095df1.mp3",
+   "hash": "85d3095df1",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p2-v0": {
+   "file": "kick/p2-v0.e1d048cd8e.mp3",
+   "hash": "e1d048cd8e",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p2-v1": {
+   "file": "kick/p2-v1.059e4d6b27.mp3",
+   "hash": "059e4d6b27",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p2-v2": {
+   "file": "kick/p2-v2.46aae8449a.mp3",
+   "hash": "46aae8449a",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p2-v3": {
+   "file": "kick/p2-v3.6ab30c805f.mp3",
+   "hash": "6ab30c805f",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p2-v4": {
+   "file": "kick/p2-v4.b3792f2f24.mp3",
+   "hash": "b3792f2f24",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p2-v5": {
+   "file": "kick/p2-v5.a215e3fe88.mp3",
+   "hash": "a215e3fe88",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p2-v6": {
+   "file": "kick/p2-v6.07982852e3.mp3",
+   "hash": "07982852e3",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p2-v7": {
+   "file": "kick/p2-v7.63cb4d190f.mp3",
+   "hash": "63cb4d190f",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p3-v0": {
+   "file": "kick/p3-v0.2ba475cdb8.mp3",
+   "hash": "2ba475cdb8",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p3-v1": {
+   "file": "kick/p3-v1.21b17e3e34.mp3",
+   "hash": "21b17e3e34",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p3-v2": {
+   "file": "kick/p3-v2.382ce775ae.mp3",
+   "hash": "382ce775ae",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p3-v3": {
+   "file": "kick/p3-v3.382bff8b12.mp3",
+   "hash": "382bff8b12",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p3-v4": {
+   "file": "kick/p3-v4.9b918c610e.mp3",
+   "hash": "9b918c610e",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p3-v5": {
+   "file": "kick/p3-v5.35b23a43bd.mp3",
+   "hash": "35b23a43bd",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p3-v6": {
+   "file": "kick/p3-v6.963b489dec.mp3",
+   "hash": "963b489dec",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "kick/p3-v7": {
+   "file": "kick/p3-v7.27fa8099d7.mp3",
+   "hash": "27fa8099d7",
+   "rate": 48000,
+   "samples": 7296,
+   "channels": 1,
+   "gain": 1
+  },
+  "lottery/drumroll-6": {
+   "file": "lottery/drumroll-6.9a59e01fe0.mp3",
+   "hash": "9a59e01fe0",
+   "rate": 48000,
+   "samples": 403680,
+   "channels": 1,
+   "gain": 1
+  },
+  "lottery/rattle-6": {
+   "file": "lottery/rattle-6.27ae824a1c.mp3",
+   "hash": "27ae824a1c",
+   "rate": 48000,
+   "samples": 416256,
+   "channels": 1,
+   "gain": 1
+  },
+  "lottery/whirr-6": {
+   "file": "lottery/whirr-6.bd4ffdeeb5.mp3",
+   "hash": "bd4ffdeeb5",
+   "rate": 48000,
+   "samples": 417745,
+   "channels": 1,
+   "gain": 1
+  },
+  "murmur/bed": {
+   "file": "murmur/bed.90eaa71f33.mp3",
+   "hash": "90eaa71f33",
+   "rate": 24000,
+   "samples": 288000,
+   "channels": 1,
+   "gain": 1
+  },
+  "murmur/v0": {
+   "file": "murmur/v0.4ce6e3a765.mp3",
+   "hash": "4ce6e3a765",
+   "rate": 24000,
+   "samples": 59470,
+   "channels": 1,
+   "gain": 1
+  },
+  "murmur/v1": {
+   "file": "murmur/v1.935cb3c6c2.mp3",
+   "hash": "935cb3c6c2",
+   "rate": 24000,
+   "samples": 60046,
+   "channels": 1,
+   "gain": 1
+  },
+  "murmur/v2": {
+   "file": "murmur/v2.f43efa20ca.mp3",
+   "hash": "f43efa20ca",
+   "rate": 24000,
+   "samples": 60934,
+   "channels": 1,
+   "gain": 1
+  },
+  "murmur/v3": {
+   "file": "murmur/v3.0b74bb0ff9.mp3",
+   "hash": "0b74bb0ff9",
+   "rate": 24000,
+   "samples": 60477,
+   "channels": 1,
+   "gain": 1
+  },
+  "murmur/v4": {
+   "file": "murmur/v4.e25bc6625d.mp3",
+   "hash": "e25bc6625d",
+   "rate": 24000,
+   "samples": 60203,
+   "channels": 1,
+   "gain": 1
+  },
+  "murmur/v5": {
+   "file": "murmur/v5.19dde88cff.mp3",
+   "hash": "19dde88cff",
+   "rate": 24000,
+   "samples": 61213,
+   "channels": 1,
+   "gain": 1
+  },
+  "music/chillhop": {
+   "file": "music/chillhop.27f55145a3.mp3",
+   "hash": "27f55145a3",
+   "rate": 48000,
+   "samples": 2143256,
+   "channels": 1,
+   "gain": 1,
+   "loop": 44.651162790697676
+  },
+  "music/pulse": {
+   "file": "music/pulse.b358247357.mp3",
+   "hash": "b358247357",
+   "rate": 48000,
+   "samples": 1645714,
+   "channels": 1,
+   "gain": 1,
+   "loop": 34.285714285714285
+  },
+  "music/pulseB": {
+   "file": "music/pulseB.30455e404c.mp3",
+   "hash": "30455e404c",
+   "rate": 48000,
+   "samples": 1645714,
+   "channels": 1,
+   "gain": 1,
+   "loop": 34.285714285714285
+  },
+  "music/pulseC": {
+   "file": "music/pulseC.67beafb24c.mp3",
+   "hash": "67beafb24c",
+   "rate": 48000,
+   "samples": 1645714,
+   "channels": 1,
+   "gain": 1,
+   "loop": 34.285714285714285
+  },
+  "music/pulseD": {
+   "file": "music/pulseD.2328120457.mp3",
+   "hash": "2328120457",
+   "rate": 48000,
+   "samples": 1645714,
+   "channels": 1,
+   "gain": 1,
+   "loop": 34.285714285714285
+  },
+  "music/synth": {
+   "file": "music/synth.207fe85cc3.mp3",
+   "hash": "207fe85cc3",
+   "rate": 48000,
+   "samples": 2194286,
+   "channels": 1,
+   "gain": 1,
+   "loop": 45.714285714285715
+  },
+  "music/tropical": {
+   "file": "music/tropical.40ecd6b3f3.mp3",
+   "hash": "40ecd6b3f3",
+   "rate": 48000,
+   "samples": 1807059,
+   "channels": 1,
+   "gain": 1,
+   "loop": 37.64705882352941
+  },
+  "net/v0": {
+   "file": "net/v0.7b4f2cfa82.mp3",
+   "hash": "7b4f2cfa82",
+   "rate": 48000,
+   "samples": 22080,
+   "channels": 1,
+   "gain": 1
+  },
+  "net/v1": {
+   "file": "net/v1.02e4a27a7b.mp3",
+   "hash": "02e4a27a7b",
+   "rate": 48000,
+   "samples": 22080,
+   "channels": 1,
+   "gain": 1
+  },
+  "net/v2": {
+   "file": "net/v2.65b680fd2d.mp3",
+   "hash": "65b680fd2d",
+   "rate": 48000,
+   "samples": 22080,
+   "channels": 1,
+   "gain": 1
+  },
+  "net/v3": {
+   "file": "net/v3.87a473be42.mp3",
+   "hash": "87a473be42",
+   "rate": 48000,
+   "samples": 22080,
+   "channels": 1,
+   "gain": 1
+  },
+  "net/v4": {
+   "file": "net/v4.39aed5069b.mp3",
+   "hash": "39aed5069b",
+   "rate": 48000,
+   "samples": 22080,
+   "channels": 1,
+   "gain": 1
+  },
+  "net/v5": {
+   "file": "net/v5.379b2b138c.mp3",
+   "hash": "379b2b138c",
+   "rate": 48000,
+   "samples": 22080,
+   "channels": 1,
+   "gain": 1
+  },
+  "net/v6": {
+   "file": "net/v6.a417714b81.mp3",
+   "hash": "a417714b81",
+   "rate": 48000,
+   "samples": 22080,
+   "channels": 1,
+   "gain": 1
+  },
+  "net/v7": {
+   "file": "net/v7.0cd735c67a.mp3",
+   "hash": "0cd735c67a",
+   "rate": 48000,
+   "samples": 22080,
+   "channels": 1,
+   "gain": 1
+  },
+  "ooh/v0": {
+   "file": "ooh/v0.1b926467d9.mp3",
+   "hash": "1b926467d9",
+   "rate": 24000,
+   "samples": 35444,
+   "channels": 1,
+   "gain": 1
+  },
+  "ooh/v1": {
+   "file": "ooh/v1.c8ab3bd137.mp3",
+   "hash": "c8ab3bd137",
+   "rate": 24000,
+   "samples": 34574,
+   "channels": 1,
+   "gain": 1
+  },
+  "ooh/v2": {
+   "file": "ooh/v2.d89fb42bbf.mp3",
+   "hash": "d89fb42bbf",
+   "rate": 24000,
+   "samples": 35628,
+   "channels": 1,
+   "gain": 1
+  },
+  "ooh/v3": {
+   "file": "ooh/v3.abfc07b2f2.mp3",
+   "hash": "abfc07b2f2",
+   "rate": 24000,
+   "samples": 35813,
+   "channels": 1,
+   "gain": 1
+  },
+  "ooh/v4": {
+   "file": "ooh/v4.8c04457bda.mp3",
+   "hash": "8c04457bda",
+   "rate": 24000,
+   "samples": 35110,
+   "channels": 1,
+   "gain": 1
+  },
+  "ooh/v5": {
+   "file": "ooh/v5.e7768f6765.mp3",
+   "hash": "e7768f6765",
+   "rate": 24000,
+   "samples": 35341,
+   "channels": 1,
+   "gain": 1.0310018549160083
+  },
+  "post/v0": {
+   "file": "post/v0.47f8ab462f.mp3",
+   "hash": "47f8ab462f",
+   "rate": 48000,
+   "samples": 36288,
+   "channels": 1,
+   "gain": 1.1207710723487698
+  },
+  "post/v1": {
+   "file": "post/v1.5ded005fe7.mp3",
+   "hash": "5ded005fe7",
+   "rate": 48000,
+   "samples": 36288,
+   "channels": 1,
+   "gain": 1.1593819880972103
+  },
+  "post/v2": {
+   "file": "post/v2.95a8a2a9ae.mp3",
+   "hash": "95a8a2a9ae",
+   "rate": 48000,
+   "samples": 36288,
+   "channels": 1,
+   "gain": 1.231758570184513
+  },
+  "post/v3": {
+   "file": "post/v3.010358283c.mp3",
+   "hash": "010358283c",
+   "rate": 48000,
+   "samples": 36288,
+   "channels": 1,
+   "gain": 1.1536496026175362
+  },
+  "post/v4": {
+   "file": "post/v4.015842f8a8.mp3",
+   "hash": "015842f8a8",
+   "rate": 48000,
+   "samples": 36288,
+   "channels": 1,
+   "gain": 1.3142152708403918
+  },
+  "post/v5": {
+   "file": "post/v5.557bd268f6.mp3",
+   "hash": "557bd268f6",
+   "rate": 48000,
+   "samples": 36288,
+   "channels": 1,
+   "gain": 1.2297786011987804
+  },
+  "post/v6": {
+   "file": "post/v6.bab15f45aa.mp3",
+   "hash": "bab15f45aa",
+   "rate": 48000,
+   "samples": 36288,
+   "channels": 1,
+   "gain": 1.1638743536812919
+  },
+  "post/v7": {
+   "file": "post/v7.6790ed347e.mp3",
+   "hash": "6790ed347e",
+   "rate": 48000,
+   "samples": 36288,
+   "channels": 1,
+   "gain": 1.2710730640255676
+  },
+  "roar/s1-v0": {
+   "file": "roar/s1-v0.e9d0ee2f3c.mp3",
+   "hash": "e9d0ee2f3c",
+   "rate": 24000,
+   "samples": 66615,
+   "channels": 1,
+   "gain": 1
+  },
+  "roar/s1-v1": {
+   "file": "roar/s1-v1.20c435ec31.mp3",
+   "hash": "20c435ec31",
+   "rate": 24000,
+   "samples": 65587,
+   "channels": 1,
+   "gain": 1
+  },
+  "roar/s1-v2": {
+   "file": "roar/s1-v2.301e124c88.mp3",
+   "hash": "301e124c88",
+   "rate": 24000,
+   "samples": 66567,
+   "channels": 1,
+   "gain": 1
+  },
+  "roar/s1-v3": {
+   "file": "roar/s1-v3.b91c8f6ffa.mp3",
+   "hash": "b91c8f6ffa",
+   "rate": 24000,
+   "samples": 65740,
+   "channels": 1,
+   "gain": 1
+  },
+  "roar/s1-v4": {
+   "file": "roar/s1-v4.36cf970d62.mp3",
+   "hash": "36cf970d62",
+   "rate": 24000,
+   "samples": 66302,
+   "channels": 1,
+   "gain": 1
+  },
+  "roar/s1-v5": {
+   "file": "roar/s1-v5.863e63ac6f.mp3",
+   "hash": "863e63ac6f",
+   "rate": 24000,
+   "samples": 66997,
+   "channels": 1,
+   "gain": 1
+  },
+  "roar/s2-v0": {
+   "file": "roar/s2-v0.28f108fb84.mp3",
+   "hash": "28f108fb84",
+   "rate": 24000,
+   "samples": 81252,
+   "channels": 1,
+   "gain": 1
+  },
+  "roar/s2-v1": {
+   "file": "roar/s2-v1.f55e29f7b1.mp3",
+   "hash": "f55e29f7b1",
+   "rate": 24000,
+   "samples": 80225,
+   "channels": 1,
+   "gain": 1
+  },
+  "roar/s2-v2": {
+   "file": "roar/s2-v2.b796a09c1f.mp3",
+   "hash": "b796a09c1f",
+   "rate": 24000,
+   "samples": 81645,
+   "channels": 1,
+   "gain": 1
+  },
+  "roar/s2-v3": {
+   "file": "roar/s2-v3.3f5530cbd7.mp3",
+   "hash": "3f5530cbd7",
+   "rate": 24000,
+   "samples": 80697,
+   "channels": 1,
+   "gain": 1
+  },
+  "roar/s2-v4": {
+   "file": "roar/s2-v4.415b90f45d.mp3",
+   "hash": "415b90f45d",
+   "rate": 24000,
+   "samples": 81290,
+   "channels": 1,
+   "gain": 1
+  },
+  "roar/s2-v5": {
+   "file": "roar/s2-v5.d3c31789f5.mp3",
+   "hash": "d3c31789f5",
+   "rate": 24000,
+   "samples": 81965,
+   "channels": 1,
+   "gain": 1
+  },
+  "roar/s3-v0": {
+   "file": "roar/s3-v0.57eb57a242.mp3",
+   "hash": "57eb57a242",
+   "rate": 24000,
+   "samples": 95889,
+   "channels": 1,
+   "gain": 1
+  },
+  "roar/s3-v1": {
+   "file": "roar/s3-v1.38db0fb087.mp3",
+   "hash": "38db0fb087",
+   "rate": 24000,
+   "samples": 94863,
+   "channels": 1,
+   "gain": 1
+  },
+  "roar/s3-v2": {
+   "file": "roar/s3-v2.afe2a82b59.mp3",
+   "hash": "afe2a82b59",
+   "rate": 24000,
+   "samples": 96679,
+   "channels": 1,
+   "gain": 1
+  },
+  "roar/s3-v3": {
+   "file": "roar/s3-v3.c190e60f00.mp3",
+   "hash": "c190e60f00",
+   "rate": 24000,
+   "samples": 95654,
+   "channels": 1,
+   "gain": 1
+  },
+  "roar/s3-v4": {
+   "file": "roar/s3-v4.7062d517d7.mp3",
+   "hash": "7062d517d7",
+   "rate": 24000,
+   "samples": 96277,
+   "channels": 1,
+   "gain": 1
+  },
+  "roar/s3-v5": {
+   "file": "roar/s3-v5.48bbc6a920.mp3",
+   "hash": "48bbc6a920",
+   "rate": 24000,
+   "samples": 96933,
+   "channels": 1,
+   "gain": 1
+  },
+  "save/held-v0": {
+   "file": "save/held-v0.e5e0b6f633.mp3",
+   "hash": "e5e0b6f633",
+   "rate": 48000,
+   "samples": 11184,
+   "channels": 1,
+   "gain": 1
+  },
+  "save/held-v1": {
+   "file": "save/held-v1.f9245eafd9.mp3",
+   "hash": "f9245eafd9",
+   "rate": 48000,
+   "samples": 11184,
+   "channels": 1,
+   "gain": 1
+  },
+  "save/held-v2": {
+   "file": "save/held-v2.856352d734.mp3",
+   "hash": "856352d734",
+   "rate": 48000,
+   "samples": 11184,
+   "channels": 1,
+   "gain": 1
+  },
+  "save/held-v3": {
+   "file": "save/held-v3.276bcc814a.mp3",
+   "hash": "276bcc814a",
+   "rate": 48000,
+   "samples": 11184,
+   "channels": 1,
+   "gain": 1
+  },
+  "save/held-v4": {
+   "file": "save/held-v4.22d40f5b5f.mp3",
+   "hash": "22d40f5b5f",
+   "rate": 48000,
+   "samples": 11184,
+   "channels": 1,
+   "gain": 1
+  },
+  "save/held-v5": {
+   "file": "save/held-v5.fc4f0137e2.mp3",
+   "hash": "fc4f0137e2",
+   "rate": 48000,
+   "samples": 11184,
+   "channels": 1,
+   "gain": 1
+  },
+  "save/held-v6": {
+   "file": "save/held-v6.2d4e220eb5.mp3",
+   "hash": "2d4e220eb5",
+   "rate": 48000,
+   "samples": 11184,
+   "channels": 1,
+   "gain": 1
+  },
+  "save/held-v7": {
+   "file": "save/held-v7.a410415de0.mp3",
+   "hash": "a410415de0",
+   "rate": 48000,
+   "samples": 11184,
+   "channels": 1,
+   "gain": 1
+  },
+  "save/parried-v0": {
+   "file": "save/parried-v0.b8f930fe5a.mp3",
+   "hash": "b8f930fe5a",
+   "rate": 48000,
+   "samples": 8304,
+   "channels": 1,
+   "gain": 1
+  },
+  "save/parried-v1": {
+   "file": "save/parried-v1.b05aff6dd0.mp3",
+   "hash": "b05aff6dd0",
+   "rate": 48000,
+   "samples": 8304,
+   "channels": 1,
+   "gain": 1
+  },
+  "save/parried-v2": {
+   "file": "save/parried-v2.ff46bf5ea7.mp3",
+   "hash": "ff46bf5ea7",
+   "rate": 48000,
+   "samples": 8304,
+   "channels": 1,
+   "gain": 1
+  },
+  "save/parried-v3": {
+   "file": "save/parried-v3.47fc3ca847.mp3",
+   "hash": "47fc3ca847",
+   "rate": 48000,
+   "samples": 8304,
+   "channels": 1,
+   "gain": 1
+  },
+  "save/parried-v4": {
+   "file": "save/parried-v4.a7a74c8670.mp3",
+   "hash": "a7a74c8670",
+   "rate": 48000,
+   "samples": 8304,
+   "channels": 1,
+   "gain": 1
+  },
+  "save/parried-v5": {
+   "file": "save/parried-v5.fc8dfc3238.mp3",
+   "hash": "fc8dfc3238",
+   "rate": 48000,
+   "samples": 8304,
+   "channels": 1,
+   "gain": 1
+  },
+  "save/parried-v6": {
+   "file": "save/parried-v6.4eb93e3c5e.mp3",
+   "hash": "4eb93e3c5e",
+   "rate": 48000,
+   "samples": 8304,
+   "channels": 1,
+   "gain": 1
+  },
+  "save/parried-v7": {
+   "file": "save/parried-v7.c13a4b3538.mp3",
+   "hash": "c13a4b3538",
+   "rate": 48000,
+   "samples": 8304,
+   "channels": 1,
+   "gain": 1
+  },
+  "shot/p100-v0": {
+   "file": "shot/p100-v0.c1d39eb600.mp3",
+   "hash": "c1d39eb600",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.2182716204195607
+  },
+  "shot/p100-v1": {
+   "file": "shot/p100-v1.cb3c90ae75.mp3",
+   "hash": "cb3c90ae75",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.2435718458525988
+  },
+  "shot/p100-v2": {
+   "file": "shot/p100-v2.84a668e56a.mp3",
+   "hash": "84a668e56a",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.2816339123005769
+  },
+  "shot/p100-v3": {
+   "file": "shot/p100-v3.6ef62d540e.mp3",
+   "hash": "6ef62d540e",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.168188391899576
+  },
+  "shot/p100-v4": {
+   "file": "shot/p100-v4.fd41ce7683.mp3",
+   "hash": "fd41ce7683",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.2808401973880068
+  },
+  "shot/p100-v5": {
+   "file": "shot/p100-v5.2893829999.mp3",
+   "hash": "2893829999",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.2372985178110552
+  },
+  "shot/p100-v6": {
+   "file": "shot/p100-v6.51aa4010ca.mp3",
+   "hash": "51aa4010ca",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.2457903550595653
+  },
+  "shot/p100-v7": {
+   "file": "shot/p100-v7.d27f240121.mp3",
+   "hash": "d27f240121",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.2620397976466589
+  },
+  "shot/p70-v0": {
+   "file": "shot/p70-v0.dd5e335470.mp3",
+   "hash": "dd5e335470",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.108627173365379
+  },
+  "shot/p70-v1": {
+   "file": "shot/p70-v1.28b47dba67.mp3",
+   "hash": "28b47dba67",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.1317225135102564
+  },
+  "shot/p70-v2": {
+   "file": "shot/p70-v2.278107604a.mp3",
+   "hash": "278107604a",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.1663159545587034
+  },
+  "shot/p70-v3": {
+   "file": "shot/p70-v3.543049638e.mp3",
+   "hash": "543049638e",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.063051515696
+  },
+  "shot/p70-v4": {
+   "file": "shot/p70-v4.3d3733bf11.mp3",
+   "hash": "3d3733bf11",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.1655645711081368
+  },
+  "shot/p70-v5": {
+   "file": "shot/p70-v5.7667d6d12f.mp3",
+   "hash": "7667d6d12f",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.125941714461969
+  },
+  "shot/p70-v6": {
+   "file": "shot/p70-v6.387d0aec91.mp3",
+   "hash": "387d0aec91",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.1337077131076736
+  },
+  "shot/p70-v7": {
+   "file": "shot/p70-v7.3f127cfcea.mp3",
+   "hash": "3f127cfcea",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.1499718743927625
+  },
+  "shot/p80-v0": {
+   "file": "shot/p80-v0.f2d079fdd3.mp3",
+   "hash": "f2d079fdd3",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.1451754034781942
+  },
+  "shot/p80-v1": {
+   "file": "shot/p80-v1.782819a22e.mp3",
+   "hash": "782819a22e",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.1690064352385852
+  },
+  "shot/p80-v2": {
+   "file": "shot/p80-v2.2ad6cadf54.mp3",
+   "hash": "2ad6cadf54",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.2047555981850138
+  },
+  "shot/p80-v3": {
+   "file": "shot/p80-v3.3d29180d89.mp3",
+   "hash": "3d29180d89",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.0980971005498146
+  },
+  "shot/p80-v4": {
+   "file": "shot/p80-v4.ae9c9081e3.mp3",
+   "hash": "ae9c9081e3",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.2039897393207162
+  },
+  "shot/p80-v5": {
+   "file": "shot/p80-v5.f9ae29842b.mp3",
+   "hash": "f9ae29842b",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.1630605678169095
+  },
+  "shot/p80-v6": {
+   "file": "shot/p80-v6.6e1cab8991.mp3",
+   "hash": "6e1cab8991",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.1710689992320782
+  },
+  "shot/p80-v7": {
+   "file": "shot/p80-v7.8c4a0b8616.mp3",
+   "hash": "8c4a0b8616",
+   "rate": 48000,
+   "samples": 9696,
+   "channels": 1,
+   "gain": 1.1873433784562715
+  },
+  "sting/highlights-v0": {
+   "file": "sting/highlights-v0.4a0753b4d8.mp3",
+   "hash": "4a0753b4d8",
+   "rate": 48000,
+   "samples": 54145,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/highlights-v1": {
+   "file": "sting/highlights-v1.4a0753b4d8.mp3",
+   "hash": "4a0753b4d8",
+   "rate": 48000,
+   "samples": 54145,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/highlights-v2": {
+   "file": "sting/highlights-v2.4a0753b4d8.mp3",
+   "hash": "4a0753b4d8",
+   "rate": 48000,
+   "samples": 54145,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/highlights-v3": {
+   "file": "sting/highlights-v3.4a0753b4d8.mp3",
+   "hash": "4a0753b4d8",
+   "rate": 48000,
+   "samples": 54145,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/highlights-v4": {
+   "file": "sting/highlights-v4.4a0753b4d8.mp3",
+   "hash": "4a0753b4d8",
+   "rate": 48000,
+   "samples": 54145,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/highlights-v5": {
+   "file": "sting/highlights-v5.4a0753b4d8.mp3",
+   "hash": "4a0753b4d8",
+   "rate": 48000,
+   "samples": 54145,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/highlights-v6": {
+   "file": "sting/highlights-v6.4a0753b4d8.mp3",
+   "hash": "4a0753b4d8",
+   "rate": 48000,
+   "samples": 54145,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/highlights-v7": {
+   "file": "sting/highlights-v7.4a0753b4d8.mp3",
+   "hash": "4a0753b4d8",
+   "rate": 48000,
+   "samples": 54145,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/replay-v0": {
+   "file": "sting/replay-v0.7bddb4ebe4.mp3",
+   "hash": "7bddb4ebe4",
+   "rate": 48000,
+   "samples": 62305,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/replay-v1": {
+   "file": "sting/replay-v1.7bddb4ebe4.mp3",
+   "hash": "7bddb4ebe4",
+   "rate": 48000,
+   "samples": 62305,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/replay-v2": {
+   "file": "sting/replay-v2.7bddb4ebe4.mp3",
+   "hash": "7bddb4ebe4",
+   "rate": 48000,
+   "samples": 62305,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/replay-v3": {
+   "file": "sting/replay-v3.7bddb4ebe4.mp3",
+   "hash": "7bddb4ebe4",
+   "rate": 48000,
+   "samples": 62305,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/replay-v4": {
+   "file": "sting/replay-v4.7bddb4ebe4.mp3",
+   "hash": "7bddb4ebe4",
+   "rate": 48000,
+   "samples": 62305,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/replay-v5": {
+   "file": "sting/replay-v5.7bddb4ebe4.mp3",
+   "hash": "7bddb4ebe4",
+   "rate": 48000,
+   "samples": 62305,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/replay-v6": {
+   "file": "sting/replay-v6.7bddb4ebe4.mp3",
+   "hash": "7bddb4ebe4",
+   "rate": 48000,
+   "samples": 62305,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/replay-v7": {
+   "file": "sting/replay-v7.7bddb4ebe4.mp3",
+   "hash": "7bddb4ebe4",
+   "rate": 48000,
+   "samples": 62305,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/show-v0": {
+   "file": "sting/show-v0.4c89545be0.mp3",
+   "hash": "4c89545be0",
+   "rate": 48000,
+   "samples": 64705,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/show-v1": {
+   "file": "sting/show-v1.4c89545be0.mp3",
+   "hash": "4c89545be0",
+   "rate": 48000,
+   "samples": 64705,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/show-v2": {
+   "file": "sting/show-v2.4c89545be0.mp3",
+   "hash": "4c89545be0",
+   "rate": 48000,
+   "samples": 64705,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/show-v3": {
+   "file": "sting/show-v3.4c89545be0.mp3",
+   "hash": "4c89545be0",
+   "rate": 48000,
+   "samples": 64705,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/show-v4": {
+   "file": "sting/show-v4.4c89545be0.mp3",
+   "hash": "4c89545be0",
+   "rate": 48000,
+   "samples": 64705,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/show-v5": {
+   "file": "sting/show-v5.4c89545be0.mp3",
+   "hash": "4c89545be0",
+   "rate": 48000,
+   "samples": 64705,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/show-v6": {
+   "file": "sting/show-v6.4c89545be0.mp3",
+   "hash": "4c89545be0",
+   "rate": 48000,
+   "samples": 64705,
+   "channels": 1,
+   "gain": 1
+  },
+  "sting/show-v7": {
+   "file": "sting/show-v7.4c89545be0.mp3",
+   "hash": "4c89545be0",
+   "rate": 48000,
+   "samples": 64705,
+   "channels": 1,
+   "gain": 1
+  },
+  "sub/v0": {
+   "file": "sub/v0.886fcd7996.mp3",
+   "hash": "886fcd7996",
+   "rate": 48000,
+   "samples": 35280,
+   "channels": 1,
+   "gain": 1
+  },
+  "sub/v1": {
+   "file": "sub/v1.1c527c95df.mp3",
+   "hash": "1c527c95df",
+   "rate": 48000,
+   "samples": 35280,
+   "channels": 1,
+   "gain": 1
+  },
+  "sub/v2": {
+   "file": "sub/v2.202c285283.mp3",
+   "hash": "202c285283",
+   "rate": 48000,
+   "samples": 35280,
+   "channels": 1,
+   "gain": 1
+  },
+  "sub/v3": {
+   "file": "sub/v3.8e30a048f0.mp3",
+   "hash": "8e30a048f0",
+   "rate": 48000,
+   "samples": 35280,
+   "channels": 1,
+   "gain": 1
+  },
+  "sub/v4": {
+   "file": "sub/v4.4cd57198bc.mp3",
+   "hash": "4cd57198bc",
+   "rate": 48000,
+   "samples": 35280,
+   "channels": 1,
+   "gain": 1
+  },
+  "sub/v5": {
+   "file": "sub/v5.46787030a4.mp3",
+   "hash": "46787030a4",
+   "rate": 48000,
+   "samples": 35280,
+   "channels": 1,
+   "gain": 1
+  },
+  "sub/v6": {
+   "file": "sub/v6.4ea8f857d8.mp3",
+   "hash": "4ea8f857d8",
+   "rate": 48000,
+   "samples": 35280,
+   "channels": 1,
+   "gain": 1
+  },
+  "sub/v7": {
+   "file": "sub/v7.84a15fbbb6.mp3",
+   "hash": "84a15fbbb6",
+   "rate": 48000,
+   "samples": 35280,
+   "channels": 1,
+   "gain": 1
+  },
+  "swish/v0": {
+   "file": "swish/v0.520f1931a7.mp3",
+   "hash": "520f1931a7",
+   "rate": 48000,
+   "samples": 13441,
+   "channels": 1,
+   "gain": 1
+  },
+  "swish/v1": {
+   "file": "swish/v1.634d73695c.mp3",
+   "hash": "634d73695c",
+   "rate": 48000,
+   "samples": 13441,
+   "channels": 1,
+   "gain": 1
+  },
+  "swish/v2": {
+   "file": "swish/v2.d4e4bc3a66.mp3",
+   "hash": "d4e4bc3a66",
+   "rate": 48000,
+   "samples": 13441,
+   "channels": 1,
+   "gain": 1
+  },
+  "swish/v3": {
+   "file": "swish/v3.0065768576.mp3",
+   "hash": "0065768576",
+   "rate": 48000,
+   "samples": 13441,
+   "channels": 1,
+   "gain": 1
+  },
+  "swish/v4": {
+   "file": "swish/v4.c388f4bb7e.mp3",
+   "hash": "c388f4bb7e",
+   "rate": 48000,
+   "samples": 13441,
+   "channels": 1,
+   "gain": 1
+  },
+  "swish/v5": {
+   "file": "swish/v5.71ac6c6c2d.mp3",
+   "hash": "71ac6c6c2d",
+   "rate": 48000,
+   "samples": 13441,
+   "channels": 1,
+   "gain": 1
+  },
+  "swish/v6": {
+   "file": "swish/v6.23c0d47378.mp3",
+   "hash": "23c0d47378",
+   "rate": 48000,
+   "samples": 13441,
+   "channels": 1,
+   "gain": 1
+  },
+  "swish/v7": {
+   "file": "swish/v7.f048e722f7.mp3",
+   "hash": "f048e722f7",
+   "rate": 48000,
+   "samples": 13441,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/full_time-v0": {
+   "file": "whistle/full_time-v0.10a192f75d.mp3",
+   "hash": "10a192f75d",
+   "rate": 48000,
+   "samples": 89280,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/full_time-v1": {
+   "file": "whistle/full_time-v1.7c2e2805e4.mp3",
+   "hash": "7c2e2805e4",
+   "rate": 48000,
+   "samples": 89280,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/full_time-v2": {
+   "file": "whistle/full_time-v2.d07a0d7671.mp3",
+   "hash": "d07a0d7671",
+   "rate": 48000,
+   "samples": 89280,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/full_time-v3": {
+   "file": "whistle/full_time-v3.fd98342c8b.mp3",
+   "hash": "fd98342c8b",
+   "rate": 48000,
+   "samples": 89280,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/full_time-v4": {
+   "file": "whistle/full_time-v4.f56d007aa6.mp3",
+   "hash": "f56d007aa6",
+   "rate": 48000,
+   "samples": 89280,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/full_time-v5": {
+   "file": "whistle/full_time-v5.b2da579219.mp3",
+   "hash": "b2da579219",
+   "rate": 48000,
+   "samples": 89280,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/full_time-v6": {
+   "file": "whistle/full_time-v6.4491605186.mp3",
+   "hash": "4491605186",
+   "rate": 48000,
+   "samples": 89280,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/full_time-v7": {
+   "file": "whistle/full_time-v7.29851d26f0.mp3",
+   "hash": "29851d26f0",
+   "rate": 48000,
+   "samples": 89280,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/long-v0": {
+   "file": "whistle/long-v0.7587837bdb.mp3",
+   "hash": "7587837bdb",
+   "rate": 48000,
+   "samples": 50880,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/long-v1": {
+   "file": "whistle/long-v1.18939975c0.mp3",
+   "hash": "18939975c0",
+   "rate": 48000,
+   "samples": 50880,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/long-v2": {
+   "file": "whistle/long-v2.d524a89ec2.mp3",
+   "hash": "d524a89ec2",
+   "rate": 48000,
+   "samples": 50880,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/long-v3": {
+   "file": "whistle/long-v3.c5a81fbbfd.mp3",
+   "hash": "c5a81fbbfd",
+   "rate": 48000,
+   "samples": 50880,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/long-v4": {
+   "file": "whistle/long-v4.01ef6cc456.mp3",
+   "hash": "01ef6cc456",
+   "rate": 48000,
+   "samples": 50880,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/long-v5": {
+   "file": "whistle/long-v5.1fa6f8019c.mp3",
+   "hash": "1fa6f8019c",
+   "rate": 48000,
+   "samples": 50880,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/long-v6": {
+   "file": "whistle/long-v6.0c6f381dd6.mp3",
+   "hash": "0c6f381dd6",
+   "rate": 48000,
+   "samples": 50880,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/long-v7": {
+   "file": "whistle/long-v7.7dba432b36.mp3",
+   "hash": "7dba432b36",
+   "rate": 48000,
+   "samples": 50880,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/short-v0": {
+   "file": "whistle/short-v0.fa56e4664b.mp3",
+   "hash": "fa56e4664b",
+   "rate": 48000,
+   "samples": 16321,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/short-v1": {
+   "file": "whistle/short-v1.af6ff4c63f.mp3",
+   "hash": "af6ff4c63f",
+   "rate": 48000,
+   "samples": 16321,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/short-v2": {
+   "file": "whistle/short-v2.2d2226dbe0.mp3",
+   "hash": "2d2226dbe0",
+   "rate": 48000,
+   "samples": 16321,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/short-v3": {
+   "file": "whistle/short-v3.be0aa425d8.mp3",
+   "hash": "be0aa425d8",
+   "rate": 48000,
+   "samples": 16321,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/short-v4": {
+   "file": "whistle/short-v4.46d6f85a22.mp3",
+   "hash": "46d6f85a22",
+   "rate": 48000,
+   "samples": 16321,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/short-v5": {
+   "file": "whistle/short-v5.1d3433b047.mp3",
+   "hash": "1d3433b047",
+   "rate": 48000,
+   "samples": 16321,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/short-v6": {
+   "file": "whistle/short-v6.2ce7cdf5d7.mp3",
+   "hash": "2ce7cdf5d7",
+   "rate": 48000,
+   "samples": 16321,
+   "channels": 1,
+   "gain": 1
+  },
+  "whistle/short-v7": {
+   "file": "whistle/short-v7.54af39f5ac.mp3",
+   "hash": "54af39f5ac",
+   "rate": 48000,
+   "samples": 16321,
+   "channels": 1,
+   "gain": 1
+  },
+  "whoosh/v0": {
+   "file": "whoosh/v0.76f09f687b.mp3",
+   "hash": "76f09f687b",
+   "rate": 48000,
+   "samples": 40801,
+   "channels": 1,
+   "gain": 1
+  },
+  "whoosh/v1": {
+   "file": "whoosh/v1.1ce242e014.mp3",
+   "hash": "1ce242e014",
+   "rate": 48000,
+   "samples": 40801,
+   "channels": 1,
+   "gain": 1
+  },
+  "whoosh/v2": {
+   "file": "whoosh/v2.1690012589.mp3",
+   "hash": "1690012589",
+   "rate": 48000,
+   "samples": 40801,
+   "channels": 1,
+   "gain": 1
+  },
+  "whoosh/v3": {
+   "file": "whoosh/v3.cbe6d5ebf1.mp3",
+   "hash": "cbe6d5ebf1",
+   "rate": 48000,
+   "samples": 40801,
+   "channels": 1,
+   "gain": 1
+  },
+  "whoosh/v4": {
+   "file": "whoosh/v4.a1b8563570.mp3",
+   "hash": "a1b8563570",
+   "rate": 48000,
+   "samples": 40801,
+   "channels": 1,
+   "gain": 1
+  },
+  "whoosh/v5": {
+   "file": "whoosh/v5.bf400c68fc.mp3",
+   "hash": "bf400c68fc",
+   "rate": 48000,
+   "samples": 40801,
+   "channels": 1,
+   "gain": 1
+  },
+  "whoosh/v6": {
+   "file": "whoosh/v6.e87b73e770.mp3",
+   "hash": "e87b73e770",
+   "rate": 48000,
+   "samples": 40801,
+   "channels": 1,
+   "gain": 1
+  },
+  "whoosh/v7": {
+   "file": "whoosh/v7.eca9f7bc89.mp3",
+   "hash": "eca9f7bc89",
+   "rate": 48000,
+   "samples": 40801,
+   "channels": 1,
+   "gain": 1
+  }
+ }
+}

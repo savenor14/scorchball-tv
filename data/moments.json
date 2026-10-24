@@ -1,0 +1,45 @@
+{
+  "_comment": "MOMENTS (Milestone 5¾; docs/tasks.md, docs/channel.md §25): what a viewer collects for each kind of moment they watched live while the tab showed, kept in their browser, never a sim input. kinds: one moment each, levelling up through steps (counts; the first step is 1), in groups for the AUDIENCE pane's MOMENTS tab; name on the wall, seen and first on its page and the notice; byTeam the counts by team on its page (goals by the scoring team; whole matches by both teams, and wins). Stops (Tom, 2026-10-13): every tackle and block seen (STATS' BLOCKS, STEALS and TACKLES, both teams: the Quell's stat), about 76 a match; stopsMatch, a whole match with that many or more, a secret (about 1 in 60). The steps were set from npm run moments (Tom, 2026-10-12). short: the first step's row on its page, and row the name in the others' (25 MATCHES), where the usual words won't keep to one line. secrets: once and done (Tom), shown as ? until found; how says what it was. places: what SEEN IT ALL needs opened at least once, as the channel names them: SIDE:<tab>, <pane title>:<tab>, CARD:PLAYER, CARD:TEAM:<tab>, LEVELS, BROADCAST. A tab renamed must be renamed here too, or the secret can't be found.",
+  "groups": ["IN A MATCH", "ON AIR", "HABITS"],
+  "kinds": [
+    { "id": "goal", "group": "IN A MATCH", "name": "GOALS", "seen": "GOALS SEEN", "first": "FIRST GOAL SEEN", "steps": [1, 25, 50, 100, 250, 500], "byTeam": "goals" },
+    { "id": "scorcher", "group": "IN A MATCH", "name": "SCORCHERS", "seen": "SCORCHERS SEEN", "first": "FIRST SCORCHER SEEN", "steps": [1, 10, 25, 50, 100] },
+    { "id": "burn", "group": "IN A MATCH", "name": "BURNS", "seen": "BURNS SEEN", "first": "FIRST BURN SEEN", "steps": [1, 10, 50, 100, 250] },
+    { "id": "stop", "group": "IN A MATCH", "name": "STOPS", "seen": "STOPS SEEN", "first": "FIRST STOP SEEN", "steps": [1, 100, 500, 1000, 2500, 5000] },
+    { "id": "hat_trick", "group": "IN A MATCH", "name": "HAT-TRICKS", "seen": "HAT-TRICKS SEEN", "first": "FIRST HAT-TRICK SEEN", "steps": [1, 5, 10, 25, 50] },
+    { "id": "first_minute", "group": "IN A MATCH", "name": "EARLY GOALS", "seen": "EARLY GOALS SEEN", "first": "AN EARLY GOAL", "short": "EARLY GOAL", "steps": [1, 3, 5, 10] },
+    { "id": "clean_sheet", "group": "IN A MATCH", "name": "CLEAN SHEETS", "seen": "CLEAN SHEETS SEEN", "first": "FIRST CLEAN SHEET", "steps": [1, 3, 5, 10] },
+    { "id": "big_win", "group": "IN A MATCH", "name": "BIG WINS", "seen": "BIG WINS SEEN", "first": "FIRST BIG WIN", "steps": [1, 3, 5, 10] },
+    { "id": "record", "group": "ON AIR", "name": "RECORDS", "seen": "RECORDS SEEN BROKEN", "first": "A RECORD BROKEN LIVE", "short": "FIRST RECORD", "steps": [1, 3, 5, 10] },
+    { "id": "interview", "group": "ON AIR", "name": "INTERVIEWS", "seen": "INTERVIEWS SEEN", "first": "FIRST INTERVIEW", "steps": [1, 5, 25, 50, 100] },
+    { "id": "ad_break", "group": "ON AIR", "name": "AD BREAKS", "seen": "AD BREAKS SAT THROUGH", "first": "FIRST AD BREAK", "steps": [1, 10, 50, 100, 250, 500] },
+    { "id": "whole_match", "group": "HABITS", "name": "WHOLE MATCHES", "seen": "WHOLE MATCHES", "first": "FIRST WHOLE MATCH", "short": "FIRST MATCH", "row": "MATCHES", "steps": [1, 5, 25, 50, 100], "byTeam": "matches" },
+    { "id": "day", "group": "HABITS", "name": "DAYS TUNED IN", "seen": "DAYS TUNED IN", "first": "FIRST DAY TUNED IN", "short": "FIRST DAY", "steps": [1, 5, 10, 25, 50, 100] }
+  ],
+  "secrets": [
+    { "id": "nil_nil", "name": "A 0–0", "how": "A whole 0–0, live" },
+    { "id": "last_minute", "name": "LAST-MINUTE WINNER", "how": "The winner in the last minute" },
+    { "id": "hundred_stops", "name": "100-STOP MATCH", "how": "A whole match with 100 stops or more" },
+    { "id": "golden_goal", "name": "GOLDEN GOAL", "how": "A golden goal, live" },
+    { "id": "every_team", "name": "EVERY TEAM", "how": "All eight teams in one day" },
+    { "id": "season_ends", "name": "OPENING TO CLOSING", "how": "A season's opening and its sign-off" },
+    { "id": "seven_days", "name": "SEVEN IN A ROW", "how": "Seven days in a row" },
+    { "id": "both_ways", "name": "BOTH WAYS", "how": "A whole match in Full and one in Broadcast" },
+    { "id": "seen_it_all", "name": "SEEN IT ALL", "how": "Every pane, tab and card" }
+  ],
+  "lastMinuteWinnerMinutes": 1,
+  "firstMinuteGoalMinutes": 1,
+  "bigWinMargin": 5,
+  "stopsMatch": 100,
+  "sevenDays": 7,
+  "places": [
+    "SIDE:STATS", "SIDE:TABLE", "SIDE:TOP", "SIDE:WEEK",
+    "SCHEDULE:ALL", "SCHEDULE:MATCHES",
+    "RULEBOOK:GAME", "RULEBOOK:HEAT", "RULEBOOK:GOALS", "RULEBOOK:LEAGUE",
+    "CHRONICLE:LATEST", "CHRONICLE:HISTORY", "CHRONICLE:RECORDS", "CHRONICLE:MONEY",
+    "AUDIENCE:MOMENTS", "AUDIENCE:FEEDBACK",
+    "INFO:ABOUT", "INFO:GUIDE", "INFO:UPDATES",
+    "CARD:PLAYER", "CARD:TEAM:NOW", "CARD:TEAM:HISTORY",
+    "LEVELS", "BROADCAST"
+  ]
+}

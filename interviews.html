@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Interviews</title>
+  <style>
+    @font-face { font-family: "VT323"; src: url("assets/fonts/VT323.ttf") format("truetype"); }
+    body { margin: 0; padding: 16px 20px 40px; background: #0b0c10; color: #f2efe6; font: 20px/1.3 "VT323", monospace; }
+    h1 { margin: 0 0 4px; font-size: 30px; color: #ffb627; }
+    h2 { margin: 18px 0 6px; font-size: 24px; color: #8fd3ff; font-weight: 400; }
+    p { margin: 6px 0; max-width: 1100px; }
+    .muted { color: #9aa1b2; }
+    table { border-collapse: collapse; margin-top: 4px; }
+    th, td { text-align: left; padding: 2px 14px 2px 0; vertical-align: top; }
+    th { color: #8fd3ff; font-weight: 400; }
+    td.num { text-align: right; }
+    tr.muted td { color: #6b7180; }
+    .count { display: inline-block; min-width: 2.5em; text-align: right; color: #ffb627; }
+    .interview { margin: 6px 0; max-width: 1100px; }
+    .interview .head { color: #9aa1b2; }
+    .interview .head b { color: #f2efe6; font-weight: 400; }
+    .interview .said { padding-left: 16px; }
+    .interview.canned .said { color: #9aa1b2; }
+    .tag { margin-left: 10px; color: #7ee081; }
+    select { font: inherit; background: #1a1d26; color: #f2efe6; border: 1px solid #2c3345; }
+  </style>
+</head>
+<body>
+  <h1>Interviews (Task 245)</h1>
+  <p class="muted">The player of the match's interview with Talk that remembers: when the facts module (src/chronicle/facts.js) has something about them or their team that fits the result, a reaction, then the fact (each its own clip, in their regional voice); otherwise one of the canned quotes, as today. The words are data/interviews.json's reactions and facts. Nothing here is voiced yet. ?seasons=N and ?seed=S for another league.</p>
+  <div id="sheet"><p class="muted">Fast-forwarding a league…</p></div>
+  <script type="module" src="src/channel/interviewsSheet.js"></script>
+</body>
+</html>

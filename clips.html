@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clips</title>
+  <style>
+    @font-face { font-family: "VT323"; src: url("assets/fonts/VT323.ttf") format("truetype"); }
+    body { margin: 0; padding: 12px 16px 40px; background: #0b0c10; color: #f2efe6; font: 20px/1.3 "VT323", monospace; }
+    h1 { margin: 0 0 4px; font-size: 30px; color: #ff8f1c; }
+    p { margin: 6px 0; max-width: 1100px; }
+    .muted { color: #9aa1b2; }
+    code { color: #f2efe6; }
+    button, select, input { font: inherit; background: #151924; color: #f2efe6; border: 1px solid #2c3345; padding: 2px 10px; }
+    button { cursor: pointer; }
+    .bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 8px 0; }
+    #moments { max-height: 160px; overflow: auto; border: 1px solid #2c3345; max-width: 1100px; }
+    #moments div { padding: 1px 8px; cursor: pointer; white-space: nowrap; }
+    #moments div:hover { background: #151924; }
+    #moments div.on { color: #ff8f1c; }
+    #moments .k { color: #9aa1b2; display: inline-block; width: 60px; }
+    #status { min-height: 26px; color: #ff8f1c; }
+    body.clean { padding: 0; }
+    body.clean #controls { display: none; }
+
+    /* The tall picture OBS records: the score above, the channel following the ball, the caption and the address below. */
+    #box { position: relative; overflow: hidden; background: #151924; --u: 1px; }
+    #top, #bottom { position: absolute; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: calc(var(--u) * 6); background: #151924; z-index: 2; }
+    #top { top: 0; }
+    #bottom { bottom: 0; }
+    #view { position: absolute; left: 0; right: 0; overflow: hidden; background: #000; }
+    #frame { position: absolute; left: 0; top: 0; border: 0; transform-origin: 0 0; }
+    .sb { display: flex; align-items: stretch; height: calc(var(--u) * 46); font-size: calc(var(--u) * 38); line-height: 1; box-shadow: 0 0 0 calc(var(--u) * 2) #2c3345; background: #151924; }
+    .sb > div { display: flex; align-items: center; padding: 0 calc(var(--u) * 12); gap: calc(var(--u) * 8); }
+    .sb .bug { color: #fff; font-weight: 700; }
+    .sb .bug.live { background: #e8392f; }
+    .sb .bug.replay { background: #3a7bd5; }
+    .sb .bug.none { display: none; }
+    .sb .kit { width: calc(var(--u) * 10); height: calc(var(--u) * 26); }
+    .sb .score { font-weight: 700; }
+    .sb .clock { color: #f2efe6; }
+    .cap { min-height: calc(var(--u) * 70); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 calc(var(--u) * 20); }
+    .cap .t { color: #ff8f1c; font-size: calc(var(--u) * 40); line-height: 1; }
+    .cap .d { color: #f2efe6; font-size: calc(var(--u) * 30); line-height: 1.1; }
+    .site { color: #ff8f1c; font-size: calc(var(--u) * 34); letter-spacing: calc(var(--u) * 2); }
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <h1>Clips: the vertical camera</h1>
+    <p class="muted">The real channel in a tall frame, following the ball, for Shorts and TikTok (getting the word out, <code>docs/launch-plan.md</code>). Record it with OBS (a Window Capture of this browser, cropped to the tall box, with the desktop's sound). <code>npm.cmd run clip -- --list</code> lists the moments worth a clip (refresh after); pick one and LOAD (it starts 20 s early; the click turns the sound on). Keys (they work after clicking the picture too, and never reach the channel's own): <b>arrows</b> nudge the framing, <b>K</b> keeps the camera still (the arrows move it), <b>F</b> back to following the ball, <b>X</b> hides these controls (and shows them again).</p>
+    <div id="moments"><div class="muted">No list yet: <code>npm.cmd run clip -- --list</code>.</div></div>
+    <div class="bar">
+      <label>Moment <input id="at" size="22" placeholder="2026-10-16T21:26:36Z"></label>
+      <label>Layout <select id="layout"><option value="full">Full</option><option value="broadcast">Broadcast</option></select></label>
+      <label>Zoom <select id="zoom"><option value="200">A · about the pitch's height</option><option value="140">B · closer</option></select></label>
+      <label>Size <select id="size"><option value="540">540 × 960</option><option value="720">720 × 1280</option></select></label>
+      <button id="load">LOAD</button>
+    </div>
+    <div id="status"></div>
+  </div>
+  <div id="box">
+    <div id="top"><div class="sb"><div class="bug none" id="v-bug"></div><div><span class="kit" id="v-hk"></span><span id="v-home">---</span></div><div class="score" id="v-score">-</div><div><span id="v-away">---</span><span class="kit" id="v-ak"></span></div><div class="clock" id="v-clock"></div></div></div>
+    <div id="view"><iframe id="frame" title="The channel" allow="autoplay"></iframe></div>
+    <div id="bottom"><div class="cap"><div class="t" id="v-ct"></div><div class="d" id="v-cd"></div></div><div class="site">SCORCHBALL.TV</div></div>
+  </div>
+  <script type="module">
+    // Dev page: the vertical camera (getting the word out; Tom, 2026-10-22: OBS records, the framing follows the play).
+    // The channel in a frame at the scale that shows `zoom` stage pixels of height, panned so the ball (scorchballBall,
+    // shared on the dev server only) stays in the middle, eased; the score and the caption read from the channel and
+    // shown in bands above and below, the channel's own plates hidden inside the frame.
+    import { STAGE_WIDTH, STAGE_HEIGHT } from './src/channel/stage.js';
+    import { PITCH } from './src/channel/pitch.js';
+    import { TOUR_KEY } from './src/channel/tour.js';
+    import { followBounds, followStep } from './src/channel/followCam.js';
+
+    const LEAD_MS = 20_000;
+    /** How quickly the camera catches up with the ball, seconds (across, and up and down). */
+    const EASE = { x: 0.45, y: 0.7 };
+    const NUDGE = 12;
+    /** The channel's plates and panes, hidden inside the frame (the bands show the score and the caption). */
+    const HIDE = '#topbar, #caption, #side-tabs, #side, #buttons, #pane, #ticker, #picker, #levels, #update-ready, #replay, #devbox { visibility: hidden !important; }';
+
+    const $ = (/** @type {string} */ id) => /** @type {any} */ (document.getElementById(id));
+    const box = $('box');
+    const view = $('view');
+    const frame = $('frame');
+    const say = (/** @type {string} */ text) => { $('status').textContent = text; };
+    try { localStorage.setItem(TOUR_KEY, 'skipped'); } catch { /* the welcome is dismissed below anyway */ }
+
+    // A moment from the link (the desk's TODAY: clips.html?at=…).
+    const linked = new URLSearchParams(location.search).get('at');
+    if (linked && !Number.isNaN(Date.parse(linked))) $('at').value = linked;
+    // The moments, as npm run clip -- --list wrote them.
+    try {
+      const res = await fetch('output/clips/moments.json', { cache: 'no-store' });
+      if (res.ok) {
+        const { moments } = await res.json();
+        $('moments').replaceChildren(...moments.map((/** @type {any} */ m) => {
+          const row = document.createElement('div');
+          row.innerHTML = `<span class="k">${m.seconds} s</span>`;
+          row.append(m.label);
+          row.onclick = () => {
+            [...$('moments').children].forEach((r) => r.classList.toggle('on', r === row));
+            $('at').value = `${new Date(m.moment).toISOString().slice(0, 19)}Z`;
+          };
+          return row;
+        }));
+      }
+    } catch { /* no list yet */ }
+
+    /** The box's layout: its size, the bands, the frame's scale. */
+    let lay = { W: 540, H: 960, top: 0, mid: 0, s: 1, V: 200 };
+    function layout() {
+      const W = Number($('size').value);
+      const H = Math.round((W * 16) / 9);
+      const u = W / 540;
+      const top = Math.round(110 * u);
+      const bottom = Math.round(170 * u);
+      const mid = H - top - bottom;
+      const V = Number($('zoom').value);
+      const s = mid / V;
+      Object.assign(box.style, { width: `${W}px`, height: `${H}px` });
+      box.style.setProperty('--u', `${u}px`);
+      $('top').style.height = `${top}px`;
+      $('bottom').style.height = `${bottom}px`;
+      Object.assign(view.style, { top: `${top}px`, height: `${mid}px` });
+      Object.assign(frame.style, { width: `${Math.round(STAGE_WIDTH * s)}px`, height: `${Math.round(STAGE_HEIGHT * s)}px` });
+      lay = { W, H, top, mid, s, V };
+    }
+    layout();
+    $('size').onchange = layout;
+    $('zoom').onchange = layout;
+
+    // The camera: its centre in stage px, the target it eases to, a nudge, held or following.
+    const cam = { x: STAGE_WIDTH / 2, y: STAGE_HEIGHT / 2, nudgeX: 0, nudgeY: 0, held: false };
+    let last = performance.now();
+    function tick() {
+      const now = performance.now();
+      const dt = Math.min(0.1, (now - last) / 1000);
+      last = now;
+      const win = frame.contentWindow;
+      const ball = win?.scorchballBall;
+      const halfW = lay.W / lay.s / 2;
+      const halfH = lay.V / 2;
+      // A ball not drawn for half a second: no match on screen (a card, the studio). Its stamp is the frame's own clock
+      // (each document counts from its own start), so it's compared with the frame's.
+      const fresh = ball && win.performance.now() - ball.at < 500 ? ball : null;
+      followStep(cam, fresh, followBounds($('layout').value, PITCH, { w: STAGE_WIDTH, h: STAGE_HEIGHT }), { w: halfW, h: halfH }, dt, EASE);
+      frame.style.transform = `translate(${Math.round(-(cam.x - halfW) * lay.s)}px, ${Math.round(-(cam.y - halfH) * lay.s)}px)`;
+      bands(frame.contentDocument);
+      requestAnimationFrame(tick);
+    }
+
+    /** The score and the caption, read from the channel. @param {Document | null} doc */
+    function bands(doc) {
+      if (!doc?.getElementById('score')) return;
+      const text = (/** @type {string} */ id) => doc.getElementById(id)?.textContent ?? '';
+      const bug = text('bug').trim();
+      $('v-bug').textContent = bug;
+      $('v-bug').className = `bug ${/^LIVE/.test(bug) ? 'live' : /REPLAY|HIGHLIGHTS|FINAL|FT/.test(bug) ? 'replay' : bug ? '' : 'none'}`;
+      $('v-home').textContent = text('home');
+      $('v-away').textContent = text('away');
+      $('v-score').textContent = text('score');
+      $('v-clock').textContent = `${text('period')} ${text('time')}`.trim();
+      $('v-hk').style.background = doc.getElementById('home-kit')?.style.background ?? '';
+      $('v-ak').style.background = doc.getElementById('away-kit')?.style.background ?? '';
+      const cap = doc.getElementById('caption');
+      const on = cap && !cap.hidden;
+      $('v-ct').textContent = on ? text('caption-title') : '';
+      $('v-cd').textContent = on ? text('caption-detail') : '';
+    }
+
+    $('load').onclick = () => {
+      const at = Date.parse($('at').value);
+      if (Number.isNaN(at)) return say('The moment must be a date-time, like 2026-10-16T21:26:36Z.');
+      const lay2 = $('layout').value === 'broadcast' ? '&layout=broadcast' : '';
+      frame.src = `index.html?at=${encodeURIComponent(new Date(at - LEAD_MS).toISOString())}${lay2}`;
+      say('Loading…');
+      const started = performance.now();
+      const ready = setInterval(() => {
+        const doc = frame.contentDocument;
+        if (performance.now() - started > 30_000) { clearInterval(ready); return say('The channel didn\'t start (the day\'s key missing? git pull).'); }
+        if (!doc?.querySelector('#buttons .icon-btn') || doc.getElementById('stage')?.hidden) return;
+        clearInterval(ready);
+        const style = doc.createElement('style');
+        style.textContent = HIDE;
+        doc.head.append(style);
+        [...doc.querySelectorAll('button')].find((x) => x.textContent.trim() === 'NO THANKS')?.click();
+        // Sound on (the frame may play it: the LOAD click and allow="autoplay").
+        doc.getElementById('sound-prompt')?.click();
+        say(`Playing from 20 s before the moment. ${$('zoom').selectedOptions[0].text}. X hides the controls.`);
+        // The camera's keys inside the frame too, ahead of the channel's own shortcuts (they'd never reach this page).
+        frame.contentWindow.addEventListener('keydown', onKey, true);
+      }, 300);
+    };
+
+    /**
+     * The camera's keys, chosen clear of the channel's (B, V, R, C, A, I, M, H, the digits, the backtick): the arrows
+     * nudge, K keeps the camera still, F follows the ball, X hides the controls. Caught first and kept from the channel.
+     * @param {KeyboardEvent} e
+     */
+    function onKey(e) {
+      if (e.target instanceof HTMLInputElement || e.ctrlKey || e.metaKey || e.altKey) return;
+      const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      if (k === 'x') document.body.classList.toggle('clean');
+      else if (k === 'k') { cam.held = !cam.held; say(cam.held ? 'Kept still: the arrows move the camera. F to follow again.' : 'Following the ball.'); }
+      else if (k === 'f') { Object.assign(cam, { held: false, nudgeX: 0, nudgeY: 0 }); say('Following the ball.'); }
+      else if (k.startsWith('Arrow')) {
+        const dx = k === 'ArrowLeft' ? -NUDGE : k === 'ArrowRight' ? NUDGE : 0;
+        const dy = k === 'ArrowUp' ? -NUDGE : k === 'ArrowDown' ? NUDGE : 0;
+        if (cam.held) { cam.x += dx; cam.y += dy; } else { cam.nudgeX += dx; cam.nudgeY += dy; }
+      } else return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }
+    addEventListener('keydown', onKey, true);
+    requestAnimationFrame(tick);
+  </script>
+</body>
+</html>

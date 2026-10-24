@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scorchball check</title>
+  <!-- The launch, Task 270 (docs/live.md §6): does this browser play the league exactly as Node does? Published (a
+       throwaway seed, never the live one); it compares with check.json, written by npm run publish. -->
+  <style>
+    @font-face { font-family: VT323; src: url(assets/fonts/VT323.ttf); }
+    :root { color-scheme: dark; }
+    body { margin: 0; padding: 24px 16px; background: #0f1116; color: #e8e4d8; font: 20px/1.4 VT323, monospace; }
+    h1 { font-size: 28px; color: #f5b335; margin: 0 0 12px; }
+    #verdict { font-size: 40px; margin: 16px 0; }
+    .pass { color: #6fd36f; } .fail { color: #ff6b5b; }
+    dl { display: grid; grid-template-columns: max-content 1fr; gap: 2px 16px; word-break: break-all; }
+    dt { color: #9a958a; }
+  </style>
+</head>
+<body>
+  <h1>SCORCHBALL · EVERY BROWSER ALIKE</h1>
+  <div id="verdict">Playing the check league…</div>
+  <dl id="facts"></dl>
+  <script type="module" src="src/checkPage.js"></script>
+</body>
+</html>
