@@ -89,6 +89,7 @@
       "A computer simulation decides every match and every season; the channel only shows what it decided. Everyone watching sees the same league at the same moment.",
       "The commentators, the studio presenters, and the players are AI voices made with ElevenLabs. The people they voice are fictional. The crowd, ball sounds, whistles, and jingles are synthesized as you watch.",
       "Scorchball TV is a hobby project built with Claude, Anthropic's AI. It's best watched full screen: F11 in most browsers, or Ctrl+Cmd+F on a Mac.",
+      "The code is on GitHub under the MIT licence: github.com/savenor14/scorchball-tv. How it was built: scorchball.tv/how-it-was-built.",
       "The lettering is VT323 by Peter Hull, under the SIL Open Font License 1.1.",
       "Scorchball.tv counts its viewers anonymously. Your moments stay in your browser; nothing about them is sent anywhere.",
       "Version {version} · scorchball.tv",
