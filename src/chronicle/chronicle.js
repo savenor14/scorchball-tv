@@ -33,7 +33,7 @@ export const statOf = (line, stat) => (stat === 'stops' ? line.tackles + line.bl
  * @property {number} season  The season it happened in (off-season moves carry the season just finished).
  * @property {'draft' | 'reserve' | 'call_up' | 'release' | 'signing' | 'retirement'} type
  * @property {string | null} teamId
- * @property {string} [reason]  release: roster, call_up, rights_expired, position, contract_end; call_up: better, short; retirement: retired, unsigned.
+ * @property {string} [reason]  release: roster, call_up, rights_expired, position, contract_end, upgrade; call_up: better, short; retirement: retired, unsigned.
  * @property {boolean} [byPlayer]  release (contract_end): the club wanted to keep them and they chose to go (Task 243).
  * @property {number} [round] @property {number} [pick]  draft only.
  *

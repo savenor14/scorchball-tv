@@ -53,7 +53,7 @@ The off-season is one night (the final on Sunday at 20:00, the new season at Mon
 | **AWARD RACE** | each award's leader and runner-up so far (the Ember Boot, the Blaze, the Compass, the Quell, the Ironclad, the Spark) | the regular season from mid-week, in place of a stats card |
 | **LAST SEASON** | last season's champions, Pennant, award winners and final table top four | the early season, in place of the thin stats cards (season 2 on) |
 | **ROLL OF HONOUR** | every season's champions and Pennant winners | any time from season 2; after the final |
-| **RECORDS WATCH** | a league record within reach this season (most goals, saves, a run) | the regular season, when one is close |
+| **RECORDS WATCH** | a league record within reach this season (most goals, saves, a run); in two halves (Tom's pick B, 2026-10-25): NEW RECORDS, a leader past the record with the mark beaten, and WITHIN REACH, the chases with how many still needed (level counts) | the regular season, when one is close or broken |
 | **SCORCHERS** (in place of STREAKS, Tom 2026-10-20) | the top two scorcher-scorers, then every team's scorchers for and against | the regular season |
 | **BIGGEST WINS** | this season's biggest margins and highest scores | the regular season |
 | **ROOKIES** | the best rookies so far (the rookie rule's first-season starters) | the regular season, in the Spark's spirit |

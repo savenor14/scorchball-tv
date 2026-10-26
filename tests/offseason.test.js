@@ -8,6 +8,7 @@ import { runOffseason } from '../src/sim/offseason.js';
 import { overall } from '../src/sim/players.js';
 import { createRng } from '../src/sim/rng.js';
 import { runSeason } from '../src/sim/season.js';
+import { seasonConfig } from '../src/sim/rules.js';
 
 const config = await loadConfigFromDisk();
 const { rules, positions } = config;
@@ -135,11 +136,13 @@ test('the lottery favours the worst team in line with its weight', () => {
 
 test('two draft rounds: every team picks in order, picks are recorded on the player', () => {
   const { league, seasons } = three;
-  for (const { report } of seasons) {
+  for (const { report, record } of seasons) {
     assert.equal(report.draft.length, 8 * rules.draft.rounds);
     assert.deepEqual(report.draft.map((p) => p.pick), Array.from({ length: 16 }, (_, i) => i + 1));
     assert.deepEqual(report.draft.slice(0, 8).map((p) => p.teamId), report.draftOrder);
-    assert.deepEqual(report.draft.slice(8).map((p) => p.teamId), report.draftOrder);
+    // The second round: the first round's order again, or the table in reverse from season 3's off-season (Tom, 2026-10-25).
+    const later = seasonConfig(config, record.season + 1).rules.draft.laterRounds;
+    assert.deepEqual(report.draft.slice(8).map((p) => p.teamId), later === 'table' ? [...record.table].reverse().map((r) => r.teamId) : report.draftOrder);
     for (const pick of report.draft) {
       const p = league.players[pick.playerId];
       assert.deepEqual(p.draft, { season: /** @type {any} */ (p.draft).season, round: pick.round, pick: pick.pick, teamId: pick.teamId });
@@ -283,10 +286,13 @@ test('the Kindling League: this draft\'s picks are never released, only sent dow
   const sent = off.filter((e) => e.type === 'reserve');
   // Fewer since contracts and the market (Tasks 231–232): deals ending leave rosters room for this draft's picks.
   assert.ok(sent.length >= 4, `sent down ${sent.length}`);
-  for (const e of sent) assert.equal(/** @type {any} */ (e.data).until, e.season + rules.reserves.rightsSeasons);
+  // The rights run from the draft: a pick sent down later (a free agent signed in his place, from season 3's off-season)
+  // keeps the same end.
+  for (const e of sent) assert.equal(/** @type {any} */ (e.data).until, /** @type {any} */ (league.players[/** @type {string} */ (e.playerId)].draft).season + rules.reserves.rightsSeasons);
   const up = off.filter((e) => e.type === 'call_up');
   assert.ok(up.length > 0);
-  for (const e of up) assert.ok(sent.some((s) => s.playerId === e.playerId && s.teamId === e.teamId && s.season < e.season), 'called up by the team that sent them down');
+  // The same off-season too, from season 3's: sent down for a free agent, then back up when the club is short.
+  for (const e of up) assert.ok(sent.some((s) => s.playerId === e.playerId && s.teamId === e.teamId && s.seq < e.seq), 'called up by the team that sent them down');
   // Rights end after rightsSeasons: released then, if never called up.
   const expired = off.filter((e) => e.type === 'release' && /** @type {any} */ (e.data).reason === 'rights_expired');
   assert.ok(expired.length > 0);
@@ -304,4 +310,23 @@ test('Task 201: no two active players share a surname, season after season', () 
     const active = Object.values(league.players).filter((p) => p.status === 'active');
     assert.equal(new Set(active.map((p) => p.lastName)).size, active.length, `season ${i + 1}`);
   }
+});
+
+test("from season 3's off-season (Tom, 2026-10-25): the draft's second round by the table, worst first, and free agency's upgrades", () => {
+  assert.equal(seasonConfig(config, 3).rules.draft.laterRounds, 'lottery');
+  assert.equal(seasonConfig(config, 3).rules.finances.upgradeMargin, 0);
+  assert.equal(seasonConfig(config, 4).rules.draft.laterRounds, 'table');
+  assert.ok(seasonConfig(config, 4).rules.finances.upgradeMargin > 0);
+  const { seasons, events, league } = run('upgrades', 6);
+  const upgrades = events.filter((e) => e.type === 'release' && /** @type {any} */ (e.data)?.reason === 'upgrade');
+  assert.ok(upgrades.every((e) => e.season >= 3), "no upgrade before season 3's off-season");
+  assert.ok(upgrades.length > 0, 'some upgrades in four off-seasons');
+  // Each upgrade: the same team signs someone at that position in the same off-season.
+  for (const e of upgrades) {
+    const out = league.players[/** @type {string} */ (e.playerId)];
+    const signing = events.find((s) => s.type === 'signing' && s.season === e.season && s.teamId === e.teamId && s.seq > e.seq);
+    assert.ok(signing, 'a signing follows the upgrade');
+    assert.equal(league.players[/** @type {string} */ (signing.playerId)].position, out.position);
+  }
+  for (const { report, record } of seasons.slice(2)) assert.deepEqual(report.draft.slice(8).map((p) => p.teamId), [...record.table].reverse().map((r) => r.teamId));
 });

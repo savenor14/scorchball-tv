@@ -343,7 +343,7 @@ const RULES_SCHEMA = obj({
     familiarity: num(0, 1), offerFloor: prob(), overMarket: obj({ roomShare: prob(), premium: num(0, 1), fromWage: int(0) }),
   }),
   finances: obj({
-    cap: int(1), minWage: int(1), wageAt60: num(1), wagePerPoint: num(1, 2), maxContractShare: prob(), rookieSeasons: int(1, 10),
+    cap: int(1), minWage: int(1), wageAt60: num(1), wagePerPoint: num(1, 2), maxContractShare: prob(), upgradeMargin: num(0, 50), rookieSeasons: int(1, 10),
     rookieScale: obj({ first: int(1), last: int(1) }),
     contractSeasons: arrayOf(obj({ maxAge: int(16, 99), min: int(1, 10), max: int(1, 10) }), { minLength: 1 }),
   }),
@@ -351,6 +351,7 @@ const RULES_SCHEMA = obj({
     rounds: int(1),
     extraProspects: int(0),
     lotteryWeights: arrayOf(num(0), { minLength: 1 }),
+    laterRounds: oneOf('lottery', 'table'),
     scoutingNoise: num(0),
     potentialWeight: prob(),
     needBonus: num(0, 50),

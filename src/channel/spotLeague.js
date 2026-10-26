@@ -3,7 +3,7 @@
 // league's ads share an end card with room for a call to action. spotArt.js puts these with the brands' (spotBrands.js).
 import { PALETTE } from './palette.js';
 import { sharpBlock, sharpBlockWidth, sharpText } from './sharpText.js';
-import { blockText, blockWidth, clamp01, ease, mix, mod, shade } from './sceneArt.js';
+import { blockText, blockWidth, clamp01, drawKitSwatch, ease, mix, mod, shade } from './sceneArt.js';
 import { drawSprite } from './pitch.js';
 import { FANS, FIRE, box, brand, crowd, endCard, fireball, hash, identBack, line, oval, small, sky, tiny } from './spotKit.js';
 
@@ -16,26 +16,26 @@ import { FANS, FIRE, box, brand, crowd, endCard, fireball, hash, identBack, line
  */
 
 /**
- * The finalists, centred: each name after a block of its kit colour, home first ("■ Gulls  v  ■ Storm").
+ * The finalists, centred: each name after its kit swatch (sceneArt.drawKitSwatch), home first, the v halfway between the
+ * home name and the away swatch (Tom, 2026-10-25: "■ Gulls  v  ■ Storm").
  * @param {CanvasRenderingContext2D} ctx @param {import('./spots.js').Finalist[]} teams @param {number} cx @param {number} y
  */
 const finalists = (ctx, [home, away], cx, y) => {
   ctx.font = '16px VT323';
-  const v = '  v  ';
   const w = (/** @type {string} */ s) => ctx.measureText(s).width;
-  const KIT = 9;
-  let x = Math.round(cx - (KIT * 2 + w(home.name) + w(v) + w(away.name)) / 2);
+  const KIT = 9; // the swatch (5 wide, its outline 7) and the gap to the name
+  const GAP = Math.round(w('  ')); // either side of the v
+  const vw = Math.round(w('v'));
+  let x = Math.round(cx - (KIT * 2 + w(home.name) + GAP * 2 + vw + w(away.name)) / 2);
   ctx.textAlign = 'left';
   ctx.textBaseline = 'middle';
-  for (const [team, after] of /** @type {const} */ ([[home, v], [away, '']])) {
-    ctx.fillStyle = '#f2efe6';
-    ctx.fillRect(x, y - 4, 6, 8);
-    ctx.fillStyle = team.colour;
-    ctx.fillRect(x + 1, y - 3, 4, 6);
-    x += KIT;
-    sharpText(ctx, team.name + after, x, y, { size: 16, colour: '#f2efe6', baseline: 'middle' });
-    x += w(team.name + after);
-  }
+  drawKitSwatch(ctx, x, y - 4, home, 5, 8);
+  sharpText(ctx, home.name, x + KIT, y, { size: 16, colour: '#f2efe6', baseline: 'middle' });
+  x = Math.round(x + KIT + w(home.name) + GAP);
+  sharpText(ctx, 'v', x, y, { size: 16, colour: '#f2efe6', baseline: 'middle' });
+  x += vw + GAP;
+  drawKitSwatch(ctx, x, y - 4, away, 5, 8);
+  sharpText(ctx, away.name, x + KIT, y, { size: 16, colour: '#f2efe6', baseline: 'middle' });
 };
 
 /**
@@ -265,13 +265,19 @@ function promoStill(ctx, R, ad, facts) {
       let fx = x;
       // The names, or the abbreviations if both names wouldn't fit beside their kits.
       const named = p.finalists.map((f) => upper(f.name));
-      const fits = blockWidth(`${named[0]} V ${named[1]}`, 1) + 22 <= R.x + R.w - x;
+      // The v halfway between the home name and the away swatch (Tom, 2026-10-25).
+      const GAP = 5;
+      const fits = blockWidth(`${named[0]}V${named[1]}`, 1) + 2 * 7 + 4 * GAP <= R.x + R.w - x;
       p.finalists.forEach((f, i) => {
-        box(ctx, '#f2efe6', fx, R.y + 11, 5, 6); box(ctx, f.colour, fx + 1, R.y + 12, 3, 4);
-        fx += 8;
-        const name = (fits ? named[i] : upper(f.abbr)) + (i === 0 ? ' V ' : '');
+        drawKitSwatch(ctx, fx + 1, R.y + 11, f, 3, 6);
+        fx += 7;
+        const name = fits ? named[i] : upper(f.abbr);
         small(ctx, name, fx, R.y + 11, '#f2efe6', '#000000');
-        fx += blockWidth(name, 1) + 6;
+        fx += blockWidth(name, 1);
+        if (i === 0) {
+          small(ctx, 'V', fx + GAP, R.y + 11, '#f2efe6', '#000000');
+          fx += GAP + blockWidth('V', 1) + GAP;
+        }
       });
     } else small(ctx, 'TWO SEMIS. ONE FINAL.', x, R.y + 11, '#f2efe6', '#000000');
   } else {

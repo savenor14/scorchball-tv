@@ -481,12 +481,18 @@ export function createCardPanel({ league, formatTime, config }) {
           ...(r.second ? [kit(team(r.second.teamId)), cell('m', r.second.name), cell('m', fmt(r.award, r.second.value))] : ['', '', '']),
         ]))];
       }
-      case 'records_watch':
-        return [el('h3', '', [card.title]), grid('auto 0.6em auto 2.4em 1fr 2.4em 0.6em auto', [
-          cell('', ''), cell('', ''), cell('m', 'THIS SEASON'), cell('', ''), cell('', ''), cell('honour', 'RECORD'), cell('', ''), cell('', ''),
-          ...card.rows.flatMap((r) => [cell('m', r.words), kit(team(r.leader.teamId)), cell('', r.leader.name), cell('r', String(r.leader.value)), cell('', ''),
-            cell('honour', String(r.record.value)), kit(team(r.record.teamId)), cell('', `${r.record.name} · S${r.record.season}`)]),
+      case 'records_watch': {
+        // Two halves (Tom's pick B, 2026-10-25): the records broken this season, the mark each beat beside it; the
+        // chases, how many still needed. One grid for both, so the columns line up.
+        const half = (/** @type {string} */ head) => [el('div', 'card-half', [head])];
+        const togo = (/** @type {{ leader: { value: number }, record: { value: number } }} */ r) => (r.leader.value === r.record.value ? 'level' : `${r.record.value - r.leader.value} to go`);
+        return [el('h3', '', [card.title]), grid('auto 0.6em auto 1fr 2.4em auto', [
+          ...(card.broken.length ? [...half('NEW RECORDS'), ...card.broken.flatMap((r) => [cell('m', r.words), kit(team(r.leader.teamId)), cell('', r.leader.name), cell('', ''),
+            cell('honour r', String(r.leader.value)), cell('m', `beat ${r.record.value}`)])] : []),
+          ...(card.chases.length ? [...half('WITHIN REACH'), ...card.chases.flatMap((r) => [cell('m', r.words), kit(team(r.leader.teamId)), cell('', r.leader.name), cell('', ''),
+            cell('r', String(r.leader.value)), cell('m', `of ${r.record.value} · ${togo(r)}`)])] : []),
         ])];
+      }
       case 'rookies':
         return [el('h3', '', [card.title]),
           ...(card.outfield.length ? [grid('0.6em 1fr auto 2.4em 2.4em 2.4em', [cell('', ''), cell('', ''), cell('', ''), cell('m r', 'G'), cell('m r', 'A'), cell('m r', 'ST'),

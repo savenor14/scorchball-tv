@@ -126,7 +126,9 @@ export function moreCard(card, live, t, ctx) {
   }
 
   // RECORDS WATCH (Tom: the chasers on the left, the record on the right): this season's leader in each stat against
-  // the season record from the seasons before, shown when a leader has studioDecks.recordsWatchShare of it.
+  // the season record from the seasons before, shown when a leader has studioDecks.recordsWatchShare of it. Two halves
+  // (Tom's pick B on recordsmock.html, 2026-10-25: the card read as if a broken record still stood): NEW RECORDS, a
+  // leader past the record, with the mark beaten; WITHIN REACH, the chases, level with it at most. Either half alone.
   if (card === 'records_watch') {
     if (season < 2) return null;
     const r = records(live.chronicle, config.chronicle.records, { upTo: season - 1 });
@@ -139,7 +141,9 @@ export function moreCard(card, live, t, ctx) {
       if (!rec || !lead || value(lead) < share * rec.value) return [];
       return [{ stat, words, leader: { name: ctx.playerName(lead.playerId), teamId: lead.teamId, value: value(lead) }, record: { value: rec.value, name: ctx.playerName(rec.playerId), teamId: rec.teamId, season: /** @type {number} */ (rec.season) } }];
     });
-    return rows.length ? { kind: /** @type {const} */ ('records_watch'), title: 'RECORDS WATCH', rows } : null;
+    const broken = rows.filter((row) => row.leader.value > row.record.value);
+    const chases = rows.filter((row) => row.leader.value <= row.record.value);
+    return rows.length ? { kind: /** @type {const} */ ('records_watch'), title: 'RECORDS WATCH', broken, chases } : null;
   }
 
   // ROOKIES (Tom: no pick; G, A and ST; the rookie keepers apart): the best five outfielders, then keepers who've

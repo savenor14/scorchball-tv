@@ -61,9 +61,12 @@ export function runOffseason(league, config, log, record) {
   // 3. Draft.
   const draftRng = stream('draft');
   report.draftOrder = draftOrder(draftRng, record, config.rules);
-  emit('draft_lottery', { data: { order: report.draftOrder } });
+  // The later rounds (Tom's note, 2026-10-25): the table in reverse once laterRounds is table; logged only then, so the
+  // seasons played before it log as they did.
+  const laterOrder = config.rules.draft.laterRounds === 'table' ? record.table.map((r) => r.teamId).reverse() : report.draftOrder;
+  emit('draft_lottery', { data: laterOrder === report.draftOrder ? { order: report.draftOrder } : { order: report.draftOrder, laterOrder } });
   const prospects = createDraftClass(league, config, draftRng, emit);
-  report.draft = runDraft(league, config, draftRng, emit, report.draftOrder, prospects, statNeeds(record, config.rules));
+  report.draft = runDraft(league, config, draftRng, emit, report.draftOrder, prospects, statNeeds(record, config.rules), laterOrder);
   // Rookie deals (Task 231): paid by pick, for rookieSeasons, kept in the reserves.
   const picks = report.draft.length;
   report.draft.forEach(({ teamId, playerId }, i) => {
@@ -440,8 +443,9 @@ function keepsForRookieRule(league, config, teamId, playerId) {
 /**
  * @param {import('./league.js').League} league @param {string} teamId @param {string} playerId
  * @param {ReturnType<import('../chronicle/eventLog.js').EventLog['scoped']>} emit
- * @param {'roster' | 'call_up' | 'rights_expired' | 'position' | 'contract_end'} reason  Over the roster limit; making way for
- *   a call-up; a reserve whose rights ran out; making room for a position the team is short of; their deal ran out (Task 231).
+ * @param {'roster' | 'call_up' | 'rights_expired' | 'position' | 'contract_end' | 'upgrade'} reason  Over the roster limit; making way for
+ *   a call-up; a reserve whose rights ran out; making room for a position the team is short of; their deal ran out (Task 231);
+ *   a better free agent signed in their place (upgrade, Tom's note 2026-10-25).
  * @param {boolean} [byPlayer]  contract_end: the club wanted to keep them and they chose the market (Task 243).
  */
 function release(league, teamId, playerId, emit, reason, byPlayer = false) {
@@ -492,10 +496,26 @@ function freeAgency(league, config, rng, emit, record, calledUp, ended) {
   // The market (Task 232): the best free agent first. Every team with a place for him (and a need at his position, if it
   // has one) and the room makes an offer (finances.offerFor); he signs where it scores best for what he wants
   // (finances.offerScore). A free agent nobody can afford waits; the market closes when nobody can sign anybody.
+  // Upgrades (Tom's note, 2026-10-25: a 20-year-old record-holding keeper went unsigned because every roster was full):
+  // with upgradeMargin above 0, a full team bids too when the free agent is worth at least that much more than its
+  // weakest player at his position, counting that player's wage as room; signing him releases that player (`upgrade`),
+  // or, one of its own draft picks whose rights it still holds, sends him down to the reserves (off the cap) instead.
+  // As in the draft and the filling pass, a local player counts localBonus more (Task 176); the rookies the rookie rule
+  // needs are never the ones let go.
+  const margin = rules.finances.upgradeMargin;
+  const worth = (/** @type {import('./players.js').Player} */ p, /** @type {string} */ teamId) => playerValue(p, league.season, positions)
+    + (p.region === league.teams[teamId].region ? rules.roster.localBonus : 0);
+  const ownPick = (/** @type {import('./players.js').Player} */ q, /** @type {string} */ teamId) => q.draft?.teamId === teamId
+    && q.draft.season + rules.reserves.rightsSeasons >= league.season;
+  const weakestAt = (/** @type {string} */ teamId, /** @type {import('./players.js').Player} */ p) => league.teams[teamId].roster
+    .map((/** @type {string} */ id) => league.players[id])
+    .filter((/** @type {import('./players.js').Player} */ q) => q.position === p.position && !keepsForRookieRule(league, config, teamId, q.id))
+    .reduce((/** @type {any} */ a, /** @type {import('./players.js').Player} */ b) => (!a || worth(b, teamId) < worth(a, teamId)
+      || (worth(b, teamId) === worth(a, teamId) && b.id > a.id) ? b : a), null);
   for (let signing = 0; signing < 1000; signing++) {
     const outlook = outlooks(league, positions);
     const open = order.filter((id) => league.teams[id].roster.length < rules.roster.size);
-    if (open.length === 0) break;
+    if (open.length === 0 && !(margin > 0)) break;
     const candidates = league.freeAgents.map((id) => league.players[id])
       .sort((a, b) => playerValue(b, league.season, positions) - playerValue(a, league.season, positions) || a.id.localeCompare(b.id));
     let done = false;
@@ -503,10 +523,19 @@ function freeAgency(league, config, rng, emit, record, calledUp, ended) {
       const market = marketWage(p, league.season, config);
       /** @type {{ teamId: string, region: string, wage: number, score: number }[]} */
       const offers = [];
-      for (const teamId of open) {
+      /** @type {Map<string, import('./players.js').Player>} */
+      const outgoing = new Map();
+      for (const teamId of order) {
+        let room = capRoom(league, teamId, rules);
+        if (!open.includes(teamId)) {
+          const weakest = margin > 0 ? weakestAt(teamId, p) : null;
+          if (!weakest || worth(p, teamId) < worth(weakest, teamId) + margin) continue;
+          outgoing.set(teamId, weakest);
+          room += weakest.contract?.wage ?? 0;
+        }
         const need = shortOf(teamId)[0];
         if (need && p.position !== need) continue;
-        const wage = offerFor(market, capRoom(league, teamId, rules), rules);
+        const wage = offerFor(market, room, rules);
         if (wage === null) continue;
         const offer = { teamId, region: league.teams[teamId].region, wage };
         offers.push({ ...offer, score: offerScore(p, offer, { season: league.season, outlook, formerTeamId: ended.get(p.id), rules }) });
@@ -515,6 +544,14 @@ function freeAgency(league, config, rng, emit, record, calledUp, ended) {
       // Ties go to the worse team (the order's first).
       const best = offers.reduce((a, b) => (b.score > a.score ? b : a));
       const turnedDown = offers.filter((o) => o !== best).map((o) => ({ teamId: o.teamId, wage: o.wage }));
+      const out = outgoing.get(best.teamId);
+      if (out && ownPick(out, best.teamId)) {
+        const team = league.teams[best.teamId];
+        team.roster = team.roster.filter((/** @type {string} */ r) => r !== out.id);
+        team.reserves.push(out.id);
+        out.reserveUntil = /** @type {any} */ (out.draft).season + rules.reserves.rightsSeasons;
+        emit('reserve', { teamId: best.teamId, playerId: out.id, data: { position: out.position, overall: Math.round(overall(out, positions)), until: out.reserveUntil } });
+      } else if (out) release(league, best.teamId, out.id, emit, 'upgrade');
       signFreeAgent(league, config, rng, emit, best.teamId, p, best.wage, ended, turnedDown);
       signed.push({ teamId: best.teamId, playerId: p.id });
       done = true;

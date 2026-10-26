@@ -6,6 +6,13 @@
       "season": 2,
       "reason": "With its first draft, the League brings in the rookie rule: every side starts a rookie.",
       "changes": { "roster": { "rookieStarters": 1 } }
+    },
+    {
+      "id": "draft_and_market",
+      "season": 4,
+      "reason": "The League tidies its off-season: the draft's second round goes by the table, worst first, and a club with room may sign a better free agent in a weaker player's place.",
+      "_comment": "Tom's notes, 2026-10-25 (docs/finances.md): a 20-year-old record-holding keeper went unsigned in season 2's off-season because every roster was full. Season 4's rules run season 3's off-season, so nothing published changes. Measured (margin 8): good free agents left unsigned (better than the median rostered player) about 18 a season to 10; upgrades about 1.3 a season, a pick on the roster sent down to the reserves rather than released; every balance target and the default parity run met, 12 leagues on the edge of two parity targets as the rules before it are.",
+      "changes": { "draft": { "laterRounds": "table" }, "finances": { "upgradeMargin": 8 } }
     }
   ]
 }

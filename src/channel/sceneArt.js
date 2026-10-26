@@ -37,16 +37,17 @@ export const shade = (hex, k) => `#${rgbOf(hex).map((v) => Math.round(Math.min(2
 /**
  * A team's kit swatch on a canvas, as the scorebug and the ticker draw theirs (index.html .kit): its main colour, a
  * one-pixel stripe of its second down the right, a faint light outline (the page's is half a stage pixel; here one,
- * fainter). `x`, `y` its top-left; 4 × 8 stage pixels.
+ * fainter). `x`, `y` its top-left; 4 × 8 stage pixels, or `w` × `h` where the text beside it is smaller (the ads).
  * @param {CanvasRenderingContext2D} ctx @param {number} x @param {number} y @param {{ colours: { primary: string, secondary: string } }} team
+ * @param {number} [w] @param {number} [h]
  */
-export function drawKitSwatch(ctx, x, y, team) {
+export function drawKitSwatch(ctx, x, y, team, w = 4, h = 8) {
   ctx.fillStyle = 'rgba(255,255,255,0.16)';
-  ctx.fillRect(x - 1, y - 1, 6, 10);
+  ctx.fillRect(x - 1, y - 1, w + 2, h + 2);
   ctx.fillStyle = team.colours.primary;
-  ctx.fillRect(x, y, 4, 8);
+  ctx.fillRect(x, y, w, h);
   ctx.fillStyle = team.colours.secondary;
-  ctx.fillRect(x + 3, y, 1, 8);
+  ctx.fillRect(x + w - 1, y, 1, h);
 }
 export const clamp01 = (/** @type {number} */ v) => Math.min(1, Math.max(0, v));
 export const ease = (/** @type {number} */ v) => { const t = clamp01(v); return t * t * (3 - 2 * t); };

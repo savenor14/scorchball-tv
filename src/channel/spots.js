@@ -88,7 +88,7 @@ export function playoffTimes(slots, regularCount, formatTime) {
 }
 
 /**
- * @typedef {{ name: string, abbr: string, colour: string }} Finalist
+ * @typedef {{ name: string, abbr: string, colours: { primary: string, secondary: string } }} Finalist  Its kit colours for its swatch.
  * @typedef {{ stage: PromoStage, semis: string, final: string, finalAt: string, finalists: [Finalist, Finalist] | null }} PlayoffFacts
  *   The promo's facts: its version, the times ("Semis Sun 14:00 and 17:00", "Finals Sun 20:00", and the final's
  *   alone, "Sun 20:00"), and the finalists (home first, the better seed) once both semifinals have finished on screen.
@@ -136,9 +136,9 @@ export function adFacts(live, t, ctx) {
     const seeds = [semis[0].homeId, semis[1].homeId, semis[1].awayId, semis[0].awayId];
     const winners = semis.map((m) => /** @type {string} */ (winnerOf({ homeId: m.homeId, awayId: m.awayId, result: m.summary.result })));
     const [home, away] = winners.sort((a, b) => seeds.indexOf(a) - seeds.indexOf(b)).map((id) => live.league.teams[id]);
-    finalists = /** @type {[Finalist, Finalist]} */ ([home, away].map((tm) => ({ name: tm.shortName, abbr: tm.abbr, colour: tm.colours.primary })));
+    finalists = /** @type {[Finalist, Finalist]} */ ([home, away].map((tm) => ({ name: tm.shortName, abbr: tm.abbr, colours: tm.colours })));
   }
-  const team = (/** @type {string | null} */ id) => (id ? { name: live.league.teams[id].shortName, abbr: live.league.teams[id].abbr, colour: live.league.teams[id].colours.primary } : null);
+  const team = (/** @type {string | null} */ id) => (id ? { name: live.league.teams[id].shortName, abbr: live.league.teams[id].abbr, colours: live.league.teams[id].colours } : null);
   const [next] = upcomingAt(live, t, durationOf, 1);
   const tickets = next ? { when: ctx.formatTime(next.kickoff), home: team(next.homeId), away: team(next.awayId) } : null;
   const all = Object.values(live.league.teams).sort((a, b) => (a.id < b.id ? -1 : 1));

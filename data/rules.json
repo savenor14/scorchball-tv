@@ -109,6 +109,8 @@
     "wageAt60": 400,
     "wagePerPoint": 1.1,
     "maxContractShare": 0.25,
+    "_upgradeMargin": "Free agency's upgrades (Tom's note, 2026-10-25; docs/finances.md): a full team bids for a free agent worth at least this much more (players.playerValue) than its weakest player at his position, counting that player's wage as room, and releases that player if he signs. 0: off (seasons 1 to 3); on from season 3's off-season (data/ruleChanges.json).",
+    "upgradeMargin": 0,
     "rookieSeasons": 3,
     "rookieScale": { "first": 1200, "last": 300 },
     "contractSeasons": [
@@ -133,6 +135,8 @@
     "rounds": 2,
     "extraProspects": 2,
     "lotteryWeights": [40, 30, 20, 10],
+    "_laterRounds": "The order of the rounds after the first (Tom's note, 2026-10-25): lottery, the first round's order again (seasons 1 to 3); table, the regular season's table in reverse, worst first, however the lottery or the playoffs went (from season 3's off-season, data/ruleChanges.json).",
+    "laterRounds": "lottery",
     "scoutingNoise": 6,
     "potentialWeight": 0.7,
     "needBonus": 8,

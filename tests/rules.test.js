@@ -38,8 +38,8 @@ test('a season with no change in effect plays under data/rules.json itself', () 
   assert.equal(seasonConfig(real, 1), real);
 });
 
-test('the real data brings in the rookie rule at season 2 (Task 230)', () => {
-  assert.deepEqual(real.ruleChanges.changes.map((/** @type {any} */ c) => [c.id, c.season]), [['rookie_rule', 2]]);
+test('the real data brings in the rookie rule at season 2 (Task 230), and the draft and market change at 4 (Tom, 2026-10-25)', () => {
+  assert.deepEqual(real.ruleChanges.changes.map((/** @type {any} */ c) => [c.id, c.season]), [['rookie_rule', 2], ['draft_and_market', 4]]);
   assert.equal(real.rules.roster.rookieStarters, 0);
   assert.equal(seasonConfig(real, 2).rules.roster.rookieStarters, 1);
 });

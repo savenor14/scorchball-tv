@@ -190,7 +190,7 @@ async function boot() {
   /** @type {import('./spots.js').PlayoffFacts} The promo's playoffs version (Task 111: from midway through the season). */
   const playoffs = { stage: 'playoffs', ...times, finalAt: times.final.replace(/^Finals /, ''), finalists: null };
   // The final's version (from the first semifinal's kick-off), with two of the league's teams as the finalists.
-  const [fa, fb] = Object.values(live.league.teams).slice(0, 2).map((tm) => ({ name: tm.shortName, abbr: tm.abbr, colour: tm.colours.primary }));
+  const [fa, fb] = Object.values(live.league.teams).slice(0, 2).map((tm) => ({ name: tm.shortName, abbr: tm.abbr, colours: tm.colours }));
   // Tickets and Season tickets (Task 146): the next live match and a seeded team, as the channel works them out; and
   // the season tickets' playoffs version, the next season on sale.
   const league = adFacts(live, now, { timelineOf: (m) => createTimeline(m, config), formatTime: (ms) => when.format(ms).toUpperCase().replace(',', '') });

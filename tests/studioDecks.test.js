@@ -126,3 +126,20 @@ test('season 2\'s early cards: LAST SEASON with the whole final table and its ma
   assert.deepEqual(roll.rows.map((/** @type {any} */ r) => r.championId), [h.championId]);
   assert.equal(roll.most, null, 'the most Cups only once a team has two');
 });
+
+test("RECORDS WATCH in two halves (Tom's pick B, 2026-10-25): NEW RECORDS past the record, WITHIN REACH level with it at most", () => {
+  const live = new LiveLeague(config, { now: calendar.instant(1, 0), seed: SEED });
+  let cards = 0;
+  for (let day = 2; day <= 6; day++) {
+    const t = calendar.instant(2, day * 1440);
+    live.advanceTo(t);
+    const card = /** @type {any} */ (moreCard('records_watch', live, t, ctx));
+    if (!card) continue;
+    cards++;
+    assert.ok(card.broken.length + card.chases.length > 0);
+    for (const r of card.broken) assert.ok(r.leader.value > r.record.value, `${r.stat} broken`);
+    for (const r of card.chases) assert.ok(r.leader.value <= r.record.value && r.leader.value >= decks.recordsWatchShare * r.record.value, `${r.stat} within reach`);
+    assert.equal(new Set([...card.broken, ...card.chases].map((r) => r.stat)).size, card.broken.length + card.chases.length);
+  }
+  assert.ok(cards > 0, 'a card in season 2');
+});

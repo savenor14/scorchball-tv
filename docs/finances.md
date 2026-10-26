@@ -97,6 +97,14 @@ After the draft, as today, but with money:
 3. **The player picks** the offer that scores best for their motive, and signs (wage and length).
 4. Then the next player, until rosters are full. Teams still short sign the cheapest who fit, generated at the minimum wage if needed (as today).
 
+### Upgrades (Tom's note, 2026-10-25; from season 3's off-season)
+
+**Why:** in season 2's off-season M. Nankivell, the all-time saves leader at 20 (a keeper rated 77, ceiling 88), went unsigned. The Gulls had spent their room re-signing two defenders at the maximum, and free agency only filled gaps: every roster was full, so nobody could bid, though the Anvils had 7,605 of room and keepers rated 51 and 54. Over 4 leagues × 20 seasons about 18 free agents a season were better than the median rostered player.
+
+**The rule** (`finances.upgradeMargin`: 0 in `data/rules.json`, 8 in season 4's rules in `data/ruleChanges.json`, which run season 3's off-season, so nothing published changes): in the market a full team bids too when a free agent is worth at least the margin more (`playerValue`, plus `localBonus` for a local player either way) than its weakest player at his position, counting that player's wage as room. If he signs there, that player is released (`release`, reason `upgrade`), or, one of the club's own picks whose rights it still holds, sent down to the Kindling League (`reserve`, off the cap; the rights still end as counted from the draft). The rookies the rookie rule needs are never the ones let go.
+
+**Measured:** good free agents left unsigned about 18 a season to 10, about 1.3 upgrades a season; every balance target and the default parity run met (on 12 leagues two parity targets sit on their edge, as they did before). In the live league Nankivell signs for the Vintners in season 3's off-season. **Still open:** a star whose wage no club can fit still waits (about 0.7 a season in the league's top fifth); a player lowering his price after a season unsigned would be the next step.
+
 ### The local pull eased
 `roster.localBonus` (10 today) drops, perhaps to 5 (measured in Task 232), so the draft leans less on region. **Home-minded free agents** bring the regions' flavour back through free agency instead. The home-grown share (about 53% today) is watched in the balance report.
 

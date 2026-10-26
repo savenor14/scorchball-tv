@@ -72,12 +72,13 @@ export function createDraftClass(league, config, rng, emit) {
  * @param {import('../config.js').Config} config
  * @param {import('./rng.js').Rng} rng
  * @param {ReturnType<import('../chronicle/eventLog.js').EventLog['scoped']>} emit
- * @param {string[]} order
+ * @param {string[]} order  The first round's order.
  * @param {import('./players.js').Player[]} prospects  Removed from the free-agent pool when picked.
  * @param {Map<string, Record<string, number>>} [needs]  Each team's statistical need (statNeeds), rating points by position.
+ * @param {string[]} [laterOrder]  The later rounds' order (rules.draft.laterRounds); the first round's by default.
  * @returns {{ teamId: string, playerId: string, round: number, pick: number }[]}
  */
-export function runDraft(league, config, rng, emit, order, prospects, needs = new Map()) {
+export function runDraft(league, config, rng, emit, order, prospects, needs = new Map(), laterOrder = order) {
   const { rules, positions } = config;
   const d = rules.draft;
   let available = [...prospects];
@@ -85,7 +86,7 @@ export function runDraft(league, config, rng, emit, order, prospects, needs = ne
   /** @type {{ teamId: string, playerId: string, round: number, pick: number }[]} */
   const picks = [];
   for (let round = 1; round <= d.rounds; round++) {
-    for (const teamId of order) {
+    for (const teamId of round === 1 ? order : laterOrder) {
       if (available.length === 0) return picks;
       pick++;
       const short = shortPositions(league, teamId, rules);
