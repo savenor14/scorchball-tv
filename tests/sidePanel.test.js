@@ -62,7 +62,7 @@ test('a re-air shows the match as it stands at that moment of the replay, never 
   assert.fail('no re-air found');
 });
 
-test('WEEK: newest results, a re-aired match\'s score hidden, then the next fixtures', () => {
+test('GAMES (WEEK until 2026-10-27): newest results, a re-aired match\'s score hidden, then the next fixtures', () => {
   const t = slots[10].kickoff - 20 * MIN;
   const live = new LiveLeague(config, { now: t, seed: SEED });
   const played = live.matchesIn(1);

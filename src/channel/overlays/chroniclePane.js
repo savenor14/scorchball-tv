@@ -16,6 +16,7 @@ import { seasonConfig } from '../../sim/rules.js';
 import { crestCanvas } from '../crests.js';
 import { guilders, payrolls, teamContracts } from '../money.js';
 import { seasonPage, shortName } from '../recordBook.js';
+import { findPlayers } from '../playerSearch.js';
 import { el, kit } from './dom.js';
 import { playerCardBody } from './playerCardView.js';
 import { teamCardBody } from './teamCardView.js';
@@ -120,6 +121,52 @@ export function createChroniclePane({ pane, live, config, now, onChange }) {
   const stepper = el('div', 'chr-step', [prev, stepName, next]);
   const bar = el('div', '', [el('div', 'guide-bar', tabs.map((x) => x.b)), stepper]);
   const body = el('div', 'chr');
+
+  // FIND A PLAYER (Tom, 2026-10-27; playerSearch.js): a bar fixed at the pane's foot whatever the tab, the matches
+  // rising above it over the tab's foot once settings.chronicle.search.minLetters are typed; a name opens the card, ‹
+  // back to the matches with the search kept. ✕ or Esc clears it (Esc with nothing typed closes the pane, as anywhere).
+  // The channel's keys don't fire while typing.
+  const search = config.settings.chronicle.search;
+  const input = /** @type {HTMLInputElement} */ (el('input', 'chr-find-input'));
+  input.type = 'text';
+  input.placeholder = 'FIND A PLAYER';
+  input.spellcheck = false;
+  input.autocomplete = 'off';
+  input.maxLength = 30;
+  const clear = el('button', 'chr-find-x', ['✕']);
+  clear.title = 'Clear (Esc)';
+  const hitsBox = el('div', 'chr-find-hits');
+  const foot = el('div', 'chr-find', [hitsBox, el('div', 'chr-find-bar', [el('span', 'chr-find-icon'), input, clear])]);
+  const note = (/** @type {string} */ text) => el('div', 'chr-find-note', [text]);
+  /** Draw the matches for what's typed (none while a card is open). */
+  function showHits() {
+    const r = findPlayers(chronicle, league, input.value, search);
+    clear.hidden = !input.value;
+    hitsBox.hidden = r.state === 'empty' || Boolean(state.card || state.teamCard);
+    hitsBox.replaceChildren(...(r.state === 'short' ? [note(`${search.minLetters} letters or more`)] : r.state === 'none' ? [note('Nobody by that name')] : [
+      ...r.hits.map((h) => {
+        const tag = h.status === 'retired' ? 'RET' : h.status === 'free' ? 'FREE' : team(/** @type {string} */ (h.teamId)).abbr;
+        const b = el('button', 'chr-find-hit', [h.teamId ? kit(team(h.teamId)) : el('span', ''), el('span', 'nm', [h.name]), el('span', h.status === 'free' ? 'tag free' : 'tag', [tag])]);
+        b.addEventListener('click', () => openCard(h.id));
+        return b;
+      }),
+      ...(r.more ? [note(`and ${r.more} more`)] : []),
+    ]));
+  }
+  input.addEventListener('input', showHits);
+  input.addEventListener('keydown', (e) => {
+    e.stopPropagation();
+    if (e.key !== 'Escape') return;
+    if (input.value) {
+      input.value = '';
+      showHits();
+    } else pane.close();
+  });
+  clear.addEventListener('click', () => {
+    input.value = '';
+    showHits();
+    input.focus();
+  });
 
   /** "1st", "100th". @param {number} n */
   const ordinal = (n) => `${n}${n % 100 >= 11 && n % 100 <= 13 ? 'th' : ['th', 'st', 'nd', 'rd'][n % 10] ?? 'th'}`;
@@ -319,6 +366,7 @@ export function createChroniclePane({ pane, live, config, now, onChange }) {
         ? playerCardBody(document, { chronicle, config, league, playerId: state.card, backLabel, onBack: closeCard })
         : teamCardBody(document, { chronicle, config, league, teamId: /** @type {string} */ (state.teamCard), backLabel, onBack: closeCard }));
       pane.scroller.scrollTop = 0;
+      showHits();
       return;
     }
     if (bar.parentElement) bar.parentElement.hidden = false;
@@ -327,6 +375,7 @@ export function createChroniclePane({ pane, live, config, now, onChange }) {
     stepName.textContent = RECORD_PAGES[state.page][1];
     body.replaceChildren(...(state.tab === 'latest' ? latestPage() : state.tab === 'history' ? historyPage() : state.tab === 'money' ? moneyPage() : recordsPage()));
     pane.scroller.scrollTop = 0;
+    showHits();
   }
 
   /** Open a player's card from a name on the pane. @param {string} id */
@@ -354,7 +403,7 @@ export function createChroniclePane({ pane, live, config, now, onChange }) {
   return {
     /** Open or close the CHRONICLE. */
     toggle() {
-      pane.toggle('chronicle', () => ({ title: 'CHRONICLE', bar, body, onClose: () => { state.card = null; state.teamCard = null; onChange?.(false); } }));
+      pane.toggle('chronicle', () => ({ title: 'CHRONICLE', bar, body, foot, onClose: () => { state.card = null; state.teamCard = null; onChange?.(false); } }));
       if (pane.openId === 'chronicle') {
         show();
         onChange?.(true);

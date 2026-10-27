@@ -1,8 +1,8 @@
-// The side panel right of the pitch (Task 32): tabs on top (STATS, TABLE, TOP, WEEK), the chosen view below, all
+// The side panel right of the pitch (Task 32): tabs on top (STATS, TABLE, TOP, GAMES), the chosen view below, all
 // within the 86 px column. What each view shows comes from ../sidePanel.js; TABLE is overlays/tablePanel.js. The tab is the viewer's own
 // (a click or its key), starts on STATS every load, and isn't remembered.
 // Names open cards in the panel's place, under the tabs (Task 224, Tom's pick B on names.html): STATS' teams and
-// scorers, TABLE's teams (tablePanel.js), TOP's scorers, WEEK's teams. ‹ goes back to the view, as does any tab; while
+// scorers, TABLE's teams (tablePanel.js), TOP's scorers, GAMES' teams. ‹ goes back to the view, as does any tab; while
 // a card is open the views wait (a card never vanishes while it's read).
 import { statsView, TABS, topView, weekView } from '../sidePanel.js';
 import { cardBody, linked } from './cardLinks.js';
@@ -164,7 +164,7 @@ export function createSidePanel(channel, table) {
         return;
       }
 
-      // WEEK
+      // GAMES (no THIS WEEK line over it since the rename, Tom, 2026-10-27)
       const reairId = seg.kind === 'reair' ? seg.match.id : null;
       const rows = weekView(live, t, timelineOf, { ...WEEK, reairId });
       const k = JSON.stringify(rows);
@@ -174,7 +174,7 @@ export function createSidePanel(channel, table) {
       // results "FT SKA 5-5 KES", a live match "LIVE", a re-air "REP" (its score hidden). SF / F mark the playoffs.
       const label = /** @type {Record<string, string>} */ ({ live: 'LIVE', replay: 'REP', result: 'FT' });
       /** @type {HTMLElement[]} */
-      const lines = [el('p', 'side-sub', ['THIS WEEK'])];
+      const lines = [];
       let day = '';
       for (const r of rows) {
         const [d, time] = formatTime(r.kickoff).split(' ');

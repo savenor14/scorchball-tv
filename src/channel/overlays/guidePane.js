@@ -13,7 +13,7 @@ import { el, kit } from './dom.js';
 /** How often the open guide moves now along (real ms). */
 const TICK_MS = 1000;
 const TAG = /** @type {Record<string, string>} */ ({ studio: 'STUDIO', opening: 'OPENING', champions: 'CHAMPIONS', awards: 'AWARDS', offseason: 'OFF-SEASON', preview: 'PLAYOFF PREVIEW', grounds: 'AROUND THE GROUNDS', vault: 'FROM THE VAULT', podcast: 'OFF THE BALL' });
-/** The playoffs' marks, as the WEEK tab writes them. */
+/** The playoffs' marks, as the GAMES tab writes them. */
 const STAGE = /** @type {Record<string, string>} */ ({ semifinal: 'SF', final: 'F' });
 const MIN_MS = 60_000;
 /** How long before asking again for a tomorrow that couldn't be built (its day key not out yet), real ms of the channel's clock. */

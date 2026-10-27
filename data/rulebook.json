@@ -131,7 +131,7 @@
           { "text": "STATS (S): the match on screen as it happens: shots, saves, possession, and the goals." },
           { "text": "TABLE (T): the league table. The top {playoffTeams|word} go to the playoffs." },
           { "text": "TOP (G): the season's leading scorers." },
-          { "text": "WEEK (W): this week's matches: the results, and when the rest kick off." },
+          { "text": "GAMES (W): the matches: the latest results, the one on now, and when the next kick off." },
           { "text": "Select a player or a team in the side panel, the Schedule or the Chronicle to see their card." },
           { "text": "Along the bottom, the ticker: results, the next kick-offs, and the leaders." }
         ]

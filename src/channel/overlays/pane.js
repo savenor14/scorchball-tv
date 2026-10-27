@@ -9,6 +9,7 @@ import { $, el, setText } from './dom.js';
  * @property {string} title  In the title bar ("TV GUIDE").
  * @property {HTMLElement} body  What scrolls.
  * @property {HTMLElement} [bar]  A row fixed under the title (the guide's ALL / MATCHES).
+ * @property {HTMLElement} [foot]  A row fixed at the foot, under what scrolls (CHRONICLE's FIND A PLAYER).
  * @property {() => void} [onClose]
  */
 
@@ -21,7 +22,8 @@ export function createPane() {
   const head = el('div', 'pane-head', [title, sub, close]);
   const barSlot = el('div', 'pane-bar');
   const scroll = el('div', 'pane-body');
-  box.append(head, barSlot, scroll);
+  const footSlot = el('div', 'pane-foot');
+  box.append(head, barSlot, scroll, footSlot);
   /** @type {string | null} */
   let openId = null;
   /** @type {PaneContent | null} */
@@ -41,6 +43,8 @@ export function createPane() {
       barSlot.hidden = !c.bar;
       scroll.replaceChildren(c.body);
       scroll.scrollTop = 0;
+      footSlot.replaceChildren(...(c.foot ? [c.foot] : []));
+      footSlot.hidden = !c.foot;
       box.hidden = false;
     },
     close() {
@@ -50,6 +54,7 @@ export function createPane() {
       content = null;
       box.hidden = true;
       scroll.replaceChildren();
+      footSlot.replaceChildren();
       c?.onClose?.();
     },
     /** Open it, or close it if it's the one open. @param {string} id @param {() => PaneContent} make */

@@ -178,6 +178,9 @@
     .pane-bar[hidden] { display: none; }
     .pane-body { flex: 1; min-height: 0; overflow-y: auto; padding: calc(var(--px) * 2) calc(var(--px) * 3) calc(var(--px) * 4) calc(var(--px) * 4); scrollbar-width: thin; scrollbar-color: var(--panel-edge) transparent; }
     .pane-body::-webkit-scrollbar { width: calc(var(--px) * 2); }
+    /* A row fixed at the pane's foot (CHRONICLE's FIND A PLAYER, Tom 2026-10-27): what rises above it overlays the body. */
+    .pane-foot { flex: none; position: relative; padding: calc(var(--px) * 3); border-top: var(--px) solid var(--panel-edge); }
+    .pane-foot[hidden] { display: none; }
     .pane-body::-webkit-scrollbar-thumb { background: var(--panel-edge); }
     .guide-bar { display: flex; gap: calc(var(--px) * 2); }
     .guide-filter { all: unset; cursor: pointer; flex: 1; text-align: center; font-size: calc(var(--px) * 7); line-height: calc(var(--px) * 9); color: var(--panel-muted); box-shadow: inset 0 0 0 var(--px) var(--panel-edge); }
@@ -485,6 +488,24 @@
     .rb-about p.small { color: var(--panel-muted); }
     /* The CHRONICLE (Task 219, channel.md §20): past seasons and their pages, records one stat at a time. */
     .chr { line-height: calc(var(--px) * 9); }
+    /* FIND A PLAYER (Tom, 2026-10-27; searchmock's look B, inside CHRONICLE): the bar, the icon and ✕ amber; the matches
+       rise above the bar over the tab's foot, each a row of the grid (a button, subgrid), the club's letters or FREE / RET. */
+    .chr-find-bar { display: flex; align-items: center; height: calc(var(--px) * 10); padding: 0 calc(var(--px) * 2); background: rgb(0 0 0 / 0.35); box-shadow: 0 0 0 calc(var(--px) * 0.5) var(--panel-edge); }
+    .chr-find-bar:focus-within { box-shadow: 0 0 0 calc(var(--px) * 0.5) var(--accent); }
+    .chr-find-icon { flex: none; position: relative; width: calc(var(--px) * 4); height: calc(var(--px) * 4); margin: 0 calc(var(--px) * 3) var(--px) 0; border: calc(var(--px) * 0.6) solid var(--accent); border-radius: 50%; }
+    .chr-find-icon::after { content: ''; position: absolute; right: calc(var(--px) * -2.2); bottom: calc(var(--px) * -1); width: calc(var(--px) * 2.2); height: calc(var(--px) * 0.6); background: var(--accent); transform: rotate(45deg); }
+    .chr-find-input { all: unset; flex: 1; min-width: 0; font-family: inherit; font-size: calc(var(--px) * 7.5); color: var(--panel-ink); }
+    .chr-find-input::placeholder { color: var(--panel-muted); opacity: 1; }
+    .chr-find-x { all: unset; flex: none; cursor: pointer; color: var(--accent); padding: 0 var(--px); }
+    .chr-find-x[hidden] { display: none; }
+    .chr-find-hits { position: absolute; left: 0; right: 0; bottom: 100%; display: grid; grid-template-columns: auto 1fr auto; column-gap: calc(var(--px) * 2); row-gap: calc(var(--px) * 0.5); align-items: center; padding: calc(var(--px) * 2) calc(var(--px) * 4); background: var(--panel); border-top: var(--px) solid var(--accent); line-height: calc(var(--px) * 9); }
+    .chr-find-hits[hidden] { display: none; }
+    .chr-find-hit { all: unset; grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: center; cursor: pointer; }
+    .chr-find-hit .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .chr-find-hit:hover .nm, .chr-find-hit:focus-visible .nm { color: var(--accent); }
+    .chr-find-hit .tag { color: var(--panel-muted); font-size: calc(var(--px) * 6); }
+    .chr-find-hit .tag.free { color: var(--accent); }
+    .chr-find-note { grid-column: 1 / -1; color: var(--panel-muted); font-size: calc(var(--px) * 6.5); }
     .chr-h { color: var(--accent); font-weight: 700; margin: calc(var(--px) * 6) 0 calc(var(--px) * 2); }
     .chr-h:first-child { margin-top: calc(var(--px) * 1); }
     .chr-sub { color: var(--panel-muted); font-weight: 700; margin: calc(var(--px) * 4) 0 calc(var(--px) * 1); }

@@ -30,7 +30,7 @@ const MATCH_PARTS = Object.freeze(['pre_match', 'walk_out', 'live', 'handshakes'
  * @property {string} [awayId]
  * @property {'regular' | 'semifinal' | 'final'} [stage]
  * @property {number} [played]  When a re-aired or highlighted match was played (its kick-off).
- * @property {number} [kickoff]  A live match's kick-off: the time the guide lists, as the ticker and WEEK do (the entry
+ * @property {number} [kickoff]  A live match's kick-off: the time the guide lists, as the ticker and GAMES do (the entry
  *   itself runs from its pre-match card).
  * @property {string} [matchId]
  * @property {boolean} [round]  A live entry that's the final round's matches at once (listed as the round, not one pairing).

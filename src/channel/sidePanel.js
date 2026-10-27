@@ -6,7 +6,7 @@
 //          zero; in the studio and other gaps the last match to finish, at full time.
 //   TABLE      the league table (onScreen.js tableView, drawn by overlays/tablePanel.js).
 //   TOP    the season's top scorers so far.
-//   WEEK   recent results, the match live or being re-aired, and the next fixtures. A re-aired match's score is hidden.
+//   GAMES  recent results, the match live or being re-aired, and the next fixtures. A re-aired match's score is hidden.
 import { matchStatsAt, statRows, zero } from './matchStats.js';
 import { isFinished, isLive, topScorersAt, upcomingAt } from './onScreen.js';
 
@@ -15,7 +15,7 @@ export const TABS = Object.freeze([
   { id: 'stats', label: 'STATS', key: 's' },
   { id: 'table', label: 'TABLE', key: 't' },
   { id: 'top', label: 'TOP', key: 'g' },
-  { id: 'week', label: 'WEEK', key: 'w' },
+  { id: 'week', label: 'GAMES', key: 'w' },
 ]);
 
 /**
@@ -96,7 +96,7 @@ export function topView(live, t, timelineOf, n, part = 'regular') {
  */
 
 /**
- * The WEEK tab: the last few results (newest first), any match live now, and the next fixtures.
+ * The GAMES tab (WEEK until 2026-10-27, Tom: a season is a week, so the word misled; its id stays week, MOMENTS' SIDE:WEEK too): the last few results (newest first), any match live now, and the next fixtures.
  * @param {import('./liveLeague.js').LiveLeague} live @param {number} t @param {TimelineOf} timelineOf
  * @param {{ results: number, upcoming: number, reairId: string | null }} opts  reairId: a match being re-aired, whose score stays hidden.
  * @returns {WeekRow[]}
