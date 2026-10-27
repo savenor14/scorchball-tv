@@ -51,10 +51,12 @@ export function playerCardBody(doc, { chronicle, config, league, playerId, backL
     ? mk('div', 'card-standing legend', ['LEGEND'])
     : c.standing ? mk('div', 'card-standing', [c.standing.words]) : mk('div', '', []);
   const j = c.joined;
+  // A draft and a signing happen in an off-season, logged with the season just finished; shown as the season they're
+  // for (Tom, 2026-10-27: the season 2 draft, as the draft show already says, not S1).
   const joined = !j ? 'Never signed'
     : j.how === 'founding' ? mk('span', '', ['Founding squad, ', t(j.teamId)])
-      : j.how === 'draft' ? mk('span', '', [`${j.round === 1 ? `No. ${j.pick} pick` : `Round ${j.round} pick ${j.pick}`}, `, t(j.teamId), `, S${j.season}`])
-        : mk('span', '', ['Signed by ', t(j.teamId), `, S${j.season}`]);
+      : j.how === 'draft' ? mk('span', '', [`${j.round === 1 ? `No. ${j.pick} pick` : `Round ${j.round} pick ${j.pick}`}, `, t(j.teamId), `, S${j.season + 1}`])
+        : mk('span', '', ['Signed by ', t(j.teamId), `, S${j.season + 1}`]);
   const head = [
     back,
     mk('div', 'card-name', [c.name]),

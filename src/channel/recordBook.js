@@ -66,7 +66,7 @@ export function seasonPage(chronicle, season, players) {
  * The all-time records the mock-up shows, from records.js, with names. "(SEASON)" lists count the regular season (as
  * the leaders do, Task 141); "(CAREER)" lists count the playoffs too.
  * @param {Chronicle} chronicle @param {Record<string, any>} players
- * @param {{ listLength: number, seasonMinFaced: number, careerMinFaced: number }} options  data/chronicle.json records
+ * @param {{ listLength: number, seasonMinFaced: number, careerMinFaced: number, careerMinFacedPerSeason: number }} options  data/chronicle.json records
  * @param {{ n?: number }} [o]  How many of each to list.
  */
 export function allTimeRecords(chronicle, players, options, { n = 5 } = {}) {

@@ -56,12 +56,15 @@ function top(list, n) {
  * Every record, as of the end of season `upTo` (the chronicle's latest by default; the channel passes the last season
  * that has aired, since the log runs ahead of the screen).
  * @param {Chronicle} chronicle
- * @param {{ listLength: number, seasonMinFaced: number, careerMinFaced: number }} options  data/chronicle.json records
+ * @param {{ listLength: number, seasonMinFaced: number, careerMinFaced: number, careerMinFacedPerSeason: number }} options  data/chronicle.json records
  * @param {{ upTo?: number }} [o]
  */
 export function records(chronicle, options, { upTo = Infinity } = {}) {
-  const { listLength: n, seasonMinFaced, careerMinFaced } = withoutComments(options);
+  const { listLength: n, seasonMinFaced, careerMinFaced: careerMax, careerMinFacedPerSeason } = withoutComments(options);
   const seasons = [...chronicle.seasons.values()].filter((s) => s.season <= upTo);
+  // A career's save percentage needs careerMinFacedPerSeason a finished season, up to careerMinFaced (Tom, 2026-10-27:
+  // after two seasons nobody had faced 500, so the list was empty); at least one season's worth.
+  const careerMinFaced = Math.min(careerMax, careerMinFacedPerSeason * Math.max(1, seasons.filter((s) => s.championId).length));
   const matches = seasons.flatMap((s) => s.matchIds.map((id) => /** @type {import('./chronicle.js').MatchRecord} */ (chronicle.matches.get(id))));
   const players = [...chronicle.players.values()];
 

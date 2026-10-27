@@ -15,10 +15,11 @@
     "saves": 15
   },
   "records": {
-    "_comment": "listLength: how many in each record list. Save percentage needs at least seasonMinFaced shots on target faced in a regular season, careerMinFaced over a career.",
+    "_comment": "listLength: how many in each record list. Save percentage needs at least seasonMinFaced shots on target faced in a regular season, and over a career careerMinFacedPerSeason a finished season up to careerMinFaced (Tom, 2026-10-27: a busy keeper faces about 140 to 165 a season, so after two seasons nobody had 500 and the list was empty; 200 then, 500 from season 5).",
     "listLength": 10,
     "seasonMinFaced": 60,
-    "careerMinFaced": 500
+    "careerMinFaced": 500,
+    "careerMinFacedPerSeason": 100
   },
   "latest": {
     "_comment": "What makes LATEST (Task 220; docs/channel.md §20.3): a match of matchGoals goals, matchAssists assists or matchSaves saves (50 seasons of seed 'lat': 6.6, 2.0 and 1.1 a season; 4 goals came 17 times a season), a run of winRun wins or winlessRun games without a win (1.1 and 1.5), every milestone but games, which only from appearancesFrom (1.5 a season; the 100th comes 4.4 times), the Pennant, the playoff places and the Cup: about 25 lines a season, so the week fits.",

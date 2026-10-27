@@ -84,7 +84,8 @@ export function drawLottery(ctx, R, t, view, beats, o) {
   ctx.fillRect(b.x, b.y, b.w, h);
   ctx.fillStyle = PALETTE.accent;
   ctx.fillRect(b.x, b.y, b.w, 2);
-  text(ctx, `DRAFT LOTTERY · SEASON ${o.season}`, b.x + 6, b.y + 5, 11, PALETTE.accent, { max: b.w - 12 });
+  // The coming season's draft, as the draft's own card says (Tom, 2026-10-27).
+  text(ctx, `DRAFT LOTTERY · SEASON ${o.season + 1}`, b.x + 6, b.y + 5, 11, PALETTE.accent, { max: b.w - 12 });
   text(ctx, 'ODDS FOR NO. 1', b.x + 6, b.y + 18, 9, PALETTE.panelMuted);
   const oddsH = Math.round(14 * k);
   view.odds.forEach((od, i) => {

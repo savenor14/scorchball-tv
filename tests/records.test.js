@@ -147,3 +147,13 @@ test('records broken (Task 220b): each passes someone else\'s best, in order, on
   const lastGoals = chronicle.recordsBroken.filter((r) => r.scope === 'career' && r.stat === 'goals').at(-1);
   if (lastGoals) assert.ok(lastGoals.value <= top);
 });
+
+test("career save percentage: the shots faced it needs grow a finished season at a time up to the full mark (Tom, 2026-10-27)", () => {
+  const { careerMinFaced, careerMinFacedPerSeason } = opts;
+  for (const upTo of [1, 2, 3, 6, SEASONS]) {
+    const need = Math.min(careerMinFaced, careerMinFacedPerSeason * upTo);
+    const list = records(chronicle, opts, { upTo }).career.savePct;
+    for (const x of list) assert.ok(/** @type {number} */ (x.faced) >= need, `S${upTo}: ${x.faced} faced, ${need} needed`);
+    if (upTo === 2) assert.ok(list.length > 0, 'keepers listed after two seasons');
+  }
+});

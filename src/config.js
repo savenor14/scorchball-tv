@@ -547,7 +547,7 @@ const RULEBOOK_SCHEMA = obj({
 const CHRONICLE_SCHEMA = obj({
   milestones: obj({ goals: int(1), assists: int(1), appearances: int(1), saves: int(1), stops: int(1) }),
   notableMatch: obj({ goals: int(1), assists: int(1), saves: int(1) }),
-  records: obj({ listLength: int(1, 100), seasonMinFaced: int(0), careerMinFaced: int(0) }),
+  records: obj({ listLength: int(1, 100), seasonMinFaced: int(0), careerMinFaced: int(0), careerMinFacedPerSeason: int(0) }),
   latest: obj({ matchGoals: int(1), matchAssists: int(1), matchSaves: int(1), winRun: int(2), winlessRun: int(2), appearancesFrom: int(1) }),
   history: obj({ droughtSeasons: int(2), recordsFrom: int(1) }),
   careerCard: obj({ minSeasons: int(1), milestoneWithin: num(0, 1) }),
