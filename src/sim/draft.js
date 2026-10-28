@@ -85,10 +85,24 @@ export function runDraft(league, config, rng, emit, order, prospects, needs = ne
   let pick = 0;
   /** @type {{ teamId: string, playerId: string, round: number, pick: number }[]} */
   const picks = [];
+  // The rookie rule in the draft (Tom, 2026-10-28; rookieFit, 0 until season 4's rules): every pick leans to where a
+  // rookie would take the place of the team's weakest starter, not its star, since the rule starts a rookie at his own
+  // position (match.js startRookies; in season 3 the Royale's two rookie strikers kept O. Beaucourt on the bench). Both
+  // picks, as either may be the rookie who starts (the first alone barely helped: a round 2 striker still started).
+  const lineup = withoutComments(rules.roster.lineup);
+  const lean = (/** @type {string} */ teamId) => {
+    /** The weakest starter's rating at each position: the lineup[P]-th best natural there, 0 if there aren't enough. */
+    const weakest = Object.fromEntries(Object.entries(lineup).map(([pos, n]) => [pos, league.teams[teamId].roster.map((/** @type {string} */ id) => league.players[id])
+      .filter((/** @type {import('./players.js').Player} */ q) => q.position === pos).map((/** @type {import('./players.js').Player} */ q) => overall(q, positions))
+      .sort((/** @type {number} */ a, /** @type {number} */ b) => b - a)[/** @type {number} */ (n) - 1] ?? 0]));
+    const mean = Object.values(weakest).reduce((a, b) => a + b, 0) / Object.keys(weakest).length;
+    return (/** @type {string} */ pos) => d.rookieFit * (mean - (weakest[pos] ?? mean));
+  };
   for (let round = 1; round <= d.rounds; round++) {
     for (const teamId of round === 1 ? order : laterOrder) {
       if (available.length === 0) return picks;
       pick++;
+      const leanTo = d.rookieFit > 0 ? lean(teamId) : () => 0;
       const short = shortPositions(league, teamId, rules);
       // Teams lean towards players from their own region (Task 176, Tom: a local academy, so identities hold).
       const home = league.teams[teamId].region;
@@ -98,7 +112,7 @@ export function runDraft(league, config, rng, emit, order, prospects, needs = ne
         const scouted = p.potential + rng.normal(0, d.scoutingNoise);
         const value = d.potentialWeight * scouted + (1 - d.potentialWeight) * overall(p, positions)
           + (short.has(p.position) ? d.needBonus : 0) + (p.region === home ? rules.roster.localBonus : 0)
-          + rules.roster.styleWeight * styleFit(p, league.teams[teamId], positions) + (needs.get(teamId)?.[p.position] ?? 0);
+          + rules.roster.styleWeight * styleFit(p, league.teams[teamId], positions) + (needs.get(teamId)?.[p.position] ?? 0) + leanTo(p.position);
         if (value > bestValue) {
           best = p;
           bestValue = value;

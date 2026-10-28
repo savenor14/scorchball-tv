@@ -137,6 +137,8 @@
     "lotteryWeights": [40, 30, 20, 10],
     "_laterRounds": "The order of the rounds after the first (Tom's note, 2026-10-25): lottery, the first round's order again (seasons 1 to 3); table, the regular season's table in reverse, worst first, however the lottery or the playoffs went (from season 3's off-season, data/ruleChanges.json).",
     "laterRounds": "lottery",
+    "_rookieFit": "The rookie rule in the draft (Tom, 2026-10-28): each pick leans to the positions where a rookie would replace its weakest starter, by rookieFit points for each rating point that position's weakest starter sits below the team's average weakest starter (and away from its strongest). 0: off (seasons 1 to 3); on from season 3's off-season (data/ruleChanges.json).",
+    "rookieFit": 0,
     "scoutingNoise": 6,
     "potentialWeight": 0.7,
     "needBonus": 8,

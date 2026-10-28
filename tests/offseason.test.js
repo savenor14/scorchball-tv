@@ -330,3 +330,27 @@ test("from season 3's off-season (Tom, 2026-10-25): the draft's second round by 
   }
   for (const { report, record } of seasons.slice(2)) assert.deepEqual(report.draft.slice(8).map((p) => p.teamId), [...record.table].reverse().map((r) => r.teamId));
 });
+
+test("the rookie rule in the draft (Tom, 2026-10-28): from season 4's rules a pick leans to where a rookie would replace the weakest starter", () => {
+  assert.equal(seasonConfig(config, 3).rules.draft.rookieFit, 0);
+  assert.ok(seasonConfig(config, 4).rules.draft.rookieFit > 0);
+  const league = structuredClone(three.league);
+  const teamId = Object.keys(league.teams)[0];
+  const lineup = /** @type {Record<string, number>} */ (Object.fromEntries(Object.entries(rules.roster.lineup).filter(([k]) => !k.startsWith('_'))));
+  const weakest = (/** @type {string} */ pos) => league.teams[teamId].roster.map((/** @type {string} */ id) => league.players[id])
+    .filter((/** @type {any} */ q) => q.position === pos).map((/** @type {any} */ q) => overall(q, positions)).sort((a, b) => b - a)[lineup[pos] - 1] ?? 0;
+  const outfield = Object.keys(lineup).filter((p) => p !== positions.keeper).sort((a, b) => weakest(a) - weakest(b));
+  const [weak, strong] = [outfield[0], outfield.at(-1)];
+  assert.ok(weakest(strong) > weakest(weak), `${strong} ${weakest(strong)} over ${weak} ${weakest(weak)}`);
+  // Two prospects alike but for their position: the one at the team's weak spot is taken, with the lean on.
+  const like = /** @type {any} */ (Object.values(league.players).find((p) => p.status === 'active'));
+  const make = (/** @type {string} */ id, /** @type {string} */ position) => ({ ...structuredClone(like), id, position, teamId: null, draft: null, region: 'nowhere', attributes: Object.fromEntries(Object.keys(like.attributes).map((k) => [k, 50])), potential: 70 });
+  const pick = (/** @type {number} */ rookieFit) => {
+    const lg = structuredClone(league);
+    const cfg = { ...config, rules: { ...rules, draft: { ...rules.draft, rookieFit, scoutingNoise: 0 }, roster: { ...rules.roster, styleWeight: 0 } } };
+    const prospects = [make('px-strong', strong), make('px-weak', weak)];
+    for (const p of prospects) lg.players[p.id] = p;
+    return runDraft(lg, cfg, createRng('rookie-fit'), () => {}, [teamId], prospects)[0].playerId;
+  };
+  assert.equal(pick(5), 'px-weak');
+});

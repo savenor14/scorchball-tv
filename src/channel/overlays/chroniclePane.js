@@ -286,6 +286,9 @@ export function createChroniclePane({ pane, live, config, now, onChange }) {
     const given = new Map(chronicle.season(s).awards.map((x) => [x.award, x.playerId]));
     const aired = config.settings.awards.order.filter((/** @type {string} */ id) => given.has(id));
     if (aired.length) out.push(sub('AWARDS'), ...list(aired.map((/** @type {string} */ id) => row(`${px(34)} 1fr`, [muted(awardTitle[id]), pl(/** @type {string} */ (given.get(id)))]))));
+    // The No. 1 pick of the draft before it (Tom, 2026-10-28: who they were, a click away), from season 2 on.
+    const first = s > 1 ? [...chronicle.players.values()].find((x) => x.joined?.how === 'draft' && x.joined.season === s - 1 && x.joined.round === 1 && x.joined.pick === 1) : null;
+    if (first) out.push(sub('NO. 1 PICK'), row(`1fr ${px(18)}`, [pl(first.id), t(/** @type {string} */ (first.joined?.teamId))]));
     for (const [title, xs] of /** @type {const} */ ([['GOALS', p.regular.goals], ['ASSISTS', p.regular.assists], ['PLAYOFF GOALS', p.playoffLeaders.goals]])) {
       out.push(sub(title), ...list(xs.map((l) => row(`1fr ${px(12)}`, [pl(l.playerId), right(l.value)]))));
     }

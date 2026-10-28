@@ -352,6 +352,7 @@ const RULES_SCHEMA = obj({
     extraProspects: int(0),
     lotteryWeights: arrayOf(num(0), { minLength: 1 }),
     laterRounds: oneOf('lottery', 'table'),
+    rookieFit: num(0, 5),
     scoutingNoise: num(0),
     potentialWeight: prob(),
     needBonus: num(0, 50),

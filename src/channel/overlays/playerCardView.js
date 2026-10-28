@@ -43,10 +43,12 @@ export function playerCardBody(doc, { chronicle, config, league, playerId, backL
   // Who they are.
   const back = mk('div', 'card-back', [`‹ ${backLabel}`]);
   back.addEventListener('click', onBack);
+  // A rookie's amber R beside the position, as on the team card (Tom, 2026-10-28).
+  const pos = c.rookie ? [c.positionName, mk('span', 'tc-rookie', ['R'])] : [c.positionName];
   const where = c.retired
     ? mk('div', 'm', [`${c.positionName} · retired S${c.retired.season}`])
-    : c.status === 'reserves' && c.teamId ? mk('div', 'm', [`${c.positionName} · `, t(c.teamId), ' reserves'])
-      : c.teamId ? mk('div', 'm', [`${c.positionName} · `, t(c.teamId)]) : mk('div', 'm', [`${c.positionName} · free agent`]);
+    : c.status === 'reserves' && c.teamId ? mk('div', 'm', [...pos, ' · ', t(c.teamId), ' reserves'])
+      : c.teamId ? mk('div', 'm', [...pos, ' · ', t(c.teamId)]) : mk('div', 'm', [...pos, ' · free agent']);
   const standing = c.legend
     ? mk('div', 'card-standing legend', ['LEGEND'])
     : c.standing ? mk('div', 'card-standing', [c.standing.words]) : mk('div', '', []);

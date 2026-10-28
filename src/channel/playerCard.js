@@ -5,6 +5,7 @@
 import { withoutComments } from '../util.js';
 import { legendWhy } from '../chronicle/notable.js';
 import { statOf } from '../chronicle/chronicle.js';
+import { seasonConfig } from '../sim/rules.js';
 
 export const POSITION_NAME = /** @type {Record<string, string>} */ ({ K: 'KEEPER', D: 'DEFENDER', M: 'MIDFIELDER', S: 'STRIKER' });
 
@@ -88,6 +89,9 @@ export function playerCard(chronicle, config, playerId) {
     age: ageAt - p.birthSeason,
     region: regions[p.region] ?? p.region,
     joined: p.joined,
+    // A rookie this season, as the team card marks them (Tom, 2026-10-28): drafted, no season before this one, while the
+    // rookie rule is in force.
+    rookie: !p.retired && p.joined?.how === 'draft' && seasonConfig(config, Math.max(1, now)).rules.roster.rookieStarters > 0 && !seasons.some((s) => s < now),
     moves: p.moves,
     standing: p.retired ? null : standingIn(chronicle, opts, p.id, seasons.includes(now) ? now : now),
     legend: legendWhy(chronicle, opts, p.id),
