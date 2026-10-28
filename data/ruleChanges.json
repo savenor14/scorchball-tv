@@ -20,6 +20,13 @@
       "reason": "Clubs draft with the rookie rule in mind, so a rookie's start costs a side its weakest link rather than its star.",
       "_comment": "Tom, 2026-10-28 (fix B; docs/simulation.md, the draft): in season 3 the Royale's only rookies were both strikers, so the rule benched O. Beaucourt, the league's top scorer. Season 4's rules run season 3's off-season draft, so nothing published changes. Measured (4 leagues x 20 seasons): a rookie keeping the team's best outfielder on the bench 7.8% of team-matches to 4.5%, an 85+ player 11.9% to 5.2%; every balance target met; over 40 seasons a slight tilt to strong sides (most Cups by one club 8.8 to 9.3, target 9; kept, Tom). Stronger (3) cost more parity; the first pick alone barely helped.",
       "changes": { "draft": { "rookieFit": 2 } }
+    },
+    {
+      "id": "teammate_assists",
+      "season": 4,
+      "reason": "The League's scorers credit the assist to the last teammate to move the ball on before the scorer, and none on a free shot.",
+      "_comment": "Tom, 2026-10-28 (docs/simulation.md, assists): only 58% of goals had an assist, as the last player to move the ball on was often the scorer. Only who is credited changes, never a result. Measured (3 leagues x 10 seasons): 79% assisted; the Compass's winner changes in about 4 seasons in 10, still a midfielder; player of the match in about 6% of matches. LATEST's four-assist matches about 2 a season to 4, kept (Tom: still rare).",
+      "changes": { "match": { "assists": "teammate" } }
     }
   ]
 }

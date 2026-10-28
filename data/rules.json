@@ -8,7 +8,9 @@
     "breakawaySeconds": { "min": 2, "max": 4 },
     "maxSubstitutions": 4,
     "homeBonus": 1.2,
-    "shorthandedPenalty": 4
+    "shorthandedPenalty": 4,
+    "_assists": "Who gets the assist (Tom, 2026-10-28). lastAdvance: the last player in the team's spell on the ball to move it on (up a zone, or working the chance in the attacking zone), none when that was the scorer; a free shot keeps the last one's from before the foul. teammate: the last teammate other than the scorer to move it on in that spell, as football credits the pass before the goal; none on a free shot, nor when the scorer moved it on alone or the ball was won in the attacking zone. Only who is credited: no results change.",
+    "assists": "lastAdvance"
   },
   "heat": {
     "_comment": "Heat 0–100. Burn at 100. Penalties/bonuses are in rating points, scaled by (1 - composure/99).",

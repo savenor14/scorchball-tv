@@ -284,6 +284,7 @@ const RULES_SCHEMA = obj({
     maxSubstitutions: int(0),
     homeBonus: num(0, 20),
     shorthandedPenalty: num(0, 50),
+    assists: oneOf('lastAdvance', 'teammate'),
   }),
   heat: obj({
     burnSeconds: num(1),

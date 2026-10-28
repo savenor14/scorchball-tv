@@ -245,6 +245,8 @@ class MatchSim {
     this.lastCarrier = null;
     /** @type {OnPitch | null} */
     this.lastAdvancer = null;
+    /** The last teammate before lastAdvancer to move the ball on in this spell (rules.match.assists 'teammate'). @type {OnPitch | null} */
+    this.priorAdvancer = null;
     this.goalThisPeriod = false;
     /** momentum (Task 236): the team that has it, from when (full) to when (gone), game seconds. @type {{ side: Side, from: number, until: number } | null} */
     this.momentum = null;
@@ -396,7 +398,7 @@ class MatchSim {
         this.restart = false;
         const from = this.zone;
         this.zone = NEXT_ZONE[from];
-        this.lastAdvancer = carrier;
+        this.advancedBy(carrier);
         // Through into the attacking zone with nobody challenging: if they also outrun the defence, a breakaway.
         const opp = this.other(side);
         const chaser = !contested && this.zone === 'attacking'
@@ -428,7 +430,7 @@ class MatchSim {
     if (open || this.challenge(carrier, true) === 'won') {
       this.quality += t.workItQuality;
       this.inRange = true;
-      this.lastAdvancer = carrier;
+      this.advancedBy(carrier);
     }
   }
 
@@ -556,7 +558,7 @@ class MatchSim {
       stats.scorchers++;
       this.stat(side).scorchers++;
     }
-    const assister = this.lastAdvancer && this.lastAdvancer.player !== shooter.player ? this.lastAdvancer : null;
+    const assister = this.assisterFor(shooter, free);
     if (assister) this.statsFor(assister.player, side).assists++;
     this.goalThisPeriod = true;
     this.emitAt('goal', {
@@ -567,6 +569,27 @@ class MatchSim {
     });
     if (hot) this.gainMomentum(side, 'scorcher');
     this.changePossession(opp, 'defensive', 'goal', null);
+  }
+
+  /** A carrier moved the ball on (up a zone, or worked the chance). @param {OnPitch} carrier */
+  advancedBy(carrier) {
+    if (this.lastAdvancer && this.lastAdvancer.player !== carrier.player) this.priorAdvancer = this.lastAdvancer;
+    this.lastAdvancer = carrier;
+  }
+
+  /**
+   * Who gets a goal's assist (rules.match.assists, Tom 2026-10-28): the last to move the ball on, or under 'teammate'
+   * the last teammate other than the scorer to, none on a free shot. Only who is credited: no randomness drawn.
+   * @param {OnPitch} shooter @param {boolean} free
+   * @returns {OnPitch | null}
+   */
+  assisterFor(shooter, free) {
+    const last = this.lastAdvancer;
+    if (this.rules.match.assists !== 'teammate') return last && last.player !== shooter.player ? last : null;
+    if (free) return null;
+    if (last && last.player !== shooter.player) return last;
+    const prior = this.priorAdvancer;
+    return prior && prior.player !== shooter.player ? prior : null;
   }
 
   /**
@@ -687,6 +710,7 @@ class MatchSim {
     side.onPitch = side.onPitch.map((e) => (e === outgoing ? entry : e));
     if (this.lastCarrier === outgoing) this.lastCarrier = entry;
     if (this.lastAdvancer === outgoing) this.lastAdvancer = null;
+    if (this.priorAdvancer === outgoing) this.priorAdvancer = null;
     this.statsFor(incoming, side);
     this.emitAt('substitution', {
       teamId: side.teamId,
@@ -776,6 +800,7 @@ class MatchSim {
     this.breakaway = false;
     this.lastCarrier = null;
     this.lastAdvancer = null;
+    this.priorAdvancer = null;
   }
 
   /**
