@@ -5,6 +5,7 @@
 // and its levels work exactly as on the desktop. LEVELS opens the four switches beside it; FULL SCREEN fills the phone
 // and holds it sideways; held upright, a card asks to turn the phone.
 import { buttonHeight, phoneBands } from '../phone.js';
+import { TABS } from '../sidePanel.js';
 import { buttonIcon } from './buttons.js';
 import { $, el } from './dom.js';
 
@@ -24,6 +25,8 @@ const pixelIcon = (rows) => `<svg viewBox="0 0 9 9" shape-rendering="crispEdges"
 
 /** The side panel's views, in its tabs' order. */
 const VIEWS = /** @type {const} */ (['stats', 'table', 'top', 'week']);
+/** A view's name as its tab says it (the week view is GAMES since 2026-10-27, Tom). @param {string} id */
+const viewLabel = (id) => TABS.find((t) => t.id === id)?.label ?? id.toUpperCase();
 /** The panes, in the button row's order (buttons.js BUTTONS). */
 const PANES = /** @type {const} */ (['guide', 'rulebook', 'chronicle', 'audience', 'about']);
 /** The levels' switches (levels.js). */
@@ -115,7 +118,7 @@ export function createPhoneControls({ layout, toggleLayout, soundOn, toggleSound
     // Two lines when it's long (Tom: EXIT FULL beside FULL was confusing).
     fullscreen: { label: () => (document.fullscreenElement ? 'EXIT FULL SCREEN' : 'FULL SCREEN'), icon: () => pixelIcon(document.fullscreenElement ? ICONS.exit : ICONS.fullscreen), tap: () => { void fullScreen(); }, state: () => '' },
     layout: { label: () => (layout() === 'full' ? 'BROADCAST' : 'FULL'), icon: () => document.querySelector(layout() === 'full' ? '#bug-layout .to-broadcast' : '#bug-layout .to-full')?.outerHTML ?? '', tap: () => { levels.hidden = true; toggleLayout(); }, state: () => '' },
-    ...Object.fromEntries(VIEWS.map((id) => [id, { label: () => id.toUpperCase(), icon: () => pixelIcon(ICONS[id]), tap: () => choose(id), state: () => (chosen() === id ? 'lit' : '') }])),
+    ...Object.fromEntries(VIEWS.map((id) => [id, { label: () => viewLabel(id), icon: () => pixelIcon(ICONS[id]), tap: () => choose(id), state: () => (chosen() === id ? 'lit' : '') }])),
     ...Object.fromEntries(['guide', 'rulebook', 'chronicle'].map((id) => [id, { label: () => (id === 'guide' ? 'SCHEDULE' : id.toUpperCase()), icon: () => buttonIcon(id), tap: () => choose(id), state: () => (chosen() === id ? 'lit' : '') }])),
   };
 
@@ -184,7 +187,7 @@ export function createPhoneControls({ layout, toggleLayout, soundOn, toggleSound
     for (const b of /** @type {NodeListOf<HTMLElement>} */ (levels.querySelectorAll('.phone-lv'))) {
       b.classList.toggle('on', Boolean(levelSwitch(/** @type {string} */ (b.dataset.id))?.classList.contains('on')));
     }
-    const view = openView().toUpperCase();
+    const view = viewLabel(openView());
     if (sideHead.textContent !== view) sideHead.textContent = view;
     turn.hidden = innerHeight <= innerWidth;
     if (soundOn()) heard = true;
