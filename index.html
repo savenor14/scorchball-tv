@@ -780,7 +780,7 @@
     :is(#card, #card-ghost).glass h3 { margin: 0 calc(var(--px) * -10) calc(var(--px) * 6); padding: calc(var(--px) * 4) calc(var(--px) * 10); font-size: calc(var(--px) * 11); color: var(--panel); background: linear-gradient(100deg, var(--accent) 0 70%, transparent 70.2%); }
     :is(#card, #card-ghost).glass h3.hot { color: var(--panel); background: linear-gradient(100deg, var(--heat-hot) 0 70%, transparent 70.2%); }
     /* The big matches promoted (Tom's pick C, the poster; bigmatches.html): a fire-red column with the event stacked large */
-    :is(#card, #card-ghost).glass.card-promo { padding: 0; }
+    :is(#card, #card-ghost).glass:is(.card-promo, .card-preview_open, .card-finals_open) { padding: 0; } /* the previews' openings are posters too */
     .promo { display: grid; grid-template-columns: calc(var(--px) * 96) 1fr; height: 100%; }
     .promo-col { background: linear-gradient(170deg, #e2471b 0%, #a3200f 55%, #4d0b07 100%); color: #fff; padding: calc(var(--px) * 8) calc(var(--px) * 7); display: flex; flex-direction: column; box-shadow: inset calc(var(--px) * -1) 0 0 var(--accent); }
     .promo-col .w { font-size: calc(var(--px) * 20); line-height: calc(var(--px) * 17); font-weight: 700; text-shadow: 0 var(--px) 0 #4d0b07; }
