@@ -92,9 +92,10 @@ export function refereeSpot(ball) {
  * The referee through a match.
  * @param {import('./timeline.js').Timeline} timeline
  * @param {{ at: (e: number) => import('./motion.js').Pose | null, freeShotAt?: import('./motion.js').Motion['freeShotAt'], foulAt?: import('./motion.js').Motion['foulAt'] }} motion
- * @param {{ refereeTrackMs: number, refereeSignalMs: number, runSpeed?: number }} animation
+ * @param {{ refereeTrackMs: number, refereeSignalMs: number, runSpeed?: number, shootout?: { walkSpeed: number } }} animation
+ *   shootout.walkSpeed: the referee walks to their shootout spot at the players' pace (Tom, 2026-11-01: they ran).
  */
-export function createReferee(timeline, motion, { refereeTrackMs, refereeSignalMs, runSpeed = 0.11 }) {
+export function createReferee(timeline, motion, { refereeTrackMs, refereeSignalMs, runSpeed = 0.11, shootout }) {
   const freePauses = timeline.pauses.filter((q) => q.kind === 'free_shot');
   const foulPauses = timeline.pauses.filter((q) => q.kind === 'foul');
   /** @type {Map<number, { x: number, y: number }>} */
@@ -132,6 +133,14 @@ export function createReferee(timeline, motion, { refereeTrackMs, refereeSignalM
    */
   function at(e) {
     const arm = signals.some((s) => e >= s && e < s + refereeSignalMs);
+    // A shootout: from where overtime left them, walking to their spot on the goal line (Tom, 2026-11-01).
+    const soAt = timeline.shootoutBreakAt;
+    if (soAt >= 0 && e >= soAt && e < timeline.duration && shootout) {
+      const from = following(soAt);
+      const walk = (dist(from, REF_SHOOTOUT_LINE) * 1000) / shootout.walkSpeed;
+      const k = Math.min(1, (e - soAt) / Math.max(1, walk));
+      return { ...lerp(from, REF_SHOOTOUT_LINE, k * k * (3 - 2 * k)), arm };
+    }
     // A free shot's pause, or just after one (Task 143).
     const q = freePauses.find((p) => e >= p.at && e < p.at + p.ms + FREE_BLEND_MS);
     const f = q && motion.freeShotAt ? motion.freeShotAt(q.at) : null;

@@ -18,7 +18,10 @@
     "foulPauseSeconds": 3,
     "pauseAllowanceMinutes": 5,
     "overtimeBreakRealMinutes": 0.75,
-    "shootoutKickRealSeconds": 8
+    "shootoutKickRealSeconds": 8,
+    "_shootout": "Tom, 2026-11-01: the break before a shootout is its own, shootoutBreakRealSeconds (it was the overtime break's 45 s, a long wait once the players had walked to their spots); the first kick comes shootoutKickRealSeconds after it. The final whistle comes shootoutWhistleSeconds after the deciding kick (the crowd and the closing line with it; they waited a goal's pause), the winners still celebrating for the rest of that pause before the match ends.",
+    "shootoutBreakRealSeconds": 15,
+    "shootoutWhistleSeconds": 2.5
   },
   "calendar": {
     "_comment": "Regular-season matches play one at a time, evenly spaced from firstKickoff up to finalRoundKickoff. With finalRoundSimultaneous, the last round's matches all kick off at finalRoundKickoff.",
@@ -118,7 +121,7 @@
     "refereeSignalMs": 1500,
     "managerTrackMs": 4000,
     "_shootout": "Task 277b (Tom: players should move about as each kicker sets up): the shootout staged (Tom's pick B on shootouts.html; the old standing lines removed in the clean-up, 2026-10-21). Each player keeps a spot near the centre circle (keepers by the box); the next taker walks at walkSpeed (pitch lengths per real second) to just behind the mark, stands standMs, runs up over runUpMs and strikes; the keepers take turns in goal, bouncing on the line (bounce, a share of the pitch's width, every bounceMs) and diving; the ball rolls back to the mark over returnMs; the waiting players mill about by mill (a share of the pitch's width); a team that scores puts its arms up for celebrateMs; after the last kick the winners cheer and the losers hold their heads.",
-    "shootout": { "walkSpeed": 0.08, "standMs": 900, "runUpMs": 500, "returnMs": 1200, "celebrateMs": 1800, "bounceMs": 700, "bounce": 0.025, "mill": 0.012 }
+    "shootout": { "walkSpeed": 0.05, "standMs": 900, "runUpMs": 500, "returnMs": 1200, "celebrateMs": 1800, "bounceMs": 700, "bounce": 0.025, "mill": 0.012 }
   },
   "poses": {
     "_comment": "Livelier players (Task 120; docs/channel.md §17.4), visual only: the sim and where players are don't change. Speeds are in pitch lengths per real second, read from where each player was at 100 ms marks on the match clock (sampleMs), so every screen agrees. The run: below walkSpeed both feet down; four steps (both down, left up, both down, right up), a step every stepMs[0] at walkSpeed easing to stepMs[1] at sprintSpeed and faster, sprinting kicking the free foot back and pumping the arms. The ball at the carrier's feet goes to the side they're heading once they've moved that way faster than footSpeed over footMs[0] (or footMs[1], for slow drifts); otherwise toward the goal they attack. Kicks: as a pass sets off, kickMs; a shot, shotKickMs (leaning in). A keeper's dive at a shot saved or scored: the leap from diveLeadMs before it lands for diveLeadMs + diveMs, then kneeMs on one knee. Turf kicked up (flecks): turfStride behind each sprinting step, turfTurn when a runner faster than turnSpeed changes direction or the ball changes feet, turfKick at a pass, turfShot at a shot, turfDive where a keeper lands.",
@@ -311,8 +314,10 @@
   },
   "captions": {
     "_comment": "How long lower-third captions stay on screen, in real milliseconds. Goals stay longer. alertMs: goal alerts from other live matches (final round). calloutMs: the on-pitch speech bubbles (TACKLE!, SAVE!, FOUL! …). subCalloutMs: the SUB ON bubble over a player coming on, shown alongside them. quoteCharsPerSecond: how fast the player of the match's quote types out in its speech bubble. recordMs (Task 220b): a record falling has the caption bar to itself this long, after the goal's caption when it's a goal or an assist.",
+    "_queue": "Tom, 2026-11-01: captions follow each other rather than the newest wiping out the one showing. A goal (or a scorcher, a golden goal) cuts in at once; a period card or a shootout kick cuts in over a lesser one; any other waits its turn, its time shortened by its wait but shown at least queueMinMs, and dropped if its whole time has passed. A substitution stays up until the whistle restarts play (its pause), a free shot from the foul until captions.ms after the shot.",
     "ms": 3500,
     "goalMs": 6000,
+    "queueMinMs": 1500,
     "recordMs": 7000,
     "alertMs": 6000,
     "calloutMs": 1200,

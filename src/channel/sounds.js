@@ -8,7 +8,7 @@
 //   - the motion: a kick whenever the ball leaves a player's feet (passes, which aren't events), found on a fixed grid
 //     so the answer doesn't depend on the frame rate.
 // The crowd's reactions come in Task 52.
-import { missNearPost } from './motion.js';
+import { missNearPost, shootoutMissSaved } from './motion.js';
 
 /** The grid the motion is checked on for kicks, ms of match time. */
 const KICK_GRID_MS = 50;
@@ -56,11 +56,15 @@ export function eventCues(timeline, { matchId, shotMs }) {
       case 'substitution': add('whistle', at, { blast: 'short' }); break;
       case 'shootout_kick':
         add('shot', Math.max(0, at - shotMs), { power: 0.8 });
-        add(data.scored ? 'net' : 'save', at, data.scored ? {} : { held: true });
+        // A miss is a save only when the keeper reaches it (Tom, 2026-11-01: a kick wide played a save).
+        if (data.scored) add('net', at);
+        else if (shootoutMissSaved(matchId, e.seq)) add('save', at, { held: true });
         break;
       default: break;
     }
   }
+  // The end of overtime before a shootout (Tom, 2026-11-01: nothing marked it): a long blast.
+  if (timeline.shootoutBreakAt >= 0) add('whistle', timeline.shootoutBreakAt, { blast: 'long' });
   // Play restarting after a substitution (Tom, 2026-10-20): a short whistle as its pause ends and the clock runs again,
   // unless a whistle is already blowing then.
   for (const q of timeline.pauses) {

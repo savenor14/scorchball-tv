@@ -1,6 +1,8 @@
 // Lower-third captions: which one is on screen at a moment in a match. Pure and DOM-free. See docs/channel.md §6.
-// A caption appears when its event happens on screen and stays for settings.captions.ms (goals: goalMs).
-// The newest caption wins, except that a lesser one never cuts a goal (or the half-time/full-time card) short.
+// A caption appears when its event happens on screen and stays for settings.captions.ms (goals: goalMs; a substitution
+// until play restarts, a free shot from its foul). They follow each other (Tom, 2026-11-01: a free shot's caption was
+// wiped out by a substitution's straight after): a goal cuts in, a period card or a shootout kick cuts in over a lesser
+// one, the rest wait their turn (captionSchedule).
 
 /**
  * @typedef {object} Caption
@@ -13,7 +15,9 @@
  */
 
 /** Higher wins while both are showing. */
-const PRIORITY = /** @type {const} */ ({ record: 4, goal: 3, scorcher: 3, period: 2, shootout: 2, burn: 1, free_shot: 1, substitution: 1, injury: 1 });
+const PRIORITY = /** @type {Record<string, number>} */ ({ record: 4, golden: 3, goal: 3, scorcher: 3, period: 2, shootout: 2, burn: 1, free_shot: 1, substitution: 1, injury: 1 });
+/** Goals cut in even over each other. */
+const CUTS_ANY = 3;
 
 /**
  * A record falling on screen (Task 220b): when, and what the caption says.
@@ -23,7 +27,7 @@ const PRIORITY = /** @type {const} */ ({ record: 4, goal: 3, scorcher: 3, period
 /**
  * @param {import('./timeline.js').Timeline} timeline
  * @param {number} elapsed  ms since kick-off.
- * @param {{ playerName: (id: string) => string, teamName: (id: string) => string, captions: { ms: number, goalMs: number, recordMs: number }, records?: RecordCaption[] }} ctx
+ * @param {{ playerName: (id: string) => string, teamName: (id: string) => string, captions: { ms: number, goalMs: number, queueMinMs: number, recordMs: number }, records?: RecordCaption[] }} ctx
  *   records: the match's records falling (recordCaptions); each has the caption bar to itself for captions.recordMs.
  * @returns {Caption | null}
  */
@@ -32,23 +36,71 @@ export function captionAt(timeline, elapsed, ctx) {
     const since = elapsed - r.at;
     if (since >= 0 && since < ctx.captions.recordMs) return { key: r.key, kind: 'record', title: r.title, detail: r.detail, teamId: r.teamId, f: since / ctx.captions.recordMs };
   }
-  const count = timeline.countAt(elapsed);
-  /** @type {Caption | null} */
-  let best = null;
-  // Walk back from the newest event while captions could still be showing.
-  const longest = Math.max(ctx.captions.ms, ctx.captions.goalMs);
-  for (let i = count - 1; i >= 0; i--) {
-    const { event, at } = timeline.events[i];
-    const since = elapsed - at;
-    if (since >= longest) break;
-    const made = describe(event, ctx, timeline);
-    if (!made) continue;
-    const length = made.kind === 'goal' || made.kind === 'scorcher' ? ctx.captions.goalMs : ctx.captions.ms;
-    if (since >= length) continue;
-    const caption = { ...made, key: String(event.seq), f: since / length };
-    if (!best || PRIORITY[caption.kind] > PRIORITY[best.kind]) best = caption;
+  const shown = captionSchedule(timeline, ctx).findLast((s) => s.from <= elapsed);
+  if (!shown || elapsed >= shown.to) return null;
+  return { ...shown.caption, key: shown.key, f: (elapsed - shown.from) / (shown.to - shown.from) };
+}
+
+/** @typedef {{ key: string, caption: Omit<Caption, 'key' | 'f'>, from: number, to: number }} Shown */
+/** @type {WeakMap<import('./timeline.js').Timeline, Shown[]>} */
+const schedules = new WeakMap();
+
+/**
+ * When each of a match's captions is on screen, worked out once (Tom, 2026-11-01): in order of their moments; a goal
+ * cuts in at once, a period card or a shootout kick over a lesser caption (ending the one showing); any other waits for
+ * the one showing to end, its time shortened by the wait (at least captions.queueMinMs), dropped once its time has passed.
+ * @param {import('./timeline.js').Timeline} timeline
+ * @param {{ playerName: (id: string) => string, teamName: (id: string) => string, captions: { ms: number, goalMs: number, queueMinMs: number } }} ctx
+ * @returns {Shown[]}  In time order, never overlapping.
+ */
+export function captionSchedule(timeline, ctx) {
+  const known = schedules.get(timeline);
+  if (known) return known;
+  const { ms, goalMs, queueMinMs } = ctx.captions;
+  const wanted = timeline.events.flatMap(({ event, at }) => {
+    const caption = describe(event, ctx, timeline);
+    if (!caption) return [];
+    let from = at;
+    let to = at + (PRIORITY[caption.kind] >= CUTS_ANY ? goalMs : ms);
+    if (caption.kind === 'substitution') {
+      // Up until the whistle that restarts play (its pause); both teams changing at that moment share it, in turn.
+      const q = timeline.pauses.find((p) => p.at === at);
+      if (q) {
+        const together = timeline.events.filter((t) => t.at === at && t.event.type === 'substitution');
+        const share = Math.max(ms, q.ms) / together.length;
+        from = at + together.findIndex((t) => t.event === event) * share;
+        to = from + share;
+      }
+    } else if (caption.kind === 'free_shot') {
+      // From the foul: its pause ends as the free shot is struck.
+      const q = timeline.pauses.findLast((p) => p.kind === 'free_shot' && p.at + p.ms === at);
+      if (q) from = q.at;
+    }
+    return [{ key: String(event.seq), caption, from, to }];
+  }).sort((a, b) => a.from - b.from);
+  /** @type {Shown[]} */
+  const out = [];
+  for (const w of wanted) {
+    const prev = out.at(-1);
+    if (!prev || prev.to <= w.from) {
+      out.push(w);
+      continue;
+    }
+    const rank = PRIORITY[w.caption.kind];
+    if (rank >= CUTS_ANY || rank > PRIORITY[prev.caption.kind]) {
+      prev.to = w.from;
+      if (prev.to <= prev.from) out.pop();
+      out.push(w);
+      continue;
+    }
+    // Wait for the one showing; what's left of its time, if any.
+    const from = prev.to;
+    const left = w.to - from;
+    if (left <= 0) continue;
+    out.push({ ...w, from, to: from + Math.max(left, queueMinMs) });
   }
-  return best;
+  schedules.set(timeline, out);
+  return out;
 }
 
 /** Does this event add one to a player's stat (goals, assists, saves, stops)? @param {any} e @param {string} stat @param {string} id */

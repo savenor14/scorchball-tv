@@ -12,7 +12,7 @@
 // a foul and the free shot it gives (Task 67: the sim has them at the same moment; the referee places the ball), and
 // for match.foulPauseSeconds after any other foul (Task 144: the referee sets the ball, a restart pass):
 // events after them move later, and a match's duration grows by its pauses. The sim's game time is unchanged. Shootout kicks are spaced
-// settings.match.shootoutKickRealSeconds apart, the final whistle a goal's pause after the last (Task 277b). Event clocks are whole game-seconds and several events can share
+// settings.match.shootoutKickRealSeconds apart after their own break (shootoutBreakRealSeconds), the final whistle shootoutWhistleSeconds after the last and the match a goal's pause after it (Task 277b; Tom, 2026-11-01). Event clocks are whole game-seconds and several events can share
 // one (the half-time whistle and the second-half kick-off are both at 20:00), so each event's period comes
 // from the kick-offs before it, not from its clock.
 
@@ -56,6 +56,8 @@ export function createTimeline(match, { settings, rules }) {
   const halfTimeMs = settings.match.halfTimeRealMinutes * 60_000;
   const breakMs = settings.match.overtimeBreakRealMinutes * 60_000;
   const kickMs = settings.match.shootoutKickRealSeconds * 1000;
+  const shootoutBreakMs = settings.match.shootoutBreakRealSeconds * 1000;
+  const whistleMs = settings.match.shootoutWhistleSeconds * 1000;
   const pauseMs = { goal: settings.match.goalPauseSeconds * 1000, substitution: settings.match.subPauseSeconds * 1000, free_shot: settings.match.freeShotPauseSeconds * 1000, foul: settings.match.foulPauseSeconds * 1000 };
 
   const result = /** @type {any} */ (events.at(-1)?.data);
@@ -86,16 +88,16 @@ export function createTimeline(match, { settings, rules }) {
     const p = Math.max(1, period);
     let at;
     if (event.type === 'shootout_kick') {
-      if (kick === 0) shootoutStart = overtimeEndClock * msPerGameSecond + offset[3] + shift + breakMs;
+      if (kick === 0) shootoutStart = overtimeEndClock * msPerGameSecond + offset[3] + shift + shootoutBreakMs;
       at = shootoutStart + ++kick * kickMs;
     } else if (event.type === 'match_result' || event.type === 'player_of_the_match') {
       // The final whistle: after the last moment, and after its pause if it has one (a golden goal, Task 147). The player
       // of the match (Task 214), logged just before the result, is named then too (after a shootout's kicks).
       const lastAt = timed.at(-1)?.at ?? 0;
       const lastPause = pauses.at(-1);
-      // After a shootout the last kick, which settles it, is held like a goal (Task 277b: it was cut off at its moment).
+      // After a shootout the whistle comes soon after the deciding kick (Tom, 2026-11-01: it waited a goal's pause).
       const lastKickAt = kick > 0 ? shootoutStart + kick * kickMs : -1;
-      at = lastPause && lastPause.at === lastAt ? lastAt + lastPause.ms : lastAt === lastKickAt ? lastAt + pauseMs.goal : lastAt;
+      at = lastPause && lastPause.at === lastAt ? lastAt + lastPause.ms : lastAt === lastKickAt ? lastAt + whistleMs : lastAt;
     }
     else if (event.type === 'substitution' && timed.at(-1)?.event.type === 'substitution' && timed.at(-1)?.event.clock === event.clock) {
       // Both teams changing at the same moment share it (and its one pause).
@@ -132,7 +134,10 @@ export function createTimeline(match, { settings, rules }) {
       }
     }
   }
-  const duration = timed.at(-1)?.at ?? 0;
+  // A shootout's last kick, which settles it, is held like a goal (Task 277b: it was cut off at its moment): the match
+  // ends a goal's pause after it, the whistle having gone shootoutWhistleSeconds in.
+  const lastKick = timed.findLast((t) => t.event.type === 'shootout_kick')?.at ?? -1;
+  const duration = Math.max(timed.at(-1)?.at ?? 0, lastKick >= 0 ? lastKick + pauseMs.goal : 0);
 
   // Play, pause and break segments, for the phase and game clock at any moment.
   /** @type {Segment[]} */
@@ -195,8 +200,10 @@ export function createTimeline(match, { settings, rules }) {
     pauses: /** @type {readonly Readonly<Pause>[]} */ (pauses),
     /** The breaks between periods (half-time, before overtime), elapsed ms from and to, in order (Task 63: the tunnel gate). */
     breaks: /** @type {readonly { from: number, to: number }[]} */ (segments.filter((g) => g.phase === 'half_time' || g.phase === 'overtime_break').map((g) => ({ from: g.from, to: g.to }))),
-    /** Elapsed ms from kick-off to the final whistle (after a shootout, a goal's pause after the last kick: Task 277b). */
+    /** Elapsed ms from kick-off to the match's end: the final whistle, or after a shootout a goal's pause after the last kick (Task 277b). */
     duration,
+    /** When overtime ends and the shootout's break begins, or -1 without a shootout (Tom, 2026-11-01: its whistle and call). */
+    shootoutBreakAt: segments.find((g) => g.phase === 'shootout_break')?.from ?? -1,
     decidedBy: /** @type {'regulation' | 'overtime' | 'shootout'} */ (result.decidedBy),
     /** The golden goal's moment, if the match was won by one (Task 147), or -1. */
     goldenAt: goldenGoal ? timed.findLast((t) => t.event.type === 'goal')?.at ?? -1 : -1,

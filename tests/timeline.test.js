@@ -180,17 +180,21 @@ test('shootout: kicks come after a second break, one every few seconds, and the 
   const otEnd = (2400 + rules.match.overtimeMinutes * 60) * msPerGameSecond + halfTime + brk + pausedBefore(tl);
   assert.equal(tl.stateAt(otEnd + 1).phase, 'shootout_break');
   const kicks = tl.events.filter((t) => t.event.type === 'shootout_kick');
-  assert.equal(kicks[0].at, otEnd + brk + settings.match.shootoutKickRealSeconds * 1000);
+  // Its own break (Tom, 2026-11-01), then the first kick.
+  const soBreak = settings.match.shootoutBreakRealSeconds * 1000;
+  assert.equal(tl.shootoutBreakAt, otEnd);
+  assert.equal(kicks[0].at, otEnd + soBreak + settings.match.shootoutKickRealSeconds * 1000);
   assert.equal(tl.stateAt(kicks[0].at - 1).phase, 'shootout');
   assert.equal(tl.stateAt(kicks[0].at - 1).shootout, null);
   assert.deepEqual(tl.stateAt(kicks[0].at).shootout, kicks[0].event.data.shootout);
   const r = /** @type {any} */ (tl.events.at(-1)?.event.data);
   assert.deepEqual(tl.stateAt(tl.duration).shootout, [r.shootout.home, r.shootout.away]);
-  // The last kick is held like a goal before the final whistle (Task 277b).
+  // The final whistle soon after the deciding kick (Tom, 2026-11-01), the match held like a goal after it (Task 277b).
+  assert.equal(tl.events.at(-1)?.at, /** @type {number} */ (kicks.at(-1)?.at) + settings.match.shootoutWhistleSeconds * 1000);
   assert.equal(tl.duration, /** @type {number} */ (kicks.at(-1)?.at) + settings.match.goalPauseSeconds * 1000);
   assert.equal(tl.stateAt(tl.duration - 1).phase, 'shootout');
   // Within the longest knockout the config validator allows for (two rounds of sudden death).
-  assert.ok(tl.duration <= otEnd + brk + 2 * (rules.playoffs.shootoutKicks + 2) * settings.match.shootoutKickRealSeconds * 1000 + settings.match.goalPauseSeconds * 1000 || kicks.length > 2 * (rules.playoffs.shootoutKicks + 2));
+  assert.ok(tl.duration <= otEnd + soBreak + 2 * (rules.playoffs.shootoutKicks + 2) * settings.match.shootoutKickRealSeconds * 1000 + settings.match.goalPauseSeconds * 1000 || kicks.length > 2 * (rules.playoffs.shootoutKicks + 2));
 });
 
 test('stateAt is fast enough to call every frame', () => {

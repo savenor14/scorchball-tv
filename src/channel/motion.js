@@ -61,6 +61,18 @@ export function missNearPost(matchId, shotSeq) {
   return Math.abs(missOffset(createRng(`${matchId}|shot|${shotSeq}`))) < POST_BAND;
 }
 const SHOOTOUT_MARK = 0.82;
+/** Of the shootout kicks missed, the share the keeper saves (the rest go wide). */
+const SHOOTOUT_SAVED = 0.6;
+/**
+ * Whether a missed shootout kick is drawn saved rather than wide (the same draws as the kick's staging, shootoutPlan),
+ * so the sound and the call match the picture (Tom, 2026-11-01).
+ * @param {string} matchId @param {number} seq  The kick's event.
+ */
+export function shootoutMissSaved(matchId, seq) {
+  const rng = createRng(`${matchId}|shootout|${seq}`);
+  rng.chance(0.5);
+  return rng.chance(SHOOTOUT_SAVED);
+}
 const SHOOTOUT_HEAT = 90;
 // The free shot (Task 143, Tom's pick from freeshots.html): taken from the shootout's mark. The foul that gives one is
 // drawn inside an invisible box in front of the goal (Tom): its carrier between BOX.near and BOX.depth (pitch lengths)
@@ -1631,7 +1643,7 @@ export function createMotion(timeline, { matchId, homeId, keeperSlot, animation,
    *   taker stands before the run-up. @property {Point} impact  Where the ball ends up. @property {number} diveY  Where the
    *   keeper dives to.
    */
-  /** @type {{ kicks: ShootoutKick[], frames: Map<string, Frame[]>, sideOf: Map<string, 'home' | 'away'>, winner: 'home' | 'away' } | null} */
+  /** @type {{ kicks: ShootoutKick[], frames: Map<string, Frame[]>, sideOf: Map<string, 'home' | 'away'>, winner: 'home' | 'away', breakAt: number, ballStart: Point } | null} */
   let soPlan = null;
   /**
    * The shootout staged (Task 277b), worked out once: every kick's times, where its taker stands and the ball ends up, and
@@ -1661,6 +1673,12 @@ export function createMotion(timeline, { matchId, homeId, keeperSlot, animation,
       }
     }
     const keeperOf = (/** @type {'home' | 'away'} */ side) => onPitch[side].find((p) => p.slot === keeperSlot)?.playerId ?? null;
+    // Where everyone and the ball were as overtime ended: they walk from there (Tom, 2026-11-01: they jumped to their spots).
+    const breakAt = timeline.shootoutBreakAt;
+    const before = breakAt > 0 ? poseAt(breakAt - 1) : null;
+    /** @type {Map<string, Point>} */
+    const startOf = new Map((before?.players ?? []).map((p) => [p.playerId, { x: p.x, y: p.y }]));
+    const ballStart = before?.ball ? { x: before.ball.x, y: before.ball.y } : mark;
     /** @type {ShootoutKick[]} */
     const kicks = kickEvents.map((t) => {
       const rng = createRng(`${matchId}|shootout|${t.event.seq}`);
@@ -1675,7 +1693,7 @@ export function createMotion(timeline, { matchId, homeId, keeperSlot, animation,
         impact = { x: 1 + NET_DEPTH, y: 0.5 + way * rng.float(0.3, 0.85) * MOUTH_HALF };
         // The keeper guesses: the right way but not far enough, or the wrong way.
         diveY = 0.5 + (rng.chance(0.5) ? way : -way) * rng.float(0.04, 0.07);
-      } else if (rng.chance(0.6)) {
+      } else if (rng.chance(SHOOTOUT_SAVED)) {
         diveY = 0.5 + way * rng.float(0.03, 0.07);
         impact = { x: goal.x, y: diveY };
       } else {
@@ -1709,9 +1727,10 @@ export function createMotion(timeline, { matchId, homeId, keeperSlot, animation,
           jobs.push({ arrive: k.set, to: goal, inner: [{ t: k.S, at: bouncing }, { t: k.A, at: fixed(dived) }], leave: k.end, from: fixed(dived) });
         }
       }
+      const start = startOf.get(id);
       /** @type {Frame[]} */
-      const list = [{ t: -Infinity, at: home }];
-      let cur = { t: -Infinity, at: home, resting: true };
+      const list = start ? [{ t: -Infinity, at: fixed(start) }, { t: breakAt, at: fixed(start) }] : [{ t: -Infinity, at: home }];
+      let cur = start ? { t: breakAt, at: fixed(start), resting: false } : { t: -Infinity, at: home, resting: true };
       for (const job of jobs) {
         if (!cur.resting) {
           // Back to their spot first if there's time, else straight on.
@@ -1732,7 +1751,7 @@ export function createMotion(timeline, { matchId, homeId, keeperSlot, animation,
       if (!cur.resting && Number.isFinite(cur.t)) list.push({ t: cur.t + walkMs(cur.at(cur.t), home(cur.t)), at: home });
       frames.set(id, list);
     }
-    soPlan = { kicks, frames, sideOf, winner };
+    soPlan = { kicks, frames, sideOf, winner, breakAt, ballStart };
     return soPlan;
   }
 
@@ -1779,7 +1798,8 @@ export function createMotion(timeline, { matchId, homeId, keeperSlot, animation,
     const noEffects = { burn: null, goal: null, flight: false, scorcher: false };
     // The ball: on the mark, struck, at rest where it ended, then rolled back to the mark for the next kick.
     const k = plan.kicks.findLast((x) => x.S <= e);
-    if (!k) return { players, ball: { ...mark, held: false, dir: 1 }, heat: SHOOTOUT_HEAT, effects: noEffects };
+    // Before the first kick: rolled to the mark from where overtime left it.
+    if (!k) return { players, ball: { ...lerp(plan.ballStart, mark, Math.min(1, Math.max(0, (e - plan.breakAt) / (2 * S.returnMs)))), held: false, dir: 1 }, heat: SHOOTOUT_HEAT, effects: noEffects };
     if (e < k.A) return { players, ball: { ...lerp(mark, k.impact, (e - k.S) / shotMs), held: false, dir: 1, spin: SPIN.shot }, heat: SHOOTOUT_HEAT, effects: { ...noEffects, flight: true, scorcher: true } };
     const effects = k.scored && e < k.A + goalHoldMs ? { ...noEffects, goal: { x: 1, y: k.impact.y, f: (e - k.A) / goalHoldMs, scorcher: true } } : noEffects;
     const back = k === lastKick ? 0 : Math.min(1, Math.max(0, (e - k.end) / S.returnMs));

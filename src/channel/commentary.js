@@ -5,7 +5,7 @@
 // them, frame by frame (passCall), since working them out for a whole match at once takes too long. See
 // docs/channel.md §18.2 and §18.5.
 import { createRng } from '../sim/rng.js';
-import { missNearPost } from './motion.js';
+import { missNearPost, shootoutMissSaved } from './motion.js';
 
 /**
  * @typedef {{ id: string, name: string, engine: 'kokoro' | 'elevenlabs', voice: string, speed: number, onAir: boolean }} Commentator
@@ -131,6 +131,8 @@ function momentOf(e, matchId, shotSeq, so) {
     case 'miss': return missNearPost(matchId, shotSeq) ? 'post' : 'wide';
     case 'burn': return 'burn';
     case 'advance': return data.breakaway ? 'breakaway' : null;
+    // A shootout kick (Tom, 2026-11-01: the shootout went uncalled): a goal's lines, or a save's or a miss's, as the picture shows it.
+    case 'shootout_kick': return data.scored ? 'goal' : shootoutMissSaved(matchId, e.seq) ? 'save' : 'wide';
     default: return null;
   }
 }
@@ -183,8 +185,17 @@ export function commentaryCalls(timeline, { matchId, homeId, commentatorId, data
     // Only a share of the frequent moments is called at all (their own seeded roll, so the rest are dealt as before).
     if (moment && (data.moments[moment].rate ?? 1) < 1 && createRng(`commentary|rate|${matchId}|${e.seq}`).next() >= /** @type {number} */ (data.moments[moment].rate)) moment = null;
     const outcome = e.type === 'goal' || e.type === 'save' || e.type === 'block' || e.type === 'miss';
-    if (moment) moments.push({ at, seq: e.seq, moment, follow: outcome && breakawayShot, home: e.teamId === homeId, namedId: e.type === 'goal' || e.type === 'save' ? e.playerId : null });
+    // A kick scored names its taker (the save's event names the keeper; a missed kick's names the taker, so no name).
+    const named = e.type === 'goal' || e.type === 'save' || (e.type === 'shootout_kick' && /** @type {any} */ (e.data)?.scored);
+    // Every shootout kick is called, like a breakaway's outcome (the deciding one came just before the full-time line).
+    if (moment) moments.push({ at, seq: e.seq, moment, follow: (outcome && breakawayShot) || e.type === 'shootout_kick', home: e.teamId === homeId, namedId: named ? e.playerId ?? null : null });
     if (outcome) breakawayShot = false;
+  }
+  // The end of overtime before a shootout (Tom, 2026-11-01: nothing was said), after its whistle: the level lines
+  // ("Level at the end!") until the shootout's own are made.
+  if (timeline.shootoutBreakAt >= 0 && momentOnAir(data, 'full_time_level')) {
+    moments.push({ at: timeline.shootoutBreakAt, seq: -1, moment: 'full_time_level', follow: false, home: false, namedId: null });
+    moments.sort((a, b) => a.at - b.at);
   }
   /** @type {Partial<Record<Moment, string[]>>} Each moment's lines still to deal before the shuffle starts again. */
   const decks = {};

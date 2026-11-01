@@ -76,6 +76,8 @@ const SETTINGS_SCHEMA = obj({
     pauseAllowanceMinutes: num(0),
     overtimeBreakRealMinutes: num(0),
     shootoutKickRealSeconds: num(0),
+    shootoutBreakRealSeconds: num(0),
+    shootoutWhistleSeconds: num(0),
   }),
   calendar: obj({ seasonDays: int(2, 28), firstKickoff: dayTime, finalRoundKickoff: dayTime, finalRoundSimultaneous: bool() }),
   playoffs: obj({ kickoffs: arrayOf(dayTime, { minLength: 1 }) }),
@@ -222,7 +224,7 @@ const SETTINGS_SCHEMA = obj({
   draft: obj({ round1Seconds: num(5, 600), walkAt: num(0, 600), cutAt: num(0, 600), kitAt: num(0, 600), cheerAt: num(0, 600), round2Seconds: num(2, 600), round2NameAt: num(0, 600) }),
   // The trophy lift after the final (Task 190; src/channel/trophyLift.js).
   trophyLift: obj({ celebrateSeconds: num(10, 600), guardSeconds: num(10, 600), anthemSeconds: num(10, 600), liftSeconds: num(10, 600), closeUpAfterSeconds: num(0, 600), stageAfterSeconds: num(0, 600) }),
-  captions: obj({ ms: num(500, 30_000), goalMs: num(500, 30_000), recordMs: num(500, 30_000), alertMs: num(500, 30_000), calloutMs: num(200, 10_000), subCalloutMs: num(200, 10_000), quoteCharsPerSecond: num(1, 1000) }),
+  captions: obj({ ms: num(500, 30_000), goalMs: num(500, 30_000), queueMinMs: num(0, 30_000), recordMs: num(500, 30_000), alertMs: num(500, 30_000), calloutMs: num(200, 10_000), subCalloutMs: num(200, 10_000), quoteCharsPerSecond: num(1, 1000) }),
   updates: obj({ checkSeconds: num(30, 86_400) }),
   switches: recordOf(pattern(SWITCH_TIME, 'a time like "2026-11-02 00:00"')),
   ticker: obj({ pxPerSecond: num(1, 500), results: int(0, 20), upcoming: int(0, 20), goalFlashMs: num(0, 60_000), announcementHours: num(0, 24 * 28) }),
@@ -1151,7 +1153,7 @@ function checkCalendar(settings, rules, teamCount) {
   const matchLength = match.realMinutes + match.halfTimeRealMinutes + match.pauseAllowanceMinutes;
   const realPerGameMinute = match.realMinutes / (2 * rules.match.halfMinutes);
   const shootoutKicks = 2 * (rules.playoffs.shootoutKicks + 2);
-  const knockoutLength = matchLength + 2 * match.overtimeBreakRealMinutes
+  const knockoutLength = matchLength + match.overtimeBreakRealMinutes + match.shootoutBreakRealSeconds / 60
     + rules.match.overtimeMinutes * realPerGameMinute + (shootoutKicks * match.shootoutKickRealSeconds + match.goalPauseSeconds) / 60;
   // The walk-out has to hold its parts, and the handshake parts leave room to walk off.
   const c = settings.ceremonies;

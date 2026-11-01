@@ -14,6 +14,7 @@
 //   handshakes (applause until Tom, 2026-10-20).
 import { homeAttacksRight } from './formation.js';
 import { handshakeParts, walkOutParts } from './ceremonies.js';
+import { shootoutMissSaved } from './motion.js';
 import { recipe } from './soundRecipes.js';
 
 const PLAYING = new Set(['first_half', 'second_half', 'overtime']);
@@ -182,6 +183,11 @@ export function standsMood(timeline, e, level, { homeId, goalPauseMs }) {
     if (at < e - Math.max(goalPauseMs, GASP_MS)) break;
     const ends = event.teamId === homeId ? 'home' : 'away';
     if (event.type === 'goal' && e < at + goalPauseMs) return { ...mood, jump: ends, level: 1 };
+    // A shootout kick: the taker's fans jump for a goal, gasp at a miss (Tom, 2026-11-01).
+    if (event.type === 'shootout_kick' && e < at + GASP_MS * 2) {
+      if (/** @type {any} */ (event.data)?.scored) return { ...mood, jump: ends, level: 1 };
+      mood.gasp ??= ends;
+    }
     // A miss or save: the shooters' fans (the event names the keeper's team for a save).
     if (event.type === 'miss' && e < at + GASP_MS) mood.gasp ??= ends;
     if (event.type === 'save' && e < at + GASP_MS) mood.gasp ??= ends === 'home' ? 'away' : 'home';
@@ -228,6 +234,7 @@ export function crowdCues(timeline, { matchId, homeId, bigStage, halfMinutes, go
     cues.push({ kind, at, seed: `${matchId}|crowd|${kind}|${at}`, ...extra });
   const normalTime = 2 * halfMinutes * 60;
   let breakaway = false;
+  const kicks = timeline.events.filter((t) => t.event.type === 'shootout_kick').map((t) => t.at);
   for (const { event: e, at } of timeline.events) {
     const data = /** @type {any} */ (e.data) ?? {};
     const home = e.teamId === homeId;
@@ -263,6 +270,25 @@ export function crowdCues(timeline, { matchId, homeId, bigStage, halfMinutes, go
       // A save: the shooting side's fans groan less than the keeper's cheer; an ooh either way, fuller on a breakaway.
       case 'save': add('ooh', at, { gain: breakaway ? 1 : 0.65 }); break;
       case 'foul': if (!home) add('jeer', at); break;
+      // A shootout kick (Tom, 2026-11-01: the shootout was silent) sounds as the match's own moments do: scored, a late
+      // goal that matters (the home end's run of roars, or the away end's smaller one with the home crowd's boos), the
+      // roars stopping in time for the next kick; saved, an ooh; wide, a groan.
+      case 'shootout_kick': {
+        if (!data.scored) {
+          if (shootoutMissSaved(matchId, e.seq)) add('ooh', at, { gain: 0.65 });
+          else add('groan', at, { gain: home ? 1 : 0.5 });
+          break;
+        }
+        const next = kicks.find((k) => k > at);
+        const room = next === undefined ? goalPauseMs : next - at;
+        const power = home ? Math.min(1, 0.55 + 0.25 + (bigStage ? 0.15 : 0)) : 0.15 + 0.15;
+        for (const [after, size] of GOAL_CHEER) {
+          if (after + CHEER_TAIL_MS > room) break;
+          add('roar', at + after, { power: power * size, gain: size * (home ? 1 : AWAY_CHEER) });
+        }
+        if (!home) for (const [after, gain] of AWAY_BOOS) add('jeer', at + after, { gain });
+        break;
+      }
       case 'match_result': {
         const [hg, ag] = [data.homeGoals ?? 0, data.awayGoals ?? 0];
         const homeWon = hg !== ag ? hg > ag : Boolean(data.shootout && data.shootout.home > data.shootout.away);
