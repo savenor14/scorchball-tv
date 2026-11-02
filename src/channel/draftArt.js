@@ -144,7 +144,10 @@ export function drawDraftBoard(ctx, R, round, at, made, o) {
     ctx.clip();
     const walking = o.walk > 0 && o.walk < 1;
     const s = whole ? 4 : 3;
-    bigSprite(ctx, Math.round(win.x - 10 + o.walk * win.w * 0.62), win.y + win.h - 6, s, pk.playerId, team.colours, 0, walking ? Math.floor(o.since / 220) % 2 : -1);
+    // From wholly out of the window (the sprite reaches 4 px right of its x, Tom: not waiting half in view) to its spot.
+    const fromX = win.x - 4 * s - 1;
+    const toX = win.x - 10 + win.w * 0.62;
+    bigSprite(ctx, Math.round(fromX + o.walk * (toX - fromX)), win.y + win.h - 6, s, pk.playerId, team.colours, 0, walking ? Math.floor(o.since / 220) % 2 : -1);
     ctx.restore();
   } else {
     pickCard(ctx, { x: below.x, y: below.y, w: Math.min(330, R.w - 20) }, pk, team, o.card);

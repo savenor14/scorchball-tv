@@ -20,7 +20,7 @@ const env = (start, attack, hold, release, gain) => ({ start, attack, hold, rele
 export const SPRINKLER_TICKS = 14;
 export const SPRINKLER_TICK = 0.13;
 /** The crickets (Tom's note 14): how many chirps a take, and the time between them (s). */
-const CRICKET_CHIRPS = 5;
+const CRICKET_CHIRPS = 2; // Tom: two, was five
 const CRICKET_GAP = 1;
 
 /**

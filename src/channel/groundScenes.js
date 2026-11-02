@@ -18,8 +18,8 @@ const PASS_END = 0.9;
 
 /** The scenes with sounds of their own enough not to want the crickets at night (Tom): the mower, the sprinklers, the broom. */
 const LOUD = new Set(['mowing', 'emblem', 'dugouts']);
-/** How often the crickets' few chirps come at night (ms): about three times in a ground's 40 s, a long pause between. */
-const CRICKETS_EVERY = 13_000;
+/** How often the crickets' two chirps come at night (ms): two or three times in a ground's 40 s, a long pause between (Tom: less often, was 13 s). */
+const CRICKETS_EVERY = 16_000;
 
 /** The mower (Tom's note 14): a band's time, mowing it and driving across to the next (ms), and the drive's share of it. */
 const MOW_BAND = 10_000;
@@ -321,11 +321,20 @@ function sprinklers(c, /** @type {number} */ t) {
  * Mowing: a mower striping the turf band by band, the sprinklers turning. Down one band and up the next, back and forth
  * across the pitch (0 to 9, then 8 to 0, …), MOW_BAND ms a band (Tom: a bit slower), the last MOW_TURN of them spent
  * driving across at the end to the next band's middle (Tom: not jumping there). The fresh cut is this pass's bands.
+ * Each visit starts on a seeded band with room for the whole visit before the pass ends (Tom: the pitch going back to
+ * unmown when the mower turned round at an end was odd).
  */
-function mowing(/** @type {CanvasRenderingContext2D} */ c, /** @type {Ground} */ g, /** @type {number} */ t) {
+function mowing(/** @type {CanvasRenderingContext2D} */ c, /** @type {Ground} */ g, /** @type {number} */ t, /** @type {Span} */ span) {
   const stripes = 10;
   const cycle = 2 * (stripes - 1);
-  const tt = t + Math.floor(seeded(`${g.team.id}|mow`) * cycle) * MOW_BAND;
+  // The passes: out over steps 0 to stripes - 1, back over stripes to cycle - 1. The steps the visit needs, from a start
+  // in either pass that leaves room for them (or the first band, if a visit were ever longer than a pass).
+  const need = Math.ceil((span.until - span.from) / MOW_BAND);
+  const starts = [];
+  for (let k = 0; k + need <= stripes; k++) starts.push(k);
+  for (let k = stripes; k + need <= cycle; k++) starts.push(k);
+  const start = starts.length ? starts[Math.floor(seeded(`${g.team.id}|mow|${span.from}`) * starts.length)] : 0;
+  const tt = Math.max(0, t - span.from) + start * MOW_BAND;
   const step = Math.floor(tt / MOW_BAND) % cycle;
   /** The band at a step of the back-and-forth. @param {number} k */
   const bandAt = (k) => { const m = ((k % cycle) + cycle) % cycle; return m < stripes ? m : cycle - m; };

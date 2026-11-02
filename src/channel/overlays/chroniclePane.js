@@ -125,7 +125,12 @@ export function createChroniclePane({ pane, live, config, now, onChange }) {
   // FIND A PLAYER (Tom, 2026-10-27; playerSearch.js): a bar fixed at the pane's foot whatever the tab, the matches
   // rising above it over the tab's foot once settings.chronicle.search.minLetters are typed; a name opens the card, ‹
   // back to the matches with the search kept. ✕ or Esc clears it (Esc with nothing typed closes the pane, as anywhere).
-  // The channel's keys don't fire while typing.
+  // The channel's keys don't fire while typing. On a card (Tom, 2026-11-02: it showed but did nothing on a team's), the
+  // matches rise once something is typed there, and a name opens over the card, ‹ back to it.
+  /** The cards a search opened over, the latest last, each with where it was scrolled. @type {{ card: string | null, teamCard: string | null, scroll: number }[]} */
+  const under = [];
+  /** Whether something was typed since the card on show opened (the matches stay down over a card until then). */
+  let typed = false;
   const search = config.settings.chronicle.search;
   const input = /** @type {HTMLInputElement} */ (el('input', 'chr-find-input'));
   input.type = 'text';
@@ -142,7 +147,7 @@ export function createChroniclePane({ pane, live, config, now, onChange }) {
   function showHits() {
     const r = findPlayers(chronicle, league, input.value, search);
     clear.hidden = !input.value;
-    hitsBox.hidden = r.state === 'empty' || Boolean(state.card || state.teamCard);
+    hitsBox.hidden = r.state === 'empty' || (Boolean(state.card || state.teamCard) && !typed);
     hitsBox.replaceChildren(...(r.state === 'short' ? [note(`${search.minLetters} letters or more`)] : r.state === 'none' ? [note('Nobody by that name')] : [
       ...r.hits.map((h) => {
         const tag = h.status === 'retired' ? 'RET' : h.status === 'free' ? 'FREE' : team(/** @type {string} */ (h.teamId)).abbr;
@@ -153,7 +158,10 @@ export function createChroniclePane({ pane, live, config, now, onChange }) {
       ...(r.more ? [note(`and ${r.more} more`)] : []),
     ]));
   }
-  input.addEventListener('input', showHits);
+  input.addEventListener('input', () => {
+    typed = true;
+    showHits();
+  });
   input.addEventListener('keydown', (e) => {
     e.stopPropagation();
     if (e.key !== 'Escape') return;
@@ -364,7 +372,9 @@ export function createChroniclePane({ pane, live, config, now, onChange }) {
     if (state.card || state.teamCard) {
       // The bar's slot too, so no empty frame is left under the title.
       if (bar.parentElement) bar.parentElement.hidden = true;
-      const backLabel = state.tab === 'history' && state.season ? `SEASON ${state.season}` : state.tab === 'records' ? `RECORDS · ${RECORD_PAGES[state.page][1]}` : state.tab === 'money' && state.team ? `MONEY · ${team(state.team).abbr}` : state.tab.toUpperCase();
+      const over = under.at(-1);
+      const backLabel = over ? (over.card ? name(over.card).toUpperCase() : team(/** @type {string} */ (over.teamCard)).abbr)
+        : state.tab === 'history' && state.season ? `SEASON ${state.season}` : state.tab === 'records' ? `RECORDS · ${RECORD_PAGES[state.page][1]}` : state.tab === 'money' && state.team ? `MONEY · ${team(state.team).abbr}` : state.tab.toUpperCase();
       body.replaceChildren(state.card
         ? playerCardBody(document, { chronicle, config, league, playerId: state.card, backLabel, onBack: closeCard })
         : teamCardBody(document, { chronicle, config, league, teamId: /** @type {string} */ (state.teamCard), backLabel, onBack: closeCard }));
@@ -381,10 +391,13 @@ export function createChroniclePane({ pane, live, config, now, onChange }) {
     showHits();
   }
 
-  /** Open a player's card from a name on the pane. @param {string} id */
+  /** Open a player's card from a name on the pane, or from the search over a card (‹ back to that card). @param {string} id */
   function openCard(id) {
-    scrolledTo = pane.scroller.scrollTop;
+    if (state.card || state.teamCard) under.push({ card: state.card, teamCard: state.teamCard, scroll: pane.scroller.scrollTop });
+    else scrolledTo = pane.scroller.scrollTop;
     state.card = id;
+    state.teamCard = null;
+    typed = false;
     show();
   }
 
@@ -395,18 +408,20 @@ export function createChroniclePane({ pane, live, config, now, onChange }) {
     show();
   }
 
-  /** Back from the card to where it was opened, scrolled as it was. */
+  /** Back from the card to where it was opened (the card the search opened it over, or the tab), scrolled as it was. */
   function closeCard() {
-    state.card = null;
-    state.teamCard = null;
+    const over = under.pop();
+    state.card = over?.card ?? null;
+    state.teamCard = over?.teamCard ?? null;
+    typed = false;
     show();
-    pane.scroller.scrollTop = scrolledTo;
+    pane.scroller.scrollTop = over ? over.scroll : scrolledTo;
   }
 
   return {
     /** Open or close the CHRONICLE. */
     toggle() {
-      pane.toggle('chronicle', () => ({ title: 'CHRONICLE', bar, body, foot, onClose: () => { state.card = null; state.teamCard = null; onChange?.(false); } }));
+      pane.toggle('chronicle', () => ({ title: 'CHRONICLE', bar, body, foot, onClose: () => { state.card = null; state.teamCard = null; under.length = 0; onChange?.(false); } }));
       if (pane.openId === 'chronicle') {
         show();
         onChange?.(true);

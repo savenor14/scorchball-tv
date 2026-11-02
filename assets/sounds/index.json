@@ -602,10 +602,10 @@
    "gain": 1
   },
   "effect/crickets": {
-   "file": "effect/crickets.e1e0d52dba.mp3",
-   "hash": "e1e0d52dba",
+   "file": "effect/crickets.65081ce850.mp3",
+   "hash": "65081ce850",
    "rate": 48000,
-   "samples": 200640,
+   "samples": 56641,
    "channels": 1,
    "gain": 1
   },
