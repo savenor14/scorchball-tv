@@ -85,8 +85,8 @@ export function teamCard(chronicle, config, team, lotsOf = (season) => lotsSeedO
     return {
       id: p.id, name: nameOf(p.id), position: p.position, age: now - p.birthSeason,
       games: sum('appearances'), stat: p.position === 'K' ? saves : sum('goals'),
-      // This season's numbers for SQUAD's STATS (Task 278n): goals, assists and stops (tackles and blocks) for
-      // outfielders, saves and the save percentage for keepers.
+      // This season's numbers for SQUAD's STATS (Task 278n): goals, assists and quells (tackles and blocks; shown a game,
+      // Tom 2026-11-03) for outfielders, saves and the save percentage for keepers.
       goals: sum('goals'), assists: sum('assists'), stops: sum('tackles') + sum('blocks'), saves, savePct: faced > 0 ? saves / faced : null,
       wage: deals.get(p.id)?.wage ?? p.contract?.wage ?? null, until: deals.get(p.id)?.until ?? p.contract?.until ?? null,
       rookie: rookieRule && p.joined?.how === 'draft' && !earlier,

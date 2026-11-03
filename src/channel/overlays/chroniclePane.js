@@ -23,14 +23,14 @@ import { teamCardBody } from './teamCardView.js';
 
 /** RECORDS' pages, in order: a player stat, or the teams, the runs, the awards. */
 export const RECORD_PAGES = /** @type {const} */ ([
-  ['goals', 'GOALS'], ['assists', 'ASSISTS'], ['scorchers', 'SCORCHERS'], ['saves', 'SAVES'], ['savePct', 'SAVE %'], ['stops', 'QUELLS'],
+  ['goals', 'GOALS'], ['assists', 'ASSISTS'], ['scorchers', 'SCORCHERS'], ['saves', 'SAVES'], ['savePct', 'SAVE %'], ['stopsPerGame', 'QUELLS'],
   ['appearances', 'GAMES'], ['potm', 'PLAYER OF MATCH'], ['winningGoals', 'WINNING GOALS'], ['burns', 'BURNS'], ['teams', 'TEAMS'], ['runs', 'RUNS'], ['awards', 'AWARDS'],
 ]);
 /** Stats with no single-season record (Tom, Task 218: a season's games make no sense as a record). */
 const NO_SEASON = new Set(['appearances']);
 
 /** A stat's value as shown. @param {string} stat @param {number} v */
-export const shown = (stat, v) => (stat === 'savePct' ? `${(v * 100).toFixed(1)}%` : String(v));
+export const shown = (stat, v) => (stat === 'savePct' ? `${(v * 100).toFixed(1)}%` : stat === 'stopsPerGame' ? v.toFixed(1) : String(v));
 
 /**
  * @param {object} o
@@ -340,6 +340,15 @@ export function createChroniclePane({ pane, live, config, now, onChange }) {
     if (!NO_SEASON.has(stat)) out.push(sub('SEASON'), ...players(r.season[k], stat, true, 5));
     if (stat in r.playoffs) out.push(sub('PLAYOFFS'), ...players(/** @type {any} */ (r.playoffs)[stat], stat, false, 3));
     if (stat in r.match) out.push(sub('ONE MATCH'), ...players(/** @type {any} */ (r.match)[stat], stat, true, 3));
+    // Quells (Tom, 2026-11-03): a game, not their totals, and the most in one match (counted from season 5).
+    if (stat === 'stopsPerGame') {
+      const g = config.chronicle.records.minGames;
+      out.splice(0, 1, sub('ALL-TIME* A GAME'));
+      out.splice(out.findIndex((x) => x.textContent === 'SEASON'), 1, sub('SEASON A GAME'));
+      out.push(sub('ONE MATCH'), ...players(r.match.stops, 'stops', true, 3));
+      out.push(el('div', 'chr-note', [`* Incl. playoffs. A game: ${g.career} games or more all-time, ${g.season} in a season (the regular season). One match from season 5.`]));
+      return out;
+    }
     out.push(el('div', 'chr-note', [`* Incl. playoffs.${NO_SEASON.has(stat) ? '' : ' A season is the regular season.'}`]));
     return out;
   }

@@ -25,6 +25,7 @@ import { isFinished, seasonTotalsAt, tableAt } from './onScreen.js';
 import { allPolls, pollsAt } from './polls.js';
 import { lineTiming, sayer, talkEnd, teamsForTalk, timeLines } from './studio.js';
 import { studioJingleMs } from './talk.js';
+import { quellsAGame } from '../chronicle/chronicle.js';
 
 /**
  * @typedef {import('./liveLeague.js').LiveLeague} LiveLeague
@@ -393,7 +394,7 @@ export function podcastEpisode(live, slot, ctx) {
       const best = all[0];
       if (!best?.line) return false;
       const l = best.line;
-      const stat = l.position === 'K' ? `${l.saves} SAVES` : l.position === 'S' ? `${l.goals} GOALS` : l.position === 'M' ? `${l.assists} ASSISTS` : `${l.stops} QUELLS`;
+      const stat = l.position === 'K' ? `${l.saves} SAVES` : l.position === 'S' ? `${l.goals} GOALS` : l.position === 'M' ? `${l.assists} ASSISTS` : `${quellsAGame(l.stops, best.appearances)} QUELLS A GAME`;
       line('kidsAsk');
       line('kidsRookie', { team: name(best.teamId), player: ctx.playerName(best.playerId).toUpperCase(), position: POSITION_NAME[l.position] ?? l.position, stat });
       line('kidsReply');

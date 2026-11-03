@@ -5,7 +5,9 @@
 // `t`: matches finished on screen by then, seasons already over (the chronicle up to the season before) and the sim's
 // own events, so every screen deals the same cards whenever it was loaded.
 import { records } from '../chronicle/records.js';
+import { quellsAGame } from '../chronicle/chronicle.js';
 import { seasonAwards } from '../sim/awards.js';
+import { seasonConfig } from '../sim/rules.js';
 import { isRookie } from '../sim/players.js';
 import { createRng } from '../sim/rng.js';
 import { draftPicks, notableRetirements } from './offseasonShow.js';
@@ -22,7 +24,8 @@ import { isFinished, seasonTotalsAt, tableAt } from './onScreen.js';
 export const MORE_CARDS = /** @type {const} */ (['last_season', 'roll_of_honour', 'biggest_wins', 'scorchers', 'award_race', 'records_watch', 'rookies', 'final_table', 'playoff_stats', 'the_draft', 'farewells']);
 
 /** RECORDS WATCH: the stats with a season record, and a leader's share of it that makes it worth a card. */
-const WATCH_STATS = /** @type {const} */ ([['goals', 'GOALS'], ['scorchers', 'SCORCHERS'], ['assists', 'ASSISTS'], ['stops', 'QUELLS'], ['saves', 'SAVES']]);
+/** RECORDS WATCH's stats: season totals chasing the record (not quells, Tom 2026-11-03: their totals aren't shown). */
+const WATCH_STATS = /** @type {const} */ ([['goals', 'GOALS'], ['scorchers', 'SCORCHERS'], ['assists', 'ASSISTS'], ['saves', 'SAVES']]);
 
 /** @param {{ saves: number, conceded: number }} x */
 const savePct = (x) => (x.saves + x.conceded > 0 ? Math.round((100 * x.saves) / (x.saves + x.conceded)) : null);
@@ -115,12 +118,13 @@ export function moreCard(card, live, t, ctx) {
   // AWARD RACE: each award's leader and runner-up so far, by the award's own rule, from the regular season on screen.
   if (card === 'award_race') {
     const totals = seasonTotalsAt(live, season, t, durationOf);
-    const awards = seasonAwards(totals, live.league.players, config.rules.awards, createRng(`award-race|${season}`), season);
+    const awards = seasonAwards(totals, live.league.players, seasonConfig(config, season).rules.awards, createRng(`award-race|${season}`), season);
     if (!awards.length) return null;
     return {
       kind: /** @type {const} */ ('award_race'),
       title: `AWARD RACE · SEASON ${season}`,
-      rows: awards.map((a) => ({ award: a.award, name: awardName(a.award), leader: { name: ctx.playerName(a.playerId), teamId: a.teamId, value: a.value },
+      // A blended award (the Spark, the Aegis from season 5) shows no figure: its standing is never shown.
+      rows: awards.map((a) => ({ award: a.award, name: awardName(a.award), blended: a.line !== undefined, leader: { name: ctx.playerName(a.playerId), teamId: a.teamId, value: a.value },
         second: a.shortlist[0] ? { name: ctx.playerName(a.shortlist[0].playerId), teamId: a.shortlist[0].teamId, value: a.shortlist[0].value } : null })),
     };
   }
@@ -136,7 +140,7 @@ export function moreCard(card, live, t, ctx) {
     const share = config.settings.segments.studioDecks.recordsWatchShare;
     const rows = WATCH_STATS.flatMap(([stat, words]) => {
       const rec = /** @type {import('../chronicle/records.js').PlayerEntry[]} */ (/** @type {any} */ (r.season)[stat])[0];
-      const value = (/** @type {import('../sim/standings.js').SeasonPlayerStats} */ x) => (stat === 'stops' ? x.tackles + x.blocks : x[stat]);
+      const value = (/** @type {import('../sim/standings.js').SeasonPlayerStats} */ x) => x[stat];
       const lead = [...totals].sort((a, b) => value(b) - value(a) || a.playerId.localeCompare(b.playerId))[0];
       if (!rec || !lead || value(lead) < share * rec.value) return [];
       return [{ stat, words, leader: { name: ctx.playerName(lead.playerId), teamId: lead.teamId, value: value(lead) }, record: { value: rec.value, name: ctx.playerName(rec.playerId), teamId: rec.teamId, season: /** @type {number} */ (rec.season) } }];
@@ -146,8 +150,8 @@ export function moreCard(card, live, t, ctx) {
     return rows.length ? { kind: /** @type {const} */ ('records_watch'), title: 'RECORDS WATCH', broken, chases } : null;
   }
 
-  // ROOKIES (Tom: no pick; G, A and ST; the rookie keepers apart): the best five outfielders, then keepers who've
-  // started studioDecks.rookieKeeperStarts or more.
+  // ROOKIES (Tom: no pick; G, A and Q, quells a game; the rookie keepers apart): the best five outfielders, then keepers
+  // who've started studioDecks.rookieKeeperStarts or more.
   if (card === 'rookies') {
     const all = Object.values(seasonTotalsAt(live, season, t, durationOf))
       .filter((x) => x.appearances > 0 && live.league.players[x.playerId] && isRookie(live.league.players[x.playerId], season));
@@ -155,7 +159,7 @@ export function moreCard(card, live, t, ctx) {
     const rank = (/** @type {import('../sim/standings.js').SeasonPlayerStats} */ x) => x.goals + x.assists + stops(x) / 10;
     const outfield = all.filter((x) => live.league.players[x.playerId].position !== 'K')
       .sort((a, b) => rank(b) - rank(a) || a.playerId.localeCompare(b.playerId)).slice(0, 5)
-      .map((x) => ({ name: ctx.playerName(x.playerId), teamId: x.teamId, position: live.league.players[x.playerId].position, goals: x.goals, assists: x.assists, stops: stops(x) }));
+      .map((x) => ({ name: ctx.playerName(x.playerId), teamId: x.teamId, position: live.league.players[x.playerId].position, goals: x.goals, assists: x.assists, stops: quellsAGame(stops(x), x.appearances) }));
     const keepers = all.filter((x) => live.league.players[x.playerId].position === 'K' && x.starts >= config.settings.segments.studioDecks.rookieKeeperStarts)
       .sort((a, b) => b.saves - a.saves || a.playerId.localeCompare(b.playerId)).slice(0, 2)
       .map((x) => ({ name: ctx.playerName(x.playerId), teamId: x.teamId, saves: x.saves, pct: savePct(x) }));
@@ -168,15 +172,15 @@ export function moreCard(card, live, t, ctx) {
     return { kind: /** @type {const} */ ('final_table'), title: `FINAL TABLE · SEASON ${season}`, cut: config.rules.playoffs.teams, rows: tableAt(live, season, t, durationOf).map(tableLine) };
   }
 
-  // PLAYOFF STATS: the regular season's TOP ASSISTS, TOP STOPS and TOP KEEPERS for the playoffs alone, and scorchers.
+  // PLAYOFF STATS: the regular season's TOP ASSISTS, TOP QUELLS (a game) and TOP KEEPERS for the playoffs alone, and scorchers.
   if (card === 'playoff_stats') {
     const totals = Object.values(seasonTotalsAt(live, season, t, durationOf, 'playoffs'));
     const top = (/** @type {(x: import('../sim/standings.js').SeasonPlayerStats) => number} */ v, /** @type {boolean} */ keeper = false) => totals.filter((x) => v(x) > 0)
       .sort((a, b) => v(b) - v(a) || a.playerId.localeCompare(b.playerId)).slice(0, 3)
-      .map((x) => ({ name: ctx.playerName(x.playerId), teamId: x.teamId, value: v(x), pct: keeper ? savePct(x) : null }));
+      .map((x) => ({ name: ctx.playerName(x.playerId), teamId: x.teamId, value: v(x), shown: String(v(x)), pct: keeper ? savePct(x) : null }));
     const blocks = [
       { title: 'ASSISTS', rows: top((x) => x.assists) },
-      { title: 'QUELLS', rows: top((x) => x.tackles + x.blocks) },
+      { title: 'QUELLS A GAME', rows: top((x) => Number(quellsAGame(x.tackles + x.blocks, x.appearances))).map((r) => ({ ...r, shown: r.value.toFixed(1) })) },
       { title: 'KEEPERS', rows: top((x) => x.saves, true) },
       { title: 'SCORCHERS', rows: top((x) => x.scorchers) },
     ];

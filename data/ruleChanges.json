@@ -27,6 +27,27 @@
       "reason": "The League's scorers credit the assist to the last teammate to move the ball on before the scorer, and none on a free shot.",
       "_comment": "Tom, 2026-10-28 (docs/simulation.md, assists): only 58% of goals had an assist, as the last player to move the ball on was often the scorer. Only who is credited changes, never a result. Measured (3 leagues x 10 seasons): 79% assisted; the Compass's winner changes in about 4 seasons in 10, still a midfielder; player of the match in about 6% of matches. LATEST's four-assist matches about 2 a season to 4, kept (Tom: still rare).",
       "changes": { "match": { "assists": "teammate" } }
+    },
+    {
+      "id": "aegis_best_defender",
+      "season": 5,
+      "reason": "The Aegis goes to the best defender of the regular season, judged on quells, goals and assists a game, rather than to whoever made the most quells.",
+      "_comment": "Tom, 2026-11-03 (docs/simulation.md, the awards): a defender is more than a busy tackler, and quells' big totals aren't shown any more. Only the award changes, never a result. Season 5, not 4 as first asked: season 4 had begun, and a rule change is logged at its season's start, so every season-4 match after it would have played differently in the record (the live check refused it). The whole list, as lists replace. Measured (3 leagues x 10 seasons): a different winner in 17 seasons in 30; the same winner two seasons running 4 times in 30 either way.",
+      "changes": { "awards": { "list": [
+        { "id": "ember_boot", "name": "The Ember Boot", "stat": "goals" },
+        { "id": "blaze", "name": "The Blaze", "stat": "scorchers" },
+        { "id": "compass", "name": "The Compass", "stat": "assists" },
+        { "id": "quell", "name": "The Aegis", "stat": "positionBlend", "positions": ["D"], "minMinutesShare": 0.5, "perGame": true, "blend": {
+          "D": { "stops": 1, "assists": 0.5, "goals": 0.5 }
+        } },
+        { "id": "ironclad", "name": "The Ironclad", "stat": "savePct", "positions": ["K"], "minFacedShare": 0.5, "oneATeam": true },
+        { "id": "spark", "name": "The Spark", "stat": "rookieBlend", "minMinutesShare": 0.25, "blend": {
+          "K": { "savesAdded": 1 },
+          "D": { "stops": 1, "assists": 0.5, "goals": 0.5 },
+          "M": { "assists": 1, "goals": 0.75, "stops": 0.5 },
+          "S": { "goals": 1, "assists": 0.5, "scorchers": 0.5 }
+        } }
+      ] } }
     }
   ]
 }

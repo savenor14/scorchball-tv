@@ -3,7 +3,8 @@
 // note), POLLS (each poll's running tally, Tom's eyes only), FEEDBACK (the notes, newest first: read, bug, idea) and
 // REJECTIONS (the history, by watcher) and ROADMAP (Task 265b: the growth ideas, their status and notes, the notes
 // linked to each; no timeline) and VIEWERS (Task 277e: the live site's viewers and this dev server's, counted from the
-// channel's hellos) and TODAY (the daily Bluesky post, its picture and alt text). Everything goes through the dev
+// channel's hellos), TODAY (the daily Bluesky post, its picture and alt text) and STATS (Tom, 2026-11-03: every player's
+// numbers, the totals the screen doesn't show among them, sortable). Everything goes through the dev
 // server's /api/director/ (src/cli/directorDesk.js).
 import { loadConfig } from '../config.js';
 import { CARD, drawShareCard } from './shareCard.js';
@@ -18,6 +19,9 @@ let today = null;
 /** The teams, for the share card's crests and names (loaded with TODAY). @type {any} */
 let teams = null;
 let tab = 'proposals';
+/** STATS: the players, fetched when the tab is first opened; which part and column it's sorted by. @type {any} */
+let stats = null;
+const statsView = { part: 'season', by: 'quells' };
 let unreadOnly = false;
 
 const $ = (/** @type {string} */ id) => /** @type {HTMLElement} */ (document.getElementById(id));
@@ -60,10 +64,54 @@ function render() {
   const r = state.report;
   $('ran').textContent = r ? `Last run: ${new Date(r.at).toLocaleString()} for season ${r.season} (${r.finished} finished, seed "${r.seed}")` : 'Not run yet.';
   const unread = state.notes.filter((/** @type {any} */ n) => !n.read).length;
-  const tabs = [['proposals', `PROPOSALS (${r?.proposals.length ?? 0})`], ['polls', 'POLLS'], ['feedback', `FEEDBACK (${unread} unread)`], ['rejections', `REJECTIONS (${state.rejections.length})`], ['roadmap', 'ROADMAP'], ['viewers', `VIEWERS (${state.viewers.live?.watching ?? '?'} now)`], ['today', 'TODAY']];
+  const tabs = [['proposals', `PROPOSALS (${r?.proposals.length ?? 0})`], ['polls', 'POLLS'], ['feedback', `FEEDBACK (${unread} unread)`], ['rejections', `REJECTIONS (${state.rejections.length})`], ['roadmap', 'ROADMAP'], ['viewers', `VIEWERS (${state.viewers.live?.watching ?? '?'} now)`], ['today', 'TODAY'], ['stats', 'STATS']];
   $('tabs').replaceChildren(...tabs.map(([id, label]) => button(label, () => { tab = id; render(); }, tab === id ? 'on' : '')));
   const body = $('body');
-  body.replaceChildren(...(tab === 'proposals' ? proposals() : tab === 'polls' ? polls() : tab === 'feedback' ? feedback() : tab === 'roadmap' ? roadmap() : tab === 'viewers' ? viewers() : tab === 'today' ? todayTab() : rejections()));
+  body.replaceChildren(...(tab === 'proposals' ? proposals() : tab === 'polls' ? polls() : tab === 'feedback' ? feedback() : tab === 'roadmap' ? roadmap() : tab === 'viewers' ? viewers() : tab === 'today' ? todayTab() : tab === 'stats' ? statsTab() : rejections()));
+}
+
+/**
+ * STATS (Tom, 2026-11-03): every player's numbers as aired, this season's regular season or the career, sorted by any
+ * column (a header click). The quells' totals live here, not on screen.
+ */
+function statsTab() {
+  if (!stats) {
+    api('stats').then((r) => { stats = r; render(); }).catch((err) => say(`Couldn't count the stats: ${err instanceof Error ? err.message : err}`, true));
+    return [el('p', 'muted', ['Rebuilding the league for the stats…'])];
+  }
+  const COLS = /** @type {[string, string][]} */ ([['games', 'GP'], ['goals', 'G'], ['assists', 'A'], ['scorchers', 'SC'], ['quells', 'Q'], ['qpg', 'Q/GP'], ['tackles', 'TK'], ['steals', 'ST'], ['blocks', 'BL'], ['saves', 'SV'], ['svpct', 'SV%'], ['potm', 'POTM'], ['burns', 'BURNS']]);
+  /** @param {any} l @param {string} k */
+  const val = (l, k) => (k === 'qpg' ? (l.games ? l.quells / l.games : 0) : k === 'svpct' ? (l.faced ? l.saves / l.faced : 0) : l[k]);
+  /** @param {any} l @param {string} k */
+  const shown = (l, k) => (k === 'qpg' ? val(l, k).toFixed(1) : k === 'svpct' ? (l.faced ? `${(val(l, k) * 100).toFixed(1)}%` : '') : String(l[k]));
+  const part = statsView.part;
+  const rows = stats.players.filter((/** @type {any} */ p) => p[part] && p[part].games > 0)
+    .sort((/** @type {any} */ a, /** @type {any} */ b) => val(b[part], statsView.by) - val(a[part], statsView.by) || a.name.localeCompare(b.name));
+  const head = el('tr', '', [el('th', '', ['#']), el('th', '', ['Player']), el('th', '', ['Pos']), el('th', '', ['Team']),
+    ...COLS.map(([k, label]) => {
+      const th = el('th', statsView.by === k ? 'on' : '', [label]);
+      th.style.cursor = 'pointer';
+      th.addEventListener('click', () => { statsView.by = k; render(); });
+      return th;
+    })]);
+  const body = rows.slice(0, 200).map((/** @type {any} */ p, /** @type {number} */ i) => el('tr', '', [
+    el('td', 'muted', [String(i + 1)]), el('td', '', [p.name, p.status === 'retired' ? el('span', 'muted', [' (ret)']) : '']), el('td', '', [p.position]), el('td', '', [p.team]),
+    ...COLS.map(([k]) => el('td', statsView.by === k ? 'on' : '', [shown(p[part], k)])),
+  ]));
+  const title = part === 'season' ? `season ${stats.season} (regular season)` : 'career (incl. playoffs)';
+  const whose = stats.league === 'live' ? 'the live league' : `seed ${stats.league}`;
+  return [
+    el('div', 'card', [
+      el('h2', '', [`Stats · ${title}`]),
+      el('p', '', [
+        button('THIS SEASON', () => { statsView.part = 'season'; render(); }, part === 'season' ? 'on' : ''), ' ',
+        button('CAREER', () => { statsView.part = 'career'; render(); }, part === 'career' ? 'on' : ''), ' ',
+        button('REFRESH', () => { stats = null; render(); }),
+      ]),
+      el('p', 'muted', [`As aired (${whose}). Q quells (tackles and blocks), ST steals (tackles that intercept a pass). Click a column to sort; the top 200.`]),
+      el('table', '', [head, ...body]),
+    ]),
+  ];
 }
 
 /**

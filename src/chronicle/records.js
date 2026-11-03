@@ -22,19 +22,24 @@ import { statOf } from './chronicle.js';
  * @typedef {{ teamId: string, season: number, value: number }} TeamSeasonEntry
  */
 
-/** The player stats with records, career and season. */
-export const PLAYER_STATS = /** @type {const} */ (['goals', 'assists', 'scorchers', 'saves', 'savePct', 'stops', 'appearances', 'potm', 'winningGoals', 'burns']);
+/**
+ * The player stats with records, career and season. Quells a game (stopsPerGame, Tom 2026-11-03), not their totals:
+ * a career of at least minGames.career games, a season of minGames.season.
+ */
+export const PLAYER_STATS = /** @type {const} */ (['goals', 'assists', 'scorchers', 'saves', 'savePct', 'stopsPerGame', 'appearances', 'potm', 'winningGoals', 'burns']);
 /** The playoffs' own records (a career's playoffs). */
 export const PLAYOFF_STATS = /** @type {const} */ (['goals', 'assists', 'scorchers', 'saves', 'appearances']);
-/** Single-match records, from the notable matches the chronicle keeps. */
-export const MATCH_STATS = /** @type {const} */ (['goals', 'assists', 'saves']);
+/** Single-match records, from the notable matches the chronicle keeps (quells from notableMatchFrom.stops). */
+export const MATCH_STATS = /** @type {const} */ (['goals', 'assists', 'saves', 'stops']);
 
 /**
- * A line's value for a record, or null when it doesn't qualify (save percentage under its minimum faced).
- * @param {Line} line @param {string} stat @param {number} minFaced
+ * A line's value for a record, or null when it doesn't qualify (save percentage under its minimum faced, quells a game
+ * under its minimum games).
+ * @param {Line} line @param {string} stat @param {number} minFaced @param {number} [minGames]
  * @returns {{ value: number, faced?: number } | null}
  */
-function valueOf(line, stat, minFaced) {
+function valueOf(line, stat, minFaced, minGames = 1) {
+  if (stat === 'stopsPerGame') return line.appearances >= Math.max(1, minGames) ? { value: Math.round((statOf(line, 'stops') / line.appearances) * 10) / 10 } : null;
   if (stat !== 'savePct') return { value: statOf(line, stat) };
   const faced = line.saves + line.conceded;
   return faced >= Math.max(1, minFaced) ? { value: line.saves / faced, faced } : null;
@@ -56,11 +61,11 @@ function top(list, n) {
  * Every record, as of the end of season `upTo` (the chronicle's latest by default; the channel passes the last season
  * that has aired, since the log runs ahead of the screen).
  * @param {Chronicle} chronicle
- * @param {{ listLength: number, seasonMinFaced: number, careerMinFaced: number, careerMinFacedPerSeason: number }} options  data/chronicle.json records
+ * @param {{ listLength: number, seasonMinFaced: number, careerMinFaced: number, careerMinFacedPerSeason: number, minGames: { season: number, career: number } }} options  data/chronicle.json records
  * @param {{ upTo?: number }} [o]
  */
 export function records(chronicle, options, { upTo = Infinity } = {}) {
-  const { listLength: n, seasonMinFaced, careerMinFaced: careerMax, careerMinFacedPerSeason } = withoutComments(options);
+  const { listLength: n, seasonMinFaced, careerMinFaced: careerMax, careerMinFacedPerSeason, minGames } = withoutComments(options);
   const seasons = [...chronicle.seasons.values()].filter((s) => s.season <= upTo);
   // A career's save percentage needs careerMinFacedPerSeason a finished season, up to careerMinFaced (Tom, 2026-10-27:
   // after two seasons nobody had faced 500, so the list was empty); at least one season's worth.
@@ -72,18 +77,18 @@ export function records(chronicle, options, { upTo = Infinity } = {}) {
   const careers = players.map((p) => ({ p, all: chronicle.career(p.id, 'all', upTo), playoffs: chronicle.career(p.id, 'playoffs', upTo) })).filter((c) => c.all.seasons > 0);
   /** @param {string} stat */
   const careerList = (stat) => top(careers.flatMap(({ p, all }) => {
-    const v = valueOf(all, stat, careerMinFaced);
+    const v = valueOf(all, stat, careerMinFaced, minGames.career);
     return v ? [{ playerId: p.id, teamId: all.teamId, seasons: all.seasons, ...v }] : [];
   }), n);
   /** @param {string} stat */
   const seasonList = (stat) => top(players.flatMap((p) => Object.entries(p.seasons).flatMap(([season, s]) => {
-    const v = s.regular && Number(season) <= upTo ? valueOf(s.regular, stat, seasonMinFaced) : null;
+    const v = s.regular && Number(season) <= upTo ? valueOf(s.regular, stat, seasonMinFaced, minGames.season) : null;
     return v ? [{ playerId: p.id, teamId: /** @type {Line} */ (s.regular).teamId, season: Number(season), ...v }] : [];
   })), n);
   /** @param {string} stat */
   const playoffList = (stat) => top(careers.filter((c) => c.playoffs.seasons > 0).map(({ p, playoffs }) => ({ playerId: p.id, teamId: playoffs.teamId, seasons: playoffs.seasons, value: statOf(playoffs, stat) })), n);
-  /** @param {'goals' | 'assists' | 'saves'} stat */
-  const matchList = (stat) => top(chronicle.performances.filter((x) => x.season <= upTo).map((x) => ({ playerId: x.playerId, teamId: x.teamId, season: x.season, matchId: x.matchId, value: x[stat] })), n);
+  /** @param {'goals' | 'assists' | 'saves' | 'stops'} stat */
+  const matchList = (stat) => top(chronicle.performances.filter((x) => x.season <= upTo).map((x) => ({ playerId: x.playerId, teamId: x.teamId, season: x.season, matchId: x.matchId, value: x[stat] ?? 0 })), n);
 
   // Teams: honours and all-time results (shootouts count as a win or a loss), seasons from the tables, runs.
   const teamIds = [...chronicle.teams.keys()];

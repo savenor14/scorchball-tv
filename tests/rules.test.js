@@ -38,8 +38,10 @@ test('a season with no change in effect plays under data/rules.json itself', () 
   assert.equal(seasonConfig(real, 1), real);
 });
 
-test('the real data brings in the rookie rule at season 2 (Task 230), the draft and market change, the rookie positions and the teammate assist at 4 (Tom, 2026-10-25, 2026-10-28)', () => {
-  assert.deepEqual(real.ruleChanges.changes.map((/** @type {any} */ c) => [c.id, c.season]), [['rookie_rule', 2], ['draft_and_market', 4], ['rookie_positions', 4], ['teammate_assists', 4]]);
+test('the real data brings in the rookie rule at season 2 (Task 230), the draft and market change, the rookie positions and the teammate assist at 4 (Tom, 2026-10-25, 2026-10-28), the Aegis a best defender at 5 (2026-11-03)', () => {
+  assert.deepEqual(real.ruleChanges.changes.map((/** @type {any} */ c) => [c.id, c.season]), [['rookie_rule', 2], ['draft_and_market', 4], ['rookie_positions', 4], ['teammate_assists', 4], ['aegis_best_defender', 5]]);
+  assert.equal(seasonConfig(real, 4).rules.awards.list.find((/** @type {any} */ a) => a.id === 'quell').stat, 'stops');
+  assert.equal(seasonConfig(real, 5).rules.awards.list.find((/** @type {any} */ a) => a.id === 'quell').stat, 'positionBlend');
   assert.equal(seasonConfig(real, 3).rules.match.assists, 'lastAdvance');
   assert.equal(seasonConfig(real, 4).rules.match.assists, 'teammate');
   assert.equal(real.rules.roster.rookieStarters, 0);

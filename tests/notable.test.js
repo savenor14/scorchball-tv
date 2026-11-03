@@ -30,7 +30,7 @@ test('a season\'s story: in the order it happened, each item clearing its bar, t
       const at = order.indexOf(/** @type {string} */ (it.matchId));
       assert.ok(at >= last, `${it.kind} in order`);
       last = at;
-      if (it.kind === 'performance') assert.ok(/** @type {number} */ (it.value) >= { goals: L.matchGoals, assists: L.matchAssists, saves: L.matchSaves }[/** @type {'goals'} */ (it.stat)]);
+      if (it.kind === 'performance') assert.ok(/** @type {number} */ (it.value) >= { goals: L.matchGoals, assists: L.matchAssists, saves: L.matchSaves, stops: L.matchQuells }[/** @type {'goals'} */ (it.stat)]);
       if (it.kind === 'run') assert.ok(/** @type {number} */ (it.value) >= (it.stat === 'won' ? L.winRun : L.winlessRun));
       if (it.kind === 'milestone' && it.stat === 'appearances') assert.ok(/** @type {number} */ (it.value) >= L.appearancesFrom);
     }

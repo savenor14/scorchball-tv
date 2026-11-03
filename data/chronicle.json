@@ -1,7 +1,7 @@
 {
   "_comment": "The chronicle's thresholds (It remembers, Task 216; docs/simulation.md §12b). Counts are over a career, the regular season and playoffs together, unless said otherwise. From 50 seasons of seed 'dist': retired players' median career 15 goals and 117 appearances, the best about 600 goals, 250 assists, 270 appearances, 2,300 saves; a busy keeper faces about 140 shots on target a season.",
   "milestones": {
-    "_comment": "A milestone each time a career total passes a multiple of its step (the 100th goal, the 200th, ...), in the match it came in. stops: tackles plus blocks (the Quell's stat). Steps for about 2-3 a season each (Tom, 2026-10-08; 30 seasons of seed 'ms'): goals 100 (2.3 a season; 50 gave 6.2, the top striker one nearly every season), assists 50 (2.6), saves 500 (1.5), stops 1000 (2.5); appearances 100 (6.1, but the 100th and 200th are the classic ones; LATEST can show them quieter).",
+    "_comment": "A milestone each time a career total passes a multiple of its step (the 100th goal, the 200th, ...), in the match it came in. stops: quells, tackles plus blocks; kept (the snapshots hold them) but never shown (Tom, 2026-11-03: their totals run into the thousands). Steps for about 2-3 a season each (Tom, 2026-10-08; 30 seasons of seed 'ms'): goals 100 (2.3 a season; 50 gave 6.2, the top striker one nearly every season), assists 50 (2.6), saves 500 (1.5), stops 1000 (2.5); appearances 100 (6.1, but the 100th and 200th are the classic ones; LATEST can show them quieter).",
     "goals": 100,
     "assists": 50,
     "appearances": 100,
@@ -12,35 +12,41 @@
     "_comment": "A player's match is kept (for the single-match records) when it reaches any of these: about 41 three-goal matches a season, 9 three-assist ones, and the top 1% of keepers' saves.",
     "goals": 3,
     "assists": 3,
-    "saves": 15
+    "saves": 15,
+    "stops": 25
+  },
+  "notableMatchFrom": {
+    "_comment": "Tom, 2026-11-03: a bar's first season, where it came after the league began; a notable match keeps its quells from stops's. A whole match of 25 quells or more: 1 or 2 a season, every one a midfielder until a sixth player shares their tackles (10 seasons of seed 'quellmatch': the best 29, a defender's 19). From season 5, so the snapshots already published stay as they were.",
+    "stops": 5
   },
   "records": {
-    "_comment": "listLength: how many in each record list. Save percentage needs at least seasonMinFaced shots on target faced in a regular season, and over a career careerMinFacedPerSeason a finished season up to careerMinFaced (Tom, 2026-10-27: a busy keeper faces about 140 to 165 a season, so after two seasons nobody had 500 and the list was empty; 200 then, 500 from season 5).",
+    "_comment": "listLength: how many in each record list. Save percentage needs at least seasonMinFaced shots on target faced in a regular season, and over a career careerMinFacedPerSeason a finished season up to careerMinFaced (Tom, 2026-10-27: a busy keeper faces about 140 to 165 a season, so after two seasons nobody had 500 and the list was empty; 200 then, 500 from season 5). Quells a game (Tom, 2026-11-03: their totals aren't shown) need minGames: half a regular season's 14 games, two seasons' over a career.",
     "listLength": 10,
     "seasonMinFaced": 60,
     "careerMinFaced": 500,
-    "careerMinFacedPerSeason": 100
+    "careerMinFacedPerSeason": 100,
+    "minGames": { "season": 7, "career": 28 }
   },
   "latest": {
-    "_comment": "What makes LATEST (Task 220; docs/channel.md §20.3): a match of matchGoals goals, matchAssists assists or matchSaves saves (50 seasons of seed 'lat': 6.6, 2.0 and 1.1 a season; 4 goals came 17 times a season), a run of winRun wins or winlessRun games without a win (1.1 and 1.5), every milestone but games, which only from appearancesFrom (1.5 a season; the 100th comes 4.4 times), the Pennant, the playoff places and the Cup: about 25 lines a season, so the week fits.",
+    "_comment": "What makes LATEST (Task 220; docs/channel.md §20.3): a match of matchGoals goals, matchAssists assists, matchSaves saves or matchQuells quells (from notableMatchFrom.stops) (50 seasons of seed 'lat': 6.6, 2.0 and 1.1 a season; 4 goals came 17 times a season), a run of winRun wins or winlessRun games without a win (1.1 and 1.5), every milestone but games, which only from appearancesFrom (1.5 a season; the 100th comes 4.4 times), the Pennant, the playoff places and the Cup: about 25 lines a season, so the week fits.",
     "matchGoals": 5,
     "matchAssists": 4,
     "matchSaves": 18,
+    "matchQuells": 25,
     "winRun": 5,
     "winlessRun": 6,
     "appearancesFrom": 200
   },
   "history": {
-    "_comment": "HISTORY's landmarks (Task 220): a Cup ending a drought of droughtSeasons or more since the team's last; all-time records (goals, assists, saves, stops; not games, which changed hands 9 times in 45 seasons) changing hands from recordsFrom seasons on (before that, every season would break one).",
+    "_comment": "HISTORY's landmarks (Task 220): a Cup ending a drought of droughtSeasons or more since the team's last; all-time records (goals, assists, saves; quells' are kept but not shown, Tom 2026-11-03; not games, which changed hands 9 times in 45 seasons) changing hands from recordsFrom seasons on (before that, every season would break one).",
     "droughtSeasons": 8,
     "recordsFrom": 5
   },
   "legends": {
-    "_comment": "A legend (Tom: by rules, at retirement; HISTORY's Hall of Fame): a career of goals goals, assists assists, saves saves or stops stops (tackles plus blocks) or more, the regular season and playoffs together; or awards awards or more; or cups Scorch Cups or more as a regular (at least regularShare of their team's regular-season games). Fixed bars (Task 220): ranking against the all-time lists made a young league's first long careers legends wholesale. 350/175/2000/2800, 3 awards, 6 Cups made about 1 a season (Tom: a touch too often); these make about 21 in 50 seasons (three seeds: 20, 22, 22), one every two or three weeks, every position among them.",
+    "_comment": "A legend (Tom: by rules, at retirement; HISTORY's Hall of Fame): a career of goals goals, assists assists or saves saves or more (not quells: Tom, 2026-11-03, their totals aren't shown; 3,500 until then), the regular season and playoffs together; or awards awards or more; or cups Scorch Cups or more as a regular (at least regularShare of their team's regular-season games). Fixed bars (Task 220): ranking against the all-time lists made a young league's first long careers legends wholesale. 350/175/2000/2800, 3 awards, 6 Cups made about 1 a season (Tom: a touch too often); these make about 21 in 50 seasons (three seeds: 20, 22, 22), one every two or three weeks, every position among them.",
     "goals": 450,
     "assists": 225,
     "saves": 2500,
-    "stops": 3500,
     "awards": 5,
     "cups": 7,
     "regularShare": 0.5

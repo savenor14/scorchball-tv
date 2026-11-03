@@ -2,6 +2,7 @@
 // and what fills its line. Pure; the facts are the facts module's (src/chronicle/facts.js), the words data/studio.json's
 // (factRematch to factMomentumDecider after a match, teeUpRematch, teeUpRunOver, teeUpOldClub before one). Said: generic
 // or one team; shown: the specifics.
+import { UNSHOWN } from '../chronicle/chronicle.js';
 
 /**
  * @typedef {import('../chronicle/facts.js').Fact} Fact
@@ -36,6 +37,9 @@ const ordinal = (n) => {
   return `${n}${['TH', 'ST', 'ND', 'RD'][(v - 20) % 10] ?? ['TH', 'ST', 'ND', 'RD'][v] ?? 'TH'}`;
 };
 
+/** A milestone or record in a total the screen doesn't show (quells: UNSHOWN, Tom 2026-11-03). @param {Fact} f */
+export const unshown = (f) => (f.kind === 'milestone' || f.kind === 'record') && UNSHOWN.has(f.stat ?? '');
+
 /** Which line a fact has, if the desk says it. @param {Fact} f @param {Record<string, string>} map */
 function lineFor(f, map) {
   const variant = f.kind === 'final_rematch' && f.revenge ? 'final_rematch.revenge'
@@ -67,6 +71,7 @@ export function fillOf(f, names) {
 export function deskAfter(facts, names, from) {
   for (const f of facts) {
     if (f.weight < from) break;
+    if (unshown(f)) continue;
     const kind = lineFor(f, AFTER);
     if (kind) return { kind, fill: fillOf(f, names) };
   }

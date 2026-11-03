@@ -12,6 +12,7 @@ import { payrolls } from './money.js';
 import { byStakes, isFinished, seasonTotalsAt, stakesOf, tableAt, topScorersAt, upcomingAt } from './onScreen.js';
 import { wrapUpAt } from './calendar.js';
 import { CARD_STATS, cardStat } from './playerCard.js';
+import { quellsAGame } from '../chronicle/chronicle.js';
 import { fillOf } from './deskFacts.js';
 import { factKey, interviewTalk } from './interviewTalk.js';
 import { playerOfTheMatch, potmQuote, statLine, quoteChoice, winnerOf as resultWinner } from './potm.js';
@@ -620,15 +621,19 @@ export function studioCard(card, live, at, rotation, ctx) {
     };
   }
   // A big stat's own leaders (Task 278n, Tom: in place of the combined card; goals and scorchers have TOP SCORERS): the
-  // top five in assists, in stops (tackles and blocks, the Quell's stat), or keepers by saves with their save percentage.
+  // top five in assists, in quells a game (tackles and blocks; Tom, 2026-11-03: not their totals; at least half the
+  // games the busiest has played), or keepers by saves with their save percentage.
   if (card === 'assists' || card === 'stops' || card === 'keepers') {
-    const totals = Object.values(seasonTotalsAt(live, season, t, durationOf));
-    const value = (/** @type {import('../sim/standings.js').SeasonPlayerStats} */ x) => (card === 'assists' ? x.assists : card === 'stops' ? x.tackles + x.blocks : x.saves);
+    const all = Object.values(seasonTotalsAt(live, season, t, durationOf));
+    const most = Math.max(0, ...all.map((x) => x.appearances));
+    const totals = card === 'stops' ? all.filter((x) => x.appearances >= Math.max(1, Math.ceil(most / 2))) : all;
+    const value = (/** @type {import('../sim/standings.js').SeasonPlayerStats} */ x) => (card === 'assists' ? x.assists
+      : card === 'stops' ? Number(quellsAGame(x.tackles + x.blocks, x.appearances)) : x.saves);
     const rows = totals.filter((x) => value(x) > 0)
       .sort((a, b) => value(b) - value(a) || a.appearances - b.appearances || a.playerId.localeCompare(b.playerId))
       .slice(0, 5)
       .map((x) => ({ playerId: x.playerId, name: ctx.playerName(x.playerId), teamId: x.teamId, value: value(x), pct: card === 'keepers' && x.saves + x.conceded > 0 ? Math.round((100 * x.saves) / (x.saves + x.conceded)) : null }));
-    const what = card === 'assists' ? 'ASSISTS' : card === 'stops' ? 'QUELLS' : 'KEEPERS';
+    const what = card === 'assists' ? 'ASSISTS' : card === 'stops' ? 'QUELLS A GAME' : 'KEEPERS';
     return { kind: /** @type {const} */ ('stat_leaders'), stat: card, title: `TOP ${what} · SEASON ${season}`, rows };
   }
   if (card === 'head_to_head') {

@@ -4,14 +4,15 @@
 // Pure: reads the chronicle (only what has aired) and the config; the pane draws it.
 import { withoutComments } from '../util.js';
 import { legendWhy } from '../chronicle/notable.js';
-import { statOf } from '../chronicle/chronicle.js';
+import { statOf, UNSHOWN } from '../chronicle/chronicle.js';
 import { seasonConfig } from '../sim/rules.js';
 
 export const POSITION_NAME = /** @type {Record<string, string>} */ ({ K: 'KEEPER', D: 'DEFENDER', M: 'MIDFIELDER', S: 'STRIKER' });
 
 /**
- * The stats on a card, after games (GP): goals, assists and stops for every outfield player, the same columns so cards
- * compare at a glance (Tom, Task 221: stops added once the team moved to a heading); a keeper's saves and save %.
+ * The stats on a card, after games (GP): goals, assists and quells for every outfield player, the same columns so cards
+ * compare at a glance (Tom, Task 221: added once the team moved to a heading); quells a game (Tom, 2026-11-03: their
+ * totals ran into the thousands); a keeper's saves and save %.
  */
 const OUTFIELD = /** @type {[string, string][]} */ ([['goals', 'G'], ['assists', 'A'], ['stops', 'Q']]);
 export const CARD_STATS = /** @type {Record<string, [string, string][]>} */ ({
@@ -19,8 +20,9 @@ export const CARD_STATS = /** @type {Record<string, [string, string][]>} */ ({
   K: [['saves', 'SV'], ['savePct', 'SV%']],
 });
 
-/** A line's value for a card stat. @param {import('../chronicle/chronicle.js').Line} line @param {string} stat */
+/** A line's value for a card stat (quells a game). @param {import('../chronicle/chronicle.js').Line} line @param {string} stat */
 export function cardStat(line, stat) {
+  if (stat === 'stops') return line.appearances ? statOf(line, stat) / line.appearances : null;
   if (stat === 'savePct') {
     const faced = line.saves + line.conceded;
     return faced ? line.saves / faced : null;
@@ -102,10 +104,10 @@ export function playerCard(chronicle, config, playerId) {
       const ps = p.seasons[s];
       const both = [ps.regular, ps.playoffs].filter(Boolean);
       const sum = (/** @type {string} */ k) => both.reduce((n, l) => n + statOf(/** @type {any} */ (l), k), 0);
-      const line = /** @type {any} */ ({ saves: sum('saves'), conceded: sum('conceded') });
+      const line = /** @type {any} */ ({ saves: sum('saves'), conceded: sum('conceded'), tackles: sum('tackles'), blocks: sum('blocks'), appearances: sum('appearances') });
       return {
         season: s, teamId: ps.teamId, games: sum('appearances'),
-        stats: CARD_STATS[p.position].map(([k]) => (k === 'savePct' ? cardStat(line, k) : sum(k))),
+        stats: CARD_STATS[p.position].map(([k]) => (k === 'savePct' || k === 'stops' ? cardStat(line, k) : sum(k))),
         potm: sum('potm'),
         cup: chronicle.season(s).championId === ps.teamId,
       };
@@ -114,8 +116,8 @@ export function playerCard(chronicle, config, playerId) {
     honours: {
       awards: Object.entries(awards).map(([award, won]) => ({ award, seasons: won })),
       cups: seasons.filter((s) => chronicle.season(s).championId === p.seasons[s].teamId),
-      records: chronicle.recordsBroken.filter((r) => r.playerId === p.id),
-      milestones: chronicle.milestones.filter((m) => m.playerId === p.id && (m.stat !== 'appearances' || m.value >= opts.latest.appearancesFrom)),
+      records: chronicle.recordsBroken.filter((r) => r.playerId === p.id && !UNSHOWN.has(r.stat)),
+      milestones: chronicle.milestones.filter((m) => m.playerId === p.id && !UNSHOWN.has(m.stat) && (m.stat !== 'appearances' || m.value >= opts.latest.appearancesFrom)),
     },
   };
 }

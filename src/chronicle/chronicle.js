@@ -17,8 +17,17 @@ export const LINE_COUNTS = /** @type {const} */ ([
   'goals', 'assists', 'scorchers', 'shots', 'shotsOnTarget', 'saves', 'tackles', 'steals', 'fouls', 'burns', 'blocks', 'conceded', 'potm', 'winningGoals',
 ]);
 
-/** A line's value for a milestone or record stat: a count, or stops (tackles plus blocks, the Quell's stat). @param {Line} line @param {string} stat */
+/** A line's value for a milestone or record stat: a count, or stops (quells: tackles plus blocks). @param {Line} line @param {string} stat */
 export const statOf = (line, stat) => (stat === 'stops' ? line.tackles + line.blocks : /** @type {number} */ (/** @type {any} */ (line)[stat]));
+
+/**
+ * Totals the chronicle keeps but the screen never shows (Tom, 2026-11-03: quells run into the thousands): no milestone,
+ * record or legend by them on air, and quells shown a game. Kept, as the snapshots hold them; the desk shows them.
+ */
+export const UNSHOWN = new Set(['stops']);
+
+/** Quells a game, to one place ("15.8"). @param {number} quells @param {number} games */
+export const quellsAGame = (quells, games) => (games > 0 ? quells / games : 0).toFixed(1);
 
 /**
  * A player's season, regular season or playoffs: as the sim's SeasonPlayerStats (src/sim/standings.js), plus steals,
@@ -108,6 +117,7 @@ export const statOf = (line, stat) => (stat === 'stops' ? line.tackles + line.bl
  * @property {number} goals
  * @property {number} assists
  * @property {number} saves
+ * @property {number} [stops]  Quells, from notableMatchFrom.stops on (Tom, 2026-11-03: a single match's quells a record).
  *
  * @typedef {object} SeasonEntry
  * @property {number} season
@@ -261,12 +271,17 @@ export class Chronicle {
   #open = new Map();
 
   /**
-   * @param {{ milestones: Record<string, number>, notableMatch: Record<string, number>, history: { recordsFrom: number } }} options
-   *   data/chronicle.json (config.chronicle): the milestones' steps, the notable-match bars, when records start to count.
+   * @param {{ milestones: Record<string, number>, notableMatch: Record<string, number>, notableMatchFrom?: Record<string, number>, history: { recordsFrom: number } }} options
+   *   data/chronicle.json (config.chronicle): the milestones' steps, the notable-match bars (each from its season in
+   *   notableMatchFrom, else always), when records start to count.
    */
   constructor(options) {
     this.steps = Object.entries(withoutComments(options.milestones));
-    this.bars = Object.entries(withoutComments(options.notableMatch));
+    const from = withoutComments(options.notableMatchFrom ?? {});
+    /** @type {[string, number, number][]} Each bar: its stat, the bar, its first season. */
+    this.bars = Object.entries(withoutComments(options.notableMatch)).map(([stat, bar]) => [stat, bar, from[stat] ?? 1]);
+    /** From this season a notable match keeps its quells too (before it, the snapshots' matches are as published). */
+    this.quellsFrom = from.stops ?? 1;
     /** The records as they fall (Task 220b). */
     this.watch = new RecordWatch(options);
   }
@@ -360,8 +375,11 @@ export class Chronicle {
           this.milestones.push({ playerId: id, teamId: l.teamId, stat, value: v, season: result.season, matchId: lines.matchId });
         }
       }
-      if (this.bars.some(([stat, bar]) => statOf(m, stat) >= bar)) {
-        this.performances.push({ playerId: id, teamId: l.teamId, matchId: lines.matchId, season: result.season, stage, goals: m.goals, assists: m.assists, saves: m.saves });
+      if (this.bars.some(([stat, bar, first]) => result.season >= first && statOf(m, stat) >= bar)) {
+        this.performances.push({
+          playerId: id, teamId: l.teamId, matchId: lines.matchId, season: result.season, stage, goals: m.goals, assists: m.assists, saves: m.saves,
+          ...(result.season >= this.quellsFrom ? { stops: statOf(m, 'stops') } : {}),
+        });
       }
     }
     this.watch.fold(lines, result.season, stage);

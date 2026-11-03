@@ -3,6 +3,7 @@
 // until play restarts, a free shot from its foul). They follow each other (Tom, 2026-11-01: a free shot's caption was
 // wiped out by a substitution's straight after): a goal cuts in, a period card or a shootout kick cuts in over a lesser
 // one, the rest wait their turn (captionSchedule).
+import { UNSHOWN } from '../chronicle/chronicle.js';
 
 /**
  * @typedef {object} Caption
@@ -126,8 +127,8 @@ export function recordCaptions(broken, timeline, ctx) {
   /** @type {RecordCaption[]} */
   const out = [];
   // Each record at the moment it fell, in match order (Task 271: a saves record late in a match held back the caption of
-  // a goal record broken before it, 50 s after its goal).
-  const fell = broken.flatMap((r) => {
+  // a goal record broken before it, 50 s after its goal). Not quells' (UNSHOWN, Tom 2026-11-03: their totals aren't shown).
+  const fell = broken.filter((r) => !UNSHOWN.has(r.stat)).flatMap((r) => {
     const inMatch = timeline.events.filter((x) => counts(x.event, r.stat, r.playerId)).length;
     let total = r.value - inMatch;
     const passed = timeline.events.find((x) => counts(x.event, r.stat, r.playerId) && ++total > r.previous.value);

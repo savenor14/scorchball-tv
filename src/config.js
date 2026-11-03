@@ -389,13 +389,16 @@ const RULES_SCHEMA = obj({
     list: arrayOf(obj({
       id: pattern(/^[a-z0-9_]+$/, 'a lower-case id'),
       name: str(),
-      stat: oneOf('goals', 'assists', 'scorchers', 'saves', 'tackles', 'blocks', 'stops', 'savePct', 'rookieBlend'),
+      stat: oneOf('goals', 'assists', 'scorchers', 'saves', 'tackles', 'blocks', 'stops', 'savePct', 'rookieBlend', 'positionBlend'),
       positions: optional(arrayOf(str(), { minLength: 1, unique: true })),
       minFacedShare: optional(prob()),
       oneATeam: optional(bool()),
-      // The Spark (Task 252): rookies only, each against the regulars at their position on a blend of its stats.
+      // The Spark (Task 252, rookieBlend): rookies only, each against the regulars at their position on a blend of its
+      // stats; the Aegis (positionBlend) the same for every regular at its positions.
       blend: optional(recordOf(recordOf(num(0, 10)))),
       minMinutesShare: optional(prob()),
+      // The Aegis from season 4 (positionBlend, Tom 2026-11-03): each blend stat a game.
+      perGame: optional(bool()),
     }), { minLength: 1 }),
   }),
   league: obj({
@@ -550,13 +553,14 @@ const RULEBOOK_SCHEMA = obj({
 
 const CHRONICLE_SCHEMA = obj({
   milestones: obj({ goals: int(1), assists: int(1), appearances: int(1), saves: int(1), stops: int(1) }),
-  notableMatch: obj({ goals: int(1), assists: int(1), saves: int(1) }),
-  records: obj({ listLength: int(1, 100), seasonMinFaced: int(0), careerMinFaced: int(0), careerMinFacedPerSeason: int(0) }),
-  latest: obj({ matchGoals: int(1), matchAssists: int(1), matchSaves: int(1), winRun: int(2), winlessRun: int(2), appearancesFrom: int(1) }),
+  notableMatch: obj({ goals: int(1), assists: int(1), saves: int(1), stops: int(1) }),
+  notableMatchFrom: obj({ stops: int(1) }),
+  records: obj({ listLength: int(1, 100), seasonMinFaced: int(0), careerMinFaced: int(0), careerMinFacedPerSeason: int(0), minGames: obj({ season: int(1), career: int(1) }) }),
+  latest: obj({ matchGoals: int(1), matchAssists: int(1), matchSaves: int(1), matchQuells: int(1), winRun: int(2), winlessRun: int(2), appearancesFrom: int(1) }),
   history: obj({ droughtSeasons: int(2), recordsFrom: int(1) }),
   careerCard: obj({ minSeasons: int(1), milestoneWithin: num(0, 1) }),
   standing: obj({ starShare: num(0, 1), starterShare: num(0, 1), risingAge: int(16, 40), veteranYears: int(0, 20) }),
-  legends: obj({ goals: int(1), assists: int(1), saves: int(1), stops: int(1), awards: int(1), cups: int(1), regularShare: num(0, 1) }),
+  legends: obj({ goals: int(1), assists: int(1), saves: int(1), awards: int(1), cups: int(1), regularShare: num(0, 1) }),
   facts: obj({
     lateShare: num(0, 1), headToHeadRun: int(2), winRun: int(2), winlessRun: int(2), inARow: int(2), finalDrought: int(2), cupDrought: int(2),
     dynastyCups: int(2), dynastySeasons: int(2), injuryMatches: int(1), oldClubSeasons: int(1), deskFrom: num(0, 100), haulGoals: int(2), comebackFrom: int(1),
@@ -1060,7 +1064,10 @@ function crossCheck({ settings, rules, positions, regions, teams, commentary, st
   for (const a of rules.awards.list) {
     for (const p of a.positions ?? []) if (!posList.includes(p)) e.push(`${R} → awards.list.${a.id}: unknown position ${p}`);
     if ((a.stat === 'savePct') !== (a.minFacedShare !== undefined)) e.push(`${R} → awards.list.${a.id}: minFacedShare goes with savePct, and only with it`);
-    if ((a.stat === 'rookieBlend') !== (a.blend !== undefined) || (a.blend !== undefined) !== (a.minMinutesShare !== undefined)) e.push(`${R} → awards.list.${a.id}: blend and minMinutesShare go with rookieBlend, and only with it`);
+    const blended = a.stat === 'rookieBlend' || a.stat === 'positionBlend';
+    if (blended !== (a.blend !== undefined) || (a.blend !== undefined) !== (a.minMinutesShare !== undefined)) e.push(`${R} → awards.list.${a.id}: blend and minMinutesShare go with rookieBlend or positionBlend, and only with them`);
+    if (a.perGame !== undefined && a.stat !== 'positionBlend') e.push(`${R} → awards.list.${a.id}: perGame goes with positionBlend only`);
+    if (a.stat === 'positionBlend' && !a.positions) e.push(`${R} → awards.list.${a.id}: positionBlend needs its positions`);
     for (const [pos, stats] of Object.entries(a.blend ?? {})) {
       if (!posList.includes(pos)) e.push(`${R} → awards.list.${a.id}.blend: unknown position ${pos}`);
       for (const s of Object.keys(stats)) if (!BLEND_STATS.includes(s)) e.push(`${R} → awards.list.${a.id}.blend.${pos}: unknown stat ${s}`);

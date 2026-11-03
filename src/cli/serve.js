@@ -13,7 +13,7 @@ import { parseArgs } from 'node:util';
 import { createCalendar } from '../channel/calendar.js';
 import { allPolls } from '../channel/polls.js';
 import { sha256 } from '../sim/sha256.js';
-import { approve, deskPaths, deskState, markNote, markViewer, reject, runDirectorProcess, todayPosts, updateIdea } from './directorDesk.js';
+import { approve, deskPaths, deskState, deskStats, markNote, markViewer, reject, runDirectorProcess, todayPosts, updateIdea } from './directorDesk.js';
 import { loadConfigFromDisk } from './loadConfigFromDisk.js';
 import { saveRecording } from './recordingsStore.js';
 import { localD1 } from './localD1.js';
@@ -190,6 +190,7 @@ export function createStaticServer(root = PROJECT_ROOT, { audienceDir = join(PRO
       try {
         if (action === 'state' && req.method === 'GET') return json(await deskState(desk));
         if (action === 'today' && req.method === 'GET') return json(await todayPosts(desk));
+        if (action === 'stats' && req.method === 'GET') return json(await deskStats(desk));
         if (req.method !== 'POST') return fail(405, 'Method not allowed');
         const body = await readBody();
         if (body === undefined) return;

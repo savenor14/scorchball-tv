@@ -3,7 +3,7 @@
 // a recent player of the match was dropped, as it might not be an interesting player). Pure: reads the chronicle (only what has aired) and the config;
 // the contents are the player card's (playerCard.js), with why this player and the card's focus.
 import { withoutComments } from '../util.js';
-import { statOf } from '../chronicle/chronicle.js';
+import { statOf, UNSHOWN } from '../chronicle/chronicle.js';
 import { playerCard } from './playerCard.js';
 
 /** The focuses, in the order they cycle. */
@@ -43,7 +43,7 @@ export function careerPick(chronicle, config, focus, { teamIds }) {
     return best ? { playerId: best.id, why: { focus } } : null;
   }
   // A milestone in sight: the closest, as a share of its step, within milestoneWithin of it.
-  const steps = Object.entries(withoutComments(config.chronicle.milestones));
+  const steps = Object.entries(withoutComments(config.chronicle.milestones)).filter(([stat]) => !UNSHOWN.has(stat));
   const gamesFrom = config.chronicle.latest.appearancesFrom;
   let pick = /** @type {{ playerId: string, why: CareerWhy, share: number } | null} */ (null);
   for (const p of players) {

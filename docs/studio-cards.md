@@ -27,7 +27,7 @@ The off-season is one night (the final on Sunday at 20:00, the new season at Mon
 | TOP SCORERS (`scorers`) | the regular season's top five | ✓ | ✓ | ✓ | — |
 | PLAYOFF SCORERS (`playoff_scorers`) | the playoffs' scorers | — | — | ✓ (in the race's place) | ✓ |
 | CAREER (`career`) | ONE TO WATCH (a star in the next match) or MILESTONE IN SIGHT | ✓ | ✓ | ✓ | — |
-| TOP ASSISTS, TOP QUELLS, TOP KEEPERS | each stat's top five | ✓ | ✓ | ✓ | — |
+| TOP ASSISTS, TOP QUELLS (a game), TOP KEEPERS | each stat's top five | ✓ | ✓ | ✓ | — |
 | FORM GUIDE · LAST FIVE (`form`) | every team's last five | ✓ | ✓ | ✓ (still the regular season's form) | — |
 | TEAM SPOTLIGHT (`spotlight`) | one team: place, points, blurb | ✓ (twice a rotation until Friday) | ✓ | ✓ | ✓ |
 | THE PROMO (`promo`) | the next big match, the poster | before the final round | ✓ leads each block | ✓ leads each block | — |

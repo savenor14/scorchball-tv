@@ -3,6 +3,7 @@
 // otherwise one of the canned quotes (potm.js's quoteChoice). Pure; the words are data/interviews.json's. Seeded by the
 // match, so every screen hears the same.
 import { createRng } from '../sim/rng.js';
+import { unshown } from './deskFacts.js';
 
 /**
  * @typedef {import('../chronicle/facts.js').Fact} Fact
@@ -38,6 +39,7 @@ export function factKey(f) {
  */
 export function interviewFact(facts, { playerId, teamId, outcome }, lines) {
   return facts.find((f) => {
+    if (unshown(f)) return false;
     const mine = PLAYER_KINDS.has(f.kind) ? f.playerId === playerId : f.teamId === teamId;
     return mine && (lines[factKey(f)] ?? []).some((w) => w.results.includes(outcome));
   }) ?? null;

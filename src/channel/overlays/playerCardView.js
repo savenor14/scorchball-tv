@@ -37,7 +37,7 @@ export function playerCardBody(doc, { chronicle, config, league, playerId, backL
     return r;
   };
   const right = (/** @type {string | number} */ v) => mk('span', 'r', [String(v)]);
-  const fmt = (/** @type {string} */ k, /** @type {number | null} */ v) => (v === null ? '-' : k === 'savePct' ? `${(v * 100).toFixed(0)}%` : String(v));
+  const fmt = (/** @type {string} */ k, /** @type {number | null} */ v) => (v === null ? '-' : k === 'savePct' ? `${(v * 100).toFixed(0)}%` : k === 'stops' ? v.toFixed(1) : String(v));
   const stats = CARD_STATS[c.position];
 
   // Who they are.

@@ -2,7 +2,7 @@
 // data/chronicle.json. Pure; ids and numbers only (the words are the channel's). The seed of Talk that remembers' facts
 // module (vision §12 4½): the desk and the interview will read the same items. See docs/channel.md §20.3.
 import { withoutComments } from '../util.js';
-import { statOf } from './chronicle.js';
+import { statOf, UNSHOWN } from './chronicle.js';
 
 /**
  * @typedef {import('./chronicle.js').Chronicle} Chronicle
@@ -25,8 +25,8 @@ import { statOf } from './chronicle.js';
  * @property {boolean} [withPennant]  A Cup landmark (first_cup, cups_in_a_row, drought) won with the Pennant too.
  */
 
-/** Career stats whose all-time record changing hands is a landmark (not games: Task 220), and whose bars make a legend. */
-const RECORD_STATS = ['goals', 'assists', 'saves', 'stops'];
+/** Career stats whose bars make a legend (not quells, Tom 2026-11-03: their totals aren't shown; UNSHOWN). */
+const LEGEND_STATS = ['goals', 'assists', 'saves'];
 
 /** A record broken as an item. @param {import('./chronicle.js').RecordBroken} r @param {number} value */
 const recordItem = (r, value) => /** @type {Item} */ ({
@@ -57,20 +57,20 @@ export function seasonStory(chronicle, options, season) {
   const add = (/** @type {number} */ at, /** @type {Item} */ item) => out.push({ at, item });
 
   for (const m of chronicle.milestones) {
-    if (m.season !== season || (m.stat === 'appearances' && m.value < L.appearancesFrom)) continue;
+    if (m.season !== season || UNSHOWN.has(m.stat) || (m.stat === 'appearances' && m.value < L.appearancesFrom)) continue;
     add(/** @type {number} */ (order.get(m.matchId)), { kind: 'milestone', season, matchId: m.matchId, playerId: m.playerId, teamId: m.teamId, stat: m.stat, value: m.value });
   }
   for (const x of chronicle.performances) {
     if (x.season !== season) continue;
     const m = /** @type {MatchRecord} */ (chronicle.matches.get(x.matchId));
     const opponentId = m.homeId === x.teamId ? m.awayId : m.homeId;
-    // The biggest of the three, if it clears its bar.
-    const stat = x.goals >= L.matchGoals ? 'goals' : x.assists >= L.matchAssists ? 'assists' : x.saves >= L.matchSaves ? 'saves' : null;
+    // The biggest of the four, if it clears its bar (quells from notableMatchFrom.stops, Tom 2026-11-03).
+    const stat = x.goals >= L.matchGoals ? 'goals' : x.assists >= L.matchAssists ? 'assists' : x.saves >= L.matchSaves ? 'saves' : (x.stops ?? 0) >= L.matchQuells ? 'stops' : null;
     if (stat) add(/** @type {number} */ (order.get(x.matchId)), { kind: 'performance', season, matchId: x.matchId, playerId: x.playerId, teamId: x.teamId, opponentId, stat, value: x[stat] });
   }
   // Records as they fell (Task 220b): the value then.
   for (const r of chronicle.recordsBroken) {
-    if (r.season !== season) continue;
+    if (r.season !== season || UNSHOWN.has(r.stat)) continue;
     add(/** @type {number} */ (order.get(r.matchId)), recordItem(r, r.value));
   }
   // Runs: each once, at its longest (the match that made it so), if it reaches its bar.
@@ -154,7 +154,7 @@ export function legendWhy(chronicle, options, playerId) {
   if (!p?.retired) return null;
   const G = withoutComments(options.legends);
   const c = chronicle.career(playerId, 'all', p.retired.season);
-  const stat = RECORD_STATS.find((k) => statOf(c, k) >= G[k]);
+  const stat = LEGEND_STATS.find((k) => statOf(c, k) >= G[k]);
   if (stat) return { stat, value: statOf(c, stat) };
   if (p.awards.length >= G.awards) return { stat: 'awards', value: p.awards.length };
   let cups = 0;
@@ -198,7 +198,7 @@ export function landmarks(chronicle, options, season) {
   // final figure (the season's total), an all-time one with the total it was taken at.
   const seen = new Set();
   for (const r of chronicle.recordsBroken) {
-    if (r.season !== season || seen.has(`${r.scope} ${r.stat} ${r.playerId}`)) continue;
+    if (r.season !== season || UNSHOWN.has(r.stat) || seen.has(`${r.scope} ${r.stat} ${r.playerId}`)) continue;
     seen.add(`${r.scope} ${r.stat} ${r.playerId}`);
     const line = r.scope === 'season' ? chronicle.players.get(r.playerId)?.seasons[season]?.regular : null;
     out.push(recordItem(r, line ? statOf(line, r.stat) : r.value));

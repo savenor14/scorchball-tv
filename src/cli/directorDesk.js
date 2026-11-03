@@ -308,6 +308,34 @@ export function runDirectorProcess(p, at) {
 }
 
 /**
+ * STATS (Tom, 2026-11-03): every player's numbers as aired, this season's regular season and the career (both parts),
+ * the totals the screen doesn't show (quells) among them, for Tom's eyes. The live league rebuilt here, as TODAY's.
+ * @param {DeskPaths} p @param {number} [now] @param {string | null} [seedFor]  Another seed (the tests: the dev league).
+ */
+export async function deskStats(p, now = Date.now(), seedFor = null) {
+  const config = await configFrom(p.root);
+  const keys = config.settings.live.mode === 'keys' && !seedFor;
+  const seed = seedFor ?? (keys ? secretSeed() : config.settings.live.seed);
+  if (!seed) throw new Error('No SCORCHBALL_SEED in .env: the live league can\'t be rebuilt here.');
+  const live = new LiveLeague(config, { now, seed });
+  const season = live.calendar.seasonAt(now);
+  const { chronicle, league } = live;
+  /** @param {import('../chronicle/chronicle.js').Line | null | undefined} l */
+  const line = (l) => (l ? {
+    games: l.appearances, goals: l.goals, assists: l.assists, scorchers: l.scorchers, quells: l.tackles + l.blocks, tackles: l.tackles,
+    steals: l.steals, blocks: l.blocks, saves: l.saves, faced: l.saves + l.conceded, potm: l.potm, burns: l.burns,
+  } : null);
+  const players = [...chronicle.players.values()].map((r) => {
+    const pl = league.players[r.id];
+    return {
+      id: r.id, name: pl ? `${pl.firstName[0]}. ${pl.lastName}` : r.id, position: pl?.position ?? '', team: r.teamId ? league.teams[r.teamId]?.abbr ?? '' : '',
+      status: r.retired ? 'retired' : r.status, season: line(r.seasons[season]?.regular), career: line(chronicle.career(r.id, 'all')),
+    };
+  });
+  return { league: keys ? 'live' : seed, season, players };
+}
+
+/**
  * TODAY (getting the word out, docs/launch-plan.md): each finished day's post for the league's Bluesky account, newest
  * first, from the live league rebuilt here (SCORCHBALL_SEED in .env, never printed; the dev league's seed without
  * keys). A day is offered only once its last match has finished by the real clock (the day keys are out 12 hours

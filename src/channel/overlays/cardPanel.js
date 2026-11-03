@@ -335,13 +335,13 @@ export function createCardPanel({ league, formatTime, config }) {
         }))];
       // The desk's career card (Task 226, Tom's pick A on careercard.html): who, why, the career in big totals, honours.
       case 'career': {
-        const LABEL = /** @type {Record<string, string>} */ ({ goals: 'GOALS', assists: 'ASSISTS', stops: 'QUELLS', saves: 'SAVES', savePct: 'SAVE %' });
+        const LABEL = /** @type {Record<string, string>} */ ({ goals: 'GOALS', assists: 'ASSISTS', stops: 'QUELLS A GAME', saves: 'SAVES', savePct: 'SAVE %' });
         const WORD = /** @type {Record<string, [string, string]>} */ ({ goals: ['goal', 'goals'], assists: ['assist', 'assists'], saves: ['save', 'saves'], stops: ['quell', 'quells'], appearances: ['game', 'games'] });
         const why = card.why;
         const reason = card.next ? ['Next on: ', kit(team(card.next.homeId)), ` ${team(card.next.homeId).abbr} v `, kit(team(card.next.awayId)), ` ${team(card.next.awayId).abbr}`]
           : why.stat ? [`${why.left} ${WORD[why.stat][why.left === 1 ? 0 : 1]} from ${(why.target ?? 0).toLocaleString('en-US')}`] : [];
         const total = (/** @type {string} */ label, /** @type {string} */ v) => el('div', 'cc-total', [el('span', 'cc-big', [v]), el('span', 'muted', [label])]);
-        const shown = (/** @type {string} */ k, /** @type {number | null} */ v) => (v === null ? '-' : k === 'savePct' ? `${(v * 100).toFixed(0)}%` : v.toLocaleString('en-US'));
+        const shown = (/** @type {string} */ k, /** @type {number | null} */ v) => (v === null ? '-' : k === 'savePct' ? `${(v * 100).toFixed(0)}%` : k === 'stops' ? v.toFixed(1) : v.toLocaleString('en-US'));
         const honours = [
           ...(card.cups ? [`${card.cups} Cup${card.cups === 1 ? '' : 's'}`] : []),
           ...card.awards.map((a) => `${awardName[a.award] ?? a.award}${a.times > 1 ? ` ×${a.times}` : ''}`),
@@ -418,7 +418,7 @@ export function createCardPanel({ league, formatTime, config }) {
         if (card.rows.length === 0) return [el('h3', '', [card.title]), el('p', 'card-note', [none])];
         return [el('h3', '', [card.title]), grid('1.2em 0.6em 1fr auto 2em', card.rows.flatMap((r, i) => [
           cell('m', String(i + 1)), kit(team(r.teamId)), el('span', '', [`${r.name} `, el('span', 'muted', [team(r.teamId).abbr])]),
-          r.pct !== null ? cell('m r', `${r.pct}% saved`) : '', cell('hi r', String(r.value)),
+          r.pct !== null ? cell('m r', `${r.pct}% saved`) : '', cell('hi r', card.stat === 'stops' ? r.value.toFixed(1) : String(r.value)),
         ]))];
       }
       case 'head_to_head': {
@@ -475,10 +475,10 @@ export function createCardPanel({ league, formatTime, config }) {
           el('div', 'card-blocks', [teams(card.teams.slice(0, half)), teams(card.teams.slice(half))])];
       }
       case 'award_race': {
-        const fmt = (/** @type {string} */ award, /** @type {number} */ v) => (award === 'ironclad' ? `${Math.round(v * 100)}%` : award === 'spark' ? '' : String(v));
+        const fmt = (/** @type {{ award: string, blended: boolean }} */ r, /** @type {number} */ v) => (r.blended ? '' : r.award === 'ironclad' ? `${Math.round(v * 100)}%` : String(v));
         return [el('h3', '', [card.title]), grid('auto 0.6em auto 2.4em 1fr 0.6em auto 2.4em', card.rows.flatMap((r) => [
-          cell('m', r.name), kit(team(r.leader.teamId)), cell('', r.leader.name), cell('hi', fmt(r.award, r.leader.value)), cell('', ''),
-          ...(r.second ? [kit(team(r.second.teamId)), cell('m', r.second.name), cell('m', fmt(r.award, r.second.value))] : ['', '', '']),
+          cell('m', r.name), kit(team(r.leader.teamId)), cell('', r.leader.name), cell('hi', fmt(r, r.leader.value)), cell('', ''),
+          ...(r.second ? [kit(team(r.second.teamId)), cell('m', r.second.name), cell('m', fmt(r, r.second.value))] : ['', '', '']),
         ]))];
       }
       case 'records_watch': {
@@ -495,7 +495,7 @@ export function createCardPanel({ league, formatTime, config }) {
       }
       case 'rookies':
         return [el('h3', '', [card.title]),
-          ...(card.outfield.length ? [grid('0.6em 1fr auto 2.4em 2.4em 2.4em', [cell('', ''), cell('', ''), cell('', ''), cell('m r', 'G'), cell('m r', 'A'), cell('m r', 'ST'),
+          ...(card.outfield.length ? [grid('0.6em 1fr auto 2.4em 2.4em 2.4em', [cell('', ''), cell('', ''), cell('', ''), cell('m r', 'G'), cell('m r', 'A'), cell('m r', 'Q'),
             ...card.outfield.flatMap((r) => [kit(team(r.teamId)), cell('', r.name), cell('m', r.position), cell('hi r', String(r.goals)), cell('hi r', String(r.assists)), cell('hi r', String(r.stops))])])] : []),
           ...(card.keepers.length ? [el('h4', '', ['KEEPERS']), grid('0.6em 1fr 2.4em 2.4em', [cell('', ''), cell('', ''), cell('m r', 'SV'), cell('m r', 'SV%'),
             ...card.keepers.flatMap((r) => [kit(team(r.teamId)), cell('', r.name), cell('hi r', String(r.saves)), cell('hi r', r.pct === null ? '' : `${r.pct}%`)])])] : []),
@@ -510,7 +510,7 @@ export function createCardPanel({ league, formatTime, config }) {
       }
       case 'playoff_stats':
         return [el('h3', '', [card.title]), el('div', 'card-blocks', card.blocks.map((b) => el('div', '', [el('h4', '', [b.title]),
-          grid(b.title === 'KEEPERS' ? '0.6em 1fr auto 2em' : '0.6em 1fr 2em', b.rows.flatMap((r) => [kit(team(r.teamId)), cell('', r.name), ...(b.title === 'KEEPERS' ? [cell('m r', r.pct === null ? '' : `${r.pct}% saved`)] : []), cell('hi r', String(r.value))]))])))];
+          grid(b.title === 'KEEPERS' ? '0.6em 1fr auto 2em' : '0.6em 1fr 2em', b.rows.flatMap((r) => [kit(team(r.teamId)), cell('', r.name), ...(b.title === 'KEEPERS' ? [cell('m r', r.pct === null ? '' : `${r.pct}% saved`)] : []), cell('hi r', r.shown)]))])))];
       case 'the_draft':
         return [el('h3', '', [card.title]), grid('1.4em 0.6em auto 1fr auto auto auto', card.rows.flatMap((r) => [cell('m', String(r.pick)), kit(team(r.teamId)), cell('m', team(r.teamId).abbr), cell('', r.name), cell('m', r.position), cell('m r', `AGE ${r.age}`), cell(r.role.startsWith('STAR') ? 'hi r' : 'm r', r.role)]))];
       case 'farewells':

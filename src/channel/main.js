@@ -2269,7 +2269,9 @@ async function boot() {
     if (!awardViews.has(key)) {
       const event = awardEvents(live.leagueEvents, season).get(award);
       const nameOf = (/** @type {string} */ id) => { const p = league.players[id]; return p ? `${p.firstName} ${p.lastName}` : id; };
-      awardViews.set(key, event ? awardView(event, config.rules.awards, nameOf, (pos) => POSITION_PLURAL[pos] ?? pos) : null);
+      // Its season's awards (the Aegis a best defender from season 5); the Spark's defenders' games from the chronicle.
+      const gamesOf = (/** @type {string} */ id) => live.chronicle.players.get(id)?.seasons[season]?.regular?.appearances ?? 0;
+      awardViews.set(key, event ? awardView(event, seasonConfig(config, season).rules.awards, nameOf, (pos) => POSITION_PLURAL[pos] ?? pos, gamesOf) : null);
     }
     return awardViews.get(key) ?? null;
   };
