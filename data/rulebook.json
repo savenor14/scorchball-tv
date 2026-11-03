@@ -60,7 +60,7 @@
         "tab": "LEAGUE",
         "title": "The off-season",
         "rules": [
-          "After the final, the League gives its awards for the regular season: the Ember Boot for the most goals, the Blaze for the most scorchers, the Compass for the most assists, the Quell for the most stops by a defender, the Ironclad for the best save percentage by a keeper, and, from the second season, the Spark for the best rookie, judged against the regulars at their own position.",
+          "After the final, the League gives its awards for the regular season: the Ember Boot for the most goals, the Blaze for the most scorchers, the Compass for the most assists, the Aegis for the most quells (tackles and blocks) by a defender, the Ironclad for the best save percentage by a keeper, and, from the second season, the Spark for the best rookie, judged against the regulars at their own position.",
           "Then the draft, in {draftRounds|word} rounds. The {lotteryTeams|word} teams that missed the playoffs are drawn for the first {lotteryTeams|word} picks, the worst team with the best chance. The playoff teams pick next, in reverse order of the regular-season table, the top seed last.",
           "A squad has {squad|word} players. A draft pick who doesn't make the squad goes to the team's reserves in the {reserves}, where the team holds their rights for {rightsSeasons|word} seasons. A reserve may be called up when they're good enough, or when the team is short of players.",
           "A player from a team's own region is home-grown there. Teams lean towards their own in the draft and in free agency, so squads lean local; the team card's SQUAD says how many.",

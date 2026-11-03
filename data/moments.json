@@ -5,7 +5,7 @@
     { "id": "goal", "group": "IN A MATCH", "name": "GOALS", "seen": "GOALS SEEN", "first": "FIRST GOAL SEEN", "steps": [1, 25, 50, 100, 250, 500], "byTeam": "goals" },
     { "id": "scorcher", "group": "IN A MATCH", "name": "SCORCHERS", "seen": "SCORCHERS SEEN", "first": "FIRST SCORCHER SEEN", "steps": [1, 10, 25, 50, 100] },
     { "id": "burn", "group": "IN A MATCH", "name": "BURNS", "seen": "BURNS SEEN", "first": "FIRST BURN SEEN", "steps": [1, 10, 50, 100, 250] },
-    { "id": "stop", "group": "IN A MATCH", "name": "STOPS", "seen": "STOPS SEEN", "first": "FIRST STOP SEEN", "steps": [1, 100, 500, 1000, 2500, 5000] },
+    { "id": "stop", "group": "IN A MATCH", "name": "QUELLS", "seen": "QUELLS SEEN", "first": "FIRST QUELL SEEN", "steps": [1, 100, 500, 1000, 2500, 5000] },
     { "id": "hat_trick", "group": "IN A MATCH", "name": "HAT-TRICKS", "seen": "HAT-TRICKS SEEN", "first": "FIRST HAT-TRICK SEEN", "steps": [1, 5, 10, 25, 50] },
     { "id": "first_minute", "group": "IN A MATCH", "name": "EARLY GOALS", "seen": "EARLY GOALS SEEN", "first": "AN EARLY GOAL", "short": "EARLY GOAL", "steps": [1, 3, 5, 10] },
     { "id": "clean_sheet", "group": "IN A MATCH", "name": "CLEAN SHEETS", "seen": "CLEAN SHEETS SEEN", "first": "FIRST CLEAN SHEET", "steps": [1, 3, 5, 10] },
@@ -19,7 +19,7 @@
   "secrets": [
     { "id": "nil_nil", "name": "A 0–0", "how": "A whole 0–0, live" },
     { "id": "last_minute", "name": "LAST-MINUTE WINNER", "how": "The winner in the last minute" },
-    { "id": "hundred_stops", "name": "100-STOP MATCH", "how": "A whole match with 100 stops or more" },
+    { "id": "hundred_stops", "name": "100-QUELL MATCH", "how": "A whole match with 100 quells or more" },
     { "id": "golden_goal", "name": "GOLDEN GOAL", "how": "A golden goal, live" },
     { "id": "every_team", "name": "EVERY TEAM", "how": "All eight teams in one day" },
     { "id": "season_ends", "name": "OPENING TO CLOSING", "how": "A season's opening and its sign-off" },

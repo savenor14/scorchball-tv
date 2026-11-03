@@ -27,7 +27,7 @@ The off-season is one night (the final on Sunday at 20:00, the new season at Mon
 | TOP SCORERS (`scorers`) | the regular season's top five | ✓ | ✓ | ✓ | — |
 | PLAYOFF SCORERS (`playoff_scorers`) | the playoffs' scorers | — | — | ✓ (in the race's place) | ✓ |
 | CAREER (`career`) | ONE TO WATCH (a star in the next match) or MILESTONE IN SIGHT | ✓ | ✓ | ✓ | — |
-| TOP ASSISTS, TOP STOPS, TOP KEEPERS | each stat's top five | ✓ | ✓ | ✓ | — |
+| TOP ASSISTS, TOP QUELLS, TOP KEEPERS | each stat's top five | ✓ | ✓ | ✓ | — |
 | FORM GUIDE · LAST FIVE (`form`) | every team's last five | ✓ | ✓ | ✓ (still the regular season's form) | — |
 | TEAM SPOTLIGHT (`spotlight`) | one team: place, points, blurb | ✓ (twice a rotation until Friday) | ✓ | ✓ | ✓ |
 | THE PROMO (`promo`) | the next big match, the poster | before the final round | ✓ leads each block | ✓ leads each block | — |
@@ -40,8 +40,8 @@ The off-season is one night (the final on Sunday at 20:00, the new season at Mon
 
 ## What stands out
 
-1. **The early season is thin.** In the first rounds TOP SCORERS, ASSISTS, STOPS and KEEPERS have a match or two behind them (or say "No goals yet"), the FORM GUIDE is one or two results long, and THE PLAYOFF RACE isn't on yet, so TEAM SPOTLIGHT shows twice a rotation (63 of 343 minutes).
-2. **The playoffs keep regular-season cards that have gone stale:** the FORM GUIDE (the regular season's last five), TOP ASSISTS / STOPS / KEEPERS and TOP SCORERS (the regular season's), CAREER's ONE TO WATCH.
+1. **The early season is thin.** In the first rounds TOP SCORERS, ASSISTS, QUELLS and KEEPERS have a match or two behind them (or say "No goals yet"), the FORM GUIDE is one or two results long, and THE PLAYOFF RACE isn't on yet, so TEAM SPOTLIGHT shows twice a rotation (63 of 343 minutes).
+2. **The playoffs keep regular-season cards that have gone stale:** the FORM GUIDE (the regular season's last five), TOP ASSISTS / QUELLS / KEEPERS and TOP SCORERS (the regular season's), CAREER's ONE TO WATCH.
 3. **After the final** the 7-card rotation shows each card about 3 minutes in all, and beyond HONOURS (the award winners, the No. 1 pick) the draft and the farewells aren't on a card (they're in the off-season show only).
 4. **Nothing in the rotation looks back further than this season** except CAREER: no past champions, no records, no history, though the chronicle holds them (the CHRONICLE pane has them).
 5. **Money only after the final:** PAYROLLS and BIGGEST SIGNINGS never show in the season.
@@ -50,14 +50,14 @@ The off-season is one night (the final on Sunday at 20:00, the new season at Mon
 
 | Idea | What it shows | Where it would go |
 |---|---|---|
-| **AWARD RACE** | each award's leader and runner-up so far (the Ember Boot, the Blaze, the Compass, the Quell, the Ironclad, the Spark) | the regular season from mid-week, in place of a stats card |
+| **AWARD RACE** | each award's leader and runner-up so far (the Ember Boot, the Blaze, the Compass, the Aegis, the Ironclad, the Spark) | the regular season from mid-week, in place of a stats card |
 | **LAST SEASON** | last season's champions, Pennant, award winners and final table top four | the early season, in place of the thin stats cards (season 2 on) |
 | **ROLL OF HONOUR** | every season's champions and Pennant winners | any time from season 2; after the final |
 | **RECORDS WATCH** | a league record within reach this season (most goals, saves, a run); in two halves (Tom's pick B, 2026-10-25): NEW RECORDS, a leader past the record with the mark beaten, and WITHIN REACH, the chases with how many still needed (level counts) | the regular season, when one is close or broken |
 | **SCORCHERS** (in place of STREAKS, Tom 2026-10-20) | the top two scorcher-scorers, then every team's scorchers for and against | the regular season |
 | **BIGGEST WINS** | this season's biggest margins and highest scores | the regular season |
 | **ROOKIES** | the best rookies so far (the rookie rule's first-season starters) | the regular season, in the Spark's spirit |
-| **PLAYOFF STATS** | the playoffs' own assists, saves, stops | the playoffs, in place of the regular season's stats cards |
+| **PLAYOFF STATS** | the playoffs' own assists, saves, quells | the playoffs, in place of the regular season's stats cards |
 | **THE DRAFT** | each team's first-round pick | after the final, once the draft has aired |
 | **FAREWELLS** | the notable retirements | after the final, once they've aired |
 | **FINAL TABLE** | the regular season's final table | the playoffs and after the final |
@@ -80,11 +80,11 @@ Fixed slots in every phase: LATEST RESULTS first in the block straight after a m
 | Phase | The deck |
 |---|---|
 | **Early season** (days 1–2) | COMING UP, HEAD TO HEAD, TOP SCORERS, CAREER, FORM GUIDE, TEAM SPOTLIGHT, **LAST SEASON**, **ROLL OF HONOUR**, **BIGGEST WINS**, **SCORCHERS**, LATEST RESULTS |
-| **Mid to late season** (day 3 to the final round) | COMING UP, HEAD TO HEAD, TOP SCORERS, CAREER, TOP ASSISTS, TOP STOPS, TOP KEEPERS, FORM GUIDE, TEAM SPOTLIGHT, THE PLAYOFF RACE (from Friday), **AWARD RACE**, **RECORDS WATCH**, **SCORCHERS**, **BIGGEST WINS**, **ROOKIES**, PAYROLLS, LATEST RESULTS |
+| **Mid to late season** (day 3 to the final round) | COMING UP, HEAD TO HEAD, TOP SCORERS, CAREER, TOP ASSISTS, TOP QUELLS, TOP KEEPERS, FORM GUIDE, TEAM SPOTLIGHT, THE PLAYOFF RACE (from Friday), **AWARD RACE**, **RECORDS WATCH**, **SCORCHERS**, **BIGGEST WINS**, **ROOKIES**, PAYROLLS, LATEST RESULTS |
 | **Final round to the semifinals** | the BRACKET, **FINAL TABLE**, HEAD TO HEAD, TOP SCORERS, **AWARD RACE** (the regular season decided, the awards not yet given), CAREER, TEAM SPOTLIGHT, **RECORDS WATCH**, LATEST RESULTS; and the PLAYOFF PREVIEW show |
 | **The playoffs** (the first semifinal to the final) | the BRACKET, PLAYOFF SCORERS, **PLAYOFF STATS**, **FINAL TABLE**, HEAD TO HEAD, CAREER, **AWARD RACE**, **ROLL OF HONOUR**, LATEST RESULTS; and the FINALS PREVIEW show |
 | **After the final** | SEASON N HONOURS, SEASON N+1 STARTS, PLAYOFF SCORERS, BIGGEST SIGNINGS, PAYROLLS, **THE DRAFT**, **FAREWELLS**, **ROLL OF HONOUR**, **FINAL TABLE**, TEAM SPOTLIGHT, LATEST RESULTS |
 
 **Built 2026-10-19** (Tom's go): these decks in `config/settings.json` `segments.studioDecks` (`finalRound` and `playoffs` deal the BRACKET itself), the deal in `programme.js`, the cards in `moreCards.js` and `cardPanel.js`; `docs/channel.md` §16.9.
 
-Out of the playoffs' decks: the FORM GUIDE and the regular season's TOP ASSISTS, STOPS and KEEPERS (PLAYOFF STATS in their place). PAYROLLS joins the season (until now only after the final).
+Out of the playoffs' decks: the FORM GUIDE and the regular season's TOP ASSISTS, QUELLS and KEEPERS (PLAYOFF STATS in their place). PAYROLLS joins the season (until now only after the final).

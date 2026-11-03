@@ -185,6 +185,9 @@
     .guide-bar { display: flex; gap: calc(var(--px) * 2); }
     .guide-filter { all: unset; cursor: pointer; flex: 1; text-align: center; font-size: calc(var(--px) * 7); line-height: calc(var(--px) * 9); color: var(--panel-muted); box-shadow: inset 0 0 0 var(--px) var(--panel-edge); }
     .guide-filter.on { color: var(--panel); background: var(--panel-ink); box-shadow: none; }
+    /* CHRONICLE's and AUDIENCE's tabs (Tom, 2026-11-03: squeezed; COINS 1.0K): into most of the pane's side padding, a narrower gap, a pixel each side of the words */
+    body:not(.phone) .pane-tabs { margin: 0 calc(var(--px) * -3); gap: var(--px); }
+    body:not(.phone) .pane-tabs .guide-filter { padding: 0 var(--px); }
     .guide-row { position: relative; display: grid; grid-template-columns: calc(var(--px) * 17) 1fr; line-height: calc(var(--px) * 10); white-space: nowrap; }
     .guide-row .when { color: var(--panel-muted); }
     .guide-row .what { overflow: hidden; text-overflow: ellipsis; }

@@ -13,8 +13,8 @@
  */
 
 /** What each award is for, as the card says it. */
-const FOR_WHAT = /** @type {Record<string, string>} */ ({ rookieBlend: 'BEST ROOKIE', goals: 'MOST GOALS', scorchers: 'MOST SCORCHERS', assists: 'MOST ASSISTS', stops: 'MOST STOPS', savePct: 'BEST SAVE %', saves: 'MOST SAVES', tackles: 'MOST TACKLES', blocks: 'MOST BLOCKS' });
-const UNIT = /** @type {Record<string, string>} */ ({ goals: 'GOALS', scorchers: 'SCORCHERS', assists: 'ASSISTS', stops: 'STOPS', saves: 'SAVES', tackles: 'TACKLES', blocks: 'BLOCKS' });
+const FOR_WHAT = /** @type {Record<string, string>} */ ({ rookieBlend: 'BEST ROOKIE', goals: 'MOST GOALS', scorchers: 'MOST SCORCHERS', assists: 'MOST ASSISTS', stops: 'MOST QUELLS', savePct: 'BEST SAVE %', saves: 'MOST SAVES', tackles: 'MOST TACKLES', blocks: 'MOST BLOCKS' });
+const UNIT = /** @type {Record<string, string>} */ ({ goals: 'GOALS', scorchers: 'SCORCHERS', assists: 'ASSISTS', stops: 'QUELLS', saves: 'SAVES', tackles: 'TACKLES', blocks: 'BLOCKS' });
 
 /**
  * A rookie's season as the Spark's card shows it (Task 252), in what their position does: a striker's goals and
@@ -25,7 +25,7 @@ const UNIT = /** @type {Record<string, string>} */ ({ goals: 'GOALS', scorchers:
 export function rookieLineText(line) {
   const n = (/** @type {number} */ v, /** @type {string} */ unit) => `${v} ${v === 1 ? unit.replace(/S$/, '') : unit}`;
   if (line.position === 'K') return `${statText('savePct', line.faced > 0 ? line.saves / line.faced : 0)} · ${line.saves} OF ${line.faced}`;
-  if (line.position === 'D') return `${n(line.stops, 'STOPS')} · ${n(line.assists, 'ASSISTS')}`;
+  if (line.position === 'D') return `${n(line.stops, 'QUELLS')} · ${n(line.assists, 'ASSISTS')}`;
   if (line.position === 'M') return `${n(line.assists, 'ASSISTS')} · ${n(line.goals, 'GOALS')}`;
   return `${n(line.goals, 'GOALS')} · ${n(line.assists, 'ASSISTS')}`;
 }

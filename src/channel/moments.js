@@ -315,7 +315,7 @@ export function createMomentTracker({ config, data, timelineOf, recordsOf, seaso
       add('whole_match', match.id, t, [match.homeId, match.awayId, winner, layout]);
       if (h === 0 && a === 0) secret('nil_nil', t, where(t, match));
       const stops = match.events.filter((e) => (e.type === 'possession_change' && /** @type {any} */ (e.data).reason === 'tackle') || e.type === 'block').length;
-      if (stops >= m.stopsMatch) secret('hundred_stops', t, `${where(t, match)} · ${stops} STOPS`);
+      if (stops >= m.stopsMatch) secret('hundred_stops', t, `${where(t, match)} · ${stops} QUELLS`);
       const layouts = new Set(Object.values(data.seen.whole_match ?? {}).map((v) => (Array.isArray(v) ? v[4] : null)));
       if (layouts.has('full') && layouts.has('broadcast')) secret('both_ways', t, where(t, match));
     }

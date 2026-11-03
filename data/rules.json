@@ -186,7 +186,7 @@
       { "id": "ember_boot", "name": "The Ember Boot", "stat": "goals" },
       { "id": "blaze", "name": "The Blaze", "stat": "scorchers" },
       { "id": "compass", "name": "The Compass", "stat": "assists" },
-      { "id": "quell", "name": "The Quell", "stat": "stops", "positions": ["D"] },
+      { "id": "quell", "name": "The Aegis", "stat": "stops", "positions": ["D"] },
       { "id": "ironclad", "name": "The Ironclad", "stat": "savePct", "positions": ["K"], "minFacedShare": 0.5, "oneATeam": true },
       { "id": "spark", "name": "The Spark", "stat": "rookieBlend", "minMinutesShare": 0.25, "blend": {
         "K": { "savesAdded": 1 },

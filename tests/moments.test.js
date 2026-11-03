@@ -183,7 +183,7 @@ test('stops: every tackle and block seen counts; a whole match with 100 or more 
   s.play(KICKOFF + 51_500, KICKOFF + DURATION + 1000, (t) => (t < KICKOFF + DURATION ? live(x.match)() : { kind: 'handshakes', match: x.match }));
   assert.equal(countOf(s.data, 'stop'), 100);
   assert.ok(s.data.secrets.hundred_stops);
-  assert.match(s.data.secrets.hundred_stops.where, /100 STOPS$/);
+  assert.match(s.data.secrets.hundred_stops.where, /100 QUELLS$/);
 });
 
 test('in the final round, only the match on screen counts', () => {

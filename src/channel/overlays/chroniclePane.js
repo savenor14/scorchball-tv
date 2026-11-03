@@ -23,7 +23,7 @@ import { teamCardBody } from './teamCardView.js';
 
 /** RECORDS' pages, in order: a player stat, or the teams, the runs, the awards. */
 export const RECORD_PAGES = /** @type {const} */ ([
-  ['goals', 'GOALS'], ['assists', 'ASSISTS'], ['scorchers', 'SCORCHERS'], ['saves', 'SAVES'], ['savePct', 'SAVE %'], ['stops', 'STOPS'],
+  ['goals', 'GOALS'], ['assists', 'ASSISTS'], ['scorchers', 'SCORCHERS'], ['saves', 'SAVES'], ['savePct', 'SAVE %'], ['stops', 'QUELLS'],
   ['appearances', 'GAMES'], ['potm', 'PLAYER OF MATCH'], ['winningGoals', 'WINNING GOALS'], ['burns', 'BURNS'], ['teams', 'TEAMS'], ['runs', 'RUNS'], ['awards', 'AWARDS'],
 ]);
 /** Stats with no single-season record (Tom, Task 218: a season's games make no sense as a record). */
@@ -119,7 +119,7 @@ export function createChroniclePane({ pane, live, config, now, onChange }) {
   prev.addEventListener('click', () => { state.page = (state.page + RECORD_PAGES.length - 1) % RECORD_PAGES.length; show(); });
   next.addEventListener('click', () => { state.page = (state.page + 1) % RECORD_PAGES.length; show(); });
   const stepper = el('div', 'chr-step', [prev, stepName, next]);
-  const bar = el('div', '', [el('div', 'guide-bar', tabs.map((x) => x.b)), stepper]);
+  const bar = el('div', '', [el('div', 'guide-bar pane-tabs', tabs.map((x) => x.b)), stepper]);
   const body = el('div', 'chr');
 
   // FIND A PLAYER (Tom, 2026-10-27; playerSearch.js): a bar fixed at the pane's foot whatever the tab, the matches
@@ -178,7 +178,7 @@ export function createChroniclePane({ pane, live, config, now, onChange }) {
 
   /** "1st", "100th". @param {number} n */
   const ordinal = (n) => `${n}${n % 100 >= 11 && n % 100 <= 13 ? 'th' : ['th', 'st', 'nd', 'rd'][n % 10] ?? 'th'}`;
-  const COUNT = /** @type {Record<string, [string, string]>} */ ({ goals: ['goal', 'goals'], assists: ['assist', 'assists'], saves: ['save', 'saves'], stops: ['stop', 'stops'], appearances: ['game', 'games'] });
+  const COUNT = /** @type {Record<string, [string, string]>} */ ({ goals: ['goal', 'goals'], assists: ['assist', 'assists'], saves: ['save', 'saves'], stops: ['quell', 'quells'], appearances: ['game', 'games'] });
   const IN_A_ROW = ['', '', 'back-to-back Cups', 'three Cups in a row', 'four Cups in a row', 'five Cups in a row', 'six Cups in a row'];
   /** A Cup landmark won with the Pennant too. @param {import('../../chronicle/notable.js').Item} it */
   const andPennant = (it) => (it.withPennant ? ', and the Pennant' : '');

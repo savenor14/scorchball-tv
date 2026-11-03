@@ -27,7 +27,7 @@ const BEFORE = /** @type {Record<string, string>} */ ({ final_rematch: 'teeUpRem
 
 /** A milestone's or record's stat on the graphic. */
 const STAT = /** @type {Record<string, [string, string]>} */ ({
-  goals: ['GOAL', 'GOALS'], assists: ['ASSIST', 'ASSISTS'], appearances: ['MATCH', 'MATCHES'], saves: ['SAVE', 'SAVES'], stops: ['STOP', 'STOPS'],
+  goals: ['GOAL', 'GOALS'], assists: ['ASSIST', 'ASSISTS'], appearances: ['MATCH', 'MATCHES'], saves: ['SAVE', 'SAVES'], stops: ['QUELL', 'QUELLS'],
 });
 
 /** "100TH", "22ND". @param {number} n */

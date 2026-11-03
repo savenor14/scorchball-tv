@@ -22,7 +22,7 @@ import { isFinished, seasonTotalsAt, tableAt } from './onScreen.js';
 export const MORE_CARDS = /** @type {const} */ (['last_season', 'roll_of_honour', 'biggest_wins', 'scorchers', 'award_race', 'records_watch', 'rookies', 'final_table', 'playoff_stats', 'the_draft', 'farewells']);
 
 /** RECORDS WATCH: the stats with a season record, and a leader's share of it that makes it worth a card. */
-const WATCH_STATS = /** @type {const} */ ([['goals', 'GOALS'], ['scorchers', 'SCORCHERS'], ['assists', 'ASSISTS'], ['stops', 'STOPS'], ['saves', 'SAVES']]);
+const WATCH_STATS = /** @type {const} */ ([['goals', 'GOALS'], ['scorchers', 'SCORCHERS'], ['assists', 'ASSISTS'], ['stops', 'QUELLS'], ['saves', 'SAVES']]);
 
 /** @param {{ saves: number, conceded: number }} x */
 const savePct = (x) => (x.saves + x.conceded > 0 ? Math.round((100 * x.saves) / (x.saves + x.conceded)) : null);
@@ -176,7 +176,7 @@ export function moreCard(card, live, t, ctx) {
       .map((x) => ({ name: ctx.playerName(x.playerId), teamId: x.teamId, value: v(x), pct: keeper ? savePct(x) : null }));
     const blocks = [
       { title: 'ASSISTS', rows: top((x) => x.assists) },
-      { title: 'STOPS', rows: top((x) => x.tackles + x.blocks) },
+      { title: 'QUELLS', rows: top((x) => x.tackles + x.blocks) },
       { title: 'KEEPERS', rows: top((x) => x.saves, true) },
       { title: 'SCORCHERS', rows: top((x) => x.scorchers) },
     ];

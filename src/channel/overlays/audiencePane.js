@@ -56,7 +56,7 @@ export function createAudiencePane({ pane, config, calendar, audience, now, onAi
     b.addEventListener('click', () => { if (id === tab && id === 'moments') return; tab = id; coinsView?.reset(); opened = null; show(); });
     return { id, b };
   });
-  const bar = el('div', 'guide-bar', tabs.map((x) => x.b));
+  const bar = el('div', 'guide-bar pane-tabs', tabs.map((x) => x.b));
   /** COINS' tab with the balance on it (Tom: there, not on the Audience button). */
   function labelCoins() {
     const b = tabs.find((x) => x.id === 'coins')?.b;

@@ -116,7 +116,7 @@ export function teamCardBody(doc, { chronicle, config, league, teamId, backLabel
       const stat = (/** @type {string} */ label, /** @type {string | number} */ v) => mk('span', '', [mk('span', 'm', [`${label} `]), String(v)]);
       const line = p.position === 'K'
         ? [stat('SV', p.saves), stat('SV%', p.savePct === null ? '-' : `${Math.round(p.savePct * 100)}%`)]
-        : [stat('G', p.goals), stat('A', p.assists), stat('ST', p.stops)];
+        : [stat('G', p.goals), stat('A', p.assists), stat('Q', p.stops)];
       return mk('div', 'tc-stat', [name, mk('div', `tc-nums${p.position === 'K' ? ' k' : ''}`, line)]);
     };
     for (const [pos, title] of GROUPS) {
@@ -128,7 +128,7 @@ export function teamCardBody(doc, { chronicle, config, league, teamId, backLabel
     const key = [];
     if ([...c.squad, ...c.reserves].some((p) => p.rookie)) key.push(rookie(), ' rookie · ');
     if ([...c.squad, ...c.reserves].some((p) => p.injured)) key.push(hurt(), ' injured · ');
-    out.push(small(view === 'wages' ? [...key, 'wages a season', c.reserves.length ? '; the Kindling off the cap' : ''] : [...key, 'this season: G goals, A assists, ST stops (tackles and blocks), SV saves']));
+    out.push(small(view === 'wages' ? [...key, 'wages a season', c.reserves.length ? '; the Kindling off the cap' : ''] : [...key, 'this season: G goals, A assists, Q quells (tackles and blocks), SV saves']));
     return out;
   };
 

@@ -628,7 +628,7 @@ export function studioCard(card, live, at, rotation, ctx) {
       .sort((a, b) => value(b) - value(a) || a.appearances - b.appearances || a.playerId.localeCompare(b.playerId))
       .slice(0, 5)
       .map((x) => ({ playerId: x.playerId, name: ctx.playerName(x.playerId), teamId: x.teamId, value: value(x), pct: card === 'keepers' && x.saves + x.conceded > 0 ? Math.round((100 * x.saves) / (x.saves + x.conceded)) : null }));
-    const what = card === 'assists' ? 'ASSISTS' : card === 'stops' ? 'STOPS' : 'KEEPERS';
+    const what = card === 'assists' ? 'ASSISTS' : card === 'stops' ? 'QUELLS' : 'KEEPERS';
     return { kind: /** @type {const} */ ('stat_leaders'), stat: card, title: `TOP ${what} · SEASON ${season}`, rows };
   }
   if (card === 'head_to_head') {

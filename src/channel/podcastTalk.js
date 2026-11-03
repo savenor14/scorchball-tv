@@ -393,7 +393,7 @@ export function podcastEpisode(live, slot, ctx) {
       const best = all[0];
       if (!best?.line) return false;
       const l = best.line;
-      const stat = l.position === 'K' ? `${l.saves} SAVES` : l.position === 'S' ? `${l.goals} GOALS` : l.position === 'M' ? `${l.assists} ASSISTS` : `${l.stops} STOPS`;
+      const stat = l.position === 'K' ? `${l.saves} SAVES` : l.position === 'S' ? `${l.goals} GOALS` : l.position === 'M' ? `${l.assists} ASSISTS` : `${l.stops} QUELLS`;
       line('kidsAsk');
       line('kidsRookie', { team: name(best.teamId), player: ctx.playerName(best.playerId).toUpperCase(), position: POSITION_NAME[l.position] ?? l.position, stat });
       line('kidsReply');

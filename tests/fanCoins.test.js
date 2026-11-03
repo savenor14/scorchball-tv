@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { loadConfigFromDisk } from '../src/cli/loadConfigFromDisk.js';
 import { chantOf, createEarner, emptyData, normalizeData, picturesOf, showing } from '../src/channel/fanCoins.js';
+import { coinsShort } from '../src/channel/overlays/coinsView.js';
 
 const config = await loadConfigFromDisk();
 const s = config.settings.fanCoins;
@@ -157,4 +158,8 @@ test('a re-air shows the match\'s spends again at the moment of the match they h
   assert.equal(at(0, 'intro').chant, null);
   const other = /** @type {any} */ ({ ...reair(3 * MIN), match: { ...match, id: 'm2' } });
   assert.equal(showing(config, emptyData(), { t: later, seg: other, timelineOf }, replays).chant, null);
+});
+
+test('the AUDIENCE tab\'s balance from 1,000 in thousands, rounded down (Tom, 2026-11-03: 1000 crowded the tab)', () => {
+  assert.deepEqual([0, 825, 999, 1000, 1999, 9999, 10_000, 125_400].map(coinsShort), ['0', '825', '999', '1.0K', '1.9K', '9.9K', '10K', '125K']);
 });

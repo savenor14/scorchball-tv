@@ -13,7 +13,7 @@ export const POSITION_NAME = /** @type {Record<string, string>} */ ({ K: 'KEEPER
  * The stats on a card, after games (GP): goals, assists and stops for every outfield player, the same columns so cards
  * compare at a glance (Tom, Task 221: stops added once the team moved to a heading); a keeper's saves and save %.
  */
-const OUTFIELD = /** @type {[string, string][]} */ ([['goals', 'G'], ['assists', 'A'], ['stops', 'ST']]);
+const OUTFIELD = /** @type {[string, string][]} */ ([['goals', 'G'], ['assists', 'A'], ['stops', 'Q']]);
 export const CARD_STATS = /** @type {Record<string, [string, string][]>} */ ({
   S: OUTFIELD, M: OUTFIELD, D: OUTFIELD,
   K: [['saves', 'SV'], ['savePct', 'SV%']],

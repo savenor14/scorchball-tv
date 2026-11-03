@@ -111,7 +111,7 @@ function counts(e, stat, id) {
   return e.playerId === id && ((e.type === 'possession_change' && e.data.reason === 'tackle') || e.type === 'block');
 }
 
-const STAT_WORD = /** @type {Record<string, string>} */ ({ goals: 'goals', assists: 'assists', saves: 'saves', stops: 'stops' });
+const STAT_WORD = /** @type {Record<string, string>} */ ({ goals: 'goals', assists: 'assists', saves: 'saves', stops: 'quells' });
 
 /**
  * A match's records falling, as captions (Task 220b, Tom's look A): each at the event that passed the record (after a

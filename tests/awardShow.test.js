@@ -47,7 +47,7 @@ test('after the champions: the awards\' talk, then each award a minute, in order
   // The desk's intro names them all, in order.
   const script = /** @type {any[]} */ (talkScript(segs[i].seg, live, segs[i].from, { timelineOf, playerName: (id) => id, formatTime: () => '' }));
   assert.equal(script.length, 2);
-  assert.match(String(script[1].show), /BLAZE · COMPASS · QUELL · IRONCLAD · EMBER BOOT/);
+  assert.match(String(script[1].show), /BLAZE · COMPASS · AEGIS · IRONCLAD · EMBER BOOT/);
   // The guide: one AWARDS entry, the intro talk with them.
   assert.equal(guideKind(segs[i].seg), 'awards');
   const entries = groupEntries(segs.map((x) => ({ from: x.from, until: x.until, seg: x.seg })));
@@ -68,7 +68,7 @@ test('each award shows what the sim decided: the winner, their stat, the next tw
     assert.equal(v.winner.name, name(e.playerId));
     assert.equal(v.shortlist.length, 2);
     assert.ok(v.shortlist.every((s) => s.playerId !== e.playerId));
-    if (id === 'quell') assert.match(v.forWhat, /MOST STOPS · DEFENDERS/);
+    if (id === 'quell') assert.match(v.forWhat, /MOST QUELLS · DEFENDERS/);
     if (id === 'ironclad') assert.match(v.winner.stat, /^\d+\.\d% SAVED · \d+ OF \d+$/);
     if (id === 'ember_boot') assert.equal(v.winner.stat, `${e.data.value} GOALS`);
   }

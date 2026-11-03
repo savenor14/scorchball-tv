@@ -298,8 +298,17 @@ export function createCoinsView({ config, data, stateOf, spend, now, broadcast, 
     render,
     /** Back to the list (the pane opened afresh, or another tab). */
     reset() { Object.assign(page, { opened: null, spent: null, sending: false, error: '' }); },
-    /** The tab's label: COINS and the balance. */
-    tab() { return [/** @type {Node | string} */ ('COINS'), el('span', 'fc-n', [String(data.balance)])]; },
+    /** The tab's label: COINS and the balance, from 1,000 in thousands (Tom, 2026-11-03: 1000 crowded the tab). */
+    tab() { return [/** @type {Node | string} */ ('COINS'), el('span', 'fc-n', [coinsShort(data.balance)])]; },
   };
 }
 
+/**
+ * A balance short enough for the AUDIENCE tab: 825, then 1.0K to 9.9K (rounded down, never more than you have), then
+ * 10K, 125K. @param {number} n
+ */
+export function coinsShort(n) {
+  if (n < 1000) return String(n);
+  if (n < 10_000) return `${(Math.floor(n / 100) / 10).toFixed(1)}K`;
+  return `${Math.floor(n / 1000)}K`;
+}

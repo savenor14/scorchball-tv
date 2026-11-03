@@ -335,8 +335,8 @@ export function createCardPanel({ league, formatTime, config }) {
         }))];
       // The desk's career card (Task 226, Tom's pick A on careercard.html): who, why, the career in big totals, honours.
       case 'career': {
-        const LABEL = /** @type {Record<string, string>} */ ({ goals: 'GOALS', assists: 'ASSISTS', stops: 'STOPS', saves: 'SAVES', savePct: 'SAVE %' });
-        const WORD = /** @type {Record<string, [string, string]>} */ ({ goals: ['goal', 'goals'], assists: ['assist', 'assists'], saves: ['save', 'saves'], stops: ['stop', 'stops'], appearances: ['game', 'games'] });
+        const LABEL = /** @type {Record<string, string>} */ ({ goals: 'GOALS', assists: 'ASSISTS', stops: 'QUELLS', saves: 'SAVES', savePct: 'SAVE %' });
+        const WORD = /** @type {Record<string, [string, string]>} */ ({ goals: ['goal', 'goals'], assists: ['assist', 'assists'], saves: ['save', 'saves'], stops: ['quell', 'quells'], appearances: ['game', 'games'] });
         const why = card.why;
         const reason = card.next ? ['Next on: ', kit(team(card.next.homeId)), ` ${team(card.next.homeId).abbr} v `, kit(team(card.next.awayId)), ` ${team(card.next.awayId).abbr}`]
           : why.stat ? [`${why.left} ${WORD[why.stat][why.left === 1 ? 0 : 1]} from ${(why.target ?? 0).toLocaleString('en-US')}`] : [];
@@ -414,7 +414,7 @@ export function createCardPanel({ league, formatTime, config }) {
       case 'stat_leaders': {
         // ASSISTS, STOPS or KEEPERS (Task 278n), drawn like TOP SCORERS; keepers with their save percentage. No word beside
         // the total: the heading says what it counts (Tom, 2026-10-18).
-        const none = { assists: 'No assists yet', stops: 'No stops yet', keepers: 'No saves yet' }[card.stat];
+        const none = { assists: 'No assists yet', stops: 'No quells yet', keepers: 'No saves yet' }[card.stat];
         if (card.rows.length === 0) return [el('h3', '', [card.title]), el('p', 'card-note', [none])];
         return [el('h3', '', [card.title]), grid('1.2em 0.6em 1fr auto 2em', card.rows.flatMap((r, i) => [
           cell('m', String(i + 1)), kit(team(r.teamId)), el('span', '', [`${r.name} `, el('span', 'muted', [team(r.teamId).abbr])]),

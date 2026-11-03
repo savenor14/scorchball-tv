@@ -24,7 +24,7 @@ test('notable retirements: long careers and awards (Tom), from a team, up to fou
   const list = notableRetirements(events, history, 7, { max: 4, awardWeight: 3 }, config.rules.awards, (id) => id.toUpperCase());
   // b: 4 + 2 awards × 3 = 10; a 7; c 6; d: 2 + 3 = 5. Not e (out of free agency) or f (no team).
   assert.deepEqual(list.map((f) => f.playerId), ['b', 'a', 'c', 'd']);
-  assert.deepEqual(list[0].awards, ['2× THE QUELL']);
+  assert.deepEqual(list[0].awards, ['2× THE AEGIS']);
   assert.deepEqual(list[3].awards, ['THE BLAZE']);
   assert.equal(list[1].name, 'A');
 });

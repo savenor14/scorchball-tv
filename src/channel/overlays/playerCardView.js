@@ -112,7 +112,7 @@ export function playerCardBody(doc, { chronicle, config, league, playerId, backL
     }
     if (h.milestones.length) {
       out.push(mk('div', 'card-sub', ['MILESTONES']));
-      const word = /** @type {Record<string, string>} */ ({ goals: 'goal', assists: 'assist', saves: 'save', stops: 'stop', appearances: 'game' });
+      const word = /** @type {Record<string, string>} */ ({ goals: 'goal', assists: 'assist', saves: 'save', stops: 'quell', appearances: 'game' });
       for (const m of h.milestones.slice(-6).reverse()) out.push(row(`${px(13)} 1fr`, [mk('span', 'm', [`S${m.season}`]), `${m.value}th ${word[m.stat]}`]));
     }
     return out;
