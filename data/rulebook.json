@@ -13,7 +13,7 @@
           "Each goal has a crease. Only the defending keeper may stand in it, and only there may the ball be handled.",
           "A match is two halves of {halfMinutes} minutes. The home side kicks off the first half, the visitors the second.",
           "After a goal, the keeper who conceded restarts play at once from the crease.",
-          "The side without the ball wins it back by tackling the player who has it, stealing a pass, or blocking a shot.",
+          "The side without the ball wins it back by performing a quell: tackling the player who has possession, stealing a pass, or blocking a shot.",
           "A tackle that fails may be a foul. A foul by the defending side in its own third gives a free shot: one shooter against the keeper from the mark, with a cool ball. Any other foul gives the ball to the side fouled, where the foul happened. There are no cards.",
           "A team names {matchday} players for a match from a squad of {squad}: everyone who's fit. A tired or injured player may be replaced, up to {subs} times a match.",
           "Every team must start a rookie. A player is a rookie if they were drafted and are in their first season in the League. If no rookie is fit to play, the team plays without one."
