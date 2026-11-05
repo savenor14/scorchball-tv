@@ -241,7 +241,8 @@ async function boot() {
   // folder); the page keeps only which it was.
   const snapshotFile = snapshot ? new URL(snapshotPath(snapshot.season), location.href).href : null;
   const buildMs = performance.now() - built;
-  $('loading').hidden = true;
+  // Laid out now, unseen until the first picture (body.on-air; Tom, 2026-11-05: the scorebug's LIVE and --- showed while
+  // the sounds' index loaded), TUNING IN up until then.
   stage.hidden = false;
 
   const { league, calendar } = live;
@@ -2996,7 +2997,10 @@ async function boot() {
       dev.problem(err, t);
     }
     // The side bars' night blue from the first picture on (index.html), so they never frame an empty stage.
-    if (!document.body.classList.contains('on-air')) document.body.classList.add('on-air');
+    if (!document.body.classList.contains('on-air')) {
+      document.body.classList.add('on-air');
+      if ($('loading').dataset.back !== '1') $('loading').hidden = true;
+    }
     if (params.murmurBed && audio.on) audio.murmurBed(clock.speed > 2 ? 0 : murmurWanted);
     murmurWanted = 0;
     perf?.frameEnd(performance.now());

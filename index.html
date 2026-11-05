@@ -43,6 +43,7 @@
        §3), gone once the stage shows. Before the palette is applied, so the colours are written out (accent, panel). */
     #loading { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; font-family: 'VT323', monospace; }
     #loading[hidden] { display: none; }
+    body:not(.on-air) #stage { visibility: hidden; } /* laid out, unseen until the first picture is drawn */
     #loading .tag { background: var(--accent, #ff8f1c); color: var(--panel, #151924); font-weight: 700; font-size: 32px; padding: 2px 14px; }
     #loading .msg { color: var(--accent, #ff8f1c); font-size: 22px; animation: loading-blink 1.2s steps(2, jump-none) infinite; }
     @keyframes loading-blink { 50% { opacity: 0.35; } }
